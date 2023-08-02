@@ -1360,6 +1360,7 @@ export const en = {
   },
   container: {
     title: "Container title",
+    showScroll: "Show scroll",
   },
   drawer: {
     placement: "Drawer placement",
