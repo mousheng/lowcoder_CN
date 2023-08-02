@@ -310,6 +310,11 @@ export const mentionEvent: EventConfigType = {
   value: "mention",
   description: trans("event.mentionDesc"),
 };
+export const deleteEvent: EventConfigType = {
+  label: trans("event.delete"),
+  value: "delete",
+  description: trans("event.deleteDesc"),
+};
 
 export const InputEventHandlerControl = eventHandlerControl([
   changeEvent,
