@@ -115,6 +115,7 @@ export type UICompType =
   | "mention"
   | "autocomplete"
   | "comment"
+  | "icon"
 
 export const uiCompRegistry = {} as Record<UICompType | string, UICompManifest>;
 

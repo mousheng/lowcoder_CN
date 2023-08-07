@@ -858,6 +858,9 @@ export const en = {
     commentCompName: "Comment",
     commentCompDesc: "Comment",
     commentCompKeywords: "",
+    iconCompName: "icon",
+    iconCompDesc: "icon",
+    iconCompKeywords: "",
   },
   comp: {
     menuViewDocs: "View documentation",
@@ -2536,4 +2539,9 @@ export const en = {
     helpLabel: "label",
     helpValue: "value",
   },
+  iconComp: {
+    icon: "icon",
+    autoSize: "icon AutoSize",
+    iconSize: "icon size",
+  }
 };

@@ -97,6 +97,7 @@ import {
   MentionIcon,
   AutoCompleteCompIcon,
   CommentIcon,
+  IconCompIcon,
 } from "lowcoder-design";
 
 import { defaultFormData, FormComp } from "./comps/formComp/formComp";
@@ -126,6 +127,7 @@ import { TimeLineComp } from "./comps/timelineComp/timelineComp";
 import { MentionComp } from "./comps/textInputComp/mentionComp";
 import { AutoCompleteComp } from "./comps/autoCompleteComp/autoCompleteComp";
 import { CommentComp } from "./comps/commentComp/commentComp";
+import { IconComp } from "./comps/iconComp";
 
 //Added by Aqib Mirza
 import { JsonLottieComp } from "./comps/jsonComp/jsonLottieComp";
@@ -895,6 +897,19 @@ const uiCompMap: Registry = {
     layoutInfo: {
       w: 13,
       h: 55,
+    },
+  },
+  icon: {
+    name: trans("uiComp.iconCompName"),
+    enName: "icon",
+    description: trans("uiComp.iconCompDesc"),
+    categories: ["dataDisplay"],
+    icon: IconCompIcon,
+    keywords: trans("uiComp.iconCompKeywords"),
+    comp: IconComp,
+    layoutInfo: {
+      w: 2,
+      h: 10,
     },
   },
 };

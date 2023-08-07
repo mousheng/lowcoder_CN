@@ -841,6 +841,9 @@ uiComp: {
     commentCompName: "评论",
     commentCompDesc: "评论组件",
     commentCompKeywords: "pl",
+    iconCompName: "图标",
+    iconCompDesc: "图标",
+    iconCompKeywords: "tb",
 },
 comp: {
     menuViewDocs: "查看文档",
@@ -2525,6 +2528,11 @@ timeLine: {
         helpdisplayName: "头像文字(低优先)",
         helpvalue: "评论内容",
         helpcreatedAt: "创建时间",
+      },
+    iconComp: {
+        icon: "图标",
+        autoSize: "图标自动大小",
+        iconSize: "图标大小",
       }
 };
 

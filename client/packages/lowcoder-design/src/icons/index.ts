@@ -292,3 +292,4 @@ export { ReactComponent as LottieIcon } from "icons/icon-lottie.svg";
 export { ReactComponent as MentionIcon } from "icons/icon-mention-comp.svg";
 export { ReactComponent as AutoCompleteCompIcon } from "icons/icon-autocomplete-comp.svg";
 export { ReactComponent as CommentIcon } from "icons/icon-comment-comp.svg";
+export { ReactComponent as IconCompIcon } from "icons/IconCompIcon.svg";

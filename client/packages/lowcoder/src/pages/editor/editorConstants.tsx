@@ -40,6 +40,7 @@ import {
   MentionIcon,
   AutoCompleteCompIcon,
   CommentIcon,
+  IconCompIcon,
 } from "lowcoder-design";
 
 export const CompStateIcon: {
@@ -109,4 +110,5 @@ export const CompStateIcon: {
   mention: <MentionIcon/>,
   autocomplete: <AutoCompleteCompIcon />,
   comment: <CommentIcon />,
+  icon: <IconCompIcon />,
 };
