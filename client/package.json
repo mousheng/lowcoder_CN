@@ -41,7 +41,7 @@
     "@types/tern": "0.23.4",
     "@types/toposort": "^2.0.3",
     "@types/ua-parser-js": "^0.7.36",
-    "@welldone-software/why-did-you-render": "^6.2.3",
+    "@welldone-software/why-did-you-render": "^7.0.1",
     "add": "^2.0.6",
     "babel-jest": "^29.3.0",
     "babel-preset-react-app": "^10.0.1",
