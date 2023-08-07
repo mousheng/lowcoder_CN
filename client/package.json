@@ -74,7 +74,7 @@
   },
   "dependencies": {
     "@lottiefiles/react-lottie-player": "^3.5.3",
-    "antd-mobile": "^5.28.0",
+    "antd-mobile": "^5.32.0",
     "chalk": "4",
     "number-precision": "^1.6.0",
     "react-player": "^2.11.0",
