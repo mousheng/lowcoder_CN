@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { styleControl } from "comps/controls/styleControl";
-import { ButtonStyleType, ButtonStyle } from "comps/controls/styleControlConstants";
+import { ButtonStyleType, ButtonStyle, widthCalculator } from "comps/controls/styleControlConstants";
 import { migrateOldData } from "comps/generators/simpleGenerators";
 import styled, { css } from "styled-components";
 import { genActiveColor, genHoverColor } from "lowcoder-design";
@@ -14,7 +14,6 @@ export function getButtonStyle(buttonStyle: ButtonStyleType) {
     &&& {
       border-radius: ${buttonStyle.radius};
       margin: ${buttonStyle.margin};	
-      padding: ${buttonStyle.padding};
       &:not(:disabled) {
         // click animation color
         --antd-wave-shadow-color: ${buttonStyle.border};
@@ -23,7 +22,6 @@ export function getButtonStyle(buttonStyle: ButtonStyleType) {
         background-color: ${buttonStyle.background};
         border-radius: ${buttonStyle.radius};
         margin: ${buttonStyle.margin};	
-        padding: ${buttonStyle.padding};
   
         :hover,
         :focus {
@@ -48,10 +46,10 @@ export function getButtonStyle(buttonStyle: ButtonStyleType) {
 
 export const Button100 = styled(Button)<{ $buttonStyle?: ButtonStyleType }>`
   ${(props) => props.$buttonStyle && getButtonStyle(props.$buttonStyle)}
-  width: 100%;
-  height: auto;
+  width: ${(props) => widthCalculator(props.$buttonStyle?.margin ?? "0px")};
   display: inline-flex;
   justify-content: center;
+  vertical-align: -webkit-baseline-middle;
   align-items: center;
   overflow: hidden;
   span {

@@ -346,7 +346,7 @@ function getStaticBackground(color: string) {
   } as const;
 }
 
-export const ButtonStyle = [...getBgBorderRadiusByBg("primary"), TEXT, MARGIN, PADDING] as const;
+export const ButtonStyle = [...getBgBorderRadiusByBg("primary"), TEXT, MARGIN] as const;
 
 export const ToggleButtonStyle = [
   getBackground("canvas"),
