@@ -116,6 +116,10 @@ export type UICompType =
   | "autocomplete"
   | "comment"
   | "icon"
+  | "weekPicker"
+  | "monthPicker"
+  | "quarterPicker"
+  | "yearPicker"
 
 export const uiCompRegistry = {} as Record<UICompType | string, UICompManifest>;
 

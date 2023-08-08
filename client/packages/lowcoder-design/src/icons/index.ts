@@ -293,3 +293,7 @@ export { ReactComponent as MentionIcon } from "icons/icon-mention-comp.svg";
 export { ReactComponent as AutoCompleteCompIcon } from "icons/icon-autocomplete-comp.svg";
 export { ReactComponent as CommentIcon } from "icons/icon-comment-comp.svg";
 export { ReactComponent as IconCompIcon } from "icons/IconCompIcon.svg";
+export { ReactComponent as WeekPickerIcon } from "icons/icon-weekPicker.svg";
+export { ReactComponent as MonthPickerIcon } from "icons/icon-monthPicker.svg";
+export { ReactComponent as QuarterPickerIcon } from "icons/icon-quarterPicker.svg";
+export { ReactComponent as YearPickerIcon } from "icons/icon-yearPicker.svg";

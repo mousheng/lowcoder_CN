@@ -364,6 +364,11 @@ export: {
     datePickerValueDesc: "当前选定的日期",
     datePickerFormattedValueDesc: "根据指定的格式格式化的选定日期",
     datePickerTimestampDesc: "日期的当前选定时间戳(秒)",
+    weekPickerValueDesc: "当前选定的周",
+    monthPickerValueDesc: "当前选定的月份",
+    monthPickerDaysInMonthDesc: "当前选定月的天数",
+    quarterPickerDaysInMonthDesc: "当前选定的季度",
+    yearPickerDaysInMonthDesc: "当前选定的年份",
     dateRangeStartDesc: "当前选定的起始日期",
     dateRangeEndDesc: "当前选定的结束日期",
     dateRangeStartTimestampDesc: "开始日期的当前选定时间戳(秒)",
@@ -844,6 +849,18 @@ uiComp: {
     iconCompName: "图标",
     iconCompDesc: "图标",
     iconCompKeywords: "tb",
+    weekPickerCompName: "周选择器",
+    weekPickerCompDesc: "周选择器",
+    weekPickerCompKeywords: "zxzq",
+    monthPickerCompName: "月选择器",
+    monthPickerCompDesc: "月选择器",
+    monthPickerCompKeywords: "yxzq",
+    quarterPickerCompName: "季选择器",
+    quarterPickerCompDesc: "季选择器",
+    quarterPickerCompKeywords: "jxzq",
+    yearPickerCompName: "年选择器",
+    yearPickerCompDesc: "年选择器",
+    yearPickerCompKeywords: "nxzq",
 },
 comp: {
     menuViewDocs: "查看文档",
@@ -1021,7 +1038,7 @@ file: {
 },
 date: {
     format: "格式",
-    formatTip: "支持:\n" + "YYYY-MM-DD HH:mm:ss\nYYYY-MM-DD\n时间戳",
+    formatTip: "支持:\n" + "YYYY-MM-DD\nYYYY-MM-DD HH:mm:ss\n时间戳",
     reference: "请参考",
     showTime: "显示时间",
     start: "开始日期",
@@ -2533,6 +2550,12 @@ timeLine: {
         icon: "图标",
         autoSize: "图标自动大小",
         iconSize: "图标大小",
-      }
+      },
+      weekPickerComp: {
+        format: "YYYY-wo"
+      },
+      monthPickerComp: {
+        format: "YYYY-mm",
+      },
 };
 

@@ -41,6 +41,10 @@ import {
   AutoCompleteCompIcon,
   CommentIcon,
   IconCompIcon,
+  WeekPickerIcon,
+  MonthPickerIcon,
+  QuarterPickerIcon,
+  YearPickerIcon,
 } from "lowcoder-design";
 
 export const CompStateIcon: {
@@ -111,4 +115,8 @@ export const CompStateIcon: {
   autocomplete: <AutoCompleteCompIcon />,
   comment: <CommentIcon />,
   icon: <IconCompIcon />,
+  weekPicker: <WeekPickerIcon />,
+  monthPicker: <MonthPickerIcon />,
+  quarterPicker: <QuarterPickerIcon />,
+  yearPicker: <YearPickerIcon />,
 };

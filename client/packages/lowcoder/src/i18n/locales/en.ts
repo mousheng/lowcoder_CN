@@ -368,6 +368,11 @@ export const en = {
     datePickerValueDesc: "Currently selected date",
     datePickerFormattedValueDesc: "Formatted selected date according to the specified format",
     datePickerTimestampDesc: "The currently selected timestamp of the date (s)",
+    weekPickerValueDesc: "The currently selected week in the year",
+    monthPickerValueDesc: "The currently selected month",
+    monthPickerDaysInMonthDesc: "The currently days in the month",
+    quarterPickerDaysInMonthDesc: "The currently selected quarter",
+    yearPickerDaysInMonthDesc: "The currently selected year",
     dateRangeStartDesc: "Currently selected start date",
     dateRangeEndDesc: "Currently selected end date",
     dateRangeStartTimestampDesc: "The currently selected timestamp of the start date (s)",
@@ -861,6 +866,18 @@ export const en = {
     iconCompName: "icon",
     iconCompDesc: "icon",
     iconCompKeywords: "",
+    weekPickerCompName: "Week Picker",
+    weekPickerCompDesc: "Week Picker",
+    weekPickerCompKeywords: "",
+    monthPickerCompName: "Month Picker",
+    monthPickerCompDesc: "Month Picker",
+    monthPickerCompKeywords: "",
+    quarterPickerCompName: "Quarter Picker",
+    quarterPickerCompDesc: "Quarter Picker",
+    quarterPickerCompKeywords: "",
+    yearPickerCompName: "Year Picker",
+    yearPickerCompDesc: "Year Picker",
+    yearPickerCompKeywords: "",
   },
   comp: {
     menuViewDocs: "View documentation",
@@ -1039,7 +1056,7 @@ export const en = {
   },
   date: {
     format: "Format",
-    formatTip: "Support:\n" + "YYYY-MM-DD HH:mm:ss\nYYYY-MM-DD\nTimestamp",
+    formatTip: "Support:\n" + "YYYY-MM-DD\nYYYY-MM-DD HH:mm:ss\nTimestamp",
     reference: "Please refer to",
     showTime: "Show time",
     start: "Start date",
@@ -2543,5 +2560,11 @@ export const en = {
     icon: "icon",
     autoSize: "icon AutoSize",
     iconSize: "icon size",
-  }
+  },
+  weekPickerComp: {
+    format: "YYYY-wo",
+  },
+  monthPickerComp: {
+    format: "YYYY-mm",
+  },
 };
