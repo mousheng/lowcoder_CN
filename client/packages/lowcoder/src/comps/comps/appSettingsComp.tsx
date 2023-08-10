@@ -14,6 +14,7 @@ import { Divider } from "antd";
 import { THEME_SETTING } from "constants/routesURL";
 import { CustomShortcutsComp } from "./customShortcutsComp";
 import { DEFAULT_THEMEID } from "comps/utils/themeUtil";
+import { dropdownControl } from "../controls/dropdownControl";
 
 const TITLE = trans("appSetting.title");
 const USER_DEFINE = "__USER_DEFINE";
@@ -23,6 +24,9 @@ const ItemSpan = styled.span`
   align-items: center;
   margin: 0 1px;
   max-width: 218px;
+`;
+const HiddenItem = styled.div`
+  margin: 10px 0px;
 `;
 
 const getTagStyle = (theme: ThemeDetail) => {
@@ -134,8 +138,20 @@ const DividerStyled = styled(Divider)`
   border-color: #e1e3eb;
 `;
 
+const headerOptions = [
+  {
+    label: trans("appSetting.showHeader"),
+    value: 'showHeader',
+  },
+  {
+    label: trans("appSetting.hiddenHeader"),
+    value: 'hiddenHeader',
+  },
+] as const;
+
 const childrenMap = {
   maxWidth: dropdownInputSimpleControl(OPTIONS, USER_DEFINE, "1920"),
+  hiddenHeader: dropdownControl(headerOptions,"showHeader"),
   themeId: valueComp<string>(DEFAULT_THEMEID),
   customShortcuts: CustomShortcutsComp,
 };
@@ -145,7 +161,7 @@ type ChildrenInstance = RecordConstructorToComp<typeof childrenMap> & {
 };
 
 function AppSettingsModal(props: ChildrenInstance) {
-  const { themeList, defaultTheme, themeId, maxWidth } = props;
+  const { themeList, defaultTheme, themeId, maxWidth, hiddenHeader } = props;
   const THEME_OPTIONS = themeList?.map((theme) => ({
     label: theme.name,
     value: theme.id + "",
@@ -180,6 +196,13 @@ function AppSettingsModal(props: ChildrenInstance) {
   return (
     <SettingsStyled>
       <Title>{TITLE}</Title>
+      <HiddenItem>
+        {hiddenHeader.propertyView({
+          label: trans("appSetting.HeaderSetting"),
+          radioButton: true,
+          tooltip: trans("appSetting.HeaderSettingDes"),
+        })}
+      </HiddenItem>
       <DivStyled>
         {maxWidth.propertyView({
           dropdownLabel: trans("appSetting.canvasMaxWidth"),

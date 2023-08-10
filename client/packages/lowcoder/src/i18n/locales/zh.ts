@@ -1807,6 +1807,10 @@ appSetting: {
     themeSetting: "主题设置",
     themeSettingDefault: "默认",
     themeCreate: "创建主题",
+    HeaderSetting: "顶部菜单",
+    HeaderSettingDes: "预览时你也可以手动设置url参数template=true来隐藏标题",
+    showHeader: "显示",
+    hiddenHeader: "隐藏",
 },
 customShortcut: {
     title: "自定义快捷键",

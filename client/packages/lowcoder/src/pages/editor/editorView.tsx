@@ -254,7 +254,7 @@ function EditorView(props: EditorViewProps) {
     return () => window.removeEventListener(eventType, updateSize);
   }, []);
 
-  const hideBodyHeader = useTemplateViewMode();
+  const hideBodyHeader = useTemplateViewMode() || editorState.getAppSettings()?.hiddenHeader==="hiddenHeader";
 
   if (readOnly && hideHeader) {
     return (

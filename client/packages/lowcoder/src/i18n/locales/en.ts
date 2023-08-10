@@ -1831,6 +1831,10 @@ export const en = {
     themeSetting: "Theme setting",
     themeSettingDefault: "Default",
     themeCreate: "Create theme",
+    HeaderSetting: "Header setting",
+    HeaderSettingDes: "When previewing you can also manually set the URL parameter template=true to hide the Header",
+    showHeader: "Show",
+    hiddenHeader: "hidden",
   },
   customShortcut: {
     title: "Custom shortcuts",
