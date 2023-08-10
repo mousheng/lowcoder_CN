@@ -33,6 +33,7 @@ const Container = styled.div<{ $style: IconStyleType | undefined }>`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   svg {
     object-fit: contain;
     pointer-events: auto;
