@@ -1117,6 +1117,10 @@ export const en = {
     verticalAlignment: "Vertical alignment",
     horizontalAlignment: "Horizontal alignment",
     textDesc: "Text displayed in the current text box",
+    fontStyle: "Font Style",
+    fontSize: "Font Size",
+    bold: "Bold",
+    italic: "italic",
   },
   table: {
     editable: "Editable",

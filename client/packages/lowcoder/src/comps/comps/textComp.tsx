@@ -17,6 +17,7 @@ import { alignWithJustifyControl } from "comps/controls/alignControl";
 
 import { MarginControl } from "../controls/marginControl";
 import { PaddingControl } from "../controls/paddingControl";
+import { BoolControl } from "../controls/boolControl";
 
 const getStyle = (style: TextStyleType) => {
   return css`
@@ -70,7 +71,6 @@ const TextContainer = styled.div<{ type: string; styleConfig: TextStyleType }>`
     props.type === "text" && "white-space:break-spaces;line-height: 1.9;"};
   ${(props) => props.styleConfig && getStyle(props.styleConfig)}
   display: flex;
-  font-size: 13px;
   ${markdownCompCss};
   overflow-wrap: anywhere;
   .markdown-body {
@@ -97,6 +97,34 @@ const typeOptions = [
     value: "text",
   },
 ] as const;
+
+const fontSizeOptions = [
+  {
+    label: "S",
+    value: "0.875rem",
+  },
+  {
+    label: "M",
+    value: "1rem",
+  },
+  {
+    label: "L",
+    value: "1.25rem",
+  },
+  {
+    label: "XL",
+    value: "1.875rem",
+  },
+  {
+    label: "XXL",
+    value: "3rem",
+  },
+  {
+    label: "3XL",
+    value: "3.75rem",
+  },
+] as const;
+
 const VerticalAlignmentOptions = [
   { label: <AlignTop />, value: "flex-start" },
   { label: <AlignVerticalCenter />, value: "center" },
@@ -116,6 +144,9 @@ let TextTmpComp = (function () {
     style: styleControl(TextStyle),
     margin: MarginControl,	
     padding: PaddingControl,
+    fontSize: dropdownControl(fontSizeOptions, "0.875rem"),
+    bold: BoolControl,
+    italic: BoolControl,
   };
   return new UICompBuilder(childrenMap, (props) => {
     const value = props.text.value;
@@ -127,6 +158,10 @@ let TextTmpComp = (function () {
           justifyContent: props.horizontalAlignment,
           alignItems: props.autoHeight ? "center" : props.verticalAlignment,
           textAlign: props.horizontalAlignment,
+          fontSize: props.fontSize,
+          fontWeight: props.bold ? "bold" : "normal",
+          fontStyle: props.italic ? "italic" : "normal",
+          lineHeight: 'normal',
         }}
       >
         {props.type === "markdown" ? <TacoMarkDown>{value}</TacoMarkDown> : value}
@@ -144,6 +179,19 @@ let TextTmpComp = (function () {
             })}
             {children.text.propertyView({})}
           </Section>
+
+          {children.type.getView()==='text' &&
+          (<Section name={trans("textShow.fontStyle")}>
+            {children.fontSize.propertyView({
+              label: trans("textShow.fontSize"),
+            })}
+            {children.bold.propertyView({
+              label: trans("textShow.bold"),
+            })}
+            {children.italic.propertyView({
+              label: trans("textShow.italic"),
+            })}
+          </Section>)}
 
           <Section name={sectionNames.layout}>
             {children.autoHeight.getPropertyView()}

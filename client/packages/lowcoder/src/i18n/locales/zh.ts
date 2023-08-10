@@ -1098,7 +1098,11 @@ link: {
     verticalAlignment: "垂直对齐",
     horizontalAlignment: "水平对齐",
     textDesc: "在当前文本框中显示的文本",
-    },
+    fontStyle: "文本样式",
+    fontSize: "文本大小",
+    bold: "加粗",
+    italic: "斜体",
+},
 table: {
     editable: "可编辑",
     columnNum: "列数",
