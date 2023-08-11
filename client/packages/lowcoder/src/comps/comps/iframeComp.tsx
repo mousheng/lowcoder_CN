@@ -27,7 +27,8 @@ const Wrapper = styled.div<{ $style: IframeStyleType }>`
 `;
 
 const regex =
-  /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)/g;
+  // /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)/g;
+  /https?:\/\/(www\.)?([-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}|(?:\d{1,3}\.){3}\d{1,3}:\d{1,5})\b([-a-zA-Z0-9@:%_+.~#?&/=]*)?/g;
 
 let IFrameCompBase = new UICompBuilder(
   {
