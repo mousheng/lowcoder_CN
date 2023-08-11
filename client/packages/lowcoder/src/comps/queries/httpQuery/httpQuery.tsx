@@ -153,7 +153,7 @@ const HttpQueryPropertyView = (props: {
         options={HttpMethodOptions.filter(
           (o) => !supportHttpMethods || supportHttpMethods.includes(o.value)
         )}
-        label={"HTTP Method"}
+        label={trans("query.httpMethod")}
         onChange={(value: HttpMethodValue) => {
           children.httpMethod.dispatchChangeValueAction(value);
         }}
@@ -173,7 +173,7 @@ const HttpQueryPropertyView = (props: {
       <HttpParametersPropertyView comp={comp} />
 
       <Dropdown
-        label={"Body"}
+        label={trans("query.body")}
         placement={"bottom"}
         options={BodyTypeOptions.filter(
           (o) => !supportBodyTypes || supportBodyTypes?.includes(o.value)

@@ -5,6 +5,7 @@ import { HttpQuery } from "./httpQuery";
 import styled from "styled-components";
 import { QueryConfigItemWrapper, QueryConfigLabel, QueryConfigWrapper } from "components/query";
 import { GraphqlQuery } from "./graphqlQuery";
+import { trans } from "@lowcoder-ee/i18n";
 
 const UrlInput = styled.div<{ hasAddonBefore: boolean }>`
   display: flex;
@@ -43,7 +44,7 @@ export const HttpPathPropertyView = (props: {
   const httpConfig = datasource?.datasource.datasourceConfig as HttpConfig;
   return (
     <QueryConfigWrapper>
-      <QueryConfigLabel>URL</QueryConfigLabel>
+      <QueryConfigLabel>{trans("query.URL")}</QueryConfigLabel>
       <QueryConfigItemWrapper>
         <UrlInput hasAddonBefore={!!httpConfig?.url}>
           {httpConfig?.url && <UrlInputAddonBefore>{httpConfig?.url}</UrlInputAddonBefore>}
@@ -65,7 +66,7 @@ export const HttpHeaderPropertyView = (props: {
 }) => {
   return (
     <QueryConfigWrapper>
-      <QueryConfigLabel>Headers</QueryConfigLabel>
+      <QueryConfigLabel>{trans("query.headers")}</QueryConfigLabel>
       <QueryConfigItemWrapper>
         {props.comp.children.headers.propertyView({ keyFlexBasics: 184, valueFlexBasics: 232 })}
       </QueryConfigItemWrapper>
@@ -78,7 +79,7 @@ export const HttpParametersPropertyView = (props: {
 }) => {
   return (
     <QueryConfigWrapper>
-      <QueryConfigLabel>Parameters</QueryConfigLabel>
+      <QueryConfigLabel>{trans("query.Parameters")}</QueryConfigLabel>
       <QueryConfigItemWrapper>
         {props.comp.children.params.propertyView({ keyFlexBasics: 184, valueFlexBasics: 232 })}
       </QueryConfigItemWrapper>
