@@ -10,6 +10,7 @@ import {
   ValueFunction,
 } from "../controls/paramsControl";
 import { buildQueryCommand, FunctionProperty, toQueryView } from "./queryCompUtils";
+import { trans } from "@lowcoder-ee/i18n";
 
 const CommandOptions = [
   { label: "Find Document(s)", value: "FIND" },
@@ -35,7 +36,7 @@ const LimitOptions = [
 
 const QueryField = withPropertyViewFn(ParamsJsonControl, (comp) =>
   comp.propertyView({
-    label: "Query",
+    label: trans("query.query"),
     placement: "bottom",
     placeholder: `{
   rating : {$gte : 9}
@@ -47,7 +48,7 @@ const QueryField = withPropertyViewFn(ParamsJsonControl, (comp) =>
 
 const LimitInputField = withPropertyViewFn(ParamsPositiveNumberControl, (comp) =>
   comp.propertyView({
-    label: "Limit",
+    label: trans("query.limit"),
     placement: "bottom",
     placeholder: "10",
   })
@@ -65,7 +66,8 @@ const CommandMap: Record<
     query: QueryField,
     projection: withPropertyViewFn(ParamsJsonControl, (comp) =>
       comp.propertyView({
-        label: "Projection",
+        label: trans("query.projection"),
+        tooltip: trans("query.projectionDes"),
         placement: "bottom",
         placeholder: "{name : 1}",
         enableMetaCompletion: true,
@@ -74,14 +76,15 @@ const CommandMap: Record<
     limit: LimitInputField,
     skip: withPropertyViewFn(ParamsPositiveNumberControl, (comp) =>
       comp.propertyView({
-        label: "Skip",
+        label: trans("query.skip"),
         placement: "bottom",
         placeholder: "0",
       })
     ),
     sort: withPropertyViewFn(ParamsJsonControl, (comp) =>
       comp.propertyView({
-        label: "Sort",
+        label: trans("query.sort"),
+        tooltip: trans("query.sortDes"),
         placement: "bottom",
         placeholder: "{name : 1}",
         enableMetaCompletion: true,
@@ -138,7 +141,7 @@ const CommandMap: Record<
   AGGREGATE: buildQueryCommand({
     arrayPipelines: withPropertyViewFn(ParamsJsonControl, (comp) =>
       comp.propertyView({
-        label: "Array Pipelines",
+        label: trans("query.arrayPipelines"),
         placement: "bottom",
         placeholder: `[
   { $match: { gender: "male" } },
@@ -194,7 +197,7 @@ export class MongoQuery extends MongoQueryTmp {
     return (
       <>
         <Dropdown
-          label={"Commands"}
+          label={trans("query.Commands")}
           placement={"bottom"}
           options={CommandOptions}
           value={this.children.compType.getView()}
@@ -204,7 +207,7 @@ export class MongoQuery extends MongoQueryTmp {
         {this.children.compType.getView() !== "RAW" && (
           <>
             {this.children.collection.propertyView({
-              label: "Collection",
+              label: trans("query.collection"),
               placement: "bottom",
               enableMetaCompletion: true,
             })}
