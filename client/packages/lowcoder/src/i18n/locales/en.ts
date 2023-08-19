@@ -551,6 +551,7 @@ export const en = {
     connectSuccessfully: "Connection successful",
     saveSuccessfully: "Saved",
     database: "Database",
+    authSource: "Authentication DataBase",
     cloudHosting:
       "Cloud-hosted Lowcoder cannot access your local services with 127.0.0.1 or localhost. Try to connect public network data sources or use a reverse proxy fronting your private services.",
     notCloudHosting:

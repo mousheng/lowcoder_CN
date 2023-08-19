@@ -45,6 +45,7 @@ public class MongoDatasourceConfig implements DatasourceConnectionConfig {
 
     private final String database;
     private final String username;
+    private final String authSource;
 
     @JsonView(JsonViews.Internal.class)
     private String password;
@@ -53,11 +54,12 @@ public class MongoDatasourceConfig implements DatasourceConnectionConfig {
     @JsonCreator
     private MongoDatasourceConfig(boolean usingUri, boolean srvMode,
             boolean ssl, String uri, List<Endpoint> endpoints,
-            String host, Integer port, String database, String username, String password,
+            String host, Integer port, String database, String username, String authSource, String password,
             MongoAuthMechanism authMechanism) {
         this.usingUri = usingUri;
         this.srvMode = srvMode;
         this.ssl = ssl;
+        this.authSource = authSource;
         this.uri = uri;
         this.endpoints = endpoints;
         this.host = host;
@@ -98,6 +100,7 @@ public class MongoDatasourceConfig implements DatasourceConnectionConfig {
                 .usingUri(false)
                 .srvMode(updatedMongoConfig.isSrvMode())
                 .ssl(updatedMongoConfig.isSsl())
+                .authSource(updatedMongoConfig.getAuthSource())
                 .authMechanism(updatedMongoConfig.getAuthMechanism())
                 .endpoints(updatedMongoConfig.getEndpoints())
                 .database(updatedMongoConfig.getDatabase())
@@ -115,6 +118,7 @@ public class MongoDatasourceConfig implements DatasourceConnectionConfig {
                 .uri(uri)
                 .srvMode(srvMode)
                 .ssl(ssl)
+                .authSource(authSource)
                 .authMechanism(authMechanism)
                 .endpoints(endpoints)
                 .database(database)
@@ -144,6 +148,10 @@ public class MongoDatasourceConfig implements DatasourceConnectionConfig {
 
     public int getPort() {
         return port == null ? 27017 : port;
+    }
+
+    public String getAuthSource() {
+        return StringUtils.trimToEmpty(authSource);
     }
 
     @JsonIgnore

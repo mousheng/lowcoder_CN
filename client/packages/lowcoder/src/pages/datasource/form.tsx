@@ -139,6 +139,17 @@ export const DatabaseFormInputItem = (props: DatabaseProps) => {
   );
 };
 
+export const AuthDataBaseFormInputItem = (props: DatabaseProps) => {
+  return (
+    <FormInputItem
+      name={"authSource"}
+      label={props.label ?? trans("query.authSource")}
+      placeholder={props.placeholder ?? "admin"}
+      initialValue={props.database}
+    />
+  );
+};
+
 interface SSLProps {
   usingSSl: boolean | undefined;
 }

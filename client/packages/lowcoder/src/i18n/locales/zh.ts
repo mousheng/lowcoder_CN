@@ -539,6 +539,7 @@ query: {
     connectSuccessfully: "连接成功",
     saveSuccessfully: "保存成功",
     database: "数据库",
+    authSource: "验证数据库",
     cloudHosting:
         "云托管的Lowcoder无法访问您的本地服务,如使用127.0.0.1或localhost.请尝试连接公共网络数据源或使用反向代理来访问您的私有服务.",
     notCloudHosting:

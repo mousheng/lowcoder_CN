@@ -5,6 +5,7 @@ import { DatasourceFormProps } from "./datasourceFormRegistry";
 import { useHostCheck } from "./useHostCheck";
 import { trans } from "i18n";
 import {
+  AuthDataBaseFormInputItem,
   DatabaseFormInputItem,
   DatasourceNameFormInputItem,
   encryptedPlaceholder,
@@ -63,6 +64,7 @@ export const MongoDatasourceForm = (props: DatasourceFormProps) => {
             <HostFormInputItem initialValue={datasourceConfig?.host} />
             <PortFormInputItem initialValue={"27017"} port={datasourceConfig?.port} />
             <DatabaseFormInputItem database={datasourceConfig?.database} />
+            <AuthDataBaseFormInputItem database={datasourceConfig?.authSource} />
             <UserNameFormInputItem initialValue={datasourceConfig?.username} />
             <PasswordFormInputItem datasource={datasource} />
             <SSLFormCheckboxItem usingSSl={datasourceConfig?.usingSsl} />

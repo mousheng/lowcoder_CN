@@ -367,6 +367,7 @@ public class MongoPlugin extends Plugin {
 
             String username = mongoDatasourceConfig.getUsername();
             String password = mongoDatasourceConfig.getPassword();
+            String authDatabaseName = mongoDatasourceConfig.getAuthSource();
 
             boolean hasUsername = StringUtils.isNotEmpty(username);
             boolean hasPassword = StringUtils.isNotEmpty(password);
@@ -383,7 +384,7 @@ public class MongoPlugin extends Plugin {
             String host = mongoDatasourceConfig.getHost();
             builder.append(host);
             builder.append(isSrv ? "" : ":" + mongoDatasourceConfig.getPort());
-            builder.append('/').append(mongoDatasourceConfig.getParsedDatabase());
+            builder.append('/').append(mongoDatasourceConfig.getDatabase());
 
             List<String> queryParams = new ArrayList<>();
             if (mongoDatasourceConfig.isSsl()) {
@@ -395,6 +396,9 @@ public class MongoPlugin extends Plugin {
             if (hasUsername && mongoDatasourceConfig.getAuthMechanism() != null) {
                 queryParams.add("authMechanism=" + mongoDatasourceConfig.getAuthMechanism().getValue());
             }
+
+            if (hasUsername || StringUtils.isNotEmpty(authDatabaseName))
+                queryParams.add("authSource=" + (authDatabaseName != "" ? authDatabaseName : "admin"));
 
             builder.append('?');
             for (String param : queryParams) {

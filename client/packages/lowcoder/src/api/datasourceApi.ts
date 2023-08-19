@@ -25,6 +25,7 @@ export interface SQLConfig extends PreparedStatementConfig {
 export interface MongoConfig extends SQLConfig {
   uri: string;
   usingUri: boolean;
+  authSource?: string;
 }
 
 export interface OracleConfig extends SQLConfig {
