@@ -1,4 +1,4 @@
-import { Tabs } from "antd";
+import { Tabs, Badge } from "antd";
 import { JSONObject, JSONValue } from "util/jsonTypes";
 import { CompAction, CompActionTypes, deleteCompAction, wrapChildAction } from "lowcoder-core";
 import { DispatchType, RecordConstructorToView, wrapDispatch } from "lowcoder-core";
@@ -7,7 +7,7 @@ import { stringExposingStateControl } from "comps/controls/codeStateControl";
 import { eventHandlerControl } from "comps/controls/eventHandlerControl";
 import { TabsOptionControl } from "comps/controls/optionsControl";
 import { styleControl } from "comps/controls/styleControl";
-import { TabContainerStyle, TabContainerStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
+import { TabContainerStyle, TabContainerStyleType } from "comps/controls/styleControlConstants";
 import { sameTypeMap, UICompBuilder, withDefault } from "comps/generators";
 import { addMapChildAction } from "comps/generators/sameTypeMap";
 import { NameConfig, NameConfigHidden, withExposingConfigs } from "comps/generators/withExposing";
@@ -33,6 +33,7 @@ import { DisabledContext } from "comps/generators/uiCompBuilder";
 import { EditorContext } from "comps/editorState";
 import { checkIsMobile } from "util/commonUtils";
 import { messageInstance } from "lowcoder-design";
+import { PositionControl } from "@lowcoder-ee/index.sdk";
 
 const EVENT_OPTIONS = [
   {
@@ -41,6 +42,25 @@ const EVENT_OPTIONS = [
     description: trans("tabbedContainer.switchTabDesc"),
   },
 ] as const;
+
+const positionOptions = [
+  {
+    label: trans("tabbedContainer.top"),
+    value: "top"
+  },
+  {
+    label: trans("tabbedContainer.left"),
+    value: "left"
+  },
+  {
+    label: trans("tabbedContainer.bottom"),
+    value: "bottom"
+  },
+  {
+    label: trans("tabbedContainer.right"),
+    value: "right"
+  },
+] as const
 
 const childrenMap = {
   tabs: TabsOptionControl,
@@ -53,6 +73,7 @@ const childrenMap = {
   onEvent: eventHandlerControl(EVENT_OPTIONS),
   disabled: BoolCodeControl,
   style: styleControl(TabContainerStyle),
+  position: withDefault(PositionControl , "top")
 };
 
 type ViewProps = RecordConstructorToView<typeof childrenMap>;
@@ -74,18 +95,17 @@ const getStyle = (style: TabContainerStyleType) => {
       > .ant-tabs-nav {
         background-color: ${style.headerBackground};
 
-        .ant-tabs-tab {
-          div {
-            color: ${style.tabText};
-          }
-
-          &.ant-tabs-tab-active div {
-            color: ${style.accent};
-          }
+      > .ant-tabs-nav-wrap > .ant-tabs-nav-list > .ant-tabs-ink-bar {
+        background-color: ${style.accent};
         }
 
-        .ant-tabs-ink-bar {
-          background-color: ${style.accent};
+        .ant-badge {
+          color: ${style.tabText};
+        }
+
+        .ant-tabs-tab-active {
+          background-color: ${style.activeColor};
+          border-radius: 4px;
         }
 
         ::before {
@@ -105,23 +125,25 @@ const StyledTabs = styled(Tabs)<{ $style: TabContainerStyleType; $isMobile?: boo
     transition-duration: 0ms;
   }
 
+  .ant-tabs-tabpane {
+    height: 100%;
+    padding-left: ${(props) => (props.tabPosition==="left"?"2px!important":"0px!important")};
+    padding-right: ${(props) => (props.tabPosition==="right"?"2px!important":"0px!important")};
+  }
+
   .ant-tabs-content {
     height: 100%;
     // margin-top: -16px;
   }
 
   .ant-tabs-nav {
-    padding: 0 ${(props) => (props.$isMobile ? 16 : 24)}px;
+    padding: 0 ${(props) => (props.$isMobile ? 16 : props.tabPosition==="top" || props.tabPosition==="bottom"? 24 : 0)}px;
     background: white;
     margin: 0px;
   }
 
   .ant-tabs-tab + .ant-tabs-tab {
     margin: 0 0 0 20px;
-  }
-
-  .ant-tabs-nav-operations {
-    margin-right: -24px;
   }
 
   ${(props) => props.$style && getStyle(props.$style)}
@@ -160,16 +182,13 @@ const TabbedContainer = (props: TabbedContainerProps) => {
   const isMobile = checkIsMobile(maxWidth);
   const paddingWidth = isMobile ? 8 : 20;
 
-  // log.debug("TabbedContainer. props: ", props);
-
   const tabItems = visibleTabs.map((tab) => {
-    // log.debug("Tab. tab: ", tab, " containers: ", containers);
     const id = String(tab.id);
     const childDispatch = wrapDispatch(wrapDispatch(dispatch, "containers"), id);
     const containerProps = containers[id].children;
     const hasIcon = tab.icon.props.value;
     const label = (
-      <>
+      <Badge count={tab.count} size="small" offset={[4, -6]}>
         {tab.iconPosition === "left" && hasIcon && (
           <span style={{ marginRight: "4px" }}>{tab.icon}</span>
         )}
@@ -177,7 +196,7 @@ const TabbedContainer = (props: TabbedContainerProps) => {
         {tab.iconPosition === "right" && hasIcon && (
           <span style={{ marginLeft: "4px" }}>{tab.icon}</span>
         )}
-      </>
+      </Badge>
     );
     return {
       label,
@@ -228,6 +247,7 @@ const TabbedContainer = (props: TabbedContainerProps) => {
       $isMobile={isMobile}
       // tabBarGutter={32}
       items={tabItems}
+      tabPosition={props.position ?? "top"}
     >
     </StyledTabs>
     </div>
@@ -250,7 +270,8 @@ export const TabbedContainerBaseComp = (function () {
               title: trans("tabbedContainer.tab"),
               newOptionLabel: "Tab",
             })}
-            {children.selectedTabKey.propertyView({ label: trans("prop.defaultValue") })}
+            {children.selectedTabKey.propertyView({ label: trans("tabbedContainer.defaultKey") })}
+            {children.position.propertyView({ label: trans("tabbedContainer.TabPosition"), radioButton: true })}
             {children.autoHeight.getPropertyView()}
           </Section>
           <Section name={sectionNames.interaction}>

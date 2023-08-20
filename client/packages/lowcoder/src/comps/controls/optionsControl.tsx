@@ -1,5 +1,5 @@
 import { ViewDocIcon } from "assets/icons";
-import { ArrayControl, BoolCodeControl, StringControl } from "comps/controls/codeControl";
+import { ArrayControl, BoolCodeControl, NumberControl, StringControl } from "comps/controls/codeControl";
 import { dropdownControl, LeftRightControl } from "comps/controls/dropdownControl";
 import { IconControl } from "comps/controls/iconControl";
 import { MultiCompBuilder, valueComp, withContext, withDefault } from "comps/generators";
@@ -493,6 +493,7 @@ const TabsOption = new MultiCompBuilder(
     id: valueComp<number>(-1),
     label: StringControl,
     key: StringControl,
+    count: withDefault(NumberControl, 0),
     icon: IconControl,
     iconPosition: withDefault(LeftRightControl, "left"),
     hidden: BoolCodeControl,
@@ -503,6 +504,7 @@ const TabsOption = new MultiCompBuilder(
     <>
       {children.label.propertyView({ label: trans("label") })}
       {children.key.propertyView({ label: trans("value") })}
+      {children.count.propertyView({ label: trans("prop.budgeCount") })}
       {children.icon.propertyView({ label: trans("icon") })}
       {children.iconPosition.propertyView({
         label: trans("tabbedContainer.iconPosition"),

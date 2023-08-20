@@ -533,6 +533,13 @@ export const TabContainerStyle = [
     transformer: contrastText,
   },
   {
+    name: "activeColor",
+    label: trans("style.tabActiveColor"),
+    depTheme: "primarySurface",
+    depType: DEP_TYPE.SELF,
+    transformer: toSelf,
+  },
+  {
     name: "accent",
     label: trans("style.tabAccent"),
     depTheme: "primary",
