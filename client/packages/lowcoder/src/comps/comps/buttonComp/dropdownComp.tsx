@@ -44,7 +44,7 @@ const LeftButtonWrapper = styled.div<{ $buttonStyle: ButtonStyleType }>`
 `;
 
 const RightButtonWrapper = styled.div<{ $buttonStyle: ButtonStyleType }>`
-  // width: 32px;
+  width: 32px;
   ${(props) => `margin: ${props.$buttonStyle.margin};`}
   margin-left: -1px;
   .ant-btn {
@@ -76,7 +76,6 @@ const DropdownTmpComp = (function () {
       .map((option, index) => ({
         title: option.label,
         label: option.label,
-        style: {padding: props.style.padding},
         key: option.label + " - " + index,
         disabled: option.disabled,
         icon: hasIcon && <span>{option.prefixIcon}</span>,
