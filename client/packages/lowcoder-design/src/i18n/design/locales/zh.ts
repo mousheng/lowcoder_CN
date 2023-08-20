@@ -23,6 +23,7 @@ export const zh = {
       validation: "验证",
       layout: "布局",
       style: "样式",
+      badge: "徽标",
     },
     passwordInput: {
         label: "密码:",

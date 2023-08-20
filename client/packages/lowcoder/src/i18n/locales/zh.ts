@@ -181,7 +181,16 @@ prop: {
     showBody: "显示表体",
     showFooter: "显示表尾",
     maskClosable: "点击蒙层关闭",
-    showMask: "显示蒙层"
+    showMask: "显示蒙层",
+    budgeType: "徽标类型",
+    budgeCount: "徽标数",
+    budgeSize: "徽标尺寸",
+    budgeSizeDefault: "默认",
+    budgeSizeSmall: "较小",
+    overflowCount: "封顶数字",
+    budgeTitle: "提示",
+    dot: "点",
+    number: "数字",
 },
 autoHeightProp: {
     auto: "自动",

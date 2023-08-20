@@ -17,13 +17,14 @@ import { CommonNameConfig, NameConfig, withExposingConfigs } from "../../generat
 import { IForm } from "../formComp/formDataConstants";
 import { SimpleNameComp } from "../simpleNameComp";
 import {
+  Badge100,
   Button100,
   ButtonCompWrapper,
   buttonRefMethods,
   ButtonStyleControl,
 } from "./buttonCompConstants";
 import { RefControl } from "comps/controls/refControl";
-
+import { BudgeBasicSection, budgeChildren } from "../budgeComp/budgeConstants";
 const FormLabel = styled(CommonBlueLabel)`
   font-size: 13px;
   margin-right: 4px;
@@ -128,11 +129,19 @@ const ButtonTmpComp = (function () {
     suffixIcon: IconControl,
     style: ButtonStyleControl,
     viewRef: RefControl<HTMLElement>,
+    ...budgeChildren,
   };
   return new UICompBuilder(childrenMap, (props) => (
     <ButtonCompWrapper disabled={props.disabled}>
       <EditorContext.Consumer>
         {(editorState) => (
+        <Badge100
+        count={props.budgeCount.value}
+        size={props.budgeSize}
+        overflowCount={props.overflowCount}
+        dot={props.budgeType==='dot'}
+        title={props.budgeTitle}
+        >
           <Button100
             ref={props.viewRef}
             $buttonStyle={props.style}
@@ -151,6 +160,7 @@ const ButtonTmpComp = (function () {
             }
             {props.suffixIcon && <IconWrapper>{props.suffixIcon}</IconWrapper>}
           </Button100>
+        </Badge100>
         )}
       </EditorContext.Consumer>
     </ButtonCompWrapper>
@@ -171,7 +181,7 @@ const ButtonTmpComp = (function () {
               ]
             : children.form.getPropertyView()}
         </Section>
-
+        <BudgeBasicSection {...children}/>
         <Section name={sectionNames.layout}>
           {children.prefixIcon.propertyView({ label: trans("button.prefixIcon") })}
           {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}

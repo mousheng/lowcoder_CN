@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Badge } from "antd";
 import { styleControl } from "comps/controls/styleControl";
 import { ButtonStyleType, ButtonStyle, widthCalculator } from "comps/controls/styleControlConstants";
 import { migrateOldData } from "comps/generators/simpleGenerators";
@@ -51,12 +51,17 @@ export const Button100 = styled(Button)<{ $buttonStyle?: ButtonStyleType }>`
   justify-content: center;
   vertical-align: -webkit-baseline-middle;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
   span {
-    overflow: hidden;
+    overflow: visible;
     text-overflow: ellipsis;
   }
   gap: 6px;
+`;
+
+export const Badge100 = styled(Badge)`
+  width: 100%;
+  z-index: 1000;
 `;
 
 export const ButtonCompWrapper = styled.div<{ disabled: boolean }>`

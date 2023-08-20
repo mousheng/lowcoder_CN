@@ -103,10 +103,11 @@ const SelectableDiv = styled.div<{
   compType: UICompType;
   isHidden: boolean;
   needResizeDetector: boolean;
+  overflow?: boolean;
 }>`
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: ${(props) => (props.overflow ? "visible" : "hidden")};
 
   ${(props) =>
     `${getLineStyle(
@@ -328,6 +329,8 @@ export const CompSelectionWrapper = (props: {
         compType={props.compType}
         ref={wrapperRef}
         needResizeDetector={needResizeDetector}
+        // 如为按钮则overflow设置可溢出
+        overflow={props.compType==='button'}
       >
         {props.isSelectable && nameConfig.show && (hover || props.isSelected || props.hidden) && (
           <NameDiv
