@@ -244,6 +244,9 @@ export const en = {
       "Use debounce or throttle to control how often the action is triggered. Time unit can be ms (millisecond, default), s (second).",
     notHandledError: "Not handled",
     currentApp: "Current",
+    set: "Set",
+    clear: "Clear",
+    reset: "Reset",
   },
   event: {
     submit: "Submit",
