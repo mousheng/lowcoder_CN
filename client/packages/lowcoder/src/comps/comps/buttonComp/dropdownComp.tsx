@@ -1,4 +1,4 @@
-import { Dropdown, Menu } from "antd";
+import { ConfigProvider, Dropdown, Menu } from "antd";
 import { BoolControl } from "comps/controls/boolControl";
 import { BoolCodeControl, StringControl } from "comps/controls/codeControl";
 import { ButtonStyleType } from "comps/controls/styleControlConstants";
@@ -18,6 +18,7 @@ import {
   ButtonStyleControl,
   getButtonStyle,
 } from "./buttonCompConstants";
+import { IconControl } from "@lowcoder-ee/index.sdk";
 
 const DropdownButton = styled(Dropdown.Button)`
   width: 100%;
@@ -66,7 +67,8 @@ const DropdownTmpComp = (function () {
     options: DropdownOptionControl,
     disabled: BoolCodeControl,
     onEvent: ButtonEventHandlerControl,
-    style: withDefault(ButtonStyleControl, { background: "#FFFFFF" }),
+    style: withDefault(ButtonStyleControl, {border: "#FFFFFF"}),
+    icon: withDefault(IconControl, "/icon:antd/ellipsisoutlined"),
   };
   return new UICompBuilder(childrenMap, (props) => {
     const hasIcon =
@@ -91,37 +93,47 @@ const DropdownTmpComp = (function () {
 
     return (
       <ButtonCompWrapper disabled={props.disabled}>
-        {console.log("props,", props)}
         {props.onlyMenu ? (
-          <Dropdown
-            disabled={props.disabled}
-            dropdownRender={() => menu}
-          >
+          <Dropdown disabled={props.disabled} dropdownRender={() => menu}>
             <Button100 $buttonStyle={props.style} disabled={props.disabled}>
               {props.text || " " /* Avoid button disappearing */}
             </Button100>
           </Dropdown>
         ) : (
-          <DropdownButton
-            disabled={props.disabled}
-            dropdownRender={() => menu}
-            onClick={() => props.onEvent("click")}
-            buttonsRender={([left, right]) => [
-              <LeftButtonWrapper $buttonStyle={props.style}>
-                {React.cloneElement(left as React.ReactElement<any, string>, {
-                  disabled: props.disabled,
-                })}
-              </LeftButtonWrapper>,
-              <RightButtonWrapper $buttonStyle={props.style}>
-                {React.cloneElement(right as React.ReactElement<any, string>, {
-                  disabled: props.disabled,
-                })}
-              </RightButtonWrapper>,
-            ]}
+          <ConfigProvider
+            theme={{
+              token: {
+                colorBgBase: props.style.background,
+                colorText: props.style.text,
+                colorBorder: props.style.border,
+              },
+            }}
           >
-            {/* Avoid button disappearing */}
-            {!props.text || props.text?.length === 0 ? " " : props.text}
-          </DropdownButton>
+            <DropdownButton
+              icon={props.icon}
+              disabled={props.disabled}
+              dropdownRender={() => menu}
+              onClick={() => props.onEvent("click")}
+              buttonsRender={([left, right]) => [
+                <LeftButtonWrapper $buttonStyle={props.style}>
+                  {React.cloneElement(left as React.ReactElement<any, string>, {
+                    disabled: props.disabled,
+                  })}
+                </LeftButtonWrapper>,
+                <RightButtonWrapper $buttonStyle={props.style}>
+                  {React.cloneElement(
+                    right as React.ReactElement<any, string>,
+                    {
+                      disabled: props.disabled,
+                    }
+                  )}
+                </RightButtonWrapper>,
+              ]}
+            >
+              {/* Avoid button disappearing */}
+              {!props.text || props.text?.length === 0 ? " " : props.text}
+            </DropdownButton>
+          </ConfigProvider>
         )}
       </ButtonCompWrapper>
     );
@@ -131,6 +143,7 @@ const DropdownTmpComp = (function () {
         <Section name={sectionNames.basic}>
           {children.options.propertyView({})}
           {children.text.propertyView({ label: trans("text") })}
+          {children.icon.propertyView({ label: trans("icon") })}
           {children.onlyMenu.propertyView({ label: trans("dropdown.onlyMenu") })}
         </Section>
 
