@@ -1854,6 +1854,7 @@ export const en = {
   },
   appSetting: {
     title: "App settings",
+    pageSetting: "Page settings",
     450: "450px (Phone)",
     800: "800px (Tablet)",
     1440: "1440px (Laptop)",
@@ -1872,6 +1873,10 @@ export const en = {
     themeCreate: "Create theme",
     HeaderSetting: "Header setting",
     HeaderSettingDes: "When previewing you can also manually set the URL parameter template=true to hide the Header",
+    PCPadding: "PC container padding",
+    PCPaddingDes: "Setting the padding of the PC page container",
+    MobilePadding: "Mobile container padding",
+    MobilePaddingDes: "Setting the padding of the Mobile page container",
     showHeader: "Show",
     hiddenHeader: "hidden",
   },

@@ -35,9 +35,6 @@ export const CanvasContainer = styled.div<{ maxWidth: number }>`
   height: 100%;
   contain: paint;
 `;
-
-const DEFAULT_CONTAINER_PADDING = [20, 20] as [number, number];
-const DEFAULT_MOBILE_PADDING = [4, 4] as [number, number];
 const DEFAULT_EXTRA_HEIGHT = "25vh";
 
 const gridLayoutCanvasProps = {
@@ -77,7 +74,9 @@ export function CanvasView(props: ContainerBaseProps) {
   const maxWidthFromHook = useMaxWidth();
   const maxWidth = editorState.getAppSettings().maxWidth ?? maxWidthFromHook;
   const isMobile = checkIsMobile(maxWidth);
-  const defaultContainerPadding = isMobile ? DEFAULT_MOBILE_PADDING : DEFAULT_CONTAINER_PADDING;
+  const pcpadding = parseInt(useContext(EditorContext).getAppSettings().pcPadding)
+  const mobilePadding = parseInt(useContext(EditorContext).getAppSettings().mobilePadding)
+  const defaultContainerPadding = isMobile ? [mobilePadding, mobilePadding] as [number, number] : [pcpadding, pcpadding] as [number, number];
 
   const externalState = useContext(ExternalEditorContext);
   const {

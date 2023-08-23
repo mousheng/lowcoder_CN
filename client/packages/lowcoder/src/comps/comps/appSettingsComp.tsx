@@ -26,7 +26,16 @@ const ItemSpan = styled.span`
   max-width: 218px;
 `;
 const HiddenItem = styled.div`
-  margin: 10px 0px;
+  margin: 0px 0px 10px;
+`;
+
+const PaddingItem = styled.div`
+  margin: 0px 0px 10px;
+  div {
+    width: 100%;
+    display: block;
+    margin: 0px 0px 5px;
+  }
 `;
 
 const getTagStyle = (theme: ThemeDetail) => {
@@ -82,6 +91,18 @@ const OPTIONS = [
   { label: trans("appSetting.autofill"), value: "Infinity" },
   { label: trans("appSetting.userDefined"), value: USER_DEFINE },
 ];
+
+const PaddingOptions = [
+  { label: "20px", value: '20' },
+  { label: "15px", value: '15' },
+  { label: "10px", value: '10' },
+  { label: "5px", value: '5' },
+  { label: "4px", value: '4' },
+  { label: "3px", value: '3' },
+  { label: "2px", value: '2' },
+  { label: "1px", value: '1' },
+  { label: "0px", value: '0' },
+]
 
 const Title = styled.div`
   font-weight: 500;
@@ -154,6 +175,8 @@ const childrenMap = {
   hiddenHeader: dropdownControl(headerOptions,"showHeader"),
   themeId: valueComp<string>(DEFAULT_THEMEID),
   customShortcuts: CustomShortcutsComp,
+  pcPadding: dropdownControl(PaddingOptions, '20' ),
+  mobilePadding: dropdownControl(PaddingOptions.slice(3), '5'),
 };
 type ChildrenInstance = RecordConstructorToComp<typeof childrenMap> & {
   themeList: ThemeType[];
@@ -161,7 +184,7 @@ type ChildrenInstance = RecordConstructorToComp<typeof childrenMap> & {
 };
 
 function AppSettingsModal(props: ChildrenInstance) {
-  const { themeList, defaultTheme, themeId, maxWidth, hiddenHeader } = props;
+  const { themeList, defaultTheme, themeId, maxWidth, hiddenHeader, pcPadding, mobilePadding } = props;
   const THEME_OPTIONS = themeList?.map((theme) => ({
     label: theme.name,
     value: theme.id + "",
@@ -195,14 +218,7 @@ function AppSettingsModal(props: ChildrenInstance) {
   };
   return (
     <SettingsStyled>
-      <Title>{TITLE}</Title>
-      <HiddenItem>
-        {hiddenHeader.propertyView({
-          label: trans("appSetting.HeaderSetting"),
-          radioButton: true,
-          tooltip: trans("appSetting.HeaderSettingDes"),
-        })}
-      </HiddenItem>
+      <Title>{trans("appSetting.pageSetting")}</Title>
       <DivStyled>
         {maxWidth.propertyView({
           dropdownLabel: trans("appSetting.canvasMaxWidth"),
@@ -215,6 +231,26 @@ function AppSettingsModal(props: ChildrenInstance) {
           dropdownStyle: {marginBottom: "12px"},
           inputStyle: {marginBottom: "12px"}
         })}
+        </DivStyled>
+      <HiddenItem>
+        {hiddenHeader.propertyView({
+          label: trans("appSetting.HeaderSetting"),
+          radioButton: true,
+          tooltip: trans("appSetting.HeaderSettingDes"),
+        })}
+      </HiddenItem>
+      <PaddingItem>
+        {pcPadding.propertyView({
+          label: trans("appSetting.PCPadding"),
+          tooltip: trans("appSetting.PCPaddingDes"),
+        })}
+        {mobilePadding.propertyView({
+          label: trans("appSetting.MobilePadding"),
+          tooltip: trans("appSetting.MobilePaddingDes"),
+        })}
+      </PaddingItem>
+      <Title>{TITLE}</Title>
+      <DivStyled>
         <Dropdown
           defaultValue={
             themeWithDefault === ""

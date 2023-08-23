@@ -1830,6 +1830,7 @@ aggregation: {
 },
 appSetting: {
     title: "应用设置",
+    pageSetting: "页面设置",
     450: "450px(手机)",
     800: "800px(平板)",
     1440: "1440px(笔记本电脑)",
@@ -1848,6 +1849,10 @@ appSetting: {
     themeCreate: "创建主题",
     HeaderSetting: "顶部菜单",
     HeaderSettingDes: "预览时你也可以手动设置url参数template=true来隐藏标题",
+    PCPadding: "PC页面内边距",
+    PCPaddingDes: "设置pc端页面容器的内边距",
+    MobilePadding: "移动页面内边距",
+    MobilePaddingDes: "设置移动端页面容器的内边距",
     showHeader: "显示",
     hiddenHeader: "隐藏",
 },
