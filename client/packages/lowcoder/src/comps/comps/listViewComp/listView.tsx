@@ -23,7 +23,7 @@ const ListViewWrapper = styled.div<{ $style: any; $paddingWidth: string }>`
   height: 100%;
   border: 1px solid ${(props) => props.$style.border};
   border-radius: ${(props) => props.$style.radius};
-  padding: 3px ${(props) => props.$paddingWidth};
+  padding: ${(props) => props.$paddingWidth};
   background-color: ${(props) => props.$style.background};
 `;
 
@@ -52,7 +52,7 @@ const ContainerInListView = (props: ContainerBaseProps) => {
     <InnerGrid
       {...props}
       emptyRows={15}
-      containerPadding={[4, 4]}
+      containerPadding={[0, 0]}
       hintPlaceholder={HintPlaceHolder}
     />
   );
@@ -205,11 +205,11 @@ export function ListView(props: Props) {
 
   const maxWidth = editorState.getAppSettings().maxWidth;
   const isMobile = checkIsMobile(maxWidth);
-  const paddingWidth = isMobile ? "4px" : "16px";
+  const paddingWidth = isMobile ? "4px" : "0px";
   // log.debug("renders: ", renders);
   return (
     <BackgroundColorContext.Provider value={style.background}>
-      <ListViewWrapper $style={style} $paddingWidth={paddingWidth}>
+      <ListViewWrapper $style={style} $paddingWidth={style.containerbodypadding?? "3px 0px"}>
         <BodyWrapper ref={ref} $autoHeight={autoHeight}>
           <ReactResizeDetector
             onResize={(width?: number, height?: number) => {

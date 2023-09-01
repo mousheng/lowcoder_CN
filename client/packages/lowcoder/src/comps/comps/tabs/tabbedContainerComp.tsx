@@ -210,7 +210,8 @@ const TabbedContainer = (props: TabbedContainerProps) => {
             positionParams={containerProps.positionParams.getView()}
             dispatch={childDispatch}
             autoHeight={props.autoHeight}
-            containerPadding={[paddingWidth, 20]}
+            // containerPadding={[paddingWidth, 20]}
+            style={{padding: style.containerbodypadding}}
           />
         </BackgroundColorContext.Provider>
       )

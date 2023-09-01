@@ -548,6 +548,7 @@ export const TabContainerStyle = [
   },
   MARGIN,	
   PADDING,
+  CONTAINERBODYPADDING
 ] as const;
 
 export const ModalStyle = getBgBorderRadiusByBg();
@@ -786,7 +787,7 @@ export const IconStyle = [getStaticBackground("#00000000"),
   getStaticBorder("#00000000"), FILL, RADIUS, MARGIN, PADDING] as const;
 
 
-export const ListViewStyle = BG_STATIC_BORDER_RADIUS;
+export const ListViewStyle = [...BG_STATIC_BORDER_RADIUS, CONTAINERBODYPADDING];
 
 export const JsonSchemaFormStyle = BG_STATIC_BORDER_RADIUS;
 

@@ -352,7 +352,7 @@ style: {
     marginBottom: "下外边距",
     containerheaderpadding: "上内边距",
     containerfooterpadding: "下内边距",
-    containerbodypadding: "内边距",
+    containerbodypadding: "容器内边距",
 },
 export: {
     hiddenDesc: "如果为true,则隐藏组件",

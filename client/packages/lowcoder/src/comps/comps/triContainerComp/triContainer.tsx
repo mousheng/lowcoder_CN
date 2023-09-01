@@ -78,7 +78,7 @@ export function TriContainer(props: TriContainerProps) {
   const editorState = useContext(EditorContext);
   const maxWidth = editorState.getAppSettings().maxWidth;
   const isMobile = checkIsMobile(maxWidth);
-  const paddingWidth = isMobile ? 7 : 19;
+  const paddingWidth = isMobile ? 0 : 0;
 
   return (
     <div style={{padding: style.margin, height: '100%'}}>
@@ -108,7 +108,7 @@ export function TriContainer(props: TriContainerProps) {
             emptyRows={14}
             minHeight={showHeader ? "143px" : "142px"}
             containerPadding={
-              (showHeader && showFooter) || showHeader ? [paddingWidth, 11.5] : [paddingWidth, 11]
+              (showHeader && showFooter) || showHeader ? [paddingWidth, 3.5] : [paddingWidth, 3]
             }
             hintPlaceholder={props.hintPlaceholder ?? HintPlaceHolder}
             backgroundColor={style?.background}
