@@ -802,6 +802,10 @@ export const QRCodeStyle = [
   PADDING,
 ] as const;
 
+export const amapStyle = [
+  MARGIN,	
+] as const;
+
 export const TimeLineStyle = [
   getBackground(),
   {

@@ -315,6 +315,26 @@ export const deleteEvent: EventConfigType = {
   value: "delete",
   description: trans("event.deleteDesc"),
 };
+export const addedMarkerEvent: EventConfigType = {
+  label: trans("event.addedMarker"),
+  value: "addedMarker",
+  description: trans("event.addedMarkerDesc"),
+};
+export const delteMarkerEvent: EventConfigType = {
+  label: trans("event.delteMarker"),
+  value: "delteMarker",
+  description: trans("event.delteMarkerDesc"),
+};
+export const clickMarkerEvent: EventConfigType = {
+  label: trans("event.clickMarker"),
+  value: "clickMarker",
+  description: trans("event.delteMarkerDesc"),
+};
+export const amapMoveEndEvent: EventConfigType = {
+  label: trans("event.amapMoveEnd"),
+  value: "amapMoveEnd",
+  description: trans("event.amapMoveEndDesc"),
+};
 
 export const InputEventHandlerControl = eventHandlerControl([
   changeEvent,

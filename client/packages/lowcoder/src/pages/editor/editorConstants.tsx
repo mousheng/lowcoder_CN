@@ -45,6 +45,7 @@ import {
   MonthPickerIcon,
   QuarterPickerIcon,
   YearPickerIcon,
+  AmapIcon,
 } from "lowcoder-design";
 
 export const CompStateIcon: {
@@ -119,4 +120,5 @@ export const CompStateIcon: {
   monthPicker: <MonthPickerIcon />,
   quarterPicker: <QuarterPickerIcon />,
   yearPicker: <YearPickerIcon />,
+  amap: <AmapIcon />,
 };

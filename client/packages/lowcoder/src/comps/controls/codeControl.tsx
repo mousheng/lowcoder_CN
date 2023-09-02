@@ -390,6 +390,12 @@ export const jsonObjectControl = (defaultValue?: JSONObject) =>
     ? JSONObjectControl
     : withDefault(JSONObjectControl, JSON.stringify(defaultValue, null, 2));
 
+export const jsonArrayControl = (defaultValue?: JSONObject[]) =>
+  defaultValue === undefined
+    ? JSONObjectControl
+    : withDefault(JSONObjectArrayControl, JSON.stringify(defaultValue, null, 2));
+
+
 export const jsonValueControl = (defaultValue?: JSONValue) =>
   defaultValue === undefined
     ? JSONValueControl

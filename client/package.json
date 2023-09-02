@@ -73,6 +73,7 @@
     "eslint-plugin-only-ascii@^0.0.0": "patch:eslint-plugin-only-ascii@npm%3A0.0.0#./.yarn/patches/eslint-plugin-only-ascii-npm-0.0.0-29e3417685.patch"
   },
   "dependencies": {
+    "@amap/amap-react": "^0.1.5",
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "antd-mobile": "^5.28.0",
     "chalk": "4",

@@ -12,6 +12,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@amap/amap-react@npm:^0.1.5":
+  version: 0.1.5
+  resolution: "@amap/amap-react@npm:0.1.5"
+  peerDependencies:
+    react: ">=16.0.0"
+    react-dom: ">=16.0.0"
+  checksum: 21eda6105b8c930d87894abe2bc2bac32c086829f17b6fecca1d8ea97b5978ee1965d984879fbe102a479c58161aed8167052c8d82d94eb4fb553976d2dd6d59
+  languageName: node
+  linkType: hard
+
 "@ampproject/remapping@npm:^2.2.0":
   version: 2.2.1
   resolution: "@ampproject/remapping@npm:2.2.1"
@@ -17199,6 +17209,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "taco-fe@workspace:."
   dependencies:
+    "@amap/amap-react": ^0.1.5
     "@babel/preset-env": ^7.20.2
     "@babel/preset-typescript": ^7.18.6
     "@lottiefiles/react-lottie-player": ^3.5.3

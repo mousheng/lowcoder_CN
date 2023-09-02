@@ -108,6 +108,7 @@ import {
   MonthPickerIcon,
   QuarterPickerIcon,
   YearPickerIcon,
+  AmapIcon,
 } from "lowcoder-design";
 
 import { defaultFormData, FormComp } from "./comps/formComp/formComp";
@@ -138,6 +139,7 @@ import { MentionComp } from "./comps/textInputComp/mentionComp";
 import { AutoCompleteComp } from "./comps/autoCompleteComp/autoCompleteComp";
 import { CommentComp } from "./comps/commentComp/commentComp";
 import { IconComp } from "./comps/iconComp";
+import { AmapComp } from "./comps/amap/amapComp"
 
 //Added by Aqib Mirza
 import { JsonLottieComp } from "./comps/jsonComp/jsonLottieComp";
@@ -972,6 +974,19 @@ const uiCompMap: Registry = {
     layoutInfo: {
       w: 6,
       h: 5,
+    },
+  },
+  amap: {
+    name: trans("uiComp.amapCompName"),
+    enName: "amap",
+    description: trans("uiComp.amapCompDesc"),
+    categories: ["dataInputDate"],
+    icon: AmapIcon,
+    keywords: trans("uiComp.amapCompKeywords"),
+    comp: AmapComp,
+    layoutInfo: {
+      w: 15,
+      h: 50,
     },
   },
 };

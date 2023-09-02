@@ -297,3 +297,4 @@ export { ReactComponent as WeekPickerIcon } from "icons/icon-weekPicker.svg";
 export { ReactComponent as MonthPickerIcon } from "icons/icon-monthPicker.svg";
 export { ReactComponent as QuarterPickerIcon } from "icons/icon-quarterPicker.svg";
 export { ReactComponent as YearPickerIcon } from "icons/icon-yearPicker.svg";
+export { ReactComponent as AmapIcon } from "icons/icon-amap-comp.svg";
