@@ -41,7 +41,7 @@ import {
 } from "antd";
 import { RefControl } from "comps/controls/refControl";
 import {
-  booleanExposingStateControl,
+  booleanExposingStateControl, jsonExposingStateControl, jsonObjectExposingStateControl,
 } from "comps/controls/codeStateControl";
 
 import { getMomentLocale } from "i18n/momentLocale";
@@ -77,6 +77,7 @@ const childrenMap = {
   autocompleteIconColor: dropdownControl(autocompleteIconColor, "blue"),
   componentSize: dropdownControl(componentSize, "small"),
   valueInItems: booleanExposingStateControl("valueInItems"),
+  selectObject: jsonObjectExposingStateControl("selectObject", {}),
 };
 
 const getValidate = (value: any): "" | "warning" | "error" | undefined => {
@@ -178,6 +179,7 @@ let AutoCompleteCompBase = (function () {
                 setsearchtext(option[valueOrLabel]);
                 props.valueInItems.onChange(true);
                 props.value.onChange(option[valueOrLabel]);
+                props.selectObject.onChange(option);
                 props.onEvent("submit");
               }}
               filterOption={(inputValue: string, option) => {
@@ -381,6 +383,7 @@ AutoCompleteCompBase = class extends AutoCompleteCompBase {
 
 export const AutoCompleteComp = withExposingConfigs(AutoCompleteCompBase, [
   new NameConfig("value", trans("export.inputValueDesc")),
+  new NameConfig("selectObject", trans("export.selectObjectDesc")),
   new NameConfig("valueInItems", trans("autoComplete.valueInItems")),
   NameConfigPlaceHolder,
   NameConfigRequired,

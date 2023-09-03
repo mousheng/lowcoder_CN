@@ -371,6 +371,7 @@ export const en = {
     disabledDesc: "If true, the component will be greyed out and non-interactive",
     visibleDesc: "If true, the component is visible",
     inputValueDesc: "Current value of the input",
+    selectObjectDesc: "selected object value",
     invalidDesc: "Whether the value is invalid",
     placeholderDesc: "Text to display when no value is set",
     requiredDesc: "If true, a valid value must be provided",

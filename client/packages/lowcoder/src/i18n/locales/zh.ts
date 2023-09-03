@@ -367,6 +367,7 @@ export: {
     disabledDesc: "如果为true,则将组件置为灰色且不可交互",
     visibleDesc: "如果为true,则组件可见",
     inputValueDesc: "输入框的当前值",
+    selectObjectDesc: "选择的内容值",
     invalidDesc: "值是否无效",
     placeholderDesc: "未设置值时显示的文本",
     requiredDesc: "如果为true,则必须提供有效值",
