@@ -2257,19 +2257,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/core@npm:^1.2.6":
-  version: 1.2.6
-  resolution: "@floating-ui/core@npm:1.2.6"
-  checksum: e4aa96c435277f1720d4bc939e17a79b1e1eebd589c20b622d3c646a5273590ff889b8c6e126f7be61873cf8c4d7db7d418895986ea19b8b0d0530de32504c3a
+"@floating-ui/core@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "@floating-ui/core@npm:1.4.1"
+  dependencies:
+    "@floating-ui/utils": ^0.1.1
+  checksum: be4ab864fe17eeba5e205bd554c264b9a4895a57c573661bbf638357fa3108677fed7ba3269ec15b4da90e29274c9b626d5a15414e8d1fe691e210d02a03695c
   languageName: node
   linkType: hard
 
-"@floating-ui/dom@npm:^1.2.6":
-  version: 1.2.8
-  resolution: "@floating-ui/dom@npm:1.2.8"
+"@floating-ui/dom@npm:^1.4.2":
+  version: 1.5.1
+  resolution: "@floating-ui/dom@npm:1.5.1"
   dependencies:
-    "@floating-ui/core": ^1.2.6
-  checksum: 02894774475a17baa498c86cd25d2825598e7de0734b8c08f7b8797b19c0bec13c4c726e529feb8bf26c6dee219c153ac1f90d8530a93534f765b3c04cfa3b4a
+    "@floating-ui/core": ^1.4.1
+    "@floating-ui/utils": ^0.1.1
+  checksum: ddb509030978536ba7b321cf8c764ae9d0142a3b1fefb7e6bc050a5de7e825e12131fa5089009edabf7c125fb274886da211a5220fe17a71d875a7a96eb1386c
+  languageName: node
+  linkType: hard
+
+"@floating-ui/utils@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@floating-ui/utils@npm:0.1.1"
+  checksum: 548acdda7902f45b0afbe34e2e7f4cbff0696b95bad8c039f80936519de24ef2ec20e79902825b7815294b37f51a7c52ee86288b0688869a57cc229a164d86b4
   languageName: node
   linkType: hard
 
@@ -2966,6 +2976,15 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.18.0
   checksum: 2fd3f3d9c404f679461fa52372b71b1131ecad6b2a34d6b5be07b04475ed22428ffc7dac599a28734b349f7b1c5b714cf879e9c005a89430016c6d83899ff1e9
+  languageName: node
+  linkType: hard
+
+"@rc-component/mini-decimal@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@rc-component/mini-decimal@npm:1.1.0"
+  dependencies:
+    "@babel/runtime": ^7.18.0
+  checksum: 5333e131942479cc2422ea8854c6943dff9df959e6a593bd3905bd761cd5eeb99891a701b27186099cb615959c831549822e8aca741edd34f4e6d7499cd502a7
   languageName: node
   linkType: hard
 
@@ -4891,12 +4910,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"antd-mobile@npm:^5.28.0":
-  version: 5.30.0
-  resolution: "antd-mobile@npm:5.30.0"
+"antd-mobile@npm:^5.32.1":
+  version: 5.32.1
+  resolution: "antd-mobile@npm:5.32.1"
   dependencies:
-    "@floating-ui/dom": ^1.2.6
-    "@rc-component/mini-decimal": ^1.0.1
+    "@floating-ui/dom": ^1.4.2
+    "@rc-component/mini-decimal": ^1.1.0
     "@react-spring/web": ~9.6.1
     "@use-gesture/react": 10.2.20
     ahooks: ^3.7.6
@@ -4914,7 +4933,7 @@ __metadata:
     use-sync-external-store: ^1.2.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 76337ab6311e18d9d67bdc1decfa76acaf82098eca3c1d0549e9981fc7f62930f0e10181cd725f11f6e2db2955f9c32d3c3e24dd2acbb6f0f11feaaf5ccd836c
+  checksum: eb398346b4c9226442981f51312f9aa7314547b7c4a37e5984c5fb6296fcf007f0ebcd6c1cccc9a50669a408fc4c334989ccde6fa3bb3da1ba6b879ef3f00d4d
   languageName: node
   linkType: hard
 
@@ -17234,7 +17253,7 @@ __metadata:
     "@types/ua-parser-js": ^0.7.36
     "@welldone-software/why-did-you-render": ^6.2.3
     add: ^2.0.6
-    antd-mobile: ^5.28.0
+    antd-mobile: ^5.32.1
     babel-jest: ^29.3.0
     babel-preset-react-app: ^10.0.1
     chalk: 4
