@@ -134,8 +134,7 @@ const TimelineComp = (
     ),
     children: (
       <>
-        <Button
-          type="link"
+        <div
           onClick={(e) => {
             e.preventDefault();
             dispatch(changeChildAction("clickedObject", value, false));
@@ -148,7 +147,7 @@ const TimelineComp = (
           }}
         >
           <b>{value?.title}</b>
-        </Button>
+        </div>
         <p style={{ color: value?.subTitleColor || style?.subTitleColor }}>
           {value?.subTitle}
         </p>
