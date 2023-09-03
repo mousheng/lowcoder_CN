@@ -17,7 +17,7 @@ import { hiddenPropertyView } from "comps/utils/propertyUtils";
 // 右侧属性开关
 
 import { BoolControl } from "comps/controls/boolControl";
-import { numberExposingStateControl, } from "comps/controls/codeStateControl"; //文本并暴露值
+import { jsonExposingStateControl, numberExposingStateControl, } from "comps/controls/codeStateControl"; //文本并暴露值
 import { dropdownControl } from "comps/controls/dropdownControl";
 import { styleControl } from "comps/controls/styleControl"; //样式输入框
 import {
@@ -52,6 +52,8 @@ import { convertTimeLineData } from "./timelineUtils";
 import { Timeline } from "antd";
 import { ANTDICON } from "./antIcon";
 import styled from "styled-components";
+import { debounce } from "lodash";
+
 
 const Wrapper = styled.div<{ $style: TimeLineType, mode: string, offset: number }>`
   padding-top: 15px!important;
@@ -95,7 +97,7 @@ const modeOptions = [
 ] as const;
 
 const childrenMap = {
-  value: jsonControl(convertTimeLineData, timelineDate),
+  value: jsonExposingStateControl("value", convertTimeLineData, timelineDate),
   mode: dropdownControl(modeOptions, "alternate"),
   reverse: BoolControl,
   pending: withDefault(StringControl, trans("timeLine.defaultPending")),
@@ -121,7 +123,7 @@ const TimelineComp = (
       if (divRef.current) divRef.current.scrollTop = scrollTo.value;
     }, 20);
   }, [scrollTo.value])
-  const timelineItems = value.map((value: timelineNode, index: number) => ({
+  const timelineItems = value.value.map((value: timelineNode, index: number) => ({
     key: index,
     color: value?.color,
     dot: value?.dot && ANTDICON.hasOwnProperty(value?.dot.toLowerCase())
@@ -163,6 +165,14 @@ const TimelineComp = (
       mode={mode}
       offset={props.offset}
       ref={divRef}
+      onScrollCapture={
+        debounce(() => {
+          if (divRef.current)
+            props.scrollTo.onChange(divRef.current.scrollTop)
+        }, 300, {
+          'trailing': true
+        })
+      }
     >
       <Timeline
         mode={props?.mode || "left"}
