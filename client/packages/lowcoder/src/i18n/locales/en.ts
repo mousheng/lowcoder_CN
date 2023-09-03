@@ -2582,6 +2582,9 @@ export const en = {
     valueDesc: "data of timeline",
     clickedObjectDesc: "clicked item data",
     clickedIndexDesc: "clicked item index",
+    offset: "offset(%)",
+    offsetDes: "In left and right mode, set the timeline offset",
+    scrollTo: "Control scrollbar scrolling",
   },
   mention:{
     mentionList: "mention list",

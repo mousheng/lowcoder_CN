@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "antd";
 // 渲染组件到编辑器
 import {
   changeChildAction,
-  DispatchType,
   CompAction,
   RecordConstructorToView,
 } from "lowcoder-core";
@@ -18,19 +17,11 @@ import { hiddenPropertyView } from "comps/utils/propertyUtils";
 // 右侧属性开关
 
 import { BoolControl } from "comps/controls/boolControl";
-import { stringExposingStateControl } from "comps/controls/codeStateControl"; //文本并暴露值
+import { numberExposingStateControl, } from "comps/controls/codeStateControl"; //文本并暴露值
 import { dropdownControl } from "comps/controls/dropdownControl";
 import { styleControl } from "comps/controls/styleControl"; //样式输入框
-import { alignControl } from "comps/controls/alignControl";
-import { AutoHeightControl } from "comps/controls/autoHeightControl";
-import { jsonValueExposingStateControl } from "comps/controls/codeStateControl";
 import {
-  ArrayStringControl,
-  BoolCodeControl,
-  CodeControlJSONType,
   jsonControl,
-  jsonObjectControl,
-  jsonValueControl,
   NumberControl,
   StringControl,
 } from "comps/controls/codeControl";
@@ -45,7 +36,7 @@ import {
   TimeLineStyle,
   heightCalculator,
   widthCalculator,
-  marginCalculator,
+  TimeLineType,
 } from "comps/controls/styleControlConstants";
 // 初始化暴露值
 import { stateComp, valueComp } from "comps/generators/simpleGenerators";
@@ -60,6 +51,38 @@ import { timelineDate, timelineNode, TimelineDataTooltip } from "./timelineConst
 import { convertTimeLineData } from "./timelineUtils";
 import { Timeline } from "antd";
 import { ANTDICON } from "./antIcon";
+import styled from "styled-components";
+
+const Wrapper = styled.div<{ $style: TimeLineType, mode: string, offset: number }>`
+  padding-top: 15px!important;
+  margin: ${(props) => props.$style.margin};
+  padding: ${(props) => props.$style.padding};
+  width: ${(props) => widthCalculator(props.$style.margin)};
+  height: ${(props) => heightCalculator(props.$style.margin)};
+  background-color: ${(props) => props.$style.background};
+  border: 1px solid ${(props) => props.$style.border};
+  overflow: auto;
+  overflow-x: hidden;
+  border-radius: ${(props) => props.$style.radius};
+  .ant-timeline.ant-timeline-label .ant-timeline-item-label {
+    width: calc(${(props) => props.mode === "alternate" ? 50 : (50 - props.offset)}% - 12px);
+  }
+  .ant-timeline.ant-timeline-alternate .ant-timeline-item-tail, .ant-timeline.ant-timeline-right .ant-timeline-item-tail, .ant-timeline.ant-timeline-label .ant-timeline-item-tail, .ant-timeline.ant-timeline-alternate .ant-timeline-item-head, .ant-timeline.ant-timeline-right .ant-timeline-item-head, .ant-timeline.ant-timeline-label .ant-timeline-item-head, .ant-timeline.ant-timeline-alternate .ant-timeline-item-head-custom, .ant-timeline.ant-timeline-right .ant-timeline-item-head-custom, .ant-timeline.ant-timeline-label .ant-timeline-item-head-custom {
+    inset-inline-start: ${(props) => props.mode === "alternate" ? 50 : (props.mode === "left" ? (50 - props.offset) + "%" : (50 + props.offset) + "%")};
+  }
+  .ant-timeline.ant-timeline-alternate .ant-timeline-item-left .ant-timeline-item-content, .ant-timeline.ant-timeline-right .ant-timeline-item-left .ant-timeline-item-content, .ant-timeline.ant-timeline-label .ant-timeline-item-left .ant-timeline-item-content {
+    inset-inline-start: calc(${(props) => props.mode === "alternate" ? 50 : (50 - props.offset)}% - 4px);
+  }
+  .ant-timeline.ant-timeline-label .ant-timeline-item-right .ant-timeline-item-label {
+    inset-inline-start: calc(${(props) => props.mode === "alternate" ? 50 : (50 + props.offset)}% + 12px);
+    width: calc(50% - 12px);
+    text-align: start;
+  }
+  .ant-timeline.ant-timeline-alternate .ant-timeline-item-right .ant-timeline-item-content, .ant-timeline.ant-timeline-right .ant-timeline-item-right .ant-timeline-item-content, .ant-timeline.ant-timeline-label .ant-timeline-item-right .ant-timeline-item-content {
+    width: calc(${(props) => props.mode === "alternate" ? 50 : (50 + props.offset)}% - 12px);
+    text-align: end;
+  }
+`
 
 const EventOptions = [
   clickEvent,
@@ -80,6 +103,8 @@ const childrenMap = {
   style: styleControl(TimeLineStyle),
   clickedObject: valueComp<timelineNode>({ title: "" }),
   clickedIndex: valueComp<number>(0),
+  offset: withDefault(NumberControl, 0),
+  scrollTo: numberExposingStateControl("scrollTo", 99999),
 };
 
 const TimelineComp = (
@@ -87,7 +112,15 @@ const TimelineComp = (
     dispatch: (action: CompAction) => void;
   }
 ) => {
-  const { value, dispatch, style, mode, reverse, onEvent } = props;
+  const divRef = useRef<HTMLDivElement>(null);
+  const { value, dispatch, style, mode, reverse, onEvent, scrollTo } = props;
+  const [scroll, setScroll] = useState(0)
+  useEffect(() => {
+    setScroll(scrollTo.value)
+    setTimeout(() => {
+      if (divRef.current) divRef.current.scrollTop = scrollTo.value;
+    }, 20);
+  }, [scrollTo.value])
   const timelineItems = value.map((value: timelineNode, index: number) => ({
     key: index,
     color: value?.color,
@@ -124,20 +157,13 @@ const TimelineComp = (
   }
   ))
 
-  // TODO:parse px string
+
+
   return (
-    <div
-      style={{
-        margin: style.margin ?? '3px',
-        padding: style.padding ?? '3px',
-        width: widthCalculator(style.margin ?? '3px'),
-        height: heightCalculator(style.margin ?? '3px'),
-        background: style.background,
-        overflow: "auto",
-        overflowX: "hidden",
-        borderRadius: style.radius,
-        //height: '100%'
-      }}
+    <Wrapper $style={props.style}
+      mode={mode}
+      offset={props.offset}
+      ref={divRef}
     >
       <Timeline
         mode={props?.mode || "left"}
@@ -151,7 +177,7 @@ const TimelineComp = (
         }
         items={timelineItems}
       />
-    </div>
+    </Wrapper>
   );
 };
 
@@ -170,6 +196,10 @@ let TimeLineBasicComp = (function () {
           {children.mode.propertyView({
             label: trans("timeLine.mode"),
             tooltip: trans("timeLine.modeTooltip"),
+          })}
+          {children.mode.getView() !== "alternate" && children.offset.propertyView({
+            label: trans("timeLine.offset"),
+            tooltip: trans("timeLine.offsetDes"),
           })}
           {children.reverse.propertyView({
             label: trans("timeLine.reverse"),
@@ -200,5 +230,6 @@ export const TimeLineComp = withExposingConfigs(TimeLineBasicComp, [
   new NameConfig("value", trans("timeLine.valueDesc")),
   new NameConfig("clickedObject", trans("timeLine.clickedObjectDesc")),
   new NameConfig("clickedIndex", trans("timeLine.clickedIndexDesc")),
+  new NameConfig("scrollTo", trans("timeLine.scrollTo")),
   NameConfigHidden,
 ]);

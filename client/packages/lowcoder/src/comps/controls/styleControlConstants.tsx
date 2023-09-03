@@ -808,6 +808,7 @@ export const amapStyle = [
 
 export const TimeLineStyle = [
   getBackground(),
+  getStaticBorder(),
   {
     name: "titleColor",
     label: trans("timeLine.titleColor"),
@@ -941,6 +942,7 @@ export type InputLikeStyleType = StyleConfigType<typeof InputLikeStyle>;
 export type ButtonStyleType = StyleConfigType<typeof ButtonStyle>;
 export type ToggleButtonStyleType = StyleConfigType<typeof ToggleButtonStyle>;
 export type TextStyleType = StyleConfigType<typeof TextStyle>;
+export type TimeLineType = StyleConfigType<typeof TimeLineStyle>;
 export type ContainerStyleType = StyleConfigType<typeof ContainerStyle>;
 export type SliderStyleType = StyleConfigType<typeof SliderStyle>;
 export type RatingStyleType = StyleConfigType<typeof RatingStyle>;

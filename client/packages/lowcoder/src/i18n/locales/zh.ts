@@ -2556,7 +2556,10 @@ timeLine: {
     valueDesc: "时间线的数据",
     clickedObjectDesc: "点击的项目数据",
     clickedIndexDesc: "点击的项目序号",
-    },
+    offset: "偏移",
+    offsetDes: "在左右模式中，设置时间线偏移量",
+    scrollTo: "控制滚动条滚动",
+},
     jsonLottie: {
         lottieJson: "JSON数据",
         speed: "播放速度",
