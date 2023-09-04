@@ -151,7 +151,7 @@ const TimelineComp = (
           <b>{value?.title}</b>
         </div>
         <p style={{ color: value?.subTitleColor || style?.subTitleColor }}>
-          {value?.subTitle}
+          {value?.subTitle && value.subTitle.split('\n').map((item, index) => (<>{index !== 0 ? <br /> : ''}{item}</>))}
         </p>
       </>
     )
