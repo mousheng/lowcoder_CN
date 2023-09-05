@@ -74,10 +74,11 @@ const Wrapper = styled.div<{ $style: TimeLineType, mode: string, offset: number 
   }
   .ant-timeline.ant-timeline-alternate .ant-timeline-item-left .ant-timeline-item-content, .ant-timeline.ant-timeline-right .ant-timeline-item-left .ant-timeline-item-content, .ant-timeline.ant-timeline-label .ant-timeline-item-left .ant-timeline-item-content {
     inset-inline-start: calc(${(props) => props.mode === "alternate" ? 50 : (50 - props.offset)}% - 4px);
+    width: calc(${(props) => props.mode === "alternate" ? 50 : (50 + props.offset)}% - 12px);
   }
   .ant-timeline.ant-timeline-label .ant-timeline-item-right .ant-timeline-item-label {
     inset-inline-start: calc(${(props) => props.mode === "alternate" ? 50 : (50 + props.offset)}% + 12px);
-    width: calc(50% - 12px);
+    width: calc(${(props) => props.mode === "alternate" ? 50 : (50 - props.offset)}% - 12px);
     text-align: start;
   }
   .ant-timeline.ant-timeline-alternate .ant-timeline-item-right .ant-timeline-item-content, .ant-timeline.ant-timeline-right .ant-timeline-item-right .ant-timeline-item-content, .ant-timeline.ant-timeline-label .ant-timeline-item-right .ant-timeline-item-content {
