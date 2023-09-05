@@ -115,15 +115,22 @@ const TimelineComp = (
   }
 ) => {
   const divRef = useRef<HTMLDivElement>(null);
-  const { value, dispatch, style, mode, reverse, onEvent, scrollTo } = props;
+  const { dispatch, style, mode, reverse, onEvent, scrollTo } = props;
   const [scroll, setScroll] = useState(0)
+  const [value, setValue] = useState(props.value.value)
+  const [scrollHeight, setScrollHeight] = useState(0)
+
   useEffect(() => {
-    setScroll(scrollTo.value)
+    setValue(props.value.value);
     setTimeout(() => {
-      if (divRef.current) divRef.current.scrollTop = scrollTo.value;
+      setScroll(Math.min(scrollTo.value, scrollHeight))
+      if (divRef.current) {
+        setScrollHeight(divRef.current.scrollHeight)
+        divRef.current.scrollTop = Math.min(scrollTo.value, divRef.current.scrollHeight);
+      }
     }, 20);
-  }, [scrollTo.value])
-  const timelineItems = value.value.map((value: timelineNode, index: number) => ({
+  }, [props.value.value, scrollTo.value])
+  const timelineItems = value.map((value: timelineNode, index: number) => ({
     key: index,
     color: value?.color,
     dot: value?.dot && ANTDICON.hasOwnProperty(value?.dot.toLowerCase())
