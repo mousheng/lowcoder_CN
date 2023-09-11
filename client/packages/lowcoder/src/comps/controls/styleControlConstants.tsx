@@ -559,7 +559,6 @@ export const CascaderStyle = [
   TEXT,
   ACCENT,
   MARGIN,	
-  PADDING,
 ] as const;
 
 function checkAndUncheck() {
