@@ -1065,6 +1065,8 @@ export const en = {
     valueDesc: "Currently selected value",
     selectedIndexDesc: "The index of the currently selected value, or -1 if no value is selected",
     selectedLabelDesc: "The label of the currently selected value",
+    selectedObjectDesc: "Currently selected Object",
+
   },
   file: {
     typeErrorMsg: "Must be a number with a valid file size unit, or a unitless number of bytes.",

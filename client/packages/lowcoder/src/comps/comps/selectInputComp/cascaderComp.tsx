@@ -8,6 +8,7 @@ import { CommonNameConfig, NameConfig, withExposingConfigs } from "../../generat
 import { CascaderChildren, CascaderPropertyView, defaultDataSource } from "./cascaderContants";
 import { getStyle } from "./selectCompConstants";
 import { refMethods } from "comps/generators/withMethodExposing";
+import { JSONObject } from "@lowcoder-ee/index.sdk";
 
 const CascaderStyle = styled(Cascader)<{ $style: CascaderStyleType }>`
   width: 100%;
@@ -33,8 +34,9 @@ let CascaderBasicComp = (function () {
           $style={props.style}
           onFocus={() => props.onEvent("focus")}
           onBlur={() => props.onEvent("blur")}
-          onChange={(value: (string | number)[]) => {
+          onChange={(value: (string | number)[], selectOptions) => {
             props.value.onChange(value as string[]);
+            props.selectedObject.onChange(selectOptions as JSONObject[])
             props.onEvent("change");
           }}
         />
@@ -52,6 +54,7 @@ let CascaderBasicComp = (function () {
 
 const CascaderComp = withExposingConfigs(CascaderBasicComp, [
   new NameConfig("value", trans("selectInput.valueDesc")),
+  new NameConfig("selectedObject", trans("selectInput.selectedObjectDesc")),
   ...CommonNameConfig,
 ]);
 

@@ -1047,6 +1047,7 @@ selectInput: {
     valueDesc: "当前选择的值",
     selectedIndexDesc: "当前选择的值的索引,如果未选择任何值则为-1",
     selectedLabelDesc: "当前选择的值的标签",
+    selectedObjectDesc: "当前选择的数组对象",
 },  
 file: {
     typeErrorMsg: "必须是一个带有有效文件大小单位的数字,或者是一个无单位的字节数.",

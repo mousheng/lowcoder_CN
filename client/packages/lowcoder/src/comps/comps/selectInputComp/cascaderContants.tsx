@@ -2,7 +2,7 @@ import { SelectEventHandlerControl } from "../../controls/eventHandlerControl";
 import { Section, sectionNames } from "lowcoder-design";
 import { RecordConstructorToComp } from "lowcoder-core";
 import { BoolCodeControl, JSONObjectArrayControl, StringControl } from "comps/controls/codeControl";
-import { arrayStringExposingStateControl } from "comps/controls/codeStateControl";
+import { arrayObjectExposingStateControl, arrayStringExposingStateControl, jsonExposingStateControl, jsonObjectExposingStateControl } from "comps/controls/codeStateControl";
 import { BoolControl } from "comps/controls/boolControl";
 import { LabelControl } from "comps/controls/labelControl";
 import { styleControl } from "comps/controls/styleControl";
@@ -25,6 +25,7 @@ export const defaultDataSource = JSON.stringify(i18nObjs.cascader, null, " ");
 
 export const CascaderChildren = {
   value: arrayStringExposingStateControl("value", i18nObjs.cascaderDefult),
+  selectedObject: arrayObjectExposingStateControl("selectedObject", []),
   label: LabelControl,
   placeholder: StringControl,
   disabled: BoolCodeControl,
