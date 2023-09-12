@@ -1362,6 +1362,8 @@ export const en = {
     titleDes: "title of marker",
     clickedMarkerDes: "clicked marker value",
     clickedPositionDes: "clicked position",
+    showControlBar: "Show control bar",
+    showZoomButton: "Show zoom button",
   },
   jsonExplorer: {
     indent: "Indent",

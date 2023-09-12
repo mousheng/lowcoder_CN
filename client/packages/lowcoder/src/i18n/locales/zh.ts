@@ -1339,6 +1339,8 @@ amap: {
     positionDes: "坐标经纬度",
     titleDes: "标记的标题",
     clickedMarkerDes: "点击的标记",
+    showControlBar: "显示控制按钮",
+    showZoomButton: "显示缩放按钮",
 },
 jsonExplorer: {
     indent: "缩进",

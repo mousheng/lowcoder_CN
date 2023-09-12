@@ -34,6 +34,8 @@ const childrenMap = {
   zoom: numberExposingStateControl("zoom", 5),
   allowAddMark: BoolControl,
   allowDelMark: BoolControl,
+  showControlBar: BoolControl,
+  showZoomButton: BoolControl,
   defaultTitle: jsonValueControl({ title: "default" }),
   markers: arrayObjectExposingStateControl("markers", [{ "position": [119.306399, 26.127066], "title": "福州" }, { "position": [120.185305, 30.307673], "title": "杭州" }, { "position": [115.878665, 28.739952], "title": "南昌" }]
   ),
@@ -104,9 +106,9 @@ const AmapView = (props: RecordConstructorToView<typeof childrenMap>) => {
         }
         }
       >
-        <ControlBar position={{ top: '10px', left: '10px' }} />
+        {props.showControlBar && <ControlBar position={{ top: '10px', left: '10px' }} />}
         <Scale ></Scale>
-        <Toolbar position={{ top: '110px', left: '40px' }} />
+        {props.showZoomButton && <Toolbar position={{ top: '110px', left: '40px' }} />}
         {
           (marks as JSONObject[]).map((m, i) => (
             <Marker
@@ -161,6 +163,14 @@ let AmapBasicComp = (function () {
           {children.allowDelMark.propertyView({
             label: trans("amap.allowDelMark"),
             tooltip: trans("amap.allowDelMarkDes")
+          })}
+        </Section>
+        <Section name={sectionNames.advanced}>
+          {children.showControlBar.propertyView({
+            label: trans("amap.showControlBar"),
+          })}
+          {children.showZoomButton.propertyView({
+            label: trans("amap.showZoomButton"),
           })}
         </Section>
         <Section name={sectionNames.layout}>
