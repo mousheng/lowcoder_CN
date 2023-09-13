@@ -132,7 +132,6 @@ const TimelineComp = (
     }, 20);
   }, [props.value.value, scrollTo.value])
   const timelineItems = value.map((value: timelineNode, index: number) => ({
-    key: index,
     color: value?.color,
     dot: value?.dot && ANTDICON.hasOwnProperty(value?.dot.toLowerCase())
       ? ANTDICON[value?.dot.toLowerCase() as keyof typeof ANTDICON]
@@ -165,8 +164,6 @@ const TimelineComp = (
     )
   }
   ))
-
-
 
   return (
     <Wrapper $style={props.style}
