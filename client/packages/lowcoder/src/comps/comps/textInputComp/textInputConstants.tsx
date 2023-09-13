@@ -170,15 +170,16 @@ export const useTextInputProps = (props: RecordConstructorToView<typeof textInpu
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     props.value.onChange(e.target.value);
-    propsRef.current.onEvent("change");
-    setValidateState(
-      textInputValidate({
-        ...propsRef.current,
-        value: {
-          value: e.target.value,
-        },
-      })
-    );
+    propsRef.current.onEvent("change").then(() => {
+      setValidateState(
+        textInputValidate({
+          ...propsRef.current,
+          value: {
+            value: e.target.value,
+          },
+        })
+      );
+    })
   };
   return [
     {
@@ -271,10 +272,10 @@ export const inputRefMethods = [
 ];
 
 export function checkMentionListData(data: any) {
-  if(data === "") return {}
-  for(const key in data) {
-    check(data[key], ["array"], key,(node)=>{
-      check(node, ["string"], );
+  if (data === "") return {}
+  for (const key in data) {
+    check(data[key], ["array"], key, (node) => {
+      check(node, ["string"],);
       return node
     })
   }
