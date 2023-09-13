@@ -182,6 +182,7 @@ prop: {
     showFooter: "显示表尾",
     maskClosable: "点击蒙层关闭",
     showMask: "显示蒙层",
+    showCloseButton: "显示关闭按钮",
     budgeType: "徽标类型",
     budgeCount: "徽标数",
     budgeSize: "徽标尺寸",
@@ -1586,6 +1587,8 @@ modalComp: {
     modalHeightTooltip: "数字,例如:222",
     modalWidth: "对话框宽度",
     modalWidthTooltip: "数字或百分比,例如:520,60%",
+    defaultStartHeight: "默认弹出高度",
+    defaultStartHeightTooltip: "对话框默认弹出高度，可设置20%或200px",
 },
 listView: {
     noOfRows: "行数",

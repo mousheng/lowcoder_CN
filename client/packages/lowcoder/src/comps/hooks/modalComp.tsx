@@ -28,7 +28,7 @@ const EventOptions = [
 
 const DEFAULT_WIDTH = "60%";
 const DEFAULT_HEIGHT = 222;
-const DEFAULT_PADDING = 16;
+const DEFAULT_PADDING = 0;
 
 const getStyle = (style: ModalStyleType) => {
   return css`
@@ -36,11 +36,15 @@ const getStyle = (style: ModalStyleType) => {
       border-radius: ${style.radius};
       border: 1px solid ${style.border};
       overflow: hidden;
+      padding: ${style.padding};
       background-color: ${style.background};
 
       .ant-modal-body > .react-resizable > .react-grid-layout {
         background-color: ${style.background};
       }
+      .ant-modal-close {
+        top: 10px;
+    }
     }
   `;
 };
@@ -67,9 +71,11 @@ let TmpModalComp = (function () {
       width: StringControl,
       height: StringControl,
       autoHeight: AutoHeightControl,
-      style: styleControl(ModalStyle),
+      style: withDefault( styleControl(ModalStyle),{padding: '20px 30px'} ),
       maskClosable: withDefault(BoolControl, true),
       showMask: withDefault(BoolControl, true),
+      showCloseButton: BoolControl.DEFAULT_TRUE,
+      defaultStartHeight: withDefault( StringControl, '20%'),
     },
     (props, dispatch) => {
       const userViewMode = useUserViewMode();
@@ -113,7 +119,9 @@ let TmpModalComp = (function () {
               focusTriggerAfterClose={false}
               getContainer={() => document.querySelector(`#${CanvasContainerID}`) || document.body}
               footer={null}
+              closeIcon={props.showCloseButton}
               bodyStyle={bodyStyle}
+              style={{top: props.defaultStartHeight}}
               width={width}
               onCancel={(e) => {
                 props.visible.onChange(false);
@@ -130,7 +138,7 @@ let TmpModalComp = (function () {
                 items={gridItemCompToGridItems(items)}
                 autoHeight={props.autoHeight}
                 minHeight={DEFAULT_HEIGHT - DEFAULT_PADDING * 2 + "px"}
-                containerPadding={[DEFAULT_PADDING, DEFAULT_PADDING]}
+                containerPadding={[0, 0]}
                 hintPlaceholder={HintPlaceHolder}
               />
             </Modal>
@@ -154,11 +162,19 @@ let TmpModalComp = (function () {
             tooltip: trans("modalComp.modalWidthTooltip"),
             placeholder: DEFAULT_WIDTH,
           })}
+          {children.defaultStartHeight.propertyView({
+            label: trans("modalComp.defaultStartHeight"),
+            tooltip: trans("modalComp.defaultStartHeightTooltip"),
+            placeholder: '20% / 200px',
+          })}
           {children.maskClosable.propertyView({
             label: trans("prop.maskClosable"),
           })}
           {children.showMask.propertyView({
             label: trans("prop.showMask"),
+          })}
+          {children.showCloseButton.propertyView({
+            label: trans("prop.showCloseButton"),
           })}
         </Section>
         <Section name={sectionNames.interaction}>{children.onEvent.getPropertyView()}</Section>

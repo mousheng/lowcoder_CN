@@ -325,7 +325,7 @@ function getStaticBgBorderRadiusByBg(background: string, platform?: SupportPlatf
 }
 
 function getBgBorderRadiusByBg(background: keyof ThemeDetail = "primarySurface") {
-  return [getBackground(background), BORDER, RADIUS] as const;
+  return [getBackground(background), BORDER, RADIUS, PADDING] as const;
 }
 
 function getBackground(depTheme: keyof ThemeDetail = "primarySurface") {

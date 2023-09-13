@@ -183,6 +183,7 @@ export const en = {
     showFooter: "Show footer",
     maskClosable: "Click the mask to close",
     showMask: "Show mask",
+    showCloseButton: "Show close button",
     budgeType: "Budge type",
     budgeCount: "Budge count",
     budgeSize: "Budge size",
@@ -1611,6 +1612,8 @@ export const en = {
     modalHeightTooltip: "Number, example: 222",
     modalWidth: "Modal width",
     modalWidthTooltip: "Number or percentage, example: 520, 60%",
+    defaultStartHeight: "pop-up height",
+    defaultStartHeightTooltip: "Default pop-up height for modal，Can be set to 20% or 200px",
   },
   listView: {
     noOfRows: "Row count",
