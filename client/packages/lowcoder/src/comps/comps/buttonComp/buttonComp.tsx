@@ -186,6 +186,7 @@ const ButtonTmpComp = (function () {
           {children.prefixIcon.propertyView({ label: trans("button.prefixIcon") })}
           {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
           {hiddenPropertyView(children)}
+          {disabledPropertyView(children)}
         </Section>
 
         <Section name={sectionNames.style}>{children.style.getPropertyView()}</Section>
