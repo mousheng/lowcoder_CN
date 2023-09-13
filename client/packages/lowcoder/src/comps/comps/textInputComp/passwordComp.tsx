@@ -37,6 +37,7 @@ import { trans } from "i18n";
 import { IconControl } from "comps/controls/iconControl";
 import { hasIcon } from "comps/utils";
 import { RefControl } from "comps/controls/refControl";
+import { RegexControl } from "@lowcoder-ee/index.sdk";
 
 const PasswordStyle = styled(Input.Password)<{
   $style: InputLikeStyleType;
@@ -50,6 +51,7 @@ const PasswordTmpComp = (function () {
     viewRef: RefControl<InputRef>,
     label: withDefault(LabelControl, { text: trans("password.label") }),
     validationType: dropdownControl(TextInputValidationOptions, "Regex"),
+    regex: withDefault( RegexControl,'.*'),
     visibilityToggle: BoolControl.DEFAULT_TRUE,
     prefixIcon: IconControl,
     style: styleControl(InputLikeStyle),

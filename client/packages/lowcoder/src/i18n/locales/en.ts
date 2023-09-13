@@ -413,6 +413,8 @@ export const en = {
   validationDesc: {
     email: "Please enter a valid email address",
     url: "Please enter a valid URL",
+    phone: "Please enter an 11 digit phone number",
+    account: "Starting with a letter, allowing 5-16 characters, and allowing alphanumeric underscores",
     regex: "Please enter the content that matches the regex",
     maxLength:
       "Excessive number of characters, current length {length}, maximum length {maxLength}",

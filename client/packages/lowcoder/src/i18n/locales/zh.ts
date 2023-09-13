@@ -408,6 +408,8 @@ export: {
 },
 validationDesc: {
     email: "请输入有效的电子邮件地址",
+    phone: "请输入11位的手机号码",
+    account: "字母开头，允许5-16个字母数字或下划线",
     url: "请输入有效的URL链接",
     regex: "请输入与正则表达式匹配的内容",
     maxLength: "字符数过多,当前长度为{length},最大长度为{maxLength}",

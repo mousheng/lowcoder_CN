@@ -74,6 +74,8 @@ export const COLOR_PALETTE = [
 export const PHONE_NUMBER_PATTERN = /^1\d{10}$/;
 export const EMAIL_PATTERN = /^[\w-+.]+@([\w-]+\.)+[\w-]{2,}$/;
 export const URL_PATTERN = /^(https?:\/\/)?([\w-])+\.{1}([a-zA-Z]{2,63})([/\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)$/; // prettier-ignore
+export const PHONE_PATTERN = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
+export const ACCOUNT_PATTERN = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/
 
 export const checkOtpValid = (value: string): boolean => {
   return /^\d{6}$/.test(value);

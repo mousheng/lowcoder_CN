@@ -9,11 +9,11 @@ import {
 } from "comps/controls/codeControl";
 import { stringExposingStateControl } from "comps/controls/codeStateControl";
 import { LabelControl } from "comps/controls/labelControl";
-import { InputLikeStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
+import { InputLikeStyleType } from "comps/controls/styleControlConstants";
 import { Section, sectionNames, ValueFromOption } from "lowcoder-design";
 import _ from "lodash";
 import { css } from "styled-components";
-import { EMAIL_PATTERN, URL_PATTERN } from "util/stringUtils";
+import { ACCOUNT_PATTERN, EMAIL_PATTERN, PHONE_PATTERN, URL_PATTERN } from "util/stringUtils";
 import { MultiBaseComp, RecordConstructorToComp, RecordConstructorToView } from "lowcoder-core";
 import { dropdownControl } from "../../controls/dropdownControl";
 import { InputEventHandlerControl } from "../../controls/eventHandlerControl";
@@ -48,25 +48,37 @@ import { EvalParamType } from "comps/controls/actionSelector/executeCompTypes";
 
 export const TextInputValidationOptions = [
   {
-    label: "Text",
+    label: "文本",
     value: "Text",
     extra: /.*/,
     help: "",
   },
   {
-    label: "Email",
+    label: "手机号码",
+    value: "Phone",
+    extra: PHONE_PATTERN,
+    help: trans("validationDesc.phone"),
+  },
+  {
+    label: "账号",
+    value: "account",
+    extra: ACCOUNT_PATTERN,
+    help: trans("validationDesc.account"),
+  },
+  {
+    label: "邮箱",
     value: "Email",
     extra: EMAIL_PATTERN,
     help: trans("validationDesc.email"),
   },
   {
-    label: "URL",
+    label: "网址",
     value: "URL",
     extra: URL_PATTERN,
     help: trans("validationDesc.url"),
   },
   {
-    label: "Regex",
+    label: "正则表达式",
     value: "Regex",
     extra: undefined,
     help: trans("validationDesc.regex"),
@@ -221,7 +233,7 @@ export const TextInputValidationSection = (children: TextInputComp) => (
 export function getStyle(style: InputLikeStyleType) {
   return css`
     border-radius: ${style.radius};
-    padding: ${style.padding};	
+    padding: ${style.padding};
     // still use antd style when disabled
     &:not(.ant-input-disabled, .ant-input-affix-wrapper-disabled),
     input {
