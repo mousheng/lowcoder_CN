@@ -4,6 +4,7 @@ import _ from "lodash";
 import React, { ReactNode } from "react";
 import { CompAction } from "lowcoder-core";
 import { Comp, CompParams, MultiBaseComp, wrapDispatch } from "lowcoder-core";
+import { ChildrenToComp, ExposeMethodCompConstructor, ExposingConfig, MethodConfigsType } from "@lowcoder-ee/index.sdk";
 
 type ViewFnType<ViewReturn, ChildrenType> = (
   childrenType: ChildrenType,
@@ -87,7 +88,8 @@ export class MultiCompBuilder<ViewReturn, ChildrenCompMap extends Record<string,
   private childrenMap: ToConstructor<ChildrenCompMap>;
   private viewFn: ViewFnTypeForComp<ViewReturn, ChildrenCompMap>;
   private propertyViewFn?: PropertyViewFnTypeForComp<ChildrenCompMap>;
-
+  private stateConfigs: ExposingConfig<ChildrenToComp<ChildrenCompMap>>[] = [];
+  private methodConfigs: MethodConfigsType<ExposeMethodCompConstructor<any>> = [];
   /**
    * If viewFn is not placed in the constructor, the type of ViewReturn cannot be inferred
    */
@@ -101,6 +103,18 @@ export class MultiCompBuilder<ViewReturn, ChildrenCompMap extends Record<string,
 
   setPropertyViewFn(propertyViewFn: PropertyViewFnTypeForComp<ChildrenCompMap>) {
     this.propertyViewFn = propertyViewFn;
+    return this;
+  }
+
+  setExposeStateConfigs(configs: ExposingConfig<ChildrenToComp<ChildrenCompMap>>[]) {
+    this.stateConfigs = configs;
+    return this;
+  }
+
+  setExposeMethodConfigs(
+    configs: MethodConfigsType<ExposeMethodCompConstructor<MultiBaseComp<ChildrenCompMap>>>
+  ) {
+    this.methodConfigs = configs;
     return this;
   }
 

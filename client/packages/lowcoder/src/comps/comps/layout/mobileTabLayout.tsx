@@ -5,7 +5,7 @@ import { manualOptionsControl } from "comps/controls/optionsControl";
 import { BoolCodeControl, StringControl } from "comps/controls/codeControl";
 import { IconControl } from "comps/controls/iconControl";
 import styled from "styled-components";
-import React, { Suspense, useContext, useState } from "react";
+import React, { Suspense, useContext, useEffect, useState } from "react";
 import { registerLayoutMap } from "comps/comps/uiComp";
 import { AppSelectComp } from "comps/comps/layout/appSelectComp";
 import { NameAndExposingInfo } from "comps/utils/exposingTypes";
@@ -17,6 +17,7 @@ import { Layers } from "constants/Layers";
 import { ExternalEditorContext } from "util/context/ExternalEditorContext";
 import { Skeleton } from "antd";
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
+import { numberExposingStateControl } from "@lowcoder-ee/index.sdk";
 
 const TabBar = React.lazy(() => import("antd-mobile/es/components/tab-bar"));
 const TabBarItem = React.lazy(() =>
@@ -131,6 +132,7 @@ let MobileTabLayoutTmp = (function () {
         { label: trans("optionsControl.optionI", { i: 3 }), icon: "/icon:solid/3" },
       ],
     }),
+    selectedKey: numberExposingStateControl('selectedKey', 0),
   };
   return new MultiCompBuilder(childrenMap, (props) => {
     return null;
@@ -138,7 +140,12 @@ let MobileTabLayoutTmp = (function () {
     .setPropertyViewFn((children) => {
       return (
         <>
-          <Section name={trans("aggregation.tabBar")}>{children.tabs.propertyView({})}</Section>
+          <Section name={trans("aggregation.tabBar")}>
+            {children.tabs.propertyView({})}
+            {children.selectedKey.propertyView({
+              label: trans("aggregation.selectedKey")
+            })}
+            </Section>
         </>
       );
     })
@@ -153,6 +160,9 @@ MobileTabLayoutTmp = withViewFn(MobileTabLayoutTmp, (comp) => {
       ConstructorToComp<typeof TabOptionComp>
     >
   ).filter((tab) => !tab.children.hidden.getView());
+  useEffect(()=>{
+    setTabIndex(comp.children.selectedKey.getView().value)
+  },[comp.children.selectedKey])
   const currentTab = tabViews[tabIndex];
   const appView = (currentTab &&
     currentTab.children.app.getAppId() &&
@@ -162,7 +172,7 @@ MobileTabLayoutTmp = withViewFn(MobileTabLayoutTmp, (comp) => {
       style={{ height: "100%", backgroundColor: "white" }}
     />
   );
-
+  
   const tabBarView = (
     <TabBarView
       tabs={tabViews.map((tab, index) => ({

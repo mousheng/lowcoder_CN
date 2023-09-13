@@ -1863,6 +1863,7 @@ aggregation: {
     hashParam: "URL链接哈希参数",
     tabBar: "选项卡栏",
     emptyTabTooltip: "在右侧窗格上配置此页面",
+    selectedKey: "当前选中的序号",
 },
 appSetting: {
     title: "应用设置",
