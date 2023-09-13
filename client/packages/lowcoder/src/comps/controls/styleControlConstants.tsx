@@ -434,7 +434,6 @@ export const InputLikeStyle = [
   ...getStaticBgBorderRadiusByBg(SURFACE_COLOR),
   TEXT,
   MARGIN,	
-  PADDING,
   ...ACCENT_VALIDATE,
 ] as const;
 
@@ -492,7 +491,6 @@ const multiSelectCommon = [
   ...getStaticBgBorderRadiusByBg(SURFACE_COLOR, "pc"),
   TEXT,
   MARGIN,	
-  PADDING,
   {
     name: "tags",
     label: trans("style.tags"),
@@ -701,7 +699,7 @@ export const TableStyle = [
   },
 ] as const;
 
-export const FileStyle = [...getStaticBgBorderRadiusByBg(SURFACE_COLOR), TEXT, ACCENT, MARGIN, PADDING] as const;
+export const FileStyle = [...getStaticBgBorderRadiusByBg(SURFACE_COLOR), TEXT, ACCENT, MARGIN] as const;
 
 export const FileViewerStyle = [
   getStaticBackground("#FFFFFF"),
@@ -718,7 +716,6 @@ export const DateTimeStyle = [
   ...getStaticBgBorderRadiusByBg(SURFACE_COLOR),
   TEXT,
   MARGIN,	
-  PADDING,
   ...ACCENT_VALIDATE,
 ] as const;
 

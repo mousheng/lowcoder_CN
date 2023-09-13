@@ -135,7 +135,6 @@ const getStyle = (style: FileStyleType) => {
     .ant-btn {
       border-radius: ${style.radius};
       margin: ${style.margin};	
-      padding: ${style.padding};	
       width: ${widthCalculator(style.margin)};	
       height: ${heightCalculator(style.margin)};
     }

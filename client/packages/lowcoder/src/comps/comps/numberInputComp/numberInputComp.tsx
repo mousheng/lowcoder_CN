@@ -58,9 +58,6 @@ const getStyle = (style: InputLikeStyleType) => {
       color: ${style.text};
       background-color: ${style.background};
       border-color: ${style.border};
-      //margin: ${style.margin};	
-      padding: 0;	
-      width: ${widthCalculator(style.margin)};
       &.ant-input-number-focused {
         border-color: ${style.accent};
       }
@@ -76,11 +73,6 @@ const getStyle = (style: InputLikeStyleType) => {
       .ant-input-number {	
         margin: 0;	
       }	
-      .ant-input-number input {	
-        margin: 0;	
-        padding: ${style.padding};	
-        height: ${heightCalculator(style.margin)};	
-      }
 
       .ant-input-number-handler-wrap {
         background-color: ${style.background};

@@ -151,9 +151,6 @@ const Select = styled(AntdSelect)<{ $style: SelectStyleType & MultiSelectStyleTy
 
 const DropdownStyled = styled.div<{ $style: MultiSelectStyleType }>`
   ${(props) => props.$style && getDropdownStyle(props.$style)}
-  .ant-select-item-option-content {
-    ${(props) => `padding: ${props.$style.padding}`};	
-  }
   .option-label img {
     min-width: 14px;
     margin-right: 0;

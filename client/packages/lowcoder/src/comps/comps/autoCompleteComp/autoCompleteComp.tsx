@@ -64,7 +64,7 @@ const childrenMap = {
   ...textInputChildren,
   viewRef: RefControl<InputRef>,
   allowClear: BoolControl.DEFAULT_TRUE,
-  style: withDefault( styleControl(InputLikeStyle), {padding: "0px"}),
+  style: withDefault( styleControl(InputLikeStyle), {}),
   prefixIcon: IconControl,
   suffixIcon: IconControl,
   items: jsonControl(convertAutoCompleteData, autoCompleteDate),
@@ -160,7 +160,6 @@ let AutoCompleteCompBase = (function () {
               style={{
                 width: "100%",
                 height: "100%",
-                padding: props.style.padding,
               }}
               options={items}
               onChange={(value: string, option) => {
