@@ -980,7 +980,7 @@ const uiCompMap: Registry = {
     name: trans("uiComp.amapCompName"),
     enName: "amap",
     description: trans("uiComp.amapCompDesc"),
-    categories: ["dataInputDate"],
+    categories: ["dataDisplay"],
     icon: AmapIcon,
     keywords: trans("uiComp.amapCompKeywords"),
     comp: AmapComp,
