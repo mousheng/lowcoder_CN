@@ -51,8 +51,8 @@ export const defaultTheme: ThemeDetail = {
   canvas: "#F5F5F6",
   primarySurface: "#FFFFFF",
   borderRadius: "4px",
-  margin: "3px",	
-  padding: "3px",
+  margin: "0px",	
+  padding: "0px",
   gridColumns: "24",
 };
 
