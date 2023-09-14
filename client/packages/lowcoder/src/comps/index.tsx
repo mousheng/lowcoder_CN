@@ -1002,8 +1002,8 @@ const uiCompMap: Registry = {
     keywords: trans("uiComp.avatarCompKeywords"),
     comp: AvatarComp,
     layoutInfo: {
-      w: 1,
-      h: 5,
+      w: 2,
+      h: 8,
     },
   },
   descriptions: {
