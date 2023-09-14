@@ -61,6 +61,12 @@ export const EditorContainerWithViewMode = styled.div`
       border-radius: 9999px;
       background-color: rgba(139, 143, 163, 0.2);
       min-height: 30px;
+      background: hsl(0deg 0% 70%);
+      border-radius: 3px;
+    }
+      *::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
     }
   }
 
