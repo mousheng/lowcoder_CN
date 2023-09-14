@@ -47,6 +47,7 @@ import {
   YearPickerIcon,
   AmapIcon,
   AvatarIcon,
+  DescriptionsIcon,
 } from "lowcoder-design";
 
 export const CompStateIcon: {
@@ -123,4 +124,5 @@ export const CompStateIcon: {
   yearPicker: <YearPickerIcon />,
   amap: <AmapIcon />,
   avatar: <AvatarIcon />,
+  descriptions: <DescriptionsIcon />,
 };

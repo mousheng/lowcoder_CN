@@ -803,6 +803,12 @@ export const AvatarStyle = [
   FILL,
 ] as const;
 
+export const DescriptionsStyle = [
+  getBackground(),
+  MARGIN,	
+  PADDING,
+] as const;
+
 export const amapStyle = [
   MARGIN,	
 ] as const;

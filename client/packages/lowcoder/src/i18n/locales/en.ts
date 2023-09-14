@@ -925,6 +925,9 @@ export const en = {
     avatarCompName: "Avatar",
     avatarCompDesc: "Avatar",
     avatarCompKeywords: "",
+    descriptionsName: "Descriptions",
+    descriptionsDesc: "Descriptions",
+    descriptionsKeywords: "",
   },
   comp: {
     menuViewDocs: "View documentation",
@@ -2675,5 +2678,22 @@ export const en = {
     title: "title",
     src: "src",
     avatarCompTooltip: "The rendering order is: images ->characters ->icon",
+  },
+  descriptions: {
+    horizontal: "Horizontal",
+    vertical: "Vertical",
+    title: "title",
+    small: "small",
+    middle: "middle",
+    default: "large",
+    value: "content",
+    showbordered: "show Bordered",
+    showEditButton: "show EditButton",
+    parseEnter: "parse Enter",
+    layout: "Layout method",
+    size: "row Size",
+    columnCount: "columns per row",
+    edit: "edit",
+    editDesc: "Component cannot be edited, but click event can be activated",
   }
 };
