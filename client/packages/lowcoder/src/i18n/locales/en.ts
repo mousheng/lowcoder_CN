@@ -922,6 +922,9 @@ export const en = {
     amapCompName: "Amap",
     amapCompDesc: "Amap",
     amapCompKeywords: "",
+    avatarCompName: "Avatar",
+    avatarCompDesc: "Avatar",
+    avatarCompKeywords: "",
   },
   comp: {
     menuViewDocs: "View documentation",
@@ -2662,4 +2665,15 @@ export const en = {
   monthPickerComp: {
     format: "YYYY-mm",
   },
+  avatarComp: {
+    square: "square",
+    circle: "circle",
+    icon: "icon",
+    shape: "shape",
+    counts: "Badge",
+    cursorPointer: "cursor Pointer",
+    title: "title",
+    src: "src",
+    avatarCompTooltip: "The rendering order is: images ->characters ->icon",
+  }
 };

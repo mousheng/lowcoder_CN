@@ -798,6 +798,11 @@ export const QRCodeStyle = [
   PADDING,
 ] as const;
 
+export const AvatarStyle = [
+  getStaticBackground("#bfbfbf"),
+  FILL,
+] as const;
+
 export const amapStyle = [
   MARGIN,	
 ] as const;

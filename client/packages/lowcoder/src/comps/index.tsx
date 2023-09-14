@@ -109,6 +109,7 @@ import {
   QuarterPickerIcon,
   YearPickerIcon,
   AmapIcon,
+  AvatarIcon,
 } from "lowcoder-design";
 
 import { defaultFormData, FormComp } from "./comps/formComp/formComp";
@@ -140,6 +141,7 @@ import { AutoCompleteComp } from "./comps/autoCompleteComp/autoCompleteComp";
 import { CommentComp } from "./comps/commentComp/commentComp";
 import { IconComp } from "./comps/iconComp";
 import { AmapComp } from "./comps/amap/amapComp"
+import { AvatarComp } from "./comps/avatar"
 
 //Added by Aqib Mirza
 import { JsonLottieComp } from "./comps/jsonComp/jsonLottieComp";
@@ -987,6 +989,19 @@ const uiCompMap: Registry = {
     layoutInfo: {
       w: 15,
       h: 50,
+    },
+  },
+  avatar: {
+    name: trans("uiComp.avatarCompName"),
+    enName: "avatar",
+    description: trans("uiComp.avatarCompDesc"),
+    categories: ["dataDisplay"],
+    icon: AvatarIcon,
+    keywords: trans("uiComp.avatarCompKeywords"),
+    comp: AvatarComp,
+    layoutInfo: {
+      w: 1,
+      h: 5,
     },
   },
 };

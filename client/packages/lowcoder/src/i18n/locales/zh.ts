@@ -905,6 +905,9 @@ uiComp: {
     amapCompName: "高德地图",
     amapCompDesc: "高德地图",
     amapCompKeywords: "gddt",
+    avatarCompName: "头像",
+    avatarCompDesc: "头像",
+    avatarCompKeywords: "tx",
 },
 comp: {
     menuViewDocs: "查看文档",
@@ -2650,5 +2653,16 @@ timeLine: {
       monthPickerComp: {
         format: "YYYY-mm",
       },
+      avatarComp: {
+        square: "方形",
+        circle: "圆形",
+        icon: "图表",
+        shape: "形状",
+        counts: "角标",
+        cursorPointer: "手型指针",
+        title: "标题",
+        src: "图片",
+        avatarCompTooltip: "渲染顺序为：图片->字符->icon",
+}
 };
 

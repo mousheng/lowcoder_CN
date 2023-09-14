@@ -121,6 +121,7 @@ export type UICompType =
   | "quarterPicker"
   | "yearPicker"
   | "amap"
+  | "avatar"
 
 export const uiCompRegistry = {} as Record<UICompType | string, UICompManifest>;
 

@@ -106,7 +106,8 @@ const SelectableDiv = styled.div<{
 }>`
   width: 100%;
   height: 100%;
-  overflow: ${(props) => props?.compType==="button" ? "visible" : "hidden"};
+  // 允许组件角标溢出显示
+  overflow: ${(props) =>  ['button','avatar'].includes(props?.compType) ? "visible" : "hidden"};
 
   ${(props) =>
     `${getLineStyle(
