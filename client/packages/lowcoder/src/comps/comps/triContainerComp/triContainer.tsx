@@ -43,7 +43,8 @@ const BodyInnerGrid = styled(InnerGrid)<{
 }>`
   border-top: ${(props) => `${props.showBorder ? 1 : 0}px solid ${props.borderColor}`};
   flex: 1;
-  overflow: ${(props) => `${props.showScroll ? 'auto' : 'hidden'}`};
+  overflow-x: hidden;
+  overflow-y: ${(props) => `${props.showScroll ? 'auto' : 'hidden'}`};
   ${(props) => props.backgroundColor && `background-color: ${props.backgroundColor};`}
   border-radius: 0;
 `;
