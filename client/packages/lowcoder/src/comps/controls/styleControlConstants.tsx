@@ -328,6 +328,10 @@ function getBgBorderRadiusByBg(background: keyof ThemeDetail = "primarySurface")
   return [getBackground(background), BORDER, RADIUS, PADDING] as const;
 }
 
+function getBgBorderRadiusByBg2(background: keyof ThemeDetail = "primarySurface") {
+  return [getBackground(background), BORDER, RADIUS] as const;
+}
+
 function getBackground(depTheme: keyof ThemeDetail = "primarySurface") {
   return {
     name: "background",
@@ -346,7 +350,7 @@ function getStaticBackground(color: string) {
   } as const;
 }
 
-export const ButtonStyle = [...getBgBorderRadiusByBg("primary"), TEXT, MARGIN] as const;
+export const ButtonStyle = [...getBgBorderRadiusByBg2("primary"), TEXT, MARGIN] as const;
 
 export const ToggleButtonStyle = [
   getBackground("canvas"),
@@ -450,7 +454,6 @@ export const RatingStyle = [
     color: SECOND_SURFACE_COLOR,
   },
   MARGIN,	
-  PADDING,
 ] as const;
 
 export const SwitchStyle = [

@@ -22,7 +22,6 @@ import { IconControl } from "@lowcoder-ee/index.sdk";
 
 const DropdownButton = styled(Dropdown.Button)`
   width: 100%;
-
   .ant-btn-group {
     width: 100%;
   }
@@ -30,12 +29,12 @@ const DropdownButton = styled(Dropdown.Button)`
 
 const LeftButtonWrapper = styled.div<{ $buttonStyle: ButtonStyleType }>`
   width: calc(100% - 32px);
+  height: 32px;
   ${(props) => `margin: ${props.$buttonStyle.margin};`}
   margin-right: 0;
   .ant-btn {
     ${(props) => getButtonStyle(props.$buttonStyle)}
     margin: 0 !important;
-    height: 100%;
     &.ant-btn-default {
       margin: 0 !important;
       ${(props) => `border-radius: ${props.$buttonStyle.radius} 0 0 ${props.$buttonStyle.radius};`}
@@ -46,6 +45,7 @@ const LeftButtonWrapper = styled.div<{ $buttonStyle: ButtonStyleType }>`
 
 const RightButtonWrapper = styled.div<{ $buttonStyle: ButtonStyleType }>`
   width: 32px;
+  height: 32px;
   ${(props) => `margin: ${props.$buttonStyle.margin};`}
   margin-left: -1px;
   .ant-btn {

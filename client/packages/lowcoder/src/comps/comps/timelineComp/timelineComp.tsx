@@ -56,7 +56,6 @@ import { debounce } from "lodash";
 
 
 const Wrapper = styled.div<{ $style: TimeLineType, mode: string, offset: number }>`
-  padding-top: 15px!important;
   margin: ${(props) => props.$style.margin};
   padding: ${(props) => props.$style.padding};
   width: ${(props) => widthCalculator(props.$style.margin)};
@@ -67,21 +66,26 @@ const Wrapper = styled.div<{ $style: TimeLineType, mode: string, offset: number 
   overflow-x: hidden;
   border-radius: ${(props) => props.$style.radius};
   .ant-timeline.ant-timeline-label .ant-timeline-item-label {
+    padding-top: 15px;
     width: calc(${(props) => props.mode === "alternate" ? 50 : (50 - props.offset)}% - 12px);
   }
   .ant-timeline.ant-timeline-alternate .ant-timeline-item-tail, .ant-timeline.ant-timeline-right .ant-timeline-item-tail, .ant-timeline.ant-timeline-label .ant-timeline-item-tail, .ant-timeline.ant-timeline-alternate .ant-timeline-item-head, .ant-timeline.ant-timeline-right .ant-timeline-item-head, .ant-timeline.ant-timeline-label .ant-timeline-item-head, .ant-timeline.ant-timeline-alternate .ant-timeline-item-head-custom, .ant-timeline.ant-timeline-right .ant-timeline-item-head-custom, .ant-timeline.ant-timeline-label .ant-timeline-item-head-custom {
+    margin-top: 15px;
     inset-inline-start: ${(props) => props.mode === "alternate" ? 50 : (props.mode === "left" ? (50 - props.offset) + "%" : (50 + props.offset) + "%")};
   }
   .ant-timeline.ant-timeline-alternate .ant-timeline-item-left .ant-timeline-item-content, .ant-timeline.ant-timeline-right .ant-timeline-item-left .ant-timeline-item-content, .ant-timeline.ant-timeline-label .ant-timeline-item-left .ant-timeline-item-content {
+    padding-top: 15px;
     inset-inline-start: calc(${(props) => props.mode === "alternate" ? 50 : (50 - props.offset)}% - 4px);
     width: calc(${(props) => props.mode === "alternate" ? 50 : (50 + props.offset)}% - 12px);
   }
   .ant-timeline.ant-timeline-label .ant-timeline-item-right .ant-timeline-item-label {
+    padding-top: 15px;
     inset-inline-start: calc(${(props) => props.mode === "alternate" ? 50 : (50 + props.offset)}% + 12px);
     width: calc(${(props) => props.mode === "alternate" ? 50 : (50 - props.offset)}% - 12px);
     text-align: start;
   }
   .ant-timeline.ant-timeline-alternate .ant-timeline-item-right .ant-timeline-item-content, .ant-timeline.ant-timeline-right .ant-timeline-item-right .ant-timeline-item-content, .ant-timeline.ant-timeline-label .ant-timeline-item-right .ant-timeline-item-content {
+    padding-top: 15px;
     width: calc(${(props) => props.mode === "alternate" ? 50 : (50 + props.offset)}% - 12px);
     text-align: end;
   }

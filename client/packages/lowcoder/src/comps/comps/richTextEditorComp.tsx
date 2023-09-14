@@ -124,7 +124,7 @@ const AutoHeightReactQuill = styled.div<Props>`
   ${localizeStyle}
   ${(props) => commonStyle(props.$style)}
   & .ql-container .ql-editor {
-    min-height: 125px;
+    min-height: 132px;
   }
   ${(props) => (props.hideToolbar ? hideToolbarStyle(props.$style) : "")};
 `;

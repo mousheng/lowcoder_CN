@@ -99,6 +99,9 @@ export const RatingComp = withExposingConfigs(RatingBasicComp, [
 
 const getStyle = (style: RatingStyleType) => {
   return css`
+    display: flex;
+    height: 32px;
+    align-items: center;
     .ant-rate {
       color: ${style.checked};
     }

@@ -49,7 +49,6 @@ export const Button100 = styled(Button)<{ $buttonStyle?: ButtonStyleType }>`
   width: ${(props) => widthCalculator(props.$buttonStyle?.margin ?? "0px")};
   display: inline-flex;
   justify-content: center;
-  vertical-align: -webkit-baseline-middle;
   align-items: center;
   overflow: visible;
   span {
@@ -69,6 +68,7 @@ export const ButtonCompWrapper = styled.div<{ disabled: boolean }>`
   ${(props) =>
     props.disabled &&
     `
+    margin: ${props.style?.margin}
     cursor: not-allowed;
     button:disabled {
       pointer-events: none;

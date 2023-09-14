@@ -457,7 +457,7 @@ const uiCompMap: Registry = {
     keywords: trans("uiComp.imageCompKeywords"),
     comp: ImageComp,
     layoutInfo: {
-      w: 5,
+      w: 3,
       h: 24,
     },
   },
@@ -514,8 +514,8 @@ const uiCompMap: Registry = {
     keywords: trans("uiComp.qrCodeCompKeywords"),
     comp: QRCodeComp,
     layoutInfo: {
-      w: 4,
-      h: 19,
+      w: 3,
+      h: 23,
     },
   },
   form: {
@@ -771,8 +771,8 @@ const uiCompMap: Registry = {
     comp: CarouselComp,
     withoutLoading: true,
     layoutInfo: {
-      w: 11,
-      h: 25,
+      w: 7,
+      h: 27,
     },
   },
   collapsibleContainer: {
@@ -863,8 +863,8 @@ const uiCompMap: Registry = {
     keywords: trans("uiComp.jsonLottieCompKeywords"),
     comp: JsonLottieComp,
     layoutInfo: {
-      w: 10,
-      h: 47,
+      w: 5,
+      h: 35,
     },
   },
   timeline: {
