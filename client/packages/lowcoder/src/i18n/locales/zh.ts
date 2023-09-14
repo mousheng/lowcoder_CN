@@ -856,7 +856,7 @@ export const zh = {
         videoCompKeywords: "sp",
         drawerCompName: "抽屉",
         drawerCompDesc: "抽屉组件",
-        drawerCompKeywords: "",
+        drawerCompKeywords: "ct",
         chartCompName: "图表",
         chartCompDesc: "图表组件",
         chartCompKeywords: "tb",
