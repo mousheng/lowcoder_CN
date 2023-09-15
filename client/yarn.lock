@@ -2375,7 +2375,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fullcalendar/core@npm:^6.1.6":
+"@fullcalendar/core@npm:^6.1.8":
   version: 6.1.8
   resolution: "@fullcalendar/core@npm:6.1.8"
   dependencies:
@@ -2384,7 +2384,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fullcalendar/daygrid@npm:^6.1.6, @fullcalendar/daygrid@npm:~6.1.8":
+"@fullcalendar/daygrid@npm:^6.1.8, @fullcalendar/daygrid@npm:~6.1.8":
   version: 6.1.8
   resolution: "@fullcalendar/daygrid@npm:6.1.8"
   peerDependencies:
@@ -2393,7 +2393,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fullcalendar/interaction@npm:^6.1.6":
+"@fullcalendar/interaction@npm:^6.1.8":
   version: 6.1.8
   resolution: "@fullcalendar/interaction@npm:6.1.8"
   peerDependencies:
@@ -2402,7 +2402,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fullcalendar/list@npm:^6.1.6":
+"@fullcalendar/list@npm:^6.1.8":
   version: 6.1.8
   resolution: "@fullcalendar/list@npm:6.1.8"
   peerDependencies:
@@ -2411,7 +2411,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fullcalendar/moment@npm:^6.1.6":
+"@fullcalendar/moment@npm:^6.1.8":
   version: 6.1.8
   resolution: "@fullcalendar/moment@npm:6.1.8"
   peerDependencies:
@@ -2421,7 +2421,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fullcalendar/react@npm:^6.1.6":
+"@fullcalendar/multimonth@npm:^6.1.8":
+  version: 6.1.8
+  resolution: "@fullcalendar/multimonth@npm:6.1.8"
+  dependencies:
+    "@fullcalendar/daygrid": ~6.1.8
+  peerDependencies:
+    "@fullcalendar/core": ~6.1.8
+  checksum: 6f964c8c0ff85db63b709120856e10fe92d514e26d5bd83d3681400e03900fdd0b85dd6abbb38d38b30e7b5b06d64a840c2ba366b6616c864e0d8318a4860275
+  languageName: node
+  linkType: hard
+
+"@fullcalendar/react@npm:^6.1.8":
   version: 6.1.8
   resolution: "@fullcalendar/react@npm:6.1.8"
   peerDependencies:
@@ -2432,7 +2443,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fullcalendar/timegrid@npm:^6.1.6":
+"@fullcalendar/timegrid@npm:^6.1.8":
   version: 6.1.8
   resolution: "@fullcalendar/timegrid@npm:6.1.8"
   dependencies:
@@ -11595,13 +11606,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "lowcoder-comps@workspace:packages/lowcoder-comps"
   dependencies:
-    "@fullcalendar/core": ^6.1.6
-    "@fullcalendar/daygrid": ^6.1.6
-    "@fullcalendar/interaction": ^6.1.6
-    "@fullcalendar/list": ^6.1.6
-    "@fullcalendar/moment": ^6.1.6
-    "@fullcalendar/react": ^6.1.6
-    "@fullcalendar/timegrid": ^6.1.6
+    "@fullcalendar/core": ^6.1.8
+    "@fullcalendar/daygrid": ^6.1.8
+    "@fullcalendar/interaction": ^6.1.8
+    "@fullcalendar/list": ^6.1.8
+    "@fullcalendar/moment": ^6.1.8
+    "@fullcalendar/multimonth": ^6.1.8
+    "@fullcalendar/react": ^6.1.8
+    "@fullcalendar/timegrid": ^6.1.8
     "@types/react": 17
     "@types/react-dom": 17
     big.js: ^6.2.1

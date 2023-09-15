@@ -144,6 +144,7 @@ import { IconComp } from "./comps/iconComp";
 import { AmapComp } from "./comps/amap/amapComp"
 import { AvatarComp } from "./comps/avatar"
 import { DescriptionsComp } from "./comps/descriptionsComp";
+import { CalendarComp } from "./comps/calendarComp/calendarComp";
 
 //Added by Aqib Mirza
 import { JsonLottieComp } from "./comps/jsonComp/jsonLottieComp";
@@ -834,7 +835,8 @@ const uiCompMap: Registry = {
     categories: ["dataInputDate"],
     icon: CalendarCompIcon,
     keywords: trans("uiComp.calendarCompKeywords"),
-    comp: remoteComp({ ...builtInRemoteComps, compName: "calendar" }),
+    // comp: remoteComp({ ...builtInRemoteComps, compName: "calendar" }),
+    comp: CalendarComp,
     layoutInfo: {
       w: 24,
       h: 60,

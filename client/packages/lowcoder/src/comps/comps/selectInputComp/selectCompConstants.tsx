@@ -157,7 +157,7 @@ const DropdownStyled = styled.div<{ $style: MultiSelectStyleType }>`
   }
 `;
 
-const Wrapper = styled.span`
+export const Wrapper = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 6px;

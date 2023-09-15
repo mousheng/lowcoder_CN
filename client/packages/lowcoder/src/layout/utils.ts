@@ -744,6 +744,22 @@ export function calcTotalHeight(items: LayoutItem[]) {
   return Math.max(0, bottom - top);
 }
 
+export function RGBAToHex(r:number, g:number, b:number, a:number) {
+  r = Math.round( Math.min(255, Math.max(0, r)));
+  g = Math.round(Math.min(255, Math.max(0, g)));
+  b = Math.round(Math.min(255, Math.max(0, b)));
+  a = Math.min(1, Math.max(0, a));
+
+  const redHex = r.toString(16).padStart(2, '0');
+  const greenHex = g.toString(16).padStart(2, '0');
+  const blueHex = b.toString(16).padStart(2, '0');
+  const alphaHex = Math.round(a * 255).toString(16).padStart(2, '0');
+
+  const hexColor = `#${redHex}${greenHex}${blueHex}${alphaHex}`;
+
+  return hexColor.toUpperCase();
+}
+
 export type FlowLayoutItem = {
   i: string;
 };
