@@ -102,6 +102,7 @@ import {
   LottieIcon,
   MentionIcon,
   AutoCompleteCompIcon,
+  ResponsiveLayoutCompIcon,
   CommentIcon,
   IconCompIcon,
   WeekPickerIcon,
@@ -148,6 +149,7 @@ import { CalendarComp } from "./comps/calendarComp/calendarComp";
 
 //Added by Aqib Mirza
 import { JsonLottieComp } from "./comps/jsonComp/jsonLottieComp";
+import { ResponsiveLayoutComp } from "./comps/responsiveLayout";
 
 type Registry = {
   [key in UICompType]?: UICompManifest;
@@ -902,6 +904,21 @@ const uiCompMap: Registry = {
     layoutInfo: {
       w: 7,
       h: 5,
+    }
+  },
+  responsiveLayout: {
+    name: trans("uiComp.responsiveLayoutCompName"),
+    enName: "Responsive Layout",
+    description: trans("uiComp.responsiveLayoutCompDesc"),
+    categories: ["container", "common"],
+    icon: ResponsiveLayoutCompIcon,
+    keywords: trans("uiComp.responsiveLayoutCompKeywords"),
+    comp: ResponsiveLayoutComp,
+    withoutLoading: true,
+    layoutInfo: {
+      w: 15,
+      h: 27,
+      delayCollision: true,
     },
   },
   comment: {

@@ -299,4 +299,5 @@ export { ReactComponent as QuarterPickerIcon } from "icons/icon-quarterPicker.sv
 export { ReactComponent as YearPickerIcon } from "icons/icon-yearPicker.svg";
 export { ReactComponent as AmapIcon } from "icons/icon-amap-comp.svg";
 export { ReactComponent as AvatarIcon } from "icons/icon-comp-avatar.svg";
-export { ReactComponent as DescriptionsIcon } from "icons/icon-comp-Descriptions.svg";
+export { ReactComponent as DescriptionsIcon } from "icons/icon-comp-Descriptions.svg";export { ReactComponent as WidthIcon } from "icons/icon-width.svg";
+export { ReactComponent as ResponsiveLayoutCompIcon } from "icons/icon-responsive-layout-comp.svg";

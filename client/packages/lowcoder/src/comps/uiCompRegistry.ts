@@ -114,6 +114,7 @@ export type UICompType =
   | "timeline"
   | "mention"
   | "autocomplete"
+  | "responsiveLayout"
   | "comment"
   | "icon"
   | "weekPicker"

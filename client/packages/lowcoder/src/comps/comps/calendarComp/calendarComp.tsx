@@ -54,7 +54,7 @@ import {
 } from "./calendarConstants";
 import dayjs from "dayjs";
 import { trans } from "i18n";
-import { getMomentLocale } from "@lowcoder-ee/i18n/momentLocale";
+import { getDayJSLocale } from "i18n/dayjsLocale";
 import { Wrapper as SelectItemWrapper } from "../selectInputComp/selectCompConstants";
 import { BorderOutlined } from "@ant-design/icons";
 
@@ -324,7 +324,7 @@ let CalendarBasicComp = (function () {
           events={events}
           expandRows={true}
           height={"100%"}
-          locale={getMomentLocale()}
+          locale={getDayJSLocale()}
           locales={allLocales}
           scrollTime={props.scrollToTime ? dayjs().format('HH:mm') : ""}
           firstDay={Number(firstDay)}

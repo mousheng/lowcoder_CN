@@ -5,6 +5,7 @@ import { HttpQuery } from "./httpQuery";
 import styled from "styled-components";
 import { QueryConfigItemWrapper, QueryConfigLabel, QueryConfigWrapper } from "components/query";
 import { GraphqlQuery } from "./graphqlQuery";
+import { StreamQuery } from "./streamQuery";
 import { trans } from "@lowcoder-ee/i18n";
 
 const UrlInput = styled.div<{ hasAddonBefore: boolean }>`
@@ -34,7 +35,7 @@ const UrlInputAddonBefore = styled.div`
 `;
 
 export const HttpPathPropertyView = (props: {
-  comp: InstanceType<typeof HttpQuery | typeof GraphqlQuery>;
+  comp: InstanceType<typeof HttpQuery | typeof GraphqlQuery | typeof StreamQuery>;
   datasourceId: string;
   urlPlaceholder?: string;
 }) => {

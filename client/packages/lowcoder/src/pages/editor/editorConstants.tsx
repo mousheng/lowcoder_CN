@@ -48,6 +48,7 @@ import {
   AmapIcon,
   AvatarIcon,
   DescriptionsIcon,
+  ResponsiveLayoutCompIcon,
 } from "lowcoder-design";
 
 export const CompStateIcon: {
@@ -125,4 +126,5 @@ export const CompStateIcon: {
   amap: <AmapIcon />,
   avatar: <AvatarIcon />,
   descriptions: <DescriptionsIcon />,
+  responsiveLayout: <ResponsiveLayoutCompIcon />,
 };
