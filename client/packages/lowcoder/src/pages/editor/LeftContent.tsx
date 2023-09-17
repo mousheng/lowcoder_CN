@@ -21,7 +21,7 @@ import _ from "lodash";
 import styled from "styled-components";
 import { leftCompListClassName } from "pages/tutorials/tutorialsConstant";
 import UIComp from "comps/comps/uiComp";
-import { BottomResTypeEnum } from "types/bottomRes";
+import { BottomResTypeEnum, LeftResTypeEnum } from "types/bottomRes";
 import { getParentNodeKeysByKey, getTreeNodeByKey, safeJSONStringify } from "util/objectUtils";
 import { Tabs, TabTitle } from "components/Tabs";
 import { BackgroundColor, TopHeaderHeight } from "constants/style";
@@ -32,11 +32,13 @@ import { UICompType } from "comps/uiCompRegistry";
 import { CollapseWrapper, DirectoryTreeStyle, Node } from "./styledComponents";
 import { DataNode, EventDataNode } from "antd/lib/tree";
 import { isAggregationApp } from "util/appUtils";
+import { getBottomResIcon } from "@lowcoder-ee/index.sdk";
 
 const CollapseTitleWrapper = styled.div`
   display: flex;
   width: fit-content;
   max-width: calc(100% - 8px);
+  align-items: center;
 `;
 
 function getLen(config: string | boolean | number) {
@@ -136,9 +138,11 @@ const CollapseView = React.memo(
     onClick?: (compName: string) => void;
     isSelected?: boolean;
     isOpen?: boolean;
+    icon?: ReactNode;
   }) => {
     const { data = {} } = props;
     const onlyOne = Object.keys(data).length === 1;
+    const icon = props?.icon ? props.icon : props.hasOwnProperty('onClick') ? getBottomResIcon(props.name as LeftResTypeEnum) : null;
     return (
       <Collapse
         isSelected={props.isSelected}
@@ -153,6 +157,7 @@ const CollapseView = React.memo(
                 popupVisible={!!props.desc?.[props.name]}
               >
                 <CollapseTitleWrapper onClick={() => props.onClick && props.onClick(props.name)}>
+                  {icon}
                   <Title
                     style={{
                       whiteSpace: "nowrap",
@@ -171,8 +176,8 @@ const CollapseView = React.memo(
                           ? "leftPanel.propTipArr"
                           : "leftPanel.propTipsArr"
                         : onlyOne
-                        ? "leftPanel.propTip"
-                        : "leftPanel.propTips",
+                          ? "leftPanel.propTip"
+                          : "leftPanel.propTips",
                       {
                         num: Object.keys(data).length,
                       }
@@ -400,6 +405,7 @@ export const LeftContent = (props: LeftContentProps) => {
                 desc={data.dataDesc}
                 data={data.data}
                 isOpen={true}
+                icon={editorState.getBottomResComp(data.name)?.icon()}
               />
             </ScrollBar>
           </CollapseWrapper>
@@ -472,6 +478,7 @@ export const LeftContent = (props: LeftContentProps) => {
           data={item.data}
           isSelected={editorState.selectedBottomResName === item.name}
           onClick={() => handleBottomResItemClick(item.type as BottomResTypeEnum, item.name)}
+          icon={editorState.getBottomResComp(item.name)?.icon()}
         />
       ));
   }, [editorState, handleBottomResItemClick]);
@@ -488,6 +495,7 @@ export const LeftContent = (props: LeftContentProps) => {
         data={item.data}
         isSelected={false}
         onClick={_.noop}
+        icon={editorState.getBottomResComp(item.name)?.icon()}
       />
     ));
   }, [editorState]);
@@ -520,7 +528,7 @@ export const LeftContent = (props: LeftContentProps) => {
     {
       key: LeftTabKey.State,
       label: <TabTitle text={trans("leftPanel.stateTab")} />,
-      children: <>{ stateContent }</>
+      children: <>{stateContent}</>
     },
     {
       key: LeftTabKey.ModuleSetting,

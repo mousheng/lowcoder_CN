@@ -30,9 +30,13 @@ import {
   TempStateIcon,
   TraceApiIcon,
   TransformerIcon,
+  LeftBarThemeIcon,
+  LeftBarLocalStorageIcon,
+  LeftBarURLIcon,
 } from "lowcoder-design";
-import { BottomResTypeEnum } from "types/bottomRes";
+import { BottomResTypeEnum, LeftResTypeEnum } from "types/bottomRes";
 import { HttpMethod } from "api/api";
+import { UserOutlined } from "@ant-design/icons";
 
 const QueryLibrary = styled(QueryLibraryIcon)`
   g g g {
@@ -74,7 +78,9 @@ export type BottomResType =
   | BottomResTypeEnum.TempState
   | BottomResTypeEnum.Transformer
   | BottomResTypeEnum.Folder
-  | BottomResTypeEnum.DateResponder;
+  | BottomResTypeEnum.DateResponder
+  | LeftResTypeEnum;
+
 
 const HttpMethodIcon = {
   DELETE: <DeleteApiIcon />,
@@ -95,6 +101,14 @@ export const getBottomResIcon = (
 ) => {
   const getIcon = () => {
     switch (type) {
+      case "currentUser":
+        return <UserOutlined />;
+      case "localStorage":
+        return <LeftBarLocalStorageIcon />;
+      case "theme":
+        return <LeftBarThemeIcon />;
+      case "url":
+        return <LeftBarURLIcon />;
       case BottomResTypeEnum.TempState:
         return <TempStateIcon />;
       case BottomResTypeEnum.Transformer:

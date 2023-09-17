@@ -10,6 +10,13 @@ export enum BottomResTypeEnum {
   Folder = "folder",
 }
 
+export enum LeftResTypeEnum {
+  CurrentUser = "currentUser",
+  LocalStorage = "localStorage",
+  Theme = "theme",
+  Url = "url",
+}
+
 export interface BottomResListComp {
   /**
    * weather auto select the new created comp
