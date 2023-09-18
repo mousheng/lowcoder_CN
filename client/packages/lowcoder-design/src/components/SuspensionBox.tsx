@@ -57,6 +57,7 @@ const FooterDiv = styled.div`
 interface Iprops {
   title: string;
   onClose?: () => void;
+  setmouseOutFlag?: any;
   content: any;
   width?: number;
   contentMaxHeight?: string | number;
@@ -73,9 +74,14 @@ export const SuspensionBox = (props: Iprops) => {
     width = 312,
     contentMaxHeight = "calc(100vh - 100px)",
     scrollable,
+    setmouseOutFlag,
   } = props;
   return (
-    <Container width={width}>
+    <Container
+      width={width}
+      onMouseEnter={()=>setmouseOutFlag && setmouseOutFlag(false)}
+      onMouseLeave={()=>setmouseOutFlag && setmouseOutFlag(true)}
+    >
       <TitleDiv>
         <TitleText>{title}</TitleText>
         {onClose && <CloseIcon onClick={onClose} />}

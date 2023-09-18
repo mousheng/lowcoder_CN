@@ -62,7 +62,7 @@ const SimplePopover = (props: {
   );
   return (
     <Popover
-      overlayInnerStyle={{padding: 0}}
+      overlayInnerStyle={{ padding: 0 }}
       align={{
         offset: [-12, 0, 0, 0],
       }}
@@ -89,9 +89,11 @@ const CustomPopover = (props: {
   scrollable?: boolean;
 }) => {
   const [visible, setVisible] = useState(props.defaultVisible);
+  const [mouseOutFlag, setmouseOutFlag] = useState(true);
   const contentWithBox = (
     <SuspensionBox
       title={props.title}
+      setmouseOutFlag={setmouseOutFlag}
       onClose={() => setVisible(false)}
       content={props.content}
       scrollable={props.scrollable}
@@ -99,11 +101,11 @@ const CustomPopover = (props: {
   );
   return (
     <Popover
-      overlayInnerStyle={{padding: 0}}
+      overlayInnerStyle={{ padding: 0 }}
       content={contentWithBox}
       trigger="click"
       open={visible}
-      onOpenChange={setVisible}
+      onOpenChange={(e) => { setVisible(mouseOutFlag === e) }}
       placement={props.type === "query" ? "top" : "left"}
       overlayStyle={{ width: "310px" }}
       align={{
@@ -163,8 +165,8 @@ const EditPopover = (props: EditPopoverProps) => {
   return (
     <Popover
       arrow={false}
-      overlayStyle={{paddingTop: '15px'}}
-      overlayInnerStyle={{padding: 0}}
+      overlayStyle={{ paddingTop: '15px' }}
+      overlayInnerStyle={{ padding: 0 }}
       content={() => (
         <>
           <Wedge />
