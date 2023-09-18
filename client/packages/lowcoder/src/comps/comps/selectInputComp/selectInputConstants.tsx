@@ -91,7 +91,11 @@ export const SelectInputValidationSection = (children: ValidationComp) => (
     {children.customRule.propertyView({})}
   </Section>
 );
-
+export const CascaderValidationSection = (children: ValidationComp) => (
+  <Section name={sectionNames.validation}>
+    {requiredPropertyView(children)}
+  </Section>
+);
 type ChildrenType = RecordConstructorToComp<{
   value: ReturnType<typeof stringExposingStateControl>;
   options: typeof SelectInputOptionControl;

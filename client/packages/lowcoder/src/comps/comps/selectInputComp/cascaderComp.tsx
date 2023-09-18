@@ -10,6 +10,7 @@ import { getStyle } from "./selectCompConstants";
 import { refMethods } from "comps/generators/withMethodExposing";
 import { JSONObject } from "@lowcoder-ee/index.sdk";
 import _ from "lodash";
+import { SelectInputInvalidConfig, useSelectInputValidate } from "./selectInputConstants";
 
 const CascaderStyle = styled(Cascader) <{ $style: CascaderStyleType }>`
   width: 100%;
@@ -20,7 +21,10 @@ let CascaderBasicComp = (function () {
   const childrenMap = CascaderChildren;
 
   return new UICompBuilder(childrenMap, (props) => {
+    const [validateState, handleValidate] = useSelectInputValidate(props);
+
     return props.label({
+      required: props.required,
       style: props.style,
       children: (
         <CascaderStyle
@@ -36,16 +40,18 @@ let CascaderBasicComp = (function () {
           onFocus={() => props.onEvent("focus")}
           onBlur={() => props.onEvent("blur")}
           onChange={(value: (string | number)[], selectOptions) => {
+            handleValidate(value);
             props.value.onChange(value as string[]);
-            props.selectedObject.onChange(selectOptions.map(x => {
+            props.selectedObject.onChange(selectOptions?.map(x => {
               let ret = _.cloneDeep(x)
               ret?.children && delete ret.children
               return ret
-            }) as JSONObject[])
+            }) as JSONObject[]);
             props.onEvent("change");
           }}
         />
       ),
+      ...validateState,
     });
   })
     .setPropertyViewFn((children) => (
@@ -60,6 +66,7 @@ let CascaderBasicComp = (function () {
 const CascaderComp = withExposingConfigs(CascaderBasicComp, [
   new NameConfig("value", trans("selectInput.valueDesc")),
   new NameConfig("selectedObject", trans("selectInput.selectedObjectDesc")),
+  SelectInputInvalidConfig,
   ...CommonNameConfig,
 ]);
 

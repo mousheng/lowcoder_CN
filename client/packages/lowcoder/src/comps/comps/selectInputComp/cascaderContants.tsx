@@ -20,10 +20,13 @@ import { CascaderRef } from "antd/lib/cascader";
 
 import { MarginControl } from "../../controls/marginControl";	
 import { PaddingControl } from "../../controls/paddingControl";
+import { SelectChildrenMap } from "./selectCompConstants";
+import { CascaderValidationSection } from "./selectInputConstants";
 
 export const defaultDataSource = JSON.stringify(i18nObjs.cascader, null, " ");
 
 export const CascaderChildren = {
+  ...SelectChildrenMap,
   value: arrayStringExposingStateControl("value", i18nObjs.cascaderDefult),
   selectedObject: arrayObjectExposingStateControl("selectedObject", []),
   label: LabelControl,
@@ -60,6 +63,8 @@ export const CascaderPropertyView = (
       {allowClearPropertyView(children)}
       {showSearchPropertyView(children)}
     </Section>
+
+    <CascaderValidationSection {...children} />
 
     <Section name={sectionNames.layout}>{hiddenPropertyView(children)}</Section>
 
