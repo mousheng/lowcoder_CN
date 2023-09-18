@@ -9,8 +9,9 @@ import { CascaderChildren, CascaderPropertyView, defaultDataSource } from "./cas
 import { getStyle } from "./selectCompConstants";
 import { refMethods } from "comps/generators/withMethodExposing";
 import { JSONObject } from "@lowcoder-ee/index.sdk";
+import _ from "lodash";
 
-const CascaderStyle = styled(Cascader)<{ $style: CascaderStyleType }>`
+const CascaderStyle = styled(Cascader) <{ $style: CascaderStyleType }>`
   width: 100%;
   ${(props) => props.$style && getStyle(props.$style)}
 `;
@@ -36,7 +37,11 @@ let CascaderBasicComp = (function () {
           onBlur={() => props.onEvent("blur")}
           onChange={(value: (string | number)[], selectOptions) => {
             props.value.onChange(value as string[]);
-            props.selectedObject.onChange(selectOptions as JSONObject[])
+            props.selectedObject.onChange(selectOptions.map(x => {
+              let ret = _.cloneDeep(x)
+              ret?.children && delete ret.children
+              return ret
+            }) as JSONObject[])
             props.onEvent("change");
           }}
         />
