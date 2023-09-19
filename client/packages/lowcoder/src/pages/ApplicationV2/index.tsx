@@ -18,7 +18,7 @@ import {
   HomeActiveIcon,
   HomeDataSourceActiveIcon,
   HomeDataSourceIcon,
-  HomeIcon,
+  HomeIconDark,
   HomeModuleActiveIcon,
   HomeModuleIcon,
   HomeQueryLibraryActiveIcon,
@@ -338,7 +338,7 @@ export default function ApplicationHome() {
                 routePath: ALL_APPLICATIONS_URL,
                 routeComp: HomeView,
                 icon: ({ selected, ...otherProps }) =>
-                  selected ? <HomeActiveIcon {...otherProps} /> : <HomeIcon {...otherProps} />,
+                  selected ? <HomeActiveIcon {...otherProps} /> : <HomeIconDark {...otherProps} />,
               },
               {
                 text: <TabLabel>{trans("home.modules")}</TabLabel>,

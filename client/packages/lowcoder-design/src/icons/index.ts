@@ -170,6 +170,7 @@ export { ReactComponent as videoPlayTriangle } from "./icon-video-play-triangle.
 export { ReactComponent as DrawerCompIcon } from "./icon-drawer.svg";
 export { ReactComponent as PlusIcon } from "./icon-plus.svg";
 export { ReactComponent as HomeIcon } from "./icon-application-home.svg";
+export { ReactComponent as HomeIconDark } from "./icon-application-home-dark.svg";
 export { ReactComponent as HomeModuleIcon } from "./icon-application-module.svg";
 export { ReactComponent as HomeQueryLibraryIcon } from "./icon-application-query-library.svg";
 export { ReactComponent as HomeDataSourceIcon } from "./icon-application-datasource.svg";
