@@ -263,7 +263,7 @@ let FormTmpComp = class extends FormBaseComp implements IForm {
     const newData = { ...(initialData ?? this.children.initialData.getView()), ...data };
     return this.runMethodOfItems(
       {
-        name: "setValue",
+        name: "设置Value",
         getParams: (t) => {
           // use component name when formDataKey is empty
           const key = t.children.comp.children.formDataKey?.getView() || t.children.name.getView();
@@ -271,8 +271,8 @@ let FormTmpComp = class extends FormBaseComp implements IForm {
           return value !== undefined ? [value as EvalParamType] : undefined;
         },
       },
-      { name: "resetValue" },
-      { name: "clearValue" }
+      { name: "重置Value" },
+      { name: "清除Value" }
     );
   }
   reset() {
