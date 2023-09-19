@@ -39,7 +39,7 @@ const QueryField = withPropertyViewFn(ParamsJsonControl, (comp) =>
     label: trans("query.query"),
     placement: "bottom",
     placeholder: `{
-  rating : {$gte : 9}
+  _id : "ObjectId('6508f2ece64e2f661cc3baa1')"
 }`,
     styleName: "medium",
     enableMetaCompletion: true,
