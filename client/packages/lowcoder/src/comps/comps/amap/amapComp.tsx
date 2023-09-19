@@ -61,7 +61,7 @@ const AmapView = (props: RecordConstructorToView<typeof childrenMap>) => {
     setTimeout(() => {
       setZoom(zoomTemp)
     }, 1);
-  }, [props.markers.value])
+  }, [JSON.stringify(props.markers.value)])
 
   useEffect(() => {
     setZoom(props.zoom.value)
