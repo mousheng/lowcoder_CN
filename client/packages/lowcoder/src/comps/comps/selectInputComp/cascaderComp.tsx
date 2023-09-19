@@ -11,6 +11,7 @@ import { refMethods } from "comps/generators/withMethodExposing";
 import { JSONObject } from "@lowcoder-ee/index.sdk";
 import _ from "lodash";
 import { SelectInputInvalidConfig, useSelectInputValidate } from "./selectInputConstants";
+import { useEffect } from "react";
 
 const CascaderStyle = styled(Cascader) <{ $style: CascaderStyleType }>`
   width: 100%;
@@ -22,6 +23,20 @@ let CascaderBasicComp = (function () {
 
   return new UICompBuilder(childrenMap, (props) => {
     const [validateState, handleValidate] = useSelectInputValidate(props);
+    useEffect(() => {
+      const findLabelsWithChildren = (obj: any, value: any) => {
+        const labels = []
+        for (let i of value) {
+          obj = _.filter(obj, { value: i })
+          if (obj.length > 0) {
+            labels.push(_.omit(obj[0], 'children'))
+            obj = obj[0]?.children
+          }
+        }
+        return labels
+      }
+      props.selectedObject.onChange(findLabelsWithChildren(props.options, props.value.value))
+    }, [])
 
     return props.label({
       required: props.required,
@@ -42,11 +57,7 @@ let CascaderBasicComp = (function () {
           onChange={(value: (string | number)[], selectOptions) => {
             handleValidate(value);
             props.value.onChange(value as string[]);
-            props.selectedObject.onChange(selectOptions?.map(x => {
-              let ret = _.cloneDeep(x)
-              ret?.children && delete ret.children
-              return ret
-            }) as JSONObject[]);
+            props.selectedObject.onChange(selectOptions?.map(x => _.omit(x, ['children'])) as JSONObject[]);
             props.onEvent("change");
           }}
         />
