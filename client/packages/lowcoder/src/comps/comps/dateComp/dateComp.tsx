@@ -37,7 +37,7 @@ import {
 } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
 import { DATE_FORMAT, DATE_TIME_FORMAT, DateParser, PickerMode } from "util/dateTimeUtils";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { IconControl } from "comps/controls/iconControl";
 import { hasIcon } from "comps/utils";
 import { Section, sectionNames } from "components/Section";
@@ -158,6 +158,7 @@ export const datePickerControl = new UICompBuilder(childrenMap, (props) => {
   if(props.value.value !== '') {
     time = dayjs(props.value.value, DateParser);
   }
+  const [activate , setActivate] =useState(false)
   return props.label({
     required: props.required,
     style: props.style,
@@ -184,12 +185,12 @@ export const datePickerControl = new UICompBuilder(childrenMap, (props) => {
         onPanelChange={() => {
           handleDateChange("", props.value.onChange, noop);
         }}
-        onFocus={() => props.onEvent("focus")}
+        onFocus={() => {props.onEvent("focus");setActivate(true)}}
         onBlur={() => props.onEvent("blur")}
         suffixIcon={hasIcon(props.suffixIcon) && props.suffixIcon}
       />
     ),
-    ...validate(props),
+    ... activate ? validate(props) : undefined,
   });
 })
   .setPropertyViewFn((children) => {
@@ -253,7 +254,7 @@ export const dateRangeControl = (function () {
     if(props.end.value !== '') {
       end = dayjs(props.end.value, DateParser);
     }
-
+    const [activate , setActivate] =useState(false)
     const children = (
       <DateRangeUIView
         viewRef={props.viewRef}
@@ -280,7 +281,7 @@ export const dateRangeControl = (function () {
           mode[0] !== "date" && handleDateChange("", props.start.onChange, noop);
           mode[1] !== "date" && handleDateChange("", props.end.onChange, noop);
         }}
-        onFocus={() => props.onEvent("focus")}
+        onFocus={() => {props.onEvent("focus");setActivate(true)}}
         onBlur={() => props.onEvent("blur")}
         suffixIcon={hasIcon(props.suffixIcon) && props.suffixIcon}
       />
@@ -293,11 +294,11 @@ export const dateRangeControl = (function () {
       required: props.required,
       style: props.style,
       children: children,
-      ...(startResult.validateStatus !== "success"
+      ...activate ? ((startResult.validateStatus !== "success"
         ? startResult
         : endResult.validateStatus !== "success"
         ? endResult
-        : startResult),
+        : startResult)): undefined,
     });
   })
     .setPropertyViewFn((children) => {
@@ -354,6 +355,7 @@ export const weekPickerControl = new UICompBuilder(
   if(props.value.value !== '') {
     time = dayjs(props.value.value, DateParser);
   }
+  const [activate , setActivate] =useState(false)
   return props.label({
     required: props.required,
     style: props.style,
@@ -380,12 +382,12 @@ export const weekPickerControl = new UICompBuilder(
         onPanelChange={() => {
           handleDateChange("", props.value.onChange, noop);
         }}
-        onFocus={() => props.onEvent("focus")}
+        onFocus={() => {props.onEvent("focus");setActivate(true)}}
         onBlur={() => props.onEvent("blur")}
         suffixIcon={hasIcon(props.suffixIcon) && props.suffixIcon}
       />
     ),
-    ...validate(props),
+    ... activate ? validate(props) : undefined,
   });
 })
   .setPropertyViewFn((children) => {
@@ -491,6 +493,7 @@ export const monthPickerControl = new UICompBuilder(
   if(props.value.value !== '') {
     time = dayjs(props.value.value, DateParser);
   }
+  const [activate , setActivate] =useState(false)
   return props.label({
     required: props.required,
     style: props.style,
@@ -516,12 +519,12 @@ export const monthPickerControl = new UICompBuilder(
         }}
         onPanelChange={() => {
         }}
-        onFocus={() => props.onEvent("focus")}
+        onFocus={() => {props.onEvent("focus");setActivate(true)}}
         onBlur={() => props.onEvent("blur")}
         suffixIcon={hasIcon(props.suffixIcon) && props.suffixIcon}
       />
     ),
-    ...validate(props),
+    ... activate ? validate(props) : undefined,
   });
 })
   .setPropertyViewFn((children) => {
@@ -636,6 +639,7 @@ export const quarterPickerControl = new UICompBuilder(
   if(props.value.value !== '') {
     time = dayjs(props.value.value, DateParser);
   }
+  const [activate , setActivate] =useState(false)
   return props.label({
     required: props.required,
     style: props.style,
@@ -661,12 +665,12 @@ export const quarterPickerControl = new UICompBuilder(
         }}
         onPanelChange={() => {
         }}
-        onFocus={() => props.onEvent("focus")}
+        onFocus={() => {props.onEvent("focus");setActivate(true)}}
         onBlur={() => props.onEvent("blur")}
         suffixIcon={hasIcon(props.suffixIcon) && props.suffixIcon}
       />
     ),
-    ...validate(props),
+    ... activate ? validate(props) : undefined,
   });
 })
   .setPropertyViewFn((children) => {
@@ -781,6 +785,7 @@ export const yearPickerControl = new UICompBuilder(
   if(props.value.value !== '') {
     time = dayjs(props.value.value, DateParser);
   }
+  const [activate , setActivate] =useState(false)
   return props.label({
     required: props.required,
     style: props.style,
@@ -806,12 +811,12 @@ export const yearPickerControl = new UICompBuilder(
         }}
         onPanelChange={() => {
         }}
-        onFocus={() => props.onEvent("focus")}
+        onFocus={() => {props.onEvent("focus");setActivate(true)}}
         onBlur={() => props.onEvent("blur")}
         suffixIcon={hasIcon(props.suffixIcon) && props.suffixIcon}
       />
     ),
-    ...validate(props),
+    ... activate ? validate(props) : undefined,
   });
 })
   .setPropertyViewFn((children) => {

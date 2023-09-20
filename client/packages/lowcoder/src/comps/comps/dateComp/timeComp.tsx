@@ -40,7 +40,7 @@ import {
 } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
 import { TIME_FORMAT, TimeParser } from "util/dateTimeUtils";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { IconControl } from "comps/controls/iconControl";
 import { hasIcon } from "comps/utils";
 import { Section, sectionNames } from "components/Section";
@@ -103,7 +103,7 @@ function validate(
   }
 
   const current = dayjs(props.value.value, TimeParser);
-  if (props.required && !current.isValid()) {
+  if ((props.required && props.value.value==='') ||  !current.isValid()) {
     return { validateStatus: "error", help: trans("prop.required") };
   }
   return { validateStatus: "success" };
@@ -137,7 +137,7 @@ export const timePickerControl = new UICompBuilder(childrenMap, (props) => {
   if(props.value.value !== '') {
     time = dayjs(props.value.value, TimeParser);
   }
-
+  const [activate , setActivate] =useState(false)
   return props.label({
     required: props.required,
     style: props.style,
@@ -159,12 +159,12 @@ export const timePickerControl = new UICompBuilder(childrenMap, (props) => {
             props.onEvent
           );
         }}
-        onFocus={() => props.onEvent("focus")}
+        onFocus={() => {props.onEvent("focus");setActivate(true)}}
         onBlur={() => props.onEvent("blur")}
         suffixIcon={hasIcon(props.suffixIcon) && props.suffixIcon}
       />
     ),
-    ...validate(props),
+    ... activate ? validate(props) : undefined,
   });
 })
   .setPropertyViewFn((children) => (
