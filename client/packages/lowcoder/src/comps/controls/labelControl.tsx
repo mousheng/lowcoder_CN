@@ -96,9 +96,10 @@ const ChildrenWrapper = styled.div`
 const HelpWrapper = styled.div<{
   marginLeft: string;
   color?: string;
+  position?: string;
 }>`
   ${labelCss};
-  margin-top: 4px;
+  margin-top: ${(props) => props.position === 'row' ? '8px' : ''};
   margin-left: ${(props) => props.marginLeft};
   color: ${(props) => props.color};
   display: block;
@@ -147,19 +148,19 @@ export const LabelControl = (function () {
   };
   return new MultiCompBuilder(childrenMap, (props) => (args: LabelViewProps) => (
     <LabelViewWrapper $style={args.style}>
-      <MainWrapper	
-        position={props.position}	
-        hasLabel={!!props.text}	
-        style={{	
-          margin: args && args.style ? args?.style?.margin : 0,	
+      <MainWrapper
+        position={props.position}
+        hasLabel={!!props.text}
+        style={{
+          margin: args && args.style ? args?.style?.margin : 0,
           // padding: args && args.style ? args?.style?.padding : 0,	
-          width: widthCalculator(	
-            args && args.style ? args?.style?.margin : "0px"	
-          ),	
-          height: heightCalculator(	
-            args && args.style ? args?.style?.margin : "0px"	
-          ),	
-        }}	
+          width: widthCalculator(
+            args && args.style ? args?.style?.margin : "0px"
+          ),
+          height: heightCalculator(
+            args && args.style ? args?.style?.margin : "0px"
+          ),
+        }}
       >
         {!props.hidden && !isEmpty(props.text) && (
           <LabelWrapper
@@ -185,6 +186,21 @@ export const LabelControl = (function () {
               <Label border={!!props.tooltip}>{props.text}</Label>
             </Tooltip>
             {args.required && <StyledStarIcon />}
+            {args.help && props.position === 'column' && (
+              <HelpWrapper
+                marginLeft={'3px'}
+                position={props.position}
+                color={
+                  args.validateStatus === "error"
+                    ? red.primary
+                    : args.validateStatus === "warning"
+                      ? yellow.primary
+                      : green.primary
+                }
+              >
+                {args.help}
+              </HelpWrapper>
+            )}
           </LabelWrapper>
         )}
         <ChildrenWrapper
@@ -200,19 +216,17 @@ export const LabelControl = (function () {
         </ChildrenWrapper>
       </MainWrapper>
 
-      {args.help && (
+      {args.help && props.position === 'row' && (
         <HelpWrapper
           marginLeft={
-            props.position === "column" || isEmpty(props.text) || props.hidden
-              ? "0"
-              : `calc(min(${getLabelWidth(props.width, props.widthUnit)} , 70%) + 8px)`
+            `calc(min(${getLabelWidth(props.width, props.widthUnit)} , 70%) + 8px)`
           }
           color={
             args.validateStatus === "error"
               ? red.primary
               : args.validateStatus === "warning"
-              ? yellow.primary
-              : green.primary
+                ? yellow.primary
+                : green.primary
           }
         >
           {args.help}
