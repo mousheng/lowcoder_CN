@@ -48,14 +48,16 @@ const StyledPointIcon = styled(PointIcon)`
 const SimplePopover = (props: {
   title: string;
   visible?: boolean;
-  setVisible?: (vis: boolean) => void;
+  setVisible: (vis: boolean) => void;
   children: JSX.Element | React.ReactNode;
   content: JSX.Element | React.ReactNode;
 }) => {
   const { visible, setVisible } = props;
+  const [mouseOutFlag, setmouseOutFlag] = useState(true);
   const contentWithBox = (
     <SuspensionBox
       title={props.title}
+      setmouseOutFlag={setmouseOutFlag}
       onClose={() => setVisible?.(false)}
       content={props.content}
     />
@@ -70,7 +72,7 @@ const SimplePopover = (props: {
       content={contentWithBox}
       trigger="click"
       open={visible}
-      onOpenChange={setVisible}
+      onOpenChange={(e) => { setVisible(mouseOutFlag === e) }}
       placement="left"
       overlayStyle={{ width: "310px" }}
     >
