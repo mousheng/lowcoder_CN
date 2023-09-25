@@ -282,7 +282,9 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
   );
 
   const justify = props.horizontalAlignment === "justify";
-  const keys = props.selectedKey.value !== '' ? props.selectedKey.value : Object.keys(props.containers)[1]
+  const keys = props.selectedKey.value !== '' && props.containers.hasOwnProperty(props.selectedKey.value) ?
+    props.selectedKey.value : (Object.keys(props.containers)[0] === 'header' ? Object.keys(props.containers)[1] : Object.keys(props.containers)[0])
+
   const containerProps = props.containers[keys].children;
   const headerProps = props.containers['header'].children;
   const childDispatch = wrapDispatch(wrapDispatch(dispatch, "containers"), keys);
