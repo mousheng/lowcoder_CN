@@ -443,6 +443,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
 
 type MenuItem = Required<MenuProps>['items'][number];
 class AntLayoutImplComp extends NavCompBase implements IContainer {
+  delayDelteArray: any = [];
 
 
   // private getAllKey(data: any) {
@@ -479,15 +480,30 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
     Object.keys(containers).forEach((id) => {
       if (!ids.hasOwnProperty(id)) {
         // log.debug("syncContainers delete. ids=", ids, " id=", id);
-        actions.push(wrapChildAction("containers", wrapChildAction(id, deleteCompAction())));
+        // this.TempNodeData[id] = _.cloneDeep(containers[id].children);
+        this.delayDelteArray.push(id)
+        setTimeout(() =>{
+          this.delayDelteArray.map((id:any)=>actions.push(wrapChildAction("containers", wrapChildAction(id, deleteCompAction()))))
+          this.delayDelteArray = []
+        },200)
+        // actions.push(wrapChildAction("containers", wrapChildAction(id, deleteCompAction())));
       }
     });
     // new
     Object.keys(ids).map((id) => {
       if (!containers.hasOwnProperty(id)) {
+        let addNode = { layout: {}, items: {} }
+        
+        // if (this.delayDelteArray.hasOwnProperty(id)) {
+          // addNode.items = this.TempNodeData[id]?.items.getView()
+          // addNode.layout = this.TempNodeData[id]?.layout.getView()
+        // }
         // log.debug("syncContainers new containers: ", containers, " id: ", id);
+        if(id in this.delayDelteArray){
+          this.delayDelteArray = this.delayDelteArray.splice(this.delayDelteArray.indexof(id),1)
+        }else
         actions.push(
-          wrapChildAction("containers", addMapChildAction(id, { layout: {}, items: {} }))
+          wrapChildAction("containers", addMapChildAction(id, addNode))
         );
       }
     });
