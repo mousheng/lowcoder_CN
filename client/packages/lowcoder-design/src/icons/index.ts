@@ -305,3 +305,4 @@ export { ReactComponent as ResponsiveLayoutCompIcon } from "icons/icon-responsiv
 export { ReactComponent as LeftBarThemeIcon } from "icons/icon-leftBar-theme.svg";
 export { ReactComponent as LeftBarLocalStorageIcon } from "icons/icon-leftBar-localStorage.svg";
 export { ReactComponent as LeftBarURLIcon } from "icons/icon-leftBar-url.svg";
+export { ReactComponent as AntLayoutIcon } from "icons/icon-antLayout-comp.svg";

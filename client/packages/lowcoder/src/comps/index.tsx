@@ -112,6 +112,7 @@ import {
   AmapIcon,
   AvatarIcon,
   DescriptionsIcon,
+  AntLayoutIcon,
 } from "lowcoder-design";
 
 import { defaultFormData, FormComp } from "./comps/formComp/formComp";
@@ -146,6 +147,7 @@ import { AmapComp } from "./comps/amap/amapComp"
 import { AvatarComp } from "./comps/avatar"
 import { DescriptionsComp } from "./comps/descriptionsComp";
 import { CalendarComp } from "./comps/calendarComp/calendarComp";
+import { AntLayoutComp } from "./comps/navComp/antLayout";
 
 //Added by Aqib Mirza
 import { JsonLottieComp } from "./comps/jsonComp/jsonLottieComp";
@@ -1033,6 +1035,19 @@ const uiCompMap: Registry = {
     icon: DescriptionsIcon,
     keywords: trans("uiComp.descriptionsKeywords"),
     comp: DescriptionsComp,
+    layoutInfo: {
+      w: 13,
+      h: 40,
+    },
+  },
+  antLayout: {
+    name: trans("uiComp.antLayoutName"),
+    enName: "antLayout",
+    description: trans("uiComp.antLayoutDesc"),
+    categories: ["dataDisplay"],
+    icon: AntLayoutIcon,
+    keywords: trans("uiComp.antLayoutKeywords"),
+    comp: AntLayoutComp,
     layoutInfo: {
       w: 13,
       h: 40,

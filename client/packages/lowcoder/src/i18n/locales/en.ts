@@ -934,6 +934,9 @@ export const en = {
     descriptionsName: "Descriptions",
     descriptionsDesc: "Descriptions",
     descriptionsKeywords: "",
+    antLayoutName: "AntLayout",
+    antLayoutDesc: "AntLayout",
+    antLayoutKeywords: "",
   },
   comp: {
     menuViewDocs: "View documentation",

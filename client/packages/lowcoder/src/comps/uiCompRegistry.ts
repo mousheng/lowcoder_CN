@@ -124,6 +124,7 @@ export type UICompType =
   | "amap"
   | "avatar"
   | "descriptions"
+  | "antLayout"
 
 export const uiCompRegistry = {} as Record<UICompType | string, UICompManifest>;
 
