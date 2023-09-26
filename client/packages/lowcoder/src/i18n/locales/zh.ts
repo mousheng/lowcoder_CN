@@ -284,6 +284,10 @@ export const zh = {
         clickMarkerDesc: "在点击标记时触发",
         amapMoveEnd: "地图移动结束时",
         amapMoveEndDesc: "在地图移动结束时触发",
+        clickLogoEvent: "点击logo时",
+        clickLogoEventDesc: "在点击Logo时触发",
+        clickMenuEvent: "点击菜单时",
+        clickMenuEventDesc: "在点击菜单时触发",
     },
     themeDetail: {
         primary: "颜色主题",
@@ -2777,6 +2781,15 @@ export const zh = {
         selectedFontColor: '选中文字颜色',
         triggerButtonBgColor: '菜单开关颜色',
         triggerIconColor: '菜单开关图标颜色',
-    }
+        footString: '底部文本',
+        logoTitle: '单页面框架',
+        TitleStyle: '标题样式',
+        bodyStyle: '主体样式',
+        headerStyle: '顶部样式',
+        frameStyle: '框架样式',
+        menuStyle: '菜单样式',
+        selectedKey: '已选择键',
+        collapsed: '菜单收缩',
+}
 };
 

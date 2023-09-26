@@ -2,7 +2,7 @@ import { NameConfig, NameConfigHidden, withExposingConfigs } from "comps/generat
 import { UICompBuilder, sameTypeMap, withDefault } from "comps/generators";
 import { Section, messageInstance, sectionNames } from "lowcoder-design";
 import styled from "styled-components";
-import { clickEvent, eventHandlerControl } from "comps/controls/eventHandlerControl";
+import { clickLogoEvent, clickMenuEvent, eventHandlerControl } from "comps/controls/eventHandlerControl";
 import { StringControl } from "comps/controls/codeControl";
 import { navListComp } from "./navItemComp";
 import { menuPropertyView } from "./components/MenuItemList";
@@ -15,16 +15,20 @@ import { IContainer } from "../containerBase/iContainer";
 import { SimpleContainerComp } from "../containerBase/simpleContainerComp";
 import { addMapChildAction } from "comps/generators/sameTypeMap";
 import { CompAction, CompActionTypes, deleteCompAction, wrapChildAction, wrapDispatch } from "lowcoder-core";
-import { IconControl, JSONObject, JSONValue, NameGenerator, dropdownControl, stringExposingStateControl } from "@lowcoder-ee/index.sdk";
+import { IconControl, JSONObject, JSONValue, NameGenerator, booleanExposingStateControl, dropdownControl, stringExposingStateControl } from "@lowcoder-ee/index.sdk";
 import { CompTree, mergeCompTrees } from "../containerBase/utils";
 import _ from "lodash";
 import { v4 as uuidv4 } from 'uuid';
 import { BackgroundColorContext } from "comps/utils/backgroundColorContext";
 import { ContainerBaseProps, InnerGrid, gridItemCompToGridItems } from "../containerComp/containerView";
 import { HintPlaceHolder } from "lowcoder-design";
-import { useState } from "react";
 import { FooterProps } from "antd-mobile";
 const { Header, Content, Footer, Sider } = Layout;
+
+const EventOptions = [
+  clickLogoEvent,
+  clickMenuEvent,
+] as const;
 
 const LogoWrapper = styled.div`
   display: flex;
@@ -88,7 +92,6 @@ const sharpOptions = [
   { label: trans("avatarComp.circle"), value: "circle" },
 ] as const;
 
-const logoEventHandlers = [clickEvent];
 function getItem(
   label: React.ReactNode,
   key: React.Key,
@@ -153,7 +156,6 @@ const FrameWrapper = styled("div") <{ frameStyle: AntLayoutFramerStyleType, head
 const BodyContainer = (props: ColumnContainerProps) => {
   return (
     <div style={{
-      // 
       height: '100%',
       width: '100%',
       overflow: 'hidden',
@@ -221,9 +223,8 @@ const HeaderContainer = (props: ColumnContainerProps) => {
 const childrenMap = {
   logoUrl: StringControl,
   selectedKey: stringExposingStateControl('selectedKey', ''),
-  logoEvent: withDefault(eventHandlerControl(logoEventHandlers), [{ name: "click" }]),
   logoIcon: withDefault(IconControl, "/icon:antd/homeoutlined"),
-  logoTitle: withDefault(StringControl, '单页面框架'),
+  logoTitle: withDefault(StringControl, trans('antLayoutComp.logoTitle')),
   shape: dropdownControl(sharpOptions, "circle"),
   containers: withDefault(sameTypeMap(SimpleContainerComp), {
     'header': { view: {}, layout: {} },
@@ -234,16 +235,19 @@ const childrenMap = {
       id: uuidv4(),
     },
   ]),
-  logoStyle: withDefault(styleControl(AntLayoutLogoStyle, '标题样式'), { fontSize: '20px' }),
-  bodyStyle: withDefault(styleControl(AntLayoutBodyStyle, '主容器样式'), {}),
-  headerStyle: withDefault(styleControl(AntLayoutBodyStyle, '顶部容器样式'), {}),
-  frameStyle: withDefault(styleControl(AntLayoutFramerStyle, '框架样式'), {}),
-  menuStyle: withDefault(styleControl(AntLayoutMenuStyle, '菜单样式'), {}),
+  onEvent: eventHandlerControl(EventOptions),
+  TitleStyle: withDefault(styleControl(AntLayoutLogoStyle, trans('antLayoutComp.TitleStyle')), { fontSize: '20px' }),
+  bodyStyle: withDefault(styleControl(AntLayoutBodyStyle, trans('antLayoutComp.bodyStyle')), {}),
+  headerStyle: withDefault(styleControl(AntLayoutBodyStyle, trans('antLayoutComp.headerStyle')), {}),
+  frameStyle: withDefault(styleControl(AntLayoutFramerStyle, trans('antLayoutComp.frameStyle')), {}),
+  menuStyle: withDefault(styleControl(AntLayoutMenuStyle, trans('antLayoutComp.menuStyle')), {}),
+  footString: withDefault(StringControl, 'Ant Design ©2023 Created by Ant UED'),
+  collapsed: booleanExposingStateControl('collapsed'),
 };
 
 const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
   const data = props.items;
-
+  const collapsed = props.collapsed.value;
   const keys = props.selectedKey.value !== '' && props.containers.hasOwnProperty(props.selectedKey.value) ?
     props.selectedKey.value : (Object.keys(props.containers)[0] === 'header' ? Object.keys(props.containers)[1] : Object.keys(props.containers)[0])
 
@@ -251,9 +255,9 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
   const headerProps = props.containers['header'].children;
   const childDispatch = wrapDispatch(wrapDispatch(dispatch, "containers"), keys);
   const headerDispatch = wrapDispatch(wrapDispatch(dispatch, "containers"), Object.keys(props.containers)[0]);
-  const [collapsed, setCollapsed] = useState(false);
   const onClick: MenuProps['onClick'] = (e) => {
     props.selectedKey.onChange(e.key)
+    props.onEvent('clickMenu')
   }
   return (
     <FrameWrapper
@@ -264,21 +268,23 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
         <SiderWarpper
           collapsible
           collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
+          onCollapse={(value) => props.collapsed.onChange(value)}
           menuStyle={props.menuStyle}
         >
-          <LogoWrapper>
+          <LogoWrapper
+            onClick={() => props.onEvent('clickLogo')}
+          >
             {props.logoIcon && (props.logoUrl || (props.logoIcon as any).props.value) && (
               <AvatarComponent
                 size={42}
                 icon={props.logoIcon}
                 src={props.logoUrl}
                 shape={props.shape}
-                $style={props.logoStyle}
+                $style={props.TitleStyle}
               />
             )}
             {!collapsed && <TitleWarpper
-              $style={props.logoStyle}
+              $style={props.TitleStyle}
               collapsed={collapsed}
             >
               {props.logoTitle}
@@ -306,16 +312,12 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
                 style={{
                   ...props.headerStyle,
                 }}
-              // containerPadding={[0, 0]}
-              // style={{'overflow': 'hidden'}}
               />
             </BackgroundColorContext.Provider>
           </Header>
           <Content style={{ margin: '0px', height: '100%' }}>
             <div style={{
-              // height: 'calc(100% - 48px)', 
               height: '100%',
-              // background: '#fff'
             }}>
               <BackgroundColorContext.Provider value={props.bodyStyle.background}>
                 <BodyContainer
@@ -323,11 +325,8 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
                   items={gridItemCompToGridItems(containerProps.items.getView())}
                   positionParams={containerProps.positionParams.getView()}
                   dispatch={childDispatch}
-                  // autoHeight={props.autoHeight}
                   style={{
                     ...props.bodyStyle
-                    // ...columnCustomStyle,
-                    // background: backgroundStyle,
                   }}
                 />
               </BackgroundColorContext.Provider>
@@ -335,7 +334,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
           </Content>
           <FooterWarpper>
             <span>
-              Ant Design ©2023 Created by Ant UED
+              {props.footString}
             </span>
           </FooterWarpper>
         </Layout>
@@ -357,18 +356,23 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
             label: trans("avatarComp.shape"),
             radioButton: true,
           })}
-          {children.selectedKey.propertyView({ label: '默认选择键' })}
+          {children.selectedKey.propertyView({ label: trans('antLayoutComp.selectedKey') })}
         </Section>
         <Section name={trans("menu")}>
           {menuPropertyView(children.items)}
+          {children.collapsed.propertyView({ label: trans('antLayoutComp.collapsed') })}
         </Section>
-        <Section name={sectionNames.layout}>{hiddenPropertyView(children)}</Section>
+        <Section name={sectionNames.layout}>
+          {children.onEvent.getPropertyView()}
+          {hiddenPropertyView(children)}
+          {children.footString.propertyView({ label: trans('antLayoutComp.footString') })}
+        </Section>
         <Section name={sectionNames.style}>
           {children.frameStyle.getPropertyView()}
           {children.bodyStyle.getPropertyView()}
           {children.menuStyle.getPropertyView()}
           {children.headerStyle.getPropertyView()}
-          {children.logoStyle.getPropertyView()}
+          {children.TitleStyle.getPropertyView()}
         </Section>
       </>
     );
@@ -492,5 +496,6 @@ export const AntLayoutComp = withExposingConfigs(AntLayoutImplComp, [
   new NameConfig("logoUrl", trans("navigation.logoURLDesc")),
   NameConfigHidden,
   new NameConfig("items", trans("navigation.itemsDesc")),
-  new NameConfig("selectedKey", "selectedKey"),
+  new NameConfig("selectedKey", trans('antLayoutComp.selectedKey')),
+  new NameConfig("collapsed", trans('antLayoutComp.collapsed')),
 ]);

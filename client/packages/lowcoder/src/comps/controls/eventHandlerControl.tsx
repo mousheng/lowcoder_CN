@@ -335,6 +335,16 @@ export const amapMoveEndEvent: EventConfigType = {
   value: "amapMoveEnd",
   description: trans("event.amapMoveEndDesc"),
 };
+export const clickLogoEvent: EventConfigType = {
+  label: trans("event.clickLogoEvent"),
+  value: "clickLogo",
+  description: trans("event.clickLogoEventDesc"),
+};
+export const clickMenuEvent: EventConfigType = {
+  label: trans("event.clickMenuEvent"),
+  value: "clickMenu",
+  description: trans("event.clickMenuEventDesc"),
+};
 
 export const InputEventHandlerControl = eventHandlerControl([
   changeEvent,
