@@ -229,14 +229,15 @@ const ResetIcon = styled(IconReset)`
   }
 `;
 
-export function styleControl<T extends readonly SingleColorConfig[]>(colorConfigs: T) {
+export function styleControl<T extends readonly SingleColorConfig[]>(colorConfigs: T, label?: string) {
   type ColorMap = { [K in Names<T>]: string };
   const childrenMap: any = {};
   colorConfigs.map((config) => {
     const name: Names<T> = config.name;
     if (	
       name === "radius" ||	
-      name === "cardRadius"
+      name === "cardRadius" ||
+      name === "fontSize"
     ) {	
       childrenMap[name] = StringControl;	
     } else if (name === "margin" || name === "padding" || name==="containerheaderpadding" || name==="containerfooterpadding" || name==="containerbodypadding") {	
@@ -246,7 +247,7 @@ export function styleControl<T extends readonly SingleColorConfig[]>(colorConfig
     }
   });
   // [K in Names<T>]: new (params: CompParams<any>) => ColorControl;
-  const label = trans("prop.style");
+  label = label ?? trans("prop.style");
   return new ControlItemCompBuilder(
     childrenMap as ToConstructor<{ [K in Names<T>]: ColorControl }>,
     (props) => {
