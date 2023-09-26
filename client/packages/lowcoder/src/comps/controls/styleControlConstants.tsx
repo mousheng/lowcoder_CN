@@ -807,6 +807,40 @@ export const AntLayoutFramerStyle = [
   PADDING,
 ] as const;
 
+export const AntLayoutMenuStyle = [
+  getStaticBackground("#FFFFFFFF"),
+  {
+    name: "menuBackground",
+    label: trans("antLayoutComp.menuBackground"),
+    color: "#FFFFFFFF",
+  },
+  {
+    name: "subMenuBackground",
+    label: trans("antLayoutComp.subMenuBackground"),
+    color: "#fafafa",
+  },
+  {
+    name: "selectedMenuBackground",
+    label: trans("antLayoutComp.selectedMenuBackground"),
+    color: "#e6f4ff",
+  },
+  {
+    name: "selectedFontColor",
+    label: trans("antLayoutComp.selectedFontColor"),
+    color: "#1677ff",
+  },
+  {
+    name: "triggerButtonBgColor",
+    label: trans("antLayoutComp.triggerButtonBgColor"),
+    color: "#f5f5f5",
+  },
+  {
+    name: "triggerIconColor",
+    label: trans("antLayoutComp.triggerIconColor"),
+    color: "#393b47",
+  }
+] as const;
+
 export const AntLayoutBodyStyle = [
   {
     name: "containerColor",
@@ -1044,6 +1078,7 @@ export type ResponsiveLayoutColStyleType = StyleConfigType<typeof ResponsiveLayo
 export type AntLayoutLogoStyleType = StyleConfigType<typeof AntLayoutLogoStyle>;
 export type AntLayoutBodyStyleType = StyleConfigType<typeof AntLayoutBodyStyle>;
 export type AntLayoutFramerStyleType = StyleConfigType<typeof AntLayoutFramerStyle>;
+export type AntLayoutMenuStyleType = StyleConfigType<typeof AntLayoutMenuStyle>;
 
 
 export function widthCalculator(margin: string) {

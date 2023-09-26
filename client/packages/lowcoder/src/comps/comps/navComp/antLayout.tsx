@@ -4,22 +4,18 @@ import { Section, messageInstance, sectionNames } from "lowcoder-design";
 import styled from "styled-components";
 import { clickEvent, eventHandlerControl } from "comps/controls/eventHandlerControl";
 import { StringControl } from "comps/controls/codeControl";
-import { alignWithJustifyControl } from "comps/controls/alignControl";
 import { navListComp } from "./navItemComp";
 import { menuPropertyView } from "./components/MenuItemList";
-import { DownOutlined } from "@ant-design/icons";
-import { Avatar, Breadcrumb, Dropdown, Layout, Menu, MenuProps, SiderProps } from "antd";
-import { migrateOldData } from "comps/generators/simpleGenerators";
+import { Avatar, Layout, Menu, MenuProps, SiderProps } from "antd";
 import { styleControl } from "comps/controls/styleControl";
-import { AntLayoutBodyStyle, AntLayoutBodyStyleType, AntLayoutFramerStyle, AntLayoutFramerStyleType, AntLayoutLogoStyle, AntLayoutLogoStyleType, NavigationStyle, ResponsiveLayoutColStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
+import { AntLayoutBodyStyle, AntLayoutBodyStyleType, AntLayoutFramerStyle, AntLayoutFramerStyleType, AntLayoutLogoStyle, AntLayoutLogoStyleType, AntLayoutMenuStyle, AntLayoutMenuStyleType, NavigationStyle, ResponsiveLayoutColStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
 import { IContainer } from "../containerBase/iContainer";
-import { runInContext } from "lodash";
 import { SimpleContainerComp } from "../containerBase/simpleContainerComp";
 import { addMapChildAction } from "comps/generators/sameTypeMap";
 import { CompAction, CompActionTypes, deleteCompAction, wrapChildAction, wrapDispatch } from "lowcoder-core";
-import { DisabledContext, IconControl, JSONObject, JSONValue, NameGenerator, NumberControl, dropdownControl, stringExposingStateControl } from "@lowcoder-ee/index.sdk";
+import { IconControl, JSONObject, JSONValue, NameGenerator, dropdownControl, stringExposingStateControl } from "@lowcoder-ee/index.sdk";
 import { CompTree, mergeCompTrees } from "../containerBase/utils";
 import _ from "lodash";
 import { v4 as uuidv4 } from 'uuid';
@@ -34,7 +30,7 @@ const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 64px;
+  height: 58px;
   cursor: pointer;
   .span {
     width: 40px;
@@ -58,23 +54,31 @@ const FooterWarpper = styled(Footer) <FooterProps>`
   justify-content: center;
 `
 
-const SiderWarpper = styled(Sider) <SiderProps>`
-  .ant-layout .ant-layout-has-sider{
-    .ant-layout .ant-layout-sider {
-      background: red;
-    }
-  }
+const SiderWarpper = styled(Sider) <  SiderProps & { menuStyle: AntLayoutMenuStyleType } > `
+.ant-menu-light, .ant-menu-light>.ant-menu {
+  background: ${(props) => props.menuStyle.menuBackground};
+}
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+  background: ${(props) => props.menuStyle.subMenuBackground};
+}
+.ant-menu-light .ant-menu-item-selected, .ant-menu-light>.ant-menu .ant-menu-item-selected {
+  background-color: ${(props) => props.menuStyle.selectedMenuBackground};
+  color: ${(props) => props.menuStyle.selectedFontColor};
+}
+.ant-menu-light .ant-menu-submenu-selected >.ant-menu-submenu-title, .ant-menu-light>.ant-menu .ant-menu-submenu-selected >.ant-menu-submenu-title {
+  color: ${(props) => props.menuStyle.selectedFontColor};
+}
   
   .ant-layout-sider-children{
-    background-color: #fff;
+    background-color: ${(props) => props.menuStyle.background};
     overflow: auto;
   }
   
   .ant-layout-sider-trigger {
-    background-color: #fff;
+    background-color: ${(props) => props.menuStyle.triggerButtonBgColor};
     position: relative;
     svg {
-      color: #000;
+      color: ${(props) => props.menuStyle.triggerIconColor};
     }
   }
 `;
@@ -234,6 +238,7 @@ const childrenMap = {
   bodyStyle: withDefault(styleControl(AntLayoutBodyStyle, '主容器样式'), {}),
   headerStyle: withDefault(styleControl(AntLayoutBodyStyle, '顶部容器样式'), {}),
   frameStyle: withDefault(styleControl(AntLayoutFramerStyle, '框架样式'), {}),
+  menuStyle: withDefault(styleControl(AntLayoutMenuStyle, '菜单样式'), {}),
 };
 
 const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
@@ -260,6 +265,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
+          menuStyle={props.menuStyle}
         >
           <LogoWrapper>
             {props.logoIcon && (props.logoUrl || (props.logoIcon as any).props.value) && (
@@ -286,7 +292,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
           />
         </SiderWarpper>
         <Layout>
-          <Header style={{ padding: 0, height: '64px', lineHeight: '16px' }} >
+          <Header style={{ padding: 0, height: '58px', lineHeight: '16px' }} >
             <BackgroundColorContext.Provider value={'#fff'}>
               <HeaderContainer
                 {...props}
@@ -336,38 +342,6 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
       </Layout>
     </FrameWrapper>
 
-
-    // <DisabledContext.Provider value={false}>
-    //   <div style={{ width: '90%', height: '100px' }}>
-    //       <ColumnContainer
-    //         layout={containerProps.layout.getView()}
-    //         items={gridItemCompToGridItems(containerProps.items.getView())}
-    //         positionParams={containerProps.positionParams.getView()}
-    //         dispatch={childDispatch}
-    //         // autoHeight={props.autoHeight}
-    //         style={{
-    //           radius: '0px',
-    //           margin: '0px',
-    //           border: '0px',
-    //           background: '#fff',
-    //           padding: '0px',
-    //           // ...columnCustomStyle,
-    //           // background: backgroundStyle,
-    //         }}
-    //       />
-    //     </div>
-    //   <Wrapper borderColor={props.style.border} bgColor={props.style.background}>
-    //     <NavInner justify={justify}>
-    //       {props.logoUrl && (
-    //         <LogoWrapper onClick={() => props.logoEvent("click")}>
-    //           <img src={props.logoUrl} alt="LOGO" />
-    //         </LogoWrapper>
-    //       )}
-    //       {!justify ? <ItemList align={props.horizontalAlignment}>{items}</ItemList> : items}
-    //     </NavInner>
-
-    //   </Wrapper>
-    // </DisabledContext.Provider>
   );
 })
   .setPropertyViewFn((children) => {
@@ -384,7 +358,6 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
             radioButton: true,
           })}
           {children.selectedKey.propertyView({ label: '默认选择键' })}
-          {/* {children.logoUrl.getView() && children.logoEvent.propertyView({ inline: true })} */}
         </Section>
         <Section name={trans("menu")}>
           {menuPropertyView(children.items)}
@@ -393,6 +366,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
         <Section name={sectionNames.style}>
           {children.frameStyle.getPropertyView()}
           {children.bodyStyle.getPropertyView()}
+          {children.menuStyle.getPropertyView()}
           {children.headerStyle.getPropertyView()}
           {children.logoStyle.getPropertyView()}
         </Section>
@@ -405,24 +379,6 @@ type MenuItem = Required<MenuProps>['items'][number];
 class AntLayoutImplComp extends NavCompBase implements IContainer {
   delayDelteArray: any = [];
 
-
-  // private getAllKey(data: any) {
-  //   let allKey = {}
-  //   return new Set(data.map((column: any) =>
-  //     column.getView().children.map((child: any) => child.getView().id)));
-  // }
-  // private TraversalNode = (data: any, fun?: Function): any => {
-  //   return data.map((item: any, idx: number) => {
-  //     const { hidden, label, items, active, onEvent, icon, key, id } = item.getView();
-  //     // console.log(hidden, label, items, active, onEvent, key);
-  //     let subItems = this.TraversalNode(items, fun)
-  //     if (fun)
-  //       return fun(data)
-  //     else {
-  //       return this.getItem(label, id, icon, subItems.length ? subItems : undefined)
-  //     }
-  //   })
-  // }
   private syncContainers(): this {
     const columns = this.children.items.getView();
     const ids = _.reduce(columns, (ret: Record<string, string>, item) => {
@@ -432,33 +388,22 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
       return ret
     }, {})
     ids['header'] = ""
-    // const ids: Set<string> = new Set(this.TraversalNode(columns, x=> x.forEach(item => item.children.id)));
-    // const ids: Set<string> = new Set(columns.map((column) => String(column.getView().id)));
     let containers = this.children.containers.getView();
     // delete
     const actions: CompAction[] = [];
     Object.keys(containers).forEach((id) => {
       if (!ids.hasOwnProperty(id)) {
-        // log.debug("syncContainers delete. ids=", ids, " id=", id);
-        // this.TempNodeData[id] = _.cloneDeep(containers[id].children);
         this.delayDelteArray.push(id)
         setTimeout(() => {
           this.delayDelteArray.map((id: any) => actions.push(wrapChildAction("containers", wrapChildAction(id, deleteCompAction()))))
           this.delayDelteArray = []
         }, 200)
-        // actions.push(wrapChildAction("containers", wrapChildAction(id, deleteCompAction())));
       }
     });
     // new
     Object.keys(ids).map((id) => {
       if (!containers.hasOwnProperty(id)) {
         let addNode = { layout: {}, items: {} }
-
-        // if (this.delayDelteArray.hasOwnProperty(id)) {
-        // addNode.items = this.TempNodeData[id]?.items.getView()
-        // addNode.layout = this.TempNodeData[id]?.layout.getView()
-        // }
-        // log.debug("syncContainers new containers: ", containers, " id: ", id);
         if (id in this.delayDelteArray) {
           this.delayDelteArray = this.delayDelteArray.splice(this.delayDelteArray.indexof(id), 1)
         } else
@@ -467,7 +412,6 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
           );
       }
     });
-    // log.debug("syncContainers. actions: ", actions);
     let instance = this;
     actions.forEach((action) => {
       instance = instance.reduce(action);
@@ -497,13 +441,11 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
         return this;
       }
     }
-    // log.debug("before super reduce. action: ", action);
     let newInstance = super.reduce(action);
     if (action.type === CompActionTypes.UPDATE_NODES_V2) {
       // Need eval to get the value in StringControl
       newInstance = newInstance.syncContainers();
     }
-    // log.debug("reduce. instance: ", this, " newInstance: ", newInstance);
     return newInstance;
   }
 
@@ -513,14 +455,6 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
     return Object.values(this.children.containers.children).find((container) =>
       container.realSimpleContainer(key)
     );
-    // let selectedTabKey = this.children.selectedKey.getView().value;
-    // const tabs = this.children.items.getView();
-    // const selectedTab = tabs.find((tab) => tab.key === selectedTabKey) ?? tabs[0];
-    // const id = String(selectedTab.id);
-    // if (_.isNil(key)) return this.children.containers.children[id];
-    // return Object.values(this.children.containers.children).find((container) =>
-    //   container.realSimpleContainer(key)
-    // );
   }
 
   getCompTree(): CompTree {
@@ -550,7 +484,6 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
   }
 
   override autoHeight(): boolean {
-    // return this.children.autoHeight.getView();
     return false;
   }
 }

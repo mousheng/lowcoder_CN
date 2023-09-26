@@ -2781,11 +2781,17 @@ export const en = {
     editDesc: "Component cannot be edited, but click event can be activated",
   },
   antLayoutComp: {
-    logoIconColor: 'logo Color',
-    logoBackgroundColor: 'logo background color',
-    titleSize: 'title size',
-    fontColor: 'font color',
+    logoIconColor: 'Logo Color',
+    logoBackgroundColor: 'Logo background color',
+    titleSize: 'Title size',
+    fontColor: 'Font color',
     atLeastOneColumnError: 'Antlayout keeps at least one menu item！',
-    containerColor: 'container color',
+    containerColor: 'Container color',
+    menuBackground: 'Menu background color',
+    subMenuBackground: 'SubMenu background color',
+    selectedMenuBackground: 'Selected background color',
+    selectedFontColor: 'Selected font color',
+    triggerButtonBgColor: 'Trigger button color',
+    triggerIconColor: 'Trigger icon color',
   }
 };
