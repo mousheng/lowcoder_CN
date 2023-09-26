@@ -19,7 +19,7 @@ import { runInContext } from "lodash";
 import { SimpleContainerComp } from "../containerBase/simpleContainerComp";
 import { addMapChildAction } from "comps/generators/sameTypeMap";
 import { CompAction, CompActionTypes, deleteCompAction, wrapChildAction, wrapDispatch } from "lowcoder-core";
-import { DisabledContext, IconControl, JSONObject, JSONValue, NameGenerator, NumberControl, stringExposingStateControl } from "@lowcoder-ee/index.sdk";
+import { DisabledContext, IconControl, JSONObject, JSONValue, NameGenerator, NumberControl, dropdownControl, stringExposingStateControl } from "@lowcoder-ee/index.sdk";
 import { CompTree, mergeCompTrees } from "../containerBase/utils";
 import _ from "lodash";
 import { v4 as uuidv4 } from 'uuid';
@@ -130,6 +130,11 @@ const SiderWarpper = styled(Sider) <SiderProps>`
   }
 `;
 
+const sharpOptions = [
+  { label: trans("avatarComp.square"), value: "square" },
+  { label: trans("avatarComp.circle"), value: "circle" },
+] as const;
+
 const logoEventHandlers = [clickEvent];
 function getItem(
   label: React.ReactNode,
@@ -167,6 +172,13 @@ white-space: nowrap;
 display: ${(props) => props.collapsed ? '' : ''};
 font-size: ${(props) => props.$style.fontSize};
 color: ${(props) => props.$style.fontColor};
+`
+const AvatarComponent = styled(Avatar) <{ $style: AntLayoutLogoStyleType }>`
+  font-size: 48px;
+  background-color: ${((props) => props.$style.background)};
+  color: ${((props) => props.$style.color)};
+  width: 48px;
+  height: 48px;
 `
 
 const BodyContainer = (props: ColumnContainerProps) => {
@@ -208,13 +220,12 @@ const childrenMap = {
   logoEvent: withDefault(eventHandlerControl(logoEventHandlers), [{ name: "click" }]),
   logoIcon: withDefault(IconControl, "/icon:antd/homeoutlined"),
   logoTitle: withDefault(StringControl, '单页面框架'),
-  // horizontalAlignment: alignWithJustifyControl(),
+  shape: dropdownControl(sharpOptions, "circle"),
   containers: withDefault(sameTypeMap(SimpleContainerComp), {
     'header': { view: {}, layout: {} },
   }),
   items: withDefault(navListComp(), [
     {
-
       label: trans("menuItem") + "1",
       id: uuidv4(),
     },
@@ -226,7 +237,6 @@ const childrenMap = {
 const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
   const data = props.items;
 
-  // const justify = props.horizontalAlignment === "justify"; 
   const keys = props.selectedKey.value !== '' && props.containers.hasOwnProperty(props.selectedKey.value) ?
     props.selectedKey.value : (Object.keys(props.containers)[0] === 'header' ? Object.keys(props.containers)[1] : Object.keys(props.containers)[0])
 
@@ -240,11 +250,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
   }
   return (
     <DisabledContext.Provider value={false} >
-      <Layout style={{
-        height: '100%',
-        margin: '5px'
-      }}
-      >
+      <Layout style={{ height: '100%', margin: '5px' }}>
         <SiderWarpper
           collapsible
           collapsed={collapsed}
@@ -252,19 +258,12 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
         >
           <LogoWrapper>
             {props.logoIcon && (props.logoUrl || (props.logoIcon as any).props.value) && (
-              <Avatar
-                // size={parseInt(props.logoStyle.logoSize)}
-                size={32}
+              <AvatarComponent
+                size={42}
                 icon={props.logoIcon}
                 src={props.logoUrl}
-                shape='square'
-                style={{
-                  fontSize: '32px',
-                  backgroundColor: props.logoStyle.background,
-                  color: props.logoStyle.color,
-                  width: '40px',
-                  height: '40px',
-                }}
+                shape={props.shape}
+                $style={props.logoStyle}
               />
             )}
             {!collapsed && <TitleWarpper
@@ -380,6 +379,10 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
             label: trans("avatarComp.icon"),
             IconType: "All",
           })}
+          {children.shape.propertyView({
+            label: trans("avatarComp.shape"),
+            radioButton: true,
+          })}
           {children.selectedKey.propertyView({ label: '默认选择键' })}
           {/* {children.logoUrl.getView() && children.logoEvent.propertyView({ inline: true })} */}
         </Section>
@@ -486,7 +489,7 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
           },
         } as CompAction;
       }
-      if (value.type === "delete" && columns.length <= 1 && action.path.length === 1 ) {
+      if (value.type === "delete" && columns.length <= 1 && action.path.length === 1) {
         messageInstance.warning(trans("antLayoutComp.atLeastOneColumnError"));
         // at least one column
         return this;
