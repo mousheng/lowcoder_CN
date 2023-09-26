@@ -1049,8 +1049,8 @@ const uiCompMap: Registry = {
     keywords: trans("uiComp.antLayoutKeywords"),
     comp: AntLayoutComp,
     layoutInfo: {
-      w: 13,
-      h: 40,
+      w: 24,
+      h: 115,
     },
   },
 };

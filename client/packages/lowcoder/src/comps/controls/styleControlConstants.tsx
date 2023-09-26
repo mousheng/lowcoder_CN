@@ -780,6 +780,33 @@ export const NavigationStyle = [
   PADDING,
 ] as const;
 
+export const AntLayoutLogoStyle = [
+  {
+    name: "color",
+    label: trans("antLayoutComp.logoIconColor"),
+    color: "#5589F2",
+  },
+  getStaticBackground("#FFFFFF00"),
+  {
+    name: "fontSize",
+    label: trans("antLayoutComp.titleSize"),
+    padding: "padding",	
+  },
+  {
+    name: "fontColor",
+    label: trans("antLayoutComp.fontColor"),
+    color: "#000000",
+  },
+] as const;
+
+export const AntLayoutBodyStyle = [
+  getStaticBackground("#FFFFFF00"),
+  getStaticBorder("#FFFFFF00"),
+  RADIUS,
+  MARGIN,	
+  PADDING,
+] as const;
+
 export const ImageStyle = [getStaticBorder("#00000000"), RADIUS, MARGIN, PADDING] as const;
 
 export const IconStyle = [getStaticBackground("#00000000"),
@@ -999,6 +1026,8 @@ export type CarouselStyleType = StyleConfigType<typeof CarouselStyle>;
 export type RichTextEditorStyleType = StyleConfigType<typeof RichTextEditorStyle>;
 export type ResponsiveLayoutRowStyleType = StyleConfigType<typeof ResponsiveLayoutRowStyle>;
 export type ResponsiveLayoutColStyleType = StyleConfigType<typeof ResponsiveLayoutColStyle>;
+export type AntLayoutLogoStyleType = StyleConfigType<typeof AntLayoutLogoStyle>;
+export type AntLayoutBodyStyleType = StyleConfigType<typeof AntLayoutBodyStyle>;
 
 export function widthCalculator(margin: string) {
   const marginArr = margin?.trim().replace(/\s+/g,' ').split(" ") || "";

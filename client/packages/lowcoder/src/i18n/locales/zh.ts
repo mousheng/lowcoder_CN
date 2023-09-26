@@ -2764,5 +2764,11 @@ export const zh = {
         rowLayout: "行布局",
         columnsLayout: "栏目布局",
     },
+    antLayoutComp: {
+        logoIconColor: '图标填充颜色',
+        logoBackgroundColor: '图标背景颜色',
+        titleSize: '标题大小',
+        fontColor: '标题颜色',
+  }
 };
 

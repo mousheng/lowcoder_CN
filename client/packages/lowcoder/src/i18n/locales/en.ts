@@ -2779,5 +2779,11 @@ export const en = {
     columnCount: "columns per row",
     edit: "edit",
     editDesc: "Component cannot be edited, but click event can be activated",
+  },
+  antLayoutComp: {
+    logoIconColor: 'logo Color',
+    logoBackgroundColor: 'logo background color',
+    titleSize: 'title size',
+    fontColor: 'font color',
   }
 };
