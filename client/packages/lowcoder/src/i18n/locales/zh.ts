@@ -2766,10 +2766,11 @@ export const zh = {
     },
     antLayoutComp: {
         logoIconColor: '图标填充颜色',
-        logoBackgroundColor: '图标背景颜色',
         titleSize: '标题大小',
+        logoBackgroundColor: '图标背景颜色',
         fontColor: '标题颜色',
         atLeastOneColumnError: '至少保留一个菜单项！',
+        containerColor: '容器背景色',
   }
 };
 

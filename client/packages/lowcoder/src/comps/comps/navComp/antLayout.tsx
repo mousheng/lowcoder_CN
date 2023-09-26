@@ -11,7 +11,7 @@ import { DownOutlined } from "@ant-design/icons";
 import { Avatar, Breadcrumb, Dropdown, Layout, Menu, MenuProps, SiderProps } from "antd";
 import { migrateOldData } from "comps/generators/simpleGenerators";
 import { styleControl } from "comps/controls/styleControl";
-import { AntLayoutBodyStyle, AntLayoutBodyStyleType, AntLayoutLogoStyle, AntLayoutLogoStyleType, NavigationStyle, ResponsiveLayoutColStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
+import { AntLayoutBodyStyle, AntLayoutBodyStyleType, AntLayoutFramerStyle, AntLayoutFramerStyleType, AntLayoutLogoStyle, AntLayoutLogoStyleType, NavigationStyle, ResponsiveLayoutColStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
 import { IContainer } from "../containerBase/iContainer";
@@ -28,51 +28,7 @@ import { ContainerBaseProps, InnerGrid, gridItemCompToGridItems } from "../conta
 import { HintPlaceHolder } from "lowcoder-design";
 import { useState } from "react";
 import { FooterProps } from "antd-mobile";
-import { calcColumnWidth } from "../tableComp/tableUtils";
 const { Header, Content, Footer, Sider } = Layout;
-
-
-type IProps = {
-  justify: boolean;
-  bgColor: string;
-  borderColor: string;
-};
-
-// const Wrapper = styled("div") <Pick<IProps, "bgColor" | "borderColor">>`
-//   height: 100%;
-//   border-radius: 2px;
-//   box-sizing: border-box;
-//   border: 1px solid ${(props) => props.borderColor};
-//   background-color: ${(props) => props.bgColor};
-// `;
-
-// const NavInner = styled("div") <Pick<IProps, "justify">>`
-//   margin: 0 -16px;
-//   height: 100px;
-//   display: flex;
-//   justify-content: ${(props) => (props.justify ? "space-between" : "left")};
-// `;
-
-// const Item = styled.div<{
-//   active: boolean;
-//   activeColor: string;
-//   color: string;
-// }>`
-//   height: 30px;
-//   line-height: 30px;
-//   padding: 0 16px;
-//   color: ${(props) => (props.active ? props.activeColor : props.color)};
-//   font-weight: 500;
-
-//   &:hover {
-//     color: ${(props) => props.activeColor};
-//     cursor: pointer;
-//   }
-
-//   .anticon {
-//     margin-left: 5px;
-//   }
-// `;
 
 const LogoWrapper = styled.div`
   display: flex;
@@ -85,13 +41,6 @@ const LogoWrapper = styled.div`
     height: 40px;
   }
 `;
-
-// const ItemList = styled.div<{ align: string }>`
-//   flex: 1;
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: ${(props) => props.align};
-// `;
 
 const StyledMenu = styled(Menu) <MenuProps>`
   &.ant-dropdown-menu {
@@ -155,7 +104,6 @@ function getItem(
 const TraversalNode = (data: any): any => {
   return data.map((item: any, idx: number) => {
     const { hidden, label, items, active, onEvent, icon, key, id } = item.getView();
-    // console.log(hidden, label, items, active, onEvent, key);
     let subItems = TraversalNode(items)
     return getItem(label, id, icon, subItems.length ? subItems : undefined)
   })
@@ -180,6 +128,23 @@ const AvatarComponent = styled(Avatar) <{ $style: AntLayoutLogoStyleType }>`
   width: 48px;
   height: 48px;
 `
+const FrameWrapper = styled("div") <{ frameStyle: AntLayoutFramerStyleType, headerBgColor: string }> `
+  height: ${(props) => heightCalculator(props.frameStyle.margin)};
+  width: ${(props) => widthCalculator(props.frameStyle.margin)};
+  overflow: hidden;
+  padding: ${(props) => props.frameStyle.padding};
+  margin: ${(props) => props.frameStyle.margin};
+  border-radius: ${(props) => props.frameStyle.radius};
+  box-sizing: border-box;
+  border: 1px solid ${(props) => props.frameStyle.border};
+  background-color: ${(props) => props.frameStyle.background};
+  .ant-layout-header {
+    background-color: ${(props) => props.headerBgColor};
+  }
+  .ant-layout-footer {
+    background-color: ${(props) => props.frameStyle.background};
+  }
+`;
 
 const BodyContainer = (props: ColumnContainerProps) => {
   return (
@@ -191,22 +156,57 @@ const BodyContainer = (props: ColumnContainerProps) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: props.style.containerColor,
+      borderRadius: props.style.radius,
     }}>
       <div style={{
         border: `1px solid ${props.style.border}`,
         height: heightCalculator(props.style.margin),
         width: widthCalculator(props.style.margin),
         borderRadius: props.style.radius,
+        overflow: 'hidden',
       }}>
         <InnerGrid
           {...props}
-          emptyRows={15}
+          style={{
+            ...props.style,
+            margin: '0px',
+            overflow: 'hidden',
+          }}
+          radius={props.style.radius}
+        />
+      </div>
+    </div>
+  );
+};
+
+const HeaderContainer = (props: ColumnContainerProps) => {
+  return (
+    <div style={{
+      height: '100%',
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: props.style.containerColor,
+    }}>
+      <div style={{
+        border: `1px solid ${props.style.border}`,
+        height: "100%",
+        width: "100%",
+        borderRadius: props.style.radius,
+      }}>
+        <InnerGrid
+          {...props}
           hintPlaceholder={HintPlaceHolder}
           radius={props.style.radius}
           containerPadding={[parseInt(props.style.padding), parseInt(props.style.padding)]}
           style={{
             ...props.style,
-            margin: '0px',
+            overflow: 'hidden',
+            height: heightCalculator(props.style.margin),
+            width: widthCalculator(props.style.margin),
+            backgroundColor: props.style.background,
           }}
         />
       </div>
@@ -232,6 +232,8 @@ const childrenMap = {
   ]),
   logoStyle: withDefault(styleControl(AntLayoutLogoStyle, '标题样式'), { fontSize: '20px' }),
   bodyStyle: withDefault(styleControl(AntLayoutBodyStyle, '主容器样式'), {}),
+  headerStyle: withDefault(styleControl(AntLayoutBodyStyle, '顶部容器样式'), {}),
+  frameStyle: withDefault(styleControl(AntLayoutFramerStyle, '框架样式'), {}),
 };
 
 const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
@@ -249,7 +251,10 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
     props.selectedKey.onChange(e.key)
   }
   return (
-    <DisabledContext.Provider value={false} >
+    <FrameWrapper
+      frameStyle={props.frameStyle}
+      headerBgColor={props.headerStyle.containerColor}
+    >
       <Layout style={{ height: '100%', margin: '5px' }}>
         <SiderWarpper
           collapsible
@@ -283,7 +288,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
         <Layout>
           <Header style={{ padding: 0, height: '64px', lineHeight: '16px' }} >
             <BackgroundColorContext.Provider value={'#fff'}>
-              <InnerGrid
+              <HeaderContainer
                 {...props}
                 layout={headerProps.layout.getView()}
                 items={gridItemCompToGridItems(headerProps.items.getView())}
@@ -291,16 +296,11 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
                 dispatch={headerDispatch}
                 emptyRows={5}
                 hintPlaceholder={HintPlaceHolder}
-                // minHeight="64px"
-                // autoHeight={true}
-                radius={'1px'}
+                autoHeight={true}
                 style={{
-                  // height: '64px',
-                  overflow: 'hidden',
-                  background: '#fff',
-                  // margin: '5px' 
+                  ...props.headerStyle,
                 }}
-                containerPadding={[0, 0]}
+              // containerPadding={[0, 0]}
               // style={{'overflow': 'hidden'}}
               />
             </BackgroundColorContext.Provider>
@@ -334,7 +334,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
           </FooterWarpper>
         </Layout>
       </Layout>
-    </DisabledContext.Provider>
+    </FrameWrapper>
 
 
     // <DisabledContext.Provider value={false}>
@@ -391,7 +391,9 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
         </Section>
         <Section name={sectionNames.layout}>{hiddenPropertyView(children)}</Section>
         <Section name={sectionNames.style}>
+          {children.frameStyle.getPropertyView()}
           {children.bodyStyle.getPropertyView()}
+          {children.headerStyle.getPropertyView()}
           {children.logoStyle.getPropertyView()}
         </Section>
       </>

@@ -2786,5 +2786,6 @@ export const en = {
     titleSize: 'title size',
     fontColor: 'font color',
     atLeastOneColumnError: 'Antlayout keeps at least one menu item！',
+    containerColor: 'container color',
   }
 };

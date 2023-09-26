@@ -799,8 +799,23 @@ export const AntLayoutLogoStyle = [
   },
 ] as const;
 
+export const AntLayoutFramerStyle = [
+  getStaticBackground("#FFFFFFFF"),
+  getStaticBorder("#FFFFFF00"),
+  RADIUS,
+  MARGIN,	
+  PADDING,
+] as const;
+
 export const AntLayoutBodyStyle = [
-  getStaticBackground("#FFFFFF00"),
+  {
+    name: "containerColor",
+    label: trans("antLayoutComp.containerColor"),
+    depTheme: 'canvas',
+    depType: DEP_TYPE.SELF,
+    transformer: toSelf,
+  },
+  getStaticBackground("#FFFFFFFF"),
   getStaticBorder("#FFFFFF00"),
   RADIUS,
   MARGIN,	
@@ -1028,6 +1043,8 @@ export type ResponsiveLayoutRowStyleType = StyleConfigType<typeof ResponsiveLayo
 export type ResponsiveLayoutColStyleType = StyleConfigType<typeof ResponsiveLayoutColStyle>;
 export type AntLayoutLogoStyleType = StyleConfigType<typeof AntLayoutLogoStyle>;
 export type AntLayoutBodyStyleType = StyleConfigType<typeof AntLayoutBodyStyle>;
+export type AntLayoutFramerStyleType = StyleConfigType<typeof AntLayoutFramerStyle>;
+
 
 export function widthCalculator(margin: string) {
   const marginArr = margin?.trim().replace(/\s+/g,' ').split(" ") || "";
