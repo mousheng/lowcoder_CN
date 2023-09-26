@@ -2785,5 +2785,6 @@ export const en = {
     logoBackgroundColor: 'logo background color',
     titleSize: 'title size',
     fontColor: 'font color',
+    atLeastOneColumnError: 'Antlayout keeps at least one menu item！',
   }
 };

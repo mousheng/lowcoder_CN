@@ -486,8 +486,8 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
           },
         } as CompAction;
       }
-      if (value.type === "delete" && columns.length <= 1) {
-        messageInstance.warning(trans("responsiveLayout.atLeastOneColumnError"));
+      if (value.type === "delete" && columns.length <= 1 && action.path.length === 1 ) {
+        messageInstance.warning(trans("antLayoutComp.atLeastOneColumnError"));
         // at least one column
         return this;
       }

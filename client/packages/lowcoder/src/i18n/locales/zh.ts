@@ -2769,6 +2769,7 @@ export const zh = {
         logoBackgroundColor: '图标背景颜色',
         titleSize: '标题大小',
         fontColor: '标题颜色',
+        atLeastOneColumnError: '至少保留一个菜单项！',
   }
 };
 
