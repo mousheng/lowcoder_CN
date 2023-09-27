@@ -42,6 +42,7 @@ const Wrapper = styled.div<{ dragging: boolean; isOver: boolean; dropInAsSub: bo
   }
 
   .draggable-text {
+    user-select: none;
     color: #333;
     font-size: 13px;
     margin-left: 4px;

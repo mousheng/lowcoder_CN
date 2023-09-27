@@ -4,12 +4,12 @@ import { PointIcon } from "lowcoder-design";
 import React, { HTMLAttributes, useState } from "react";
 import styled from "styled-components";
 import DraggableItem from "./DraggableItem";
-import { NavCompType } from "comps/comps/navComp/components/types";
+import { MenuCompType, NavCompType } from "comps/comps/navComp/components/types";
 import { trans } from "i18n";
 
 export interface ICommonItemProps {
   path: number[];
-  item: NavCompType;
+  item: NavCompType | MenuCompType;
   dropInAsSub?: boolean;
   onDelete?: (path: number[]) => void;
   onAddSubMenu?: (path: number[], value?: any) => void;

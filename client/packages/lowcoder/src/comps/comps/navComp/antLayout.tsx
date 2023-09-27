@@ -4,7 +4,7 @@ import { Section, messageInstance, sectionNames } from "lowcoder-design";
 import styled from "styled-components";
 import { clickLogoEvent, clickMenuEvent, eventHandlerControl } from "comps/controls/eventHandlerControl";
 import { StringControl } from "comps/controls/codeControl";
-import { navListComp } from "./navItemComp";
+import { menuListComp } from "./navItemComp";
 import { menuPropertyView } from "./components/MenuItemList";
 import { Avatar, Layout, Menu, MenuProps, SiderProps } from "antd";
 import { styleControl } from "comps/controls/styleControl";
@@ -23,6 +23,7 @@ import { BackgroundColorContext } from "comps/utils/backgroundColorContext";
 import { ContainerBaseProps, InnerGrid, gridItemCompToGridItems } from "../containerComp/containerView";
 import { HintPlaceHolder } from "lowcoder-design";
 import { FooterProps } from "antd-mobile";
+import { useState } from "react";
 const { Header, Content, Footer, Sider } = Layout;
 
 const EventOptions = [
@@ -46,7 +47,6 @@ const StyledMenu = styled(Menu) <MenuProps>`
   &.ant-dropdown-menu {
     min-width: 160px;
   }
-  
 `;
 const FooterWarpper = styled(Footer) <FooterProps>`
   textAlign: center;
@@ -58,31 +58,31 @@ const FooterWarpper = styled(Footer) <FooterProps>`
   justify-content: center;
 `
 
-const SiderWarpper = styled(Sider) <  SiderProps & { menuStyle: AntLayoutMenuStyleType } > `
+const SiderWarpper = styled(Sider) <  SiderProps & { menustyle: AntLayoutMenuStyleType } > `
 .ant-menu-light, .ant-menu-light>.ant-menu {
-  background: ${(props) => props.menuStyle.menuBackground};
+  background: ${(props) => props.menustyle.menuBackground};
 }
 .ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
-  background: ${(props) => props.menuStyle.subMenuBackground};
+  background: ${(props) => props.menustyle.subMenuBackground};
 }
 .ant-menu-light .ant-menu-item-selected, .ant-menu-light>.ant-menu .ant-menu-item-selected {
-  background-color: ${(props) => props.menuStyle.selectedMenuBackground};
-  color: ${(props) => props.menuStyle.selectedFontColor};
+  background-color: ${(props) => props.menustyle.selectedMenuBackground};
+  color: ${(props) => props.menustyle.selectedFontColor};
 }
 .ant-menu-light .ant-menu-submenu-selected >.ant-menu-submenu-title, .ant-menu-light>.ant-menu .ant-menu-submenu-selected >.ant-menu-submenu-title {
-  color: ${(props) => props.menuStyle.selectedFontColor};
+  color: ${(props) => props.menustyle.selectedFontColor};
 }
   
   .ant-layout-sider-children{
-    background-color: ${(props) => props.menuStyle.background};
+    background-color: ${(props) => props.menustyle.background};
     overflow: auto;
   }
   
   .ant-layout-sider-trigger {
-    background-color: ${(props) => props.menuStyle.triggerButtonBgColor};
+    background-color: ${(props) => props.menustyle.triggerButtonBgColor};
     position: relative;
     svg {
-      color: ${(props) => props.menuStyle.triggerIconColor};
+      color: ${(props) => props.menustyle.triggerIconColor};
     }
   }
 `;
@@ -97,22 +97,31 @@ function getItem(
   key: React.Key,
   icon?: React.ReactNode,
   children?: MenuItem[],
-  type?: 'group',
+  disabled?: boolean,
 ): MenuItem {
   return {
     key,
     icon,
     children,
     label,
-    type,
+    disabled,
   } as MenuItem;
 }
 
 const TraversalNode = (data: any): any => {
-  return data.map((item: any, idx: number) => {
+  return data.map((item: any) => {
     const { hidden, label, items, active, onEvent, icon, key, id } = item.getView();
+    if (hidden) return undefined
     let subItems = TraversalNode(items)
-    return getItem(label, id, icon, subItems.length ? subItems : undefined)
+    let iconComp = undefined
+    let iconValue = (icon as any).props.value
+    if (iconValue !== '') {
+      if (iconValue.indexOf('icon:antd')) {
+        iconComp = (<span role="img" aria-label="paper-clip"> {icon}</span>)
+      } else
+        iconComp = icon
+    }
+    return getItem(label, id, iconComp, subItems.length ? subItems : undefined, !active)
   })
 }
 
@@ -229,7 +238,7 @@ const childrenMap = {
   containers: withDefault(sameTypeMap(SimpleContainerComp), {
     'header': { view: {}, layout: {} },
   }),
-  items: withDefault(navListComp(), [
+  items: withDefault(menuListComp(), [
     {
       label: trans("menuItem") + "1",
       id: uuidv4(),
@@ -246,11 +255,12 @@ const childrenMap = {
 };
 
 const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
+  const [openKeys, setOpenKeys] = useState(['']);
   const data = props.items;
   const collapsed = props.collapsed.value;
   const keys = props.selectedKey.value !== '' && props.containers.hasOwnProperty(props.selectedKey.value) ?
     props.selectedKey.value : (Object.keys(props.containers)[0] === 'header' ? Object.keys(props.containers)[1] : Object.keys(props.containers)[0])
-
+  const rootSubmenuKeys = data.map(item => item.getView().id)
   const containerProps = props.containers[keys].children;
   const headerProps = props.containers['header'].children;
   const childDispatch = wrapDispatch(wrapDispatch(dispatch, "containers"), keys);
@@ -259,6 +269,14 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
     props.selectedKey.onChange(e.key)
     props.onEvent('clickMenu')
   }
+  const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey!) === -1) {
+      setOpenKeys(keys);
+    } else {
+      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+    }
+  };
   return (
     <FrameWrapper
       frameStyle={props.frameStyle}
@@ -269,7 +287,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => props.collapsed.onChange(value)}
-          menuStyle={props.menuStyle}
+          menustyle={props.menuStyle}
         >
           <LogoWrapper
             onClick={() => props.onEvent('clickLogo')}
@@ -295,6 +313,8 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
             items={TraversalNode(data)}
             mode="inline"
             onClick={onClick}
+            openKeys={openKeys}
+            onOpenChange={onOpenChange}
           />
         </SiderWarpper>
         <Layout>

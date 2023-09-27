@@ -2805,6 +2805,7 @@ export const en = {
     frameStyle: 'Frame style',
     menuStyle: 'Menu style',
     selectedKey: 'Selected key',
-    collapsed: 'collapsed',
+    collapsed: 'Collapsed',
+    icon: 'Icon',
   }
 };

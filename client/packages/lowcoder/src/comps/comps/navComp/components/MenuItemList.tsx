@@ -8,7 +8,7 @@ import styled from "styled-components";
 import DraggableMenuItem from "./DroppableMenuItem";
 import DroppablePlaceholder from "./DroppablePlaceHolder";
 import MenuItem from "./MenuItem";
-import { IDragData, IDropData, NavCompType, NavListCompType } from "./types";
+import { IDragData, IDropData, MenuCompType, MenuListCompType, NavCompType, NavListCompType } from "./types";
 
 const Wrapper = styled.div`
   .menu-title {
@@ -29,7 +29,7 @@ const Wrapper = styled.div`
 `;
 
 interface IMenuItemListProps {
-  items: NavCompType[];
+  items: NavCompType[] | MenuCompType[];
   onAddItem: (path: number[], value?: any) => number;
   onDeleteItem: (path: number[]) => void;
   onAddSubItem: (path: number[], value: any, unshift?: boolean) => number;
@@ -128,9 +128,9 @@ function MenuItemList(props: IMenuItemListProps) {
   );
 }
 
-export function menuPropertyView(itemsComp: NavListCompType) {
+export function menuPropertyView(itemsComp: NavListCompType | MenuListCompType) {
   const items = itemsComp.getView();
-  const getItemByPath = (path: number[], scope?: NavCompType[]): NavCompType => {
+  const getItemByPath = (path: number[], scope?: NavCompType[] | MenuCompType[]): NavCompType | MenuCompType => {
     if (!scope) {
       scope = items;
     }
@@ -140,7 +140,7 @@ export function menuPropertyView(itemsComp: NavListCompType) {
     return getItemByPath(path.slice(1), scope[path[0]].children.items.getView());
   };
 
-  const getItemListByPath = (path: number[], root?: NavListCompType): NavListCompType => {
+  const getItemListByPath = (path: number[], root?: NavListCompType | MenuListCompType): NavListCompType | MenuListCompType => {
     if (!root) {
       root = itemsComp;
     }

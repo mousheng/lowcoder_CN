@@ -2790,6 +2790,7 @@ export const zh = {
         menuStyle: '菜单样式',
         selectedKey: '已选择键',
         collapsed: '菜单收缩',
+        icon: '图标',
 }
 };
 

@@ -1,10 +1,15 @@
-import { NavItemComp, navListComp } from "../navItemComp";
+import { MenuItemComp, NavItemComp, menuListComp, navListComp } from "../navItemComp";
 import { LayoutMenuItemComp, LayoutMenuItemListComp } from "comps/comps/layout/layoutMenuItemComp";
 
 export type NavCompType = NavItemComp | LayoutMenuItemComp;
+export type MenuCompType = MenuItemComp | LayoutMenuItemComp;
 
 export type NavListCompType =
   | InstanceType<ReturnType<typeof navListComp>>
+  | InstanceType<typeof LayoutMenuItemListComp>;
+
+export type MenuListCompType =
+  | InstanceType<ReturnType<typeof menuListComp>>
   | InstanceType<typeof LayoutMenuItemListComp>;
 
 export interface NavCompItemType {
@@ -22,6 +27,6 @@ export interface IDropData {
 }
 
 export interface IDragData {
-  item: NavCompType;
+  item: NavCompType | MenuCompType;
   path: number[];
 }
