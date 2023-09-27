@@ -782,6 +782,11 @@ export const NavigationStyle = [
 
 export const AntLayoutLogoStyle = [
   {
+    name: "containerColor",
+    label: trans("antLayoutComp.containerColor"),
+    color: '#ffffff',
+  },
+  {
     name: "color",
     label: trans("antLayoutComp.logoIconColor"),
     color: "#5589F2",
@@ -823,6 +828,11 @@ export const AntLayoutMenuStyle = [
     name: "selectedMenuBackground",
     label: trans("antLayoutComp.selectedMenuBackground"),
     color: "#e6f4ff",
+  },
+  {
+    name: "menuFontColor",
+    label: trans("antLayoutComp.menuFontColor"),
+    color: "#000000",
   },
   {
     name: "selectedFontColor",

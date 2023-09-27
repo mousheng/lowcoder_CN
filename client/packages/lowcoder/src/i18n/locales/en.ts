@@ -2794,6 +2794,7 @@ export const en = {
     menuBackground: 'Menu background color',
     subMenuBackground: 'SubMenu background color',
     selectedMenuBackground: 'Selected background color',
+    menuFontColor: 'Menu font color',
     selectedFontColor: 'Selected font color',
     triggerButtonBgColor: 'Trigger button color',
     triggerIconColor: 'Trigger icon color',

@@ -2778,6 +2778,7 @@ export const zh = {
         menuBackground: '菜单背景颜色',
         subMenuBackground: '子菜单背景颜色',
         selectedMenuBackground: '选中背景色',
+        menuFontColor: '菜单文字颜色',
         selectedFontColor: '选中文字颜色',
         triggerButtonBgColor: '菜单开关颜色',
         triggerIconColor: '菜单开关图标颜色',

@@ -31,12 +31,13 @@ const EventOptions = [
   clickMenuEvent,
 ] as const;
 
-const LogoWrapper = styled.div`
+const LogoWrapper = styled.div<{ titlestyle: AntLayoutLogoStyleType }>`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 58px;
   cursor: pointer;
+  background-color: ${(props) => props.titlestyle.containerColor};
   .span {
     width: 40px;
     height: 40px;
@@ -59,25 +60,40 @@ const FooterWarpper = styled(Footer) <FooterProps>`
 `
 
 const SiderWarpper = styled(Sider) <  SiderProps & { menustyle: AntLayoutMenuStyleType } > `
-.ant-menu-light, .ant-menu-light>.ant-menu {
-  background: ${(props) => props.menustyle.menuBackground};
-}
-.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
-  background: ${(props) => props.menustyle.subMenuBackground};
-}
-.ant-menu-light .ant-menu-item-selected, .ant-menu-light>.ant-menu .ant-menu-item-selected {
-  background-color: ${(props) => props.menustyle.selectedMenuBackground};
-  color: ${(props) => props.menustyle.selectedFontColor};
-}
-.ant-menu-light .ant-menu-submenu-selected >.ant-menu-submenu-title, .ant-menu-light>.ant-menu .ant-menu-submenu-selected >.ant-menu-submenu-title {
-  color: ${(props) => props.menustyle.selectedFontColor};
-}
-  
+  .ant-menu-light, .ant-menu-light>.ant-menu{
+    color: ${(props) => props.menustyle.menuFontColor};
+  }
+  .ant-menu-item {
+    color: ${(props) => props.menustyle.menuFontColor};
+  }
+  .ant-menu-light:not(.ant-menu-horizontal) .ant-menu-item:not(.ant-menu-item-selected):hover, .ant-menu-light>.ant-menu:not(.ant-menu-horizontal) .ant-menu-item:not(.ant-menu-item-selected):hover 
+   {
+    color: ${(props) => props.menustyle.selectedFontColor};
+  }
+  .ant-menu-item .ant-menu-item-selected {
+    color: ${(props) => props.menustyle.selectedFontColor};
+  }
+  .ant-menu-light, .ant-menu-light>.ant-menu {
+    background: ${(props) => props.menustyle.menuBackground};
+  }
+  .ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+    background: ${(props) => props.menustyle.subMenuBackground};
+  }
+  .ant-menu-light .ant-menu-item-selected, .ant-menu-light>.ant-menu .ant-menu-item-selected {
+    background-color: ${(props) => props.menustyle.selectedMenuBackground};
+    color: ${(props) => props.menustyle.selectedFontColor};
+  }
+  .ant-menu-light .ant-menu-submenu-selected >.ant-menu-submenu-title, .ant-menu-light>.ant-menu .ant-menu-submenu-selected >.ant-menu-submenu-title {
+    color: ${(props) => props.menustyle.selectedFontColor};
+  }
   .ant-layout-sider-children{
     background-color: ${(props) => props.menustyle.background};
     overflow: auto;
   }
-  
+  .ant-menu-submenu-arrow {
+    color: ${(props) => props.menustyle.triggerIconColor};
+  }
+
   .ant-layout-sider-trigger {
     background-color: ${(props) => props.menustyle.triggerButtonBgColor};
     position: relative;
@@ -131,9 +147,7 @@ type ColumnContainerProps = Omit<ContainerBaseProps, 'style'> & {
 
 const TitleWarpper = styled.span<{ $style: AntLayoutLogoStyleType, collapsed: boolean }>`
 font-weight: 700;
-margin-left: 10px;
 white-space: nowrap;
-display: ${(props) => props.collapsed ? '' : ''};
 font-size: ${(props) => props.$style.fontSize};
 color: ${(props) => props.$style.fontColor};
 `
@@ -291,6 +305,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
         >
           <LogoWrapper
             onClick={() => props.onEvent('clickLogo')}
+            titlestyle={props.TitleStyle}
           >
             {props.logoIcon && (props.logoUrl || (props.logoIcon as any).props.value) && (
               <AvatarComponent
@@ -352,11 +367,11 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
               </BackgroundColorContext.Provider>
             </div>
           </Content>
-          <FooterWarpper>
+          {props.footString ? (<FooterWarpper>
             <span>
               {props.footString}
             </span>
-          </FooterWarpper>
+          </FooterWarpper>) : ''}
         </Layout>
       </Layout>
     </FrameWrapper>
