@@ -416,7 +416,6 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
 
 type MenuItem = Required<MenuProps>['items'][number];
 class AntLayoutImplComp extends NavCompBase implements IContainer {
-  delayDelteArray: any = [];
 
   private syncContainers(): this {
     const columns = this.children.items.getView();
@@ -432,23 +431,14 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
     const actions: CompAction[] = [];
     Object.keys(containers).forEach((id) => {
       if (!ids.hasOwnProperty(id)) {
-        this.delayDelteArray.push(id)
-        setTimeout(() => {
-          this.delayDelteArray.map((id: any) => actions.push(wrapChildAction("containers", wrapChildAction(id, deleteCompAction()))))
-          this.delayDelteArray = []
-        }, 200)
+        actions.push(wrapChildAction("containers", wrapChildAction(id, deleteCompAction())))
       }
     });
     // new
     Object.keys(ids).map((id) => {
       if (!containers.hasOwnProperty(id)) {
         let addNode = { layout: {}, items: {} }
-        if (id in this.delayDelteArray) {
-          this.delayDelteArray = this.delayDelteArray.splice(this.delayDelteArray.indexof(id), 1)
-        } else
-          actions.push(
-            wrapChildAction("containers", addMapChildAction(id, addNode))
-          );
+      actions.push(wrapChildAction("containers", addMapChildAction(id, addNode)));
       }
     });
     let instance = this;
@@ -459,7 +449,6 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
   }
 
   override reduce(action: CompAction): this {
-    // debugger
     const columns = this.children.items.getView();
     if (action.type === CompActionTypes.CUSTOM) {
       const value = action.value as JSONObject;

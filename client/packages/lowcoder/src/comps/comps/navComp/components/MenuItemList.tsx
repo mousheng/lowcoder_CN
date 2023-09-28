@@ -73,7 +73,6 @@ function MenuItemList(props: IMenuItemListProps) {
         let targetListPath = targetPath;
         let size = 0;
 
-        onDeleteItem(sourcePath);
 
         if (overData.dropInAsSub) {
           targetListPath = targetListPath.slice(0, -1);
@@ -81,6 +80,7 @@ function MenuItemList(props: IMenuItemListProps) {
         } else {
           size = onAddItem(targetListPath, activeData.item.toJsonValue());
         }
+        onDeleteItem(sourcePath);
 
         if (overData.targetListSize !== -1) {
           onMoveItem(targetListPath, size, targetIndex);
