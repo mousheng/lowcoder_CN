@@ -31,17 +31,15 @@ const EventOptions = [
   clickMenuEvent,
 ] as const;
 
-const LogoWrapper = styled.div<{ titlestyle: AntLayoutLogoStyleType, logoUrl: string }>`
+const LogoWrapper = styled.div<{ titlestyle: AntLayoutLogoStyleType, logoUrl: string, logoIcon: string, logoPosition: string }>`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: ${(props) => props.logoPosition === 'center' ? 'center' : 'flex-start'};
   height: 58px;
   cursor: pointer;
+  margin-left: ${(props) => props.logoPosition === 'align' ? (props.logoUrl === '' && props.logoIcon !== '' ? '20px' : '28px') : '0px'};
   background-color: ${(props) => props.titlestyle.containerColor};
-  .span {
-    width: 40px;
-    height: 40px;
-  }
+
   .ant-avatar.ant-avatar-icon {
     margin-right: ${(props) => props.logoUrl ? '12px' : ''};
   }
@@ -56,7 +54,6 @@ const FooterWarpper = styled(Footer) <FooterProps>`
   textAlign: center;
   height: 48px;
   verticalAlign: middle;
-  backgroundColor: red;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -109,6 +106,12 @@ const SiderWarpper = styled(Sider) <  SiderProps & { menustyle: AntLayoutMenuSty
 const sharpOptions = [
   { label: trans("avatarComp.square"), value: "square" },
   { label: trans("avatarComp.circle"), value: "circle" },
+] as const;
+
+const LogoPositionOptions = [
+  { label: trans("antLayoutComp.left"), value: "left" },
+  { label: trans("antLayoutComp.align"), value: "align" },
+  { label: trans("antLayoutComp.center"), value: "center" },
 ] as const;
 
 function getItem(
@@ -251,6 +254,7 @@ const childrenMap = {
   selectedKey: stringExposingStateControl('selectedKey', ''),
   logoIcon: withDefault(IconControl, "/icon:antd/homeoutlined"),
   logoTitle: withDefault(StringControl, trans('antLayoutComp.title')),
+  logoPosition: dropdownControl(LogoPositionOptions, 'align'),
   shape: dropdownControl(sharpOptions, "circle"),
   containers: withDefault(sameTypeMap(SimpleContainerComp), {
     'header': { view: {}, layout: {} },
@@ -310,6 +314,8 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
             onClick={() => props.onEvent('clickLogo')}
             titlestyle={props.TitleStyle}
             logoUrl={props.logoUrl}
+            logoPosition={props.logoPosition}
+            logoIcon={(props.logoIcon as any).props.value}
           >
             {(props.logoUrl || (props.logoIcon as any).props.value) && (
               <AvatarComponent
@@ -396,6 +402,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
             radioButton: true,
           })}
           {children.logoTitle.propertyView({ label: trans('antLayoutComp.logoTitle') })}
+          {children.logoPosition.propertyView({ label: trans('antLayoutComp.logoPosition'), radioButton: true })}
         </Section>
         <Section name={trans("menu")}>
           {menuPropertyView(children.items)}

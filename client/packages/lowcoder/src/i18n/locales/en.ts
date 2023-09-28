@@ -2809,5 +2809,9 @@ export const en = {
     selectedKey: 'Default Selected',
     collapsed: 'Collapsed',
     icon: 'Icon',
+    left: 'left',
+    align: 'Align',
+    center: 'Center',
+    logoPosition: 'Logo Position',
   }
 };

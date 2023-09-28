@@ -2793,6 +2793,10 @@ export const zh = {
         selectedKey: '默认选择',
         collapsed: '菜单收缩',
         icon: '图标',
+        left: '靠左',
+        align: '对齐',
+        center: '居中',
+        logoPosition: '标题位置',
 }
 };
 
