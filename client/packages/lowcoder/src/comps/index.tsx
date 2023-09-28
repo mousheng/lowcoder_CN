@@ -1044,7 +1044,7 @@ const uiCompMap: Registry = {
     name: trans("uiComp.antLayoutName"),
     enName: "antLayout",
     description: trans("uiComp.antLayoutDesc"),
-    categories: ["dataDisplay"],
+    categories: ["container"],
     icon: AntLayoutIcon,
     keywords: trans("uiComp.antLayoutKeywords"),
     comp: AntLayoutComp,
