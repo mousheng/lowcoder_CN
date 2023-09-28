@@ -31,7 +31,7 @@ const EventOptions = [
   clickMenuEvent,
 ] as const;
 
-const LogoWrapper = styled.div<{ titlestyle: AntLayoutLogoStyleType }>`
+const LogoWrapper = styled.div<{ titlestyle: AntLayoutLogoStyleType, logoUrl: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,6 +41,9 @@ const LogoWrapper = styled.div<{ titlestyle: AntLayoutLogoStyleType }>`
   .span {
     width: 40px;
     height: 40px;
+  }
+  .ant-avatar.ant-avatar-icon {
+    margin-right: ${(props) => props.logoUrl ? '12px' : ''};
   }
 `;
 
@@ -247,7 +250,7 @@ const childrenMap = {
   logoUrl: StringControl,
   selectedKey: stringExposingStateControl('selectedKey', ''),
   logoIcon: withDefault(IconControl, "/icon:antd/homeoutlined"),
-  logoTitle: withDefault(StringControl, trans('antLayoutComp.logoTitle')),
+  logoTitle: withDefault(StringControl, trans('antLayoutComp.title')),
   shape: dropdownControl(sharpOptions, "circle"),
   containers: withDefault(sameTypeMap(SimpleContainerComp), {
     'header': { view: {}, layout: {} },
@@ -306,8 +309,9 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
           <LogoWrapper
             onClick={() => props.onEvent('clickLogo')}
             titlestyle={props.TitleStyle}
+            logoUrl={props.logoUrl}
           >
-            {props.logoIcon && (props.logoUrl || (props.logoIcon as any).props.value) && (
+            {(props.logoUrl || (props.logoIcon as any).props.value) && (
               <AvatarComponent
                 size={42}
                 icon={props.logoIcon}
@@ -391,11 +395,12 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
             label: trans("avatarComp.shape"),
             radioButton: true,
           })}
-          {children.selectedKey.propertyView({ label: trans('antLayoutComp.selectedKey') })}
+          {children.logoTitle.propertyView({ label: trans('antLayoutComp.logoTitle') })}
         </Section>
         <Section name={trans("menu")}>
           {menuPropertyView(children.items)}
           {children.collapsed.propertyView({ label: trans('antLayoutComp.collapsed') })}
+          {children.selectedKey.propertyView({ label: trans('antLayoutComp.selectedKey') })}
         </Section>
         <Section name={sectionNames.layout}>
           {children.onEvent.getPropertyView()}
@@ -438,7 +443,7 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
     Object.keys(ids).map((id) => {
       if (!containers.hasOwnProperty(id)) {
         let addNode = { layout: {}, items: {} }
-      actions.push(wrapChildAction("containers", addMapChildAction(id, addNode)));
+        actions.push(wrapChildAction("containers", addMapChildAction(id, addNode)));
       }
     });
     let instance = this;
