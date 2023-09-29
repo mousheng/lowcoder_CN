@@ -79,6 +79,7 @@ const childrenMap = {
     }),
     shape: dropdownControl(buttonShapeOption, 'circle'),
     buttonTheme: dropdownControl(buttonThemeOption, 'primary'),
+    dot: BoolControl,
 };
 
 const FloatButtonView = (props: RecordConstructorToView<typeof childrenMap>) => {
@@ -89,7 +90,7 @@ const FloatButtonView = (props: RecordConstructorToView<typeof childrenMap>) => 
             onClick={() => button.onEvent("click")}
             tooltip={button?.label}
             description={button?.description}
-            badge={{ count: button?.badge, color: props.style.badgeColor }}
+            badge={{ count: button?.badge, color: props.style.badgeColor, dot: props.dot }}
         />) : (
             <FloatButton.BackTop visibilityHeight={0} description={button?.description} tooltip={button?.label}></FloatButton.BackTop>
         )
@@ -104,7 +105,7 @@ const FloatButtonView = (props: RecordConstructorToView<typeof childrenMap>) => 
                     style={{ right: -20 }}
                     icon={props.icon}
                     shape={props.shape}
-                    badge={{ count: props.buttons.reduce((sum, i) => sum + (i.buttonType === 'custom' ? i.badge : 0), 0), color: props.style.badgeColor }}
+                    badge={{ count: props.buttons.reduce((sum, i) => sum + (i.buttonType === 'custom' ? i.badge : 0), 0), color: props.style.badgeColor, dot: props.dot }}
                     type={props.buttonTheme}
                 >
                     {props.buttons.map((button: any) => renderButton(button))}
@@ -120,11 +121,12 @@ let FloatButtonBasicComp = (function () {
             <>
                 <Section name={sectionNames.basic}>
                     {children.buttons.propertyView({})}
-                </Section>
-                <Section name={sectionNames.layout}>
                     {children.icon.propertyView({ label: trans("icon") })}
                     {children.shape.propertyView({ label: trans("floatButton.buttonShape"), radioButton: true })}
                     {children.buttonTheme.propertyView({ label: trans("floatButton.buttonTheme"), radioButton: true })}
+                    {children.dot.propertyView({ label: trans("floatButton.dot") })}
+                </Section>
+                <Section name={sectionNames.layout}>
                     {hiddenPropertyView(children)}
                 </Section>
                 <Section name={sectionNames.style}>{children.style.getPropertyView()}</Section>

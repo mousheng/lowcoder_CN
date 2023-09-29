@@ -2830,5 +2830,6 @@ export const en = {
     default: 'Default',
     buttonTheme: 'Button Theme',
     badgeColor: 'Badge Color',
+    dot: 'badge as dot',
   }
 };
