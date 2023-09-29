@@ -20,6 +20,10 @@ const Wrapper = styled.div<{ $style: FloatButtonStyleType }>`
     width: 0px;
     height: 0px;
     overflow: hidden;
+    .ant-float-btn {
+        right: -20px;
+        inset-block-end: -8px;
+    }
 `
 const buttonTypeOption = [
     { label: trans('floatButton.custom'), value: 'custom' },
@@ -43,7 +47,7 @@ const buttonGroupOption = new MultiCompBuilder(
         badge: withDefault(NumberControl, 0),
         description: withDefault(StringControl, ''),
         buttonType: dropdownControl(buttonTypeOption, 'custom'),
-        icon: IconControl,
+        icon: withDefault(IconControl, '/icon:antd/questioncircleoutlined'),
         onEvent: ButtonEventHandlerControl,
     },
     (props) => props
@@ -78,34 +82,34 @@ const childrenMap = {
 };
 
 const FloatButtonView = (props: RecordConstructorToView<typeof childrenMap>) => {
+    const renderButton = (button: any) => {
+        return button?.buttonType === 'custom' ? (<FloatButton
+            key={button?.id}
+            icon={button?.icon}
+            onClick={() => button.onEvent("click")}
+            tooltip={button?.label}
+            description={button?.description}
+            badge={{ count: button?.badge, color: props.style.badgeColor }}
+        />) : (
+            <FloatButton.BackTop visibilityHeight={0} description={button?.description} tooltip={button?.label}></FloatButton.BackTop>
+        )
+    }
     return (
         <Wrapper
             $style={props.style}
         >
-            <FloatButton.Group
-                trigger="hover"
-                style={{ right: -20 }}
-                icon={props.icon}
-                shape={props.shape}
-                badge={{ count: props.buttons.reduce((sum, i) => sum + (i.buttonType === 'custom' ? i.badge : 0), 0), color: props.style.badgeColor }}
-                type={props.buttonTheme}
-            >
-                {props.buttons.map((button: any) => {
-                    return button?.buttonType === 'custom' ? (<FloatButton
-                        key={button?.id}
-                        icon={button?.icon}
-                        onClick={() => button.onEvent("click")}
-                        tooltip={button?.label}
-                        description={button?.description}
-                        badge={{ count: button?.badge, color: props.style.badgeColor }}
-                    />) : (
-                        <FloatButton.BackTop visibilityHeight={0} description={button?.description} tooltip={button?.label}></FloatButton.BackTop>
-                    )
-                }
-                )}
-
-
-            </FloatButton.Group>
+            {props.buttons.length === 1 ? (renderButton(props.buttons[0])) :
+                (<FloatButton.Group
+                    trigger="hover"
+                    style={{ right: -20 }}
+                    icon={props.icon}
+                    shape={props.shape}
+                    badge={{ count: props.buttons.reduce((sum, i) => sum + (i.buttonType === 'custom' ? i.badge : 0), 0), color: props.style.badgeColor }}
+                    type={props.buttonTheme}
+                >
+                    {props.buttons.map((button: any) => renderButton(button))}
+                </FloatButton.Group>)
+            }
         </Wrapper>
     );
 };
