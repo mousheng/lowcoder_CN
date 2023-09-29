@@ -2815,6 +2815,7 @@ export const zh = {
         buttonTheme: '按钮主题',
         badgeColor: '徽标颜色',
         dot: '徽标显示为点',
+        hidden: '隐藏',
     }
 };
 

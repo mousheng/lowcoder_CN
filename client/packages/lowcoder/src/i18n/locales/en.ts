@@ -2831,5 +2831,6 @@ export const en = {
     buttonTheme: 'Button Theme',
     badgeColor: 'Badge Color',
     dot: 'badge as dot',
+    hidden: 'hidden',
   }
 };

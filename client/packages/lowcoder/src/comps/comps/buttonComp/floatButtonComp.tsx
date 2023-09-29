@@ -49,6 +49,7 @@ const buttonGroupOption = new MultiCompBuilder(
         buttonType: dropdownControl(buttonTypeOption, 'custom'),
         icon: withDefault(IconControl, '/icon:antd/questioncircleoutlined'),
         onEvent: ButtonEventHandlerControl,
+        hidden: BoolControl,
     },
     (props) => props
 )
@@ -57,6 +58,7 @@ const buttonGroupOption = new MultiCompBuilder(
             {children.label.propertyView({ label: trans("label") })}
             {children.description.propertyView({ label: trans("floatButton.description") })}
             {children.badge.propertyView({ label: trans("floatButton.badge") })}
+            {children.hidden.propertyView({ label: trans("floatButton.hidden") })}
             {children.buttonType.propertyView({ label: trans("floatButton.buttonType"), radioButton: true })}
             {children.buttonType.getView() === 'custom' && children.icon.propertyView({ label: trans("icon") })}
             {children.buttonType.getView() === 'custom' && children.onEvent.getPropertyView()}
@@ -84,16 +86,18 @@ const childrenMap = {
 
 const FloatButtonView = (props: RecordConstructorToView<typeof childrenMap>) => {
     const renderButton = (button: any) => {
-        return button?.buttonType === 'custom' ? (<FloatButton
-            key={button?.id}
-            icon={button?.icon}
-            onClick={() => button.onEvent("click")}
-            tooltip={button?.label}
-            description={button?.description}
-            badge={{ count: button?.badge, color: props.style.badgeColor, dot: props.dot }}
-        />) : (
-            <FloatButton.BackTop visibilityHeight={0} description={button?.description} tooltip={button?.label}></FloatButton.BackTop>
-        )
+        return !button?.hidden ? (button?.buttonType === 'custom' ?
+            (<FloatButton
+                key={button?.id}
+                icon={button?.icon}
+                onClick={() => button.onEvent("click")}
+                tooltip={button?.label}
+                description={button?.description}
+                badge={{ count: button?.badge, color: props.style.badgeColor, dot: props.dot }}
+            />) :
+            (
+                <FloatButton.BackTop visibilityHeight={0} description={button?.description} tooltip={button?.label}></FloatButton.BackTop>
+            )) : ''
     }
     return (
         <Wrapper
@@ -105,7 +109,7 @@ const FloatButtonView = (props: RecordConstructorToView<typeof childrenMap>) => 
                     style={{ right: -20 }}
                     icon={props.icon}
                     shape={props.shape}
-                    badge={{ count: props.buttons.reduce((sum, i) => sum + (i.buttonType === 'custom' ? i.badge : 0), 0), color: props.style.badgeColor, dot: props.dot }}
+                    badge={{ count: props.buttons.reduce((sum, i) => sum + (i.buttonType === 'custom' && !i.hidden ? i.badge : 0), 0), color: props.style.badgeColor, dot: props.dot }}
                     type={props.buttonTheme}
                 >
                     {props.buttons.map((button: any) => renderButton(button))}
