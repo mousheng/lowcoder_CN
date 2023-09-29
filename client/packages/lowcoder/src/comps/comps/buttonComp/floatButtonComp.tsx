@@ -87,7 +87,7 @@ const childrenMap = {
 };
 
 const FloatButtonView = (props: RecordConstructorToView<typeof childrenMap>) => {
-    const renderButton = (button: any) => {
+    const renderButton = (button: any, onlyOne?: boolean) => {
         return !button?.hidden ? (button?.buttonType === 'custom' ?
             (<FloatButton
                 key={button?.id}
@@ -96,12 +96,16 @@ const FloatButtonView = (props: RecordConstructorToView<typeof childrenMap>) => 
                 tooltip={button?.label}
                 description={button?.description}
                 badge={{ count: button?.badge, color: props.style.badgeColor, dot: props?.dot }}
+                type={onlyOne ? props.buttonTheme : 'default'}
+                shape={props.shape}
             />) :
             (<FloatButton.BackTop
                 description={button?.description}
                 tooltip={button?.label}
                 onClick={() => button.onEvent("click")}
                 visibilityHeight={button?.visibilityHeight}
+                type={onlyOne ? props.buttonTheme : 'default'}
+                shape={props.shape}
             />))
             : ''
     }
@@ -109,7 +113,7 @@ const FloatButtonView = (props: RecordConstructorToView<typeof childrenMap>) => 
         <Wrapper
             $style={props.style}
         >
-            {props.buttons.length === 1 ? (renderButton(props.buttons[0])) :
+            {props.buttons.length === 1 ? (renderButton(props.buttons[0], true)) :
                 (<FloatButton.Group
                     trigger="hover"
                     style={{ right: -20 }}
