@@ -113,6 +113,7 @@ import {
   AvatarIcon,
   DescriptionsIcon,
   AntLayoutIcon,
+  FloatButtonIcon,
 } from "lowcoder-design";
 
 import { defaultFormData, FormComp } from "./comps/formComp/formComp";
@@ -152,6 +153,7 @@ import { AntLayoutComp } from "./comps/navComp/antLayout";
 //Added by Aqib Mirza
 import { JsonLottieComp } from "./comps/jsonComp/jsonLottieComp";
 import { ResponsiveLayoutComp } from "./comps/responsiveLayout";
+import { FloatButtonComp } from "./comps/buttonComp/floatButtonComp";
 
 type Registry = {
   [key in UICompType]?: UICompManifest;
@@ -1053,6 +1055,20 @@ const uiCompMap: Registry = {
       h: 115,
     },
   },
+  floatButton: {
+    name: trans("uiComp.FloatButtonCompName"),
+    enName: "floatButton",
+    description: trans("uiComp.FloatButtonCompDesc"),
+    categories: ["button"],
+    icon: FloatButtonIcon,
+    keywords: trans("uiComp.FloatButtonCompKeywords"),
+    comp: FloatButtonComp,
+    layoutInfo: {
+      w: 0,
+      h: 0,
+    },
+    withoutLoading: true,
+  }
 };
 
 export function loadComps() {

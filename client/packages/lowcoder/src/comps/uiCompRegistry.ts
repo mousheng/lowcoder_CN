@@ -125,6 +125,7 @@ export type UICompType =
   | "avatar"
   | "descriptions"
   | "antLayout"
+  | "floatButton"
 
 export const uiCompRegistry = {} as Record<UICompType | string, UICompManifest>;
 

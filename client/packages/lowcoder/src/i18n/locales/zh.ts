@@ -771,6 +771,9 @@ export const zh = {
         buttonCompName: "按钮",
         buttonCompDesc: "按钮组件",
         buttonCompKeywords: "an",
+        FloatButtonCompName: "悬浮按钮",
+        FloatButtonCompDesc: "悬浮按钮组件",
+        FloatButtonCompKeywords: "xfan",
         linkCompName: "链接",
         linkCompDesc: "链接组件",
         linkCompKeywords: "lj",
@@ -2797,6 +2800,20 @@ export const zh = {
         align: '对齐',
         center: '居中',
         logoPosition: '标题位置',
-}
+    },
+    floatButton: {
+        custom: '自定义',
+        backTop: '返回顶部',
+        buttonType: '按钮类型',
+        buttonShape: '按钮形状',
+        square:  '矩形',
+        circle: '圆形',
+        description: '简要描述',
+        badge: '徽标',
+        primary: '原色',
+        default: '白色',
+        buttonTheme: '按钮主题',
+        badgeColor: '徽标颜色',
+    }
 };
 

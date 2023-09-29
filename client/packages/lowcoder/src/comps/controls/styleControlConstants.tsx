@@ -887,6 +887,14 @@ export const QRCodeStyle = [
   PADDING,
 ] as const;
 
+export const FloatButtonStyle = [
+  {
+    name: "badgeColor",
+    label: trans("floatButton.badgeColor"),
+    color: "#ff4d4f",
+  },
+] as const;
+
 export const AvatarStyle = [
   getStaticBackground("#bfbfbf"),
   FILL,
@@ -1089,6 +1097,7 @@ export type AntLayoutLogoStyleType = StyleConfigType<typeof AntLayoutLogoStyle>;
 export type AntLayoutBodyStyleType = StyleConfigType<typeof AntLayoutBodyStyle>;
 export type AntLayoutFramerStyleType = StyleConfigType<typeof AntLayoutFramerStyle>;
 export type AntLayoutMenuStyleType = StyleConfigType<typeof AntLayoutMenuStyle>;
+export type FloatButtonStyleType = StyleConfigType<typeof FloatButtonStyle>;
 
 
 export function widthCalculator(margin: string) {
