@@ -2676,7 +2676,7 @@ export const en = {
     offsetDes: "In left and right mode, set the timeline offset",
     scrollTo: "Control scrollbar scrolling",
   },
-  mention:{
+  mention: {
     mentionList: "mention list",
   },
   comment: {
@@ -2822,7 +2822,7 @@ export const en = {
     backTop: 'Back Top',
     buttonType: 'Button Type',
     buttonShape: 'Button Shape',
-    square:  'Square',
+    square: 'Square',
     circle: 'Circle',
     description: 'Description',
     badge: 'Badge',
@@ -2830,7 +2830,9 @@ export const en = {
     default: 'Default',
     buttonTheme: 'Button Theme',
     badgeColor: 'Badge Color',
-    dot: 'badge as dot',
-    hidden: 'hidden',
+    dot: 'Badge As Dot',
+    hidden: 'Hidden',
+    visibilityHeight: 'Visibility Height',
+    visibilityHeightDesc: 'Scroll to a certain height before displaying the return to top button, 0 is always displayed,Editing mode cannot preview in real-time',
   }
 };

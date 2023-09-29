@@ -368,7 +368,7 @@ export const zh = {
         containerbodypadding: "容器内边距",
         minWidth: "最小宽度",
         BackgroundImage: "背景图片",
-},
+    },
     export: {
         hiddenDesc: "如果为true,则隐藏组件",
         disabledDesc: "如果为true,则将组件置为灰色且不可交互",
@@ -460,7 +460,7 @@ export const zh = {
         transformer: "转换器",
         quickRestAPI: "REST查询",
         quickStreamAPI: "Stream查询",
-    quickGraphql: "GraphQL查询",
+        quickGraphql: "GraphQL查询",
         lowcoderAPI: "Lowcoder API",
         executeJSCode: "运行JavaScript代码",
         importFromQueryLibrary: "从查询库导入",
@@ -925,9 +925,9 @@ export const zh = {
         antLayoutName: "ant布局框架",
         antLayoutDesc: "单页面程序框架",
         antLayoutKeywords: "antbjkj",
-    responsiveLayoutCompDesc: "响应式布局",
-    responsiveLayoutCompKeywords: "",
-},
+        responsiveLayoutCompDesc: "响应式布局",
+        responsiveLayoutCompKeywords: "",
+    },
     comp: {
         menuViewDocs: "查看文档",
         menuUpgradeToLatest: "升级到最新版本",
@@ -1227,11 +1227,11 @@ export const zh = {
         fixed: "固定",
         columnType: "列类型",
         float: "分数",
-    prefix: "字首",
-    suffix: "后缀",
-    text: "文本",
+        prefix: "字首",
+        suffix: "后缀",
+        text: "文本",
         number: "数字",
-    link: "链接",
+        link: "链接",
         links: "多链接",
         tag: "标签",
         date: "日期",
@@ -2575,7 +2575,7 @@ export const zh = {
         colorListTooltip: "可以自定义事件颜色的列表",
         year: "年视图",
         scrollToTime: "滚动到此刻",
-    scrollToTimeTooltip: "滚动到当前时间",
+        scrollToTimeTooltip: "滚动到当前时间",
     },
     componentDocExtra: {
         table,
@@ -2806,7 +2806,7 @@ export const zh = {
         backTop: '返回顶部',
         buttonType: '按钮类型',
         buttonShape: '按钮形状',
-        square:  '矩形',
+        square: '矩形',
         circle: '圆形',
         description: '简要描述',
         badge: '徽标',
@@ -2816,6 +2816,8 @@ export const zh = {
         badgeColor: '徽标颜色',
         dot: '徽标显示为点',
         hidden: '隐藏',
+        visibilityHeight: '显示高度',
+        visibilityHeightDesc: '滚动到一定高度才显示返回顶部按钮，0为始终显示,编辑模式无法实时预览'
     }
 };
 

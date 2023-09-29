@@ -50,6 +50,7 @@ const buttonGroupOption = new MultiCompBuilder(
         icon: withDefault(IconControl, '/icon:antd/questioncircleoutlined'),
         onEvent: ButtonEventHandlerControl,
         hidden: BoolControl,
+        visibilityHeight: withDefault(NumberControl, 0),
     },
     (props) => props
 )
@@ -61,7 +62,8 @@ const buttonGroupOption = new MultiCompBuilder(
             {children.hidden.propertyView({ label: trans("floatButton.hidden") })}
             {children.buttonType.propertyView({ label: trans("floatButton.buttonType"), radioButton: true })}
             {children.buttonType.getView() === 'custom' && children.icon.propertyView({ label: trans("icon") })}
-            {children.buttonType.getView() === 'custom' && children.onEvent.getPropertyView()}
+            {children.buttonType.getView() !== 'custom' && children.visibilityHeight.propertyView({ label: trans("floatButton.visibilityHeight"), tooltip: trans("floatButton.visibilityHeightDesc") })}
+            {children.onEvent.getPropertyView()}
         </>
     ))
     .build();
@@ -93,11 +95,15 @@ const FloatButtonView = (props: RecordConstructorToView<typeof childrenMap>) => 
                 onClick={() => button.onEvent("click")}
                 tooltip={button?.label}
                 description={button?.description}
-                badge={{ count: button?.badge, color: props.style.badgeColor, dot: props.dot }}
+                badge={{ count: button?.badge, color: props.style.badgeColor, dot: props?.dot }}
             />) :
-            (
-                <FloatButton.BackTop visibilityHeight={0} description={button?.description} tooltip={button?.label}></FloatButton.BackTop>
-            )) : ''
+            (<FloatButton.BackTop
+                description={button?.description}
+                tooltip={button?.label}
+                onClick={() => button.onEvent("click")}
+                visibilityHeight={button?.visibilityHeight}
+            />))
+            : ''
     }
     return (
         <Wrapper
