@@ -726,6 +726,9 @@ export const en = {
     inputCompName: "Input",
     inputCompDesc: "Input component",
     inputCompKeywords: "text",
+    colorPickerCompName: "Color Picker",
+    colorPickerCompDesc: "Color Picker component",
+    colorPickerCompKeywords: "",
     textAreaCompName: "Text Area",
     textAreaCompDesc: "Text Area component",
     textAreaCompKeywords: "",
@@ -2834,5 +2837,13 @@ export const en = {
     hidden: 'Hidden',
     visibilityHeight: 'Visibility Height',
     visibilityHeightDesc: 'Scroll to a certain height before displaying the return to top button, 0 is always displayed,Editing mode cannot preview in real-time',
+  },
+  colorPicker: {
+    trigger: 'Triggers Event',
+    click: 'Click',
+    hover: 'Hover',
+    disabledAlpha: 'Disabled Alpha',
+    Recommended: 'Recommended',
+    showPresets: 'Show Presets',
   }
 };

@@ -307,3 +307,4 @@ export { ReactComponent as LeftBarLocalStorageIcon } from "icons/icon-leftBar-lo
 export { ReactComponent as LeftBarURLIcon } from "icons/icon-leftBar-url.svg";
 export { ReactComponent as AntLayoutIcon } from "icons/icon-antLayout-comp.svg";
 export { ReactComponent as FloatButtonIcon } from "icons/icon-floatbutton-comp.svg";
+export { ReactComponent as ColorPickerIcon } from "icons/icon-colorPicker-comp.svg";

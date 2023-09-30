@@ -711,6 +711,9 @@ export const zh = {
         inputCompName: "输入框",
         inputCompDesc: "输入框组件",
         inputCompKeywords: "srk",
+        colorPickerCompName: "颜色选择器",
+        colorPickerCompDesc: "颜色选择器组件",
+        colorPickerCompKeywords: "ysxzq",
         textAreaCompName: "多行文本",
         textAreaCompDesc: "多行文本组件",
         textAreaCompKeywords: "dhwb",
@@ -2818,6 +2821,14 @@ export const zh = {
         hidden: '隐藏',
         visibilityHeight: '显示高度',
         visibilityHeightDesc: '滚动到一定高度才显示返回顶部按钮，0为始终显示,编辑模式无法实时预览'
+    },
+    colorPicker: {
+        trigger: '触发事件',
+        click: '点击',
+        hover: '悬停',
+        disabledAlpha: '禁用透明度',
+        Recommended: '预设颜色',
+        showPresets: '显示预设颜色',
     }
 };
 

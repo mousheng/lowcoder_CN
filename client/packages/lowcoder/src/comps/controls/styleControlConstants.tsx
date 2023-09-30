@@ -441,6 +441,14 @@ export const InputLikeStyle = [
   ...ACCENT_VALIDATE,
 ] as const;
 
+export const ColorPickerStyle = [
+  LABEL,
+  ...getStaticBgBorderRadiusByBg(SURFACE_COLOR),
+  TEXT,
+  MARGIN,	
+  ACCENT,
+] as const;
+
 export const RatingStyle = [
   LABEL,
   {
@@ -1055,6 +1063,7 @@ export const CarouselStyle = [getBackground("canvas")] as const;
 
 export const RichTextEditorStyle = [getStaticBorder(), RADIUS] as const;
 export type InputLikeStyleType = StyleConfigType<typeof InputLikeStyle>;
+export type ColorPickerStyleType = StyleConfigType<typeof ColorPickerStyle>;
 export type ButtonStyleType = StyleConfigType<typeof ButtonStyle>;
 export type ToggleButtonStyleType = StyleConfigType<typeof ToggleButtonStyle>;
 export type TextStyleType = StyleConfigType<typeof TextStyle>;

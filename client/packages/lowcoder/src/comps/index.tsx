@@ -114,6 +114,7 @@ import {
   DescriptionsIcon,
   AntLayoutIcon,
   FloatButtonIcon,
+  ColorPickerIcon,
 } from "lowcoder-design";
 
 import { defaultFormData, FormComp } from "./comps/formComp/formComp";
@@ -149,6 +150,7 @@ import { AvatarComp } from "./comps/avatar"
 import { DescriptionsComp } from "./comps/descriptionsComp";
 import { CalendarComp } from "./comps/calendarComp/calendarComp";
 import { AntLayoutComp } from "./comps/navComp/antLayout";
+import { ColorPickerComp } from "./comps/textInputComp/colorPickerComp";
 
 //Added by Aqib Mirza
 import { JsonLottieComp } from "./comps/jsonComp/jsonLottieComp";
@@ -174,6 +176,15 @@ const uiCompMap: Registry = {
     icon: InputCompIcon,
     keywords: trans("uiComp.inputCompKeywords"),
     comp: InputComp,
+  },
+  colorPicker: {
+    name: trans("uiComp.colorPickerCompName"),
+    enName: "colorPicker",
+    description: trans("uiComp.colorPickerCompDesc"),
+    categories: ["dataInputText"],
+    icon: ColorPickerIcon,
+    keywords: trans("uiComp.colorPickerCompKeywords"),
+    comp: ColorPickerComp,
   },
   textArea: {
     name: trans("uiComp.textAreaCompName"),
