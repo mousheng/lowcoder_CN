@@ -335,6 +335,11 @@ export const amapMoveEndEvent: EventConfigType = {
   value: "amapMoveEnd",
   description: trans("event.amapMoveEndDesc"),
 };
+export const refreshEvent: EventConfigType = {
+  label: trans("event.refresh"),
+  value: "refresh",
+  description: trans("event.refreshDesc"),
+};
 
 export const InputEventHandlerControl = eventHandlerControl([
   changeEvent,

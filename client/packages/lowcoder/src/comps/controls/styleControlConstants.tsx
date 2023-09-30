@@ -797,6 +797,7 @@ export const QRCodeStyle = [
     label: trans("color"),
     color: "#000000",
   },
+  RADIUS,
   MARGIN,	
   PADDING,
 ] as const;
@@ -999,6 +1000,7 @@ export type CarouselStyleType = StyleConfigType<typeof CarouselStyle>;
 export type RichTextEditorStyleType = StyleConfigType<typeof RichTextEditorStyle>;
 export type ResponsiveLayoutRowStyleType = StyleConfigType<typeof ResponsiveLayoutRowStyle>;
 export type ResponsiveLayoutColStyleType = StyleConfigType<typeof ResponsiveLayoutColStyle>;
+export type QRCodeStyleType = StyleConfigType<typeof QRCodeStyle>;
 
 export function widthCalculator(margin: string) {
   const marginArr = margin?.trim().replace(/\s+/g,' ').split(" ") || "";

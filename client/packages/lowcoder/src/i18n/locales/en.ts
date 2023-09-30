@@ -287,6 +287,8 @@ export const en = {
     clickMarkerDesc: "Triggers markers on click",
     amapMoveEnd: "map move end",
     amapMoveEndDesc: "Triggers map move end",
+    refresh: "Refresh",
+    refreshDesc: "Triggers on refresh",
   },
   themeDetail: {
     primary: "Brand color",
@@ -1359,6 +1361,12 @@ export const en = {
     Q: "Q (Quartile)",
     H: "H (High)",
     maxLength: "The content is too long. Set the length to less than 2953 characters",
+    renderType: "Render Type",
+    status: "status",
+    active: "active",
+    expired: "expired",
+    loading: "loading",
+    imageTooltip: "Image URL/ Base64 encoded",
   },
   amap: {
     akey: "Amap key",
