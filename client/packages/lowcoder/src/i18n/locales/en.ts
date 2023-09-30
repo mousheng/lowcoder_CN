@@ -2698,6 +2698,7 @@ export const en = {
     commentList: "comment list",
     deletedItem: "deleted item",
     submitedItem: "submited item",
+    clickedItem: "Clicked Item",
     deleteAble: "show delete button",
     Introduction: "Introduction keys",
     helpUser: "user info(Required)",

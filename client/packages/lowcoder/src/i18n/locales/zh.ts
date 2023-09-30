@@ -2708,6 +2708,7 @@ export const zh = {
         commentList: "评论列表数据",
         deletedItem: "已删除的数据",
         submitedItem: "已提交的数据",
+        clickedItem: "点击的项目",
         deleteAble: "显示删除按钮",
         Introduction: "属性介绍",
         helpUser: "用户信息(必填)",

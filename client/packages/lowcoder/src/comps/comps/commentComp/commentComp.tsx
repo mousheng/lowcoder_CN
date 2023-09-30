@@ -89,8 +89,9 @@ const childrenMap = {
   style: styleControl(CommentStyle),
   commentList: jsonValueExposingStateControl("commentList", []),
   deletedItem: jsonValueExposingStateControl("deletedItem", []),
-  submitedItem: jsonValueExposingStateControl("submitedItem", []),
+  submitedItem: jsonValueExposingStateControl("submitedItem", {}),
   mentionName: valueComp<string>(""),
+  clickedItem: jsonValueExposingStateControl('clickedItem', {}),
 };
 
 const CommentCompBase = (
@@ -163,7 +164,10 @@ const CommentCompBase = (
   const generateCommentAvatar = (item: commentDataTYPE) => {
     return (
       <Avatar
-        onClick={() => props.onEvent("click")}
+        onClick={() => {
+          props.clickedItem.onChange(item)
+          props.onEvent("click")
+        }}
         // 如果有头像，则不设置背景色，如果displayName不为空，则使用getInitialsAndColorCode调用displayName
         style={{
           backgroundColor: item?.user?.avatar
@@ -275,7 +279,10 @@ const CommentCompBase = (
                 <List.Item.Meta
                   avatar={generateCommentAvatar(item)}
                   title={
-                    <div onClick={() => props.onEvent("click")}>
+                    <div onClick={() => {
+                      props.clickedItem.onChange(item)
+                      props.onEvent("click")
+                    }}>
                       <a>{item?.user?.name}</a>
                       <Tooltip
                         title={
@@ -410,6 +417,7 @@ export const CommentComp = withExposingConfigs(CommentBasicComp, [
   new NameConfig("commentList", trans("comment.commentList")),
   new NameConfig("deletedItem", trans("comment.deletedItem")),
   new NameConfig("submitedItem", trans("comment.submitedItem")),
+  new NameConfig("clickedItem", trans("comment.clickedItem")),
   new NameConfig("mentionName", trans("comment.submitedItem")),
   NameConfigHidden,
 ]);
