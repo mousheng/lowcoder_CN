@@ -14,7 +14,7 @@ import { Section, sectionNames } from "lowcoder-design";
 // 指示组件是否隐藏的开关
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
 // 右侧属性开关
-
+import ReactResizeDetector from "react-resize-detector";
 import { BoolControl } from "comps/controls/boolControl";
 import { styleControl } from "comps/controls/styleControl"; //样式输入框
 import { jsonValueExposingStateControl } from "comps/controls/codeStateControl";
@@ -114,11 +114,14 @@ const CommentCompBase = (
     deleteAble,
   } = props;
   type PrefixType = "@" | keyof typeof mentionList;
-  // 用于保存整合后的提及列表
+  // 用于保存整合后的提及列表 static
+  const conRef = useRef<HTMLDivElement>(null);
   const [MentionListData, setMentionList] = useState<typeof mentionList>([]);
   const [commentListData, setCommentListData] = useState<commentDataTYPE[]>([]);
   const [prefix, setPrefix] = useState<PrefixType>("@");
   const [context, setContext] = useState<string>("");
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
   // 将评论列表与原提及列表中的名字进行整合
   const mergeAllMentionList = (mentionList: any) => {
     setMentionList(
@@ -166,10 +169,10 @@ const CommentCompBase = (
           backgroundColor: item?.user?.avatar
             ? ""
             : getInitialsAndColorCode(
-                item?.user?.displayName === undefined
-                  ? item?.user?.name
-                  : item?.user?.displayName
-              )[1],
+              item?.user?.displayName === undefined
+                ? item?.user?.name
+                : item?.user?.displayName
+            )[1],
           verticalAlign: "middle",
         }}
         src={item?.user?.avatar}
@@ -178,8 +181,8 @@ const CommentCompBase = (
         {item?.user?.displayName
           ? item?.user?.displayName
           : /^([\u4e00-\u9fa5]{2,4})$/gi.test(item?.user?.name)
-          ? item?.user?.name.slice(-2)
-          : item?.user?.name[0]}
+            ? item?.user?.name.slice(-2)
+            : item?.user?.name[0]}
       </Avatar>
     );
   };
@@ -213,140 +216,139 @@ const CommentCompBase = (
       handleSubmit();
     }
   };
+
+  const onResize = () => {
+    const container = conRef.current;
+    setWidth(container?.clientWidth ?? 0);
+    setHeight(container?.clientHeight ?? 0);
+  };
+
   return (
-    <div
-      style={{
-        margin: style.margin ?? "3px",
-        padding: style.padding ?? "3px",
-        width: widthCalculator(style.margin ?? "3px"),
-        height: heightCalculator(style.margin ?? "3px"),
-        background: style.background,
-        overflow: "auto",
-        overflowX: "hidden",
-        borderRadius: style.radius,
-      }}
-      ref={divRef}
-    >
-      <List
-        header={
-          title !== "" ? (
-            <div>
-              {commentListData.length > 1
-                ? title
+    <ReactResizeDetector onResize={onResize}>
+      <div
+        style={{
+          margin: style.margin,
+          padding: style.padding,
+          width: widthCalculator(style.margin),
+          height: heightCalculator(style.margin),
+          background: style.background,
+          borderRadius: style.radius,
+        }}
+        ref={conRef}
+      >
+        <List
+          header={
+            title !== "" ? (
+              <div>
+                {commentListData.length > 1
+                  ? title
                     .replaceAll("%d", commentListData.length.toString())
                     .replace("comment", "comments")
-                : title.replaceAll("%d", commentListData.length.toString())}
-            </div>
-          ) : (
-            ""
-          )
-        }
-        size="small"
-      >
-        <VirtualList
-          data={commentListData}
-          ////////////////////////////////////////////////////////////////
-          // T_T , Frustrating, unable to obtain component height
-          // height={height - (sendCommentAble ? 145 : 45) + (title === "" ? 40 : 0)}
-          // ref={VirtualListRef}
-          ////////////////////////////////////////////////////////////////
-          itemKey="createdAt"
+                  : title.replaceAll("%d", commentListData.length.toString())}
+              </div>
+            ) : (
+              ""
+            )
+          }
+          size="small"
         >
-          {(item, index) => (
-            <List.Item
-              key={item?.createdAt}
-              actions={
-                deleteAble
-                  ? [
+          <VirtualList
+            data={commentListData}
+            height={height - (sendCommentAble ? 145 : 45) + (title === "" ? 40 : 0)}
+            ref={divRef as any}
+            itemKey="createdAt"
+          >
+            {(item, index) => (
+              <List.Item
+                key={item?.createdAt}
+                actions={
+                  deleteAble
+                    ? [
                       <CloseOutlined
                         style={{ color: "#c32230" }}
                         onClick={() => handleDelete(index)}
                       />,
                     ]
-                  : undefined
-              }
-            >
-              <List.Item.Meta
-                avatar={generateCommentAvatar(item)}
-                title={
-                  <div onClick={() => props.onEvent("click")}>
-                    <a>{item?.user?.name}</a>
-                    <Tooltip
-                      title={
-                        dayjs(item?.createdAt).isValid()
-                          ? dayjs(item?.createdAt).format("YYYY/M/D HH:mm:ss")
-                          : trans("comment.dateErr")
-                      }
-                      placement="bottom"
-                    >
-                      <span
-                        style={{
-                          paddingLeft: "5px",
-                          color: "#999",
-                          fontSize: "11px",
-                        }}
-                      >
-                        {dayjs(item?.createdAt).isValid()
-                          ? dayjs(item?.createdAt).fromNow()
-                          : trans("comment.dateErr")}
-                      </span>
-                    </Tooltip>
-                  </div>
+                    : undefined
                 }
-                description={<span>{item?.value}</span>}
-              />
-            </List.Item>
-          )}
-        </VirtualList>
-      </List>
-      {sendCommentAble ? (
-        <>
-          <Mentions
-            style={{
-              width: "98%",
-              height: 50,
-              margin: "0px 10px 0px 5px",
-              // position: "fixed",
-              // bottom: "50px",
-            }}
-            onSearch={onSearch}
-            prefix={Object.keys(MentionListData)}
-            onChange={onChange}
-            onSelect={(option: any) => {
-              dispatch(changeChildAction("mentionName", option?.value, false));
-              props.onEvent("mention");
-            }}
-            value={context}
-            rows={2}
-            onPressEnter={onPressEnter}
-            placeholder={placeholder}
-          >
-            {(MentionListData[prefix] || []).map(
-              (value: string, index: number) => (
-                <Mentions.Option key={index.toString()} value={value}>
-                  {value}
-                </Mentions.Option>
-              )
+              >
+                <List.Item.Meta
+                  avatar={generateCommentAvatar(item)}
+                  title={
+                    <div onClick={() => props.onEvent("click")}>
+                      <a>{item?.user?.name}</a>
+                      <Tooltip
+                        title={
+                          dayjs(item?.createdAt).isValid()
+                            ? dayjs(item?.createdAt).format("YYYY/M/D HH:mm:ss")
+                            : trans("comment.dateErr")
+                        }
+                        placement="bottom"
+                      >
+                        <span
+                          style={{
+                            paddingLeft: "5px",
+                            color: "#999",
+                            fontSize: "11px",
+                          }}
+                        >
+                          {dayjs(item?.createdAt).isValid()
+                            ? dayjs(item?.createdAt).fromNow()
+                            : trans("comment.dateErr")}
+                        </span>
+                      </Tooltip>
+                    </div>
+                  }
+                  description={<span>{item?.value}</span>}
+                />
+              </List.Item>
             )}
-          </Mentions>
-          <Button
-            type="primary"
-            style={{
-              width: "98%",
-              margin: "10px 10px 10px 5px",
-              // position: "fixed",
-              // bottom: "0px",
-            }}
-            onClick={handleSubmit}
-            disabled={context === ""}
-          >
-            {buttonText}
-          </Button>
-        </>
-      ) : (
-        ""
-      )}
-    </div>
+          </VirtualList>
+        </List>
+        {sendCommentAble ? (
+          <>
+            <Mentions
+              style={{
+                width: "99%",
+                margin: "0px 10px 0px 5px",
+              }}
+              onSearch={onSearch}
+              prefix={Object.keys(MentionListData)}
+              onChange={onChange}
+              onSelect={(option: any) => {
+                dispatch(changeChildAction("mentionName", option?.value, false));
+                props.onEvent("mention");
+              }}
+              value={context}
+              rows={2}
+              onPressEnter={onPressEnter}
+              placeholder={placeholder}
+            >
+              {(MentionListData[prefix] || []).map(
+                (value: string, index: number) => (
+                  <Mentions.Option key={index.toString()} value={value}>
+                    {value}
+                  </Mentions.Option>
+                )
+              )}
+            </Mentions>
+            <Button
+              type="primary"
+              style={{
+                width: "99%",
+                margin: "5px 10px 10px 5px",
+              }}
+              onClick={handleSubmit}
+              disabled={context === ""}
+            >
+              {buttonText}
+            </Button>
+          </>
+        ) : (
+          ""
+        )}
+      </div>
+    </ReactResizeDetector>
   );
 };
 
