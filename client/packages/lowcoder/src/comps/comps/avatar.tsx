@@ -1,14 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { RecordConstructorToView } from "lowcoder-core";
 import { styleControl } from "comps/controls/styleControl";
 import _ from "lodash";
 import {
   AvatarStyle,
-  IconStyle,
-  IconStyleType,
-  heightCalculator,
-  widthCalculator,
+  AvatarStyleType,
 } from "comps/controls/styleControlConstants";
 import { UICompBuilder } from "comps/generators/uiCompBuilder";
 import { withDefault } from "../generators";
@@ -22,46 +18,31 @@ import { hiddenPropertyView } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
 import { NumberControl } from "comps/controls/codeControl";
 import { IconControl } from "comps/controls/iconControl";
-import ReactResizeDetector from "react-resize-detector";
-import { AutoHeightControl } from "../controls/autoHeightControl";
 import {
   clickEvent,
   eventHandlerControl,
 } from "../controls/eventHandlerControl";
-import { Avatar, Badge } from "antd";
+import { Avatar, AvatarProps, Badge } from "antd";
 import { dropdownControl } from "../controls/dropdownControl";
-import { numberExposingStateControl, stringExposingStateControl } from "../controls/codeStateControl";
+import { stringExposingStateControl } from "../controls/codeStateControl";
 import { BoolControl } from "../controls/boolControl";
 import { BudgeBasicSection, budgeChildren } from "./budgeComp/budgeConstants";
 
-// const Container = styled.div<{ $style: IconStyleType | undefined }>`
-//   // height: 100%;
-//   // width: 100%;
-//   // display: flex;
-//   // align-items: center;
-//   // justify-content: center;
-//   // cursor: pointer;
-//   // svg {
-//   //   object-fit: contain;
-//   //   pointer-events: auto;
-//   // }
-//   ${(props) => props.$style && getStyle(props.$style)}
-// `;
+const AvatarWrapper = styled(Avatar) <AvatarProps & { cursorPointer: boolean, $style: AvatarStyleType }>`
+  background: ${(props) => props.$style.background};
+  color: ${(props) => props.$style.fill};
+  cursor: ${(props) => props.cursorPointer ? 'pointer' : ''};
+`;
 
-// const getStyle = (style: IconStyleType) => {
-//   return css`
-//     svg {
-//       color: ${style.fill};
-//     }
-//     padding: ${style.padding};
-//     border: 1px solid ${style.border};
-//     border-radius: ${style.radius};
-//     margin: ${style.margin};
-//     max-width: ${widthCalculator(style.margin)};
-//     max-height: ${heightCalculator(style.margin)};
-//   `;
-// };
-
+const Warpper = styled.div <{ iconSize: number }>`
+    width: ${(props) => props.iconSize}px;
+    height: ${(props) => props.iconSize}px;
+    inset-block-end: ${(props) => props.iconSize / 2}px;
+    inset-inline-start: -${(props) => props.iconSize / 2}px;
+    position: relative;
+    padding: 0px;
+    z-index: 11;
+`
 const EventOptions = [clickEvent] as const;
 const sharpOptions = [
   { label: trans("avatarComp.square"), value: "square" },
@@ -71,8 +52,7 @@ const sharpOptions = [
 const childrenMap = {
   style: styleControl(AvatarStyle),
   icon: withDefault(IconControl, "/icon:solid/user"),
-  // autoHeight: withDefault(AutoHeightControl, "auto"),
-  // iconSize: withDefault(NumberControl, 20),
+  iconSize: withDefault(NumberControl, 40),
   onEvent: eventHandlerControl(EventOptions),
   shape: dropdownControl(sharpOptions, "circle"),
   title: stringExposingStateControl("title", ""),
@@ -82,65 +62,29 @@ const childrenMap = {
 };
 
 const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
-  const { shape, title, src } = props;
-  const conRef = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
-  const [counts, setCounts] = useState(0);
-
-  useEffect(() => {
-    setCounts(props.budgeCount.value)
-  }, [props.budgeCount.value])
-
-  useEffect(() => {
-    if (height && width) {
-      console.log("!!", height, width);
-      onResize();
-    }
-  }, [height, width]);
-
-  const onResize = () => {
-    const container = conRef.current;
-    console.log(container?.clientWidth, container?.clientHeight)
-    setWidth(container?.clientWidth ?? 0);
-    setHeight(container?.clientHeight ?? 0);
-  };
-
+  const { shape, title, src, iconSize } = props;
   return (
-    <ReactResizeDetector onResize={onResize}>
-      <div
-        ref={conRef}
-        style={{
-          width: "100%",
-          height: "100%",
-          padding: '0px',
-        }}
+    <Warpper iconSize={props.iconSize}>
+      <Badge
+        count={props.budgeCount.value}
+        dot={props.budgeType === 'dot'}
+        size={props.budgeSize}
+        overflowCount={props.overflowCount}
+        title={props.budgeTitle}
       >
-        <Badge
-          count={props.budgeCount.value}
-          dot={props.budgeType === 'dot'}
-          size={props.budgeSize}
-          overflowCount={props.overflowCount}
-          title={props.budgeTitle}
+        <AvatarWrapper
+          size={iconSize}
+          icon={title.value !== '' ? null : props.icon}
+          shape={shape}
+          $style={props.style}
+          src={src.value}
+          cursorPointer={props.cursorPointer}
+          onClick={() => props.onEvent("click")}
         >
-          <Avatar
-            size={width < height ? width - 5 : height}
-            icon={title.value !== '' ? null : props.icon}
-            shape={shape}
-            style={{
-              background: props.style.background,
-              color: props.style.fill,
-              cursor: props.cursorPointer ? 'pointer' : '',
-            }}
-            src={src.value}
-            onClick={() => props.onEvent("click")}
-
-          >
-            {title.value}
-          </Avatar>
-        </Badge>
-      </div>
-    </ReactResizeDetector>
+          {title.value}
+        </AvatarWrapper>
+      </Badge>
+    </Warpper>
   );
 };
 
@@ -170,6 +114,10 @@ let IconBasicComp = (function () {
           {
             children.cursorPointer.propertyView({
               label: trans("avatarComp.cursorPointer"),
+            })}
+          {
+            children.iconSize.propertyView({
+              label: trans("avatarComp.iconSize"),
             })}
         </Section>
         {children.shape.getView() === 'square' && <BudgeBasicSection {...children} />}

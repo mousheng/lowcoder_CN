@@ -2773,6 +2773,7 @@ export const en = {
     title: "title",
     src: "src",
     avatarCompTooltip: "The rendering order is: images ->characters ->icon",
+    iconSize: "Icon Size",
   },
   descriptions: {
     horizontal: "Horizontal",

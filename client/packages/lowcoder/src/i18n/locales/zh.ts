@@ -2739,6 +2739,7 @@ export const zh = {
         title: "标题",
         src: "图片",
         avatarCompTooltip: "渲染顺序为：图片->字符->icon",
+        iconSize: "图标大小",
     },
     descriptions: {
         horizontal: "水平布局",

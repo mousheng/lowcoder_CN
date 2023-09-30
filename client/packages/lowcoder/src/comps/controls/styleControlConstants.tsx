@@ -1107,7 +1107,7 @@ export type AntLayoutBodyStyleType = StyleConfigType<typeof AntLayoutBodyStyle>;
 export type AntLayoutFramerStyleType = StyleConfigType<typeof AntLayoutFramerStyle>;
 export type AntLayoutMenuStyleType = StyleConfigType<typeof AntLayoutMenuStyle>;
 export type FloatButtonStyleType = StyleConfigType<typeof FloatButtonStyle>;
-
+export type AvatarStyleType = StyleConfigType<typeof AvatarStyle>;
 
 export function widthCalculator(margin: string) {
   const marginArr = margin?.trim().replace(/\s+/g,' ').split(" ") || "";
