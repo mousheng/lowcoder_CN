@@ -891,6 +891,7 @@ export const QRCodeStyle = [
     label: trans("color"),
     color: "#000000",
   },
+  RADIUS,
   MARGIN,	
   PADDING,
 ] as const;
@@ -1108,6 +1109,7 @@ export type AntLayoutFramerStyleType = StyleConfigType<typeof AntLayoutFramerSty
 export type AntLayoutMenuStyleType = StyleConfigType<typeof AntLayoutMenuStyle>;
 export type FloatButtonStyleType = StyleConfigType<typeof FloatButtonStyle>;
 export type AvatarStyleType = StyleConfigType<typeof AvatarStyle>;
+export type QRCodeStyleType = StyleConfigType<typeof QRCodeStyle>;
 
 export function widthCalculator(margin: string) {
   const marginArr = margin?.trim().replace(/\s+/g,' ').split(" ") || "";

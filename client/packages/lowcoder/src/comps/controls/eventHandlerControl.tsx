@@ -345,6 +345,11 @@ export const clickMenuEvent: EventConfigType = {
   value: "clickMenu",
   description: trans("event.clickMenuEventDesc"),
 };
+export const refreshEvent: EventConfigType = {
+  label: trans("event.refresh"),
+  value: "refresh",
+  description: trans("event.refreshDesc"),
+};
 
 export const InputEventHandlerControl = eventHandlerControl([
   changeEvent,
