@@ -2311,7 +2311,7 @@ export const en = {
     cloneUrl: "/apps/template-import/",
   },
   lowcoderUrl: {
-    createIssue: "https://github.com/lowcoder-org/lowcoder/issues",
+    createIssue: "https://github.com/mousheng/lowcoder_CN/issues",
     discord: "https://discord.com/invite/qMG9uTmAx2",
   },
   componentDoc: {

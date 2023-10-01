@@ -319,6 +319,7 @@ export function HelpDropdown(props: HelpDropdownProps) {
         discordUrl
           ? {
               key: "discord",
+              disabled: true,
               label: (
                 <ItemWrapper>
                   <HelpDiscordIcon />

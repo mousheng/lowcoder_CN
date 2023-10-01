@@ -230,7 +230,7 @@ export const zh = {
         goToApp: "跳转到指定应用",
         queryParams: "查询参数",
         hashParams: "哈希参数",
-        showNotification: "显示通知",
+        showNotification: "全局提示",
         text: "文本",
         level: "级别",
         duration: "持续时间",
@@ -239,7 +239,7 @@ export const zh = {
         openInNewTab: "在新标签页中打开",
         copyToClipboard: "复制到剪贴板",
         copyToClipboardValue: "值",
-        export: "导出数据",
+        export: "下载",
         exportNoFileType: "未选择(可选)",
         fileName: "文件名",
         fileNameTooltip: "支持使用扩展名指定文件类型,例如image.png.",
@@ -2276,7 +2276,7 @@ export const zh = {
         cloneUrl: "/apps/template-import/",
     },
     lowcoderUrl: {
-        createIssue: "https://github.com/lowcoder-org/lowcoder/issues",
+        createIssue: "https://github.com/mousheng/lowcoder_CN/issues",
         discord: "https://discord.com/invite/qMG9uTmAx2",
     },
     componentDoc: {
