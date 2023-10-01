@@ -100,6 +100,7 @@ let TmpDrawerComp = (function () {
       placement: PositionControl,
       maskClosable: withDefault(BoolControl, true),
       showMask: withDefault(BoolControl, true),
+      showCloseButton: BoolControl.DEFAULT_TRUE,
     },
     (props, dispatch) => {
       const isTopBom = ["top", "bottom"].includes(props.placement);
@@ -151,6 +152,7 @@ let TmpDrawerComp = (function () {
                 onClick={() => {
                   props.visible.onChange(false);
                 }}
+                style={{ display: props.showCloseButton ? '' : 'none' }}
               >
                 <CloseOutlined />
               </ButtonStyle>
@@ -177,10 +179,10 @@ let TmpDrawerComp = (function () {
           {["top", "bottom"].includes(children.placement.getView())
             ? children.autoHeight.getPropertyView()
             : children.width.propertyView({
-                label: trans("drawer.width"),
-                tooltip: trans("drawer.widthTooltip"),
-                placeholder: DEFAULT_SIZE + "",
-              })}
+              label: trans("drawer.width"),
+              tooltip: trans("drawer.widthTooltip"),
+              placeholder: DEFAULT_SIZE + "",
+            })}
           {!children.autoHeight.getView() &&
             ["top", "bottom"].includes(children.placement.getView()) &&
             children.height.propertyView({
@@ -193,6 +195,9 @@ let TmpDrawerComp = (function () {
           })}
           {children.showMask.propertyView({
             label: trans("prop.showMask"),
+          })}
+          {children.showCloseButton.propertyView({
+            label: trans("prop.showCloseButton"),
           })}
         </Section>
         <Section name={sectionNames.interaction}>{children.onEvent.getPropertyView()}</Section>
