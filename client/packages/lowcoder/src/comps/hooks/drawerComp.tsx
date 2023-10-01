@@ -190,11 +190,11 @@ let TmpDrawerComp = (function () {
               tooltip: trans("drawer.heightTooltip"),
               placeholder: DEFAULT_SIZE + "",
             })}
-          {children.maskClosable.propertyView({
-            label: trans("prop.maskClosable"),
-          })}
           {children.showMask.propertyView({
             label: trans("prop.showMask"),
+          })}
+          {children.showMask.getView() && children.maskClosable.propertyView({
+            label: trans("prop.maskClosable"),
           })}
           {children.showCloseButton.propertyView({
             label: trans("prop.showCloseButton"),
