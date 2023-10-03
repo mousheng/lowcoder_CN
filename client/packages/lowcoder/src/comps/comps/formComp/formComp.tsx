@@ -250,9 +250,9 @@ let FormTmpComp = class extends FormBaseComp implements IForm {
       const compType = item.children.compType.getView();
       log.warn(
         trans("form") +
-          compType +
-          trans("formComp.notSupportMethod") +
-          searchMethods.map((m) => m.name)
+        compType +
+        trans("formComp.notSupportMethod") +
+        searchMethods.map((m) => m.name)
       );
       return true;
     });
@@ -263,7 +263,7 @@ let FormTmpComp = class extends FormBaseComp implements IForm {
     const newData = { ...(initialData ?? this.children.initialData.getView()), ...data };
     return this.runMethodOfItems(
       {
-        name: "设置Value",
+        name: trans("eventHandler.set") + "Value",
         getParams: (t) => {
           // use component name when formDataKey is empty
           const key = t.children.comp.children.formDataKey?.getView() || t.children.name.getView();
@@ -271,8 +271,8 @@ let FormTmpComp = class extends FormBaseComp implements IForm {
           return value !== undefined ? [value as EvalParamType] : undefined;
         },
       },
-      { name: "重置Value" },
-      { name: "清除Value" }
+      { name: trans("eventHandler.reset") + "Value" },
+      { name: trans("eventHandler.clear") + "Value" }
     );
   }
   reset() {
