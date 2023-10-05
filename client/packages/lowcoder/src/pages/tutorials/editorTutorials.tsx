@@ -187,11 +187,11 @@ function addQuery(editorState: EditorState, datasourceInfos: DatasourceInfo[]) {
           bodyType: "application/json",
         },
         datasourceId: QUICK_REST_API_ID,
-        triggerType: "manual",
+        triggerType: "automatic",
       })
     );
   }
-  editorState.setSelectedBottomRes(queryName, BottomResTypeEnum.Query);
+    editorState.setSelectedBottomRes(queryName, BottomResTypeEnum.Query);
 }
 
 export default function EditorTutorials() {
@@ -261,14 +261,14 @@ export default function EditorTutorials() {
       addQuery(editorState, datasourceInfos);
       // select table in advance
       editorState.setSelectedCompNames(new Set(["table1"]));
-      setStepIndex(nextIndex);
+      setTimeout(() => setStepIndex(nextIndex), 0);
     } else if (index === 2 && action === ACTIONS.NEXT) {
       // change data
       openTableData();
       const tableComp = editorState.getUICompByName("table1");
       tableComp &&
         tableComp.children.comp.children.data.dispatchChangeValueAction("{{query1.data}}");
-      setStepIndex(nextIndex);
+      setTimeout(() => setStepIndex(nextIndex), 0);
     } else if (index === 1 && action === ACTIONS.PREV) {
       // cancel select
       editorState.setSelectedCompNames(new Set([]));

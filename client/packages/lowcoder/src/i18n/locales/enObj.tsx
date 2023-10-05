@@ -112,7 +112,7 @@ export const enObj: I18nObjects = {
     ],
   },
   editorTutorials: {
-    mockDataUrl: "https://63621db87521369cd06514c2.mockapi.io/api/lowcoder/users",
+    mockDataUrl: "https://651ecf7a44a3a8aa47690c6d.mockapi.io/api/lowcoder/user",
     data: (code) => (
       <>
         The component and query data are listed here, which can be referenced through
@@ -122,8 +122,8 @@ export const enObj: I18nObjects = {
     compProperties: (code) => (
       <>
         When the component is selected, its properties are displayed on the right
-        {code("{{query1.data}}")}. Reference the data just queried, you can use in the input box
-        {code("{{ }}")}
+        . Reference the data just queried, you can use in the input box
+        {code("{{query1.data}}")}
         write JavaScript.
       </>
     ),
