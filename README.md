@@ -1,20 +1,45 @@
-> **注释**  
-> lowcoder继承自废弃的openblocks（码匠的英文版）项目，其实码匠的底子非常好，实在不忍这个项目就此废弃 .
+## Lowcoder_cn的前生今世
 
-<div align="center">
-    <h1 style="border-bottom: none; margin-bottom: 0">Lowcoder</h1>
-    <h3 style="margin-top: 0">开源retool、tooljet和appsmith的替代方案</h3>
-    <p>
-        不受限制，快速构建面向内部和面向客户的应用
-    </p>
-</div>
+**lowcoder**继承自废弃的**openblocks**项目，**openblocks** 则是国内低代码平台**码匠**的开源版，后**码匠**项目下马。后来一个国外公司以openblocks为基础，改名为lowcoder。因改为国外团队维护，导致没有了对国内的数据源支持，甚至中文环境一度都无法运行。作为一款国产低代码平台，居然沦落到无法在中文环境运行，实在令人唏嘘。
+本人试用过appsmith、retool、tooljet、码匠，很早对码匠就挺有兴趣的，跟他们的销售人员聊的时候问及以后没有开源版来二次开发，但一直跟我说没有开源版。后来选择改造 [tooljet](https://github.com/mousheng/tooljet_cn.git),前段时间无意间发现lowcoder原来就是码匠的开源版，于是开始对其进行改造。
 
-<img src="/docs/.gitbook/assets/Bu2fpz1h01.gif"/>
+Lowcoder_cn（以下简称lowcoder）是[lowcoder](https://github.com/lowcoder-org/lowcoder.git)的国内分支（因为lowcoder合并代码速度太慢以及有些理念不同，特开此分支），是一款开发者友好的低代码平台。通过开箱即用的组件库、所见即所得 UI 布局以及连接数据库/API，您可以快速开发内部应用，同时无需关注复杂繁琐的前后端交互、应用的安装与部署，让您专注于业务发展。
 
-## 📢 通过3个步骤使用Lowcoder
-1. 连接到任何数据源或 API.
-2. 内置50+组件.
-3. 与同事或客户共享.
+?> 维护该项目纯粹出于对低代码平台的兴趣，因此，如果有志同道合的小伙伴，欢迎大家一起交流、讨论、贡献代码,如果你是码匠的前开发人员，更希望你能联系我，因为真的有很多问题需要请教🥺
+
+![](docs/assets/what-is-lowcoder-20231002133803-7j4cpkm.gif)​
+
+## 文档
+
+[Document On Github](https://mousheng.github.io/lowcoder_CN)
+
+## 快速开始
+
+### 在线试用
+
+请访问 https://lowcoder.mousheng.top
+
+!> 请不要将自己的api令牌或者账号密码保存在共享账号中
+
+> #### 账号密码
+> 账户： `test@mousheng.top`
+> 
+> 密码： `test123456`
+
+### 私有化部署
+请参阅 [docker部署](docs/docker.md)
+
+## 搭建应用的步骤？
+
+只需通过几个步骤，便可搭建和使用您的内部应用：
+
+1. 通过 GUI 快速[连接数据源](docs/datasource.md)。
+2. 编写少量代码[构建查询](docs/how-to-write-query.md)。
+3. 使用开箱即用的组件库轻松[搭建应用界面](docs/drag-and-drop.md)，使用 [JavaScript 表达式](docs/javascript-in-lowcoder/writing-javascript.md)绑定查询数据。
+4. 触发查询/控制组件/响应用户行为/...，通过设置[事件触发](docs/event-handler.md)提供响应式 UI 交互。
+5. [预览](docs/app-release.md)并将您的应用分享给其他人。
+
+* [教程：如何搭建一个应用？](docs/quick-tutorial.md)
 
 ## 💡 为什么选择Lowcoder
 创建单个应用程序很麻烦。您必须设计用户界面，用多种语言和框架编写代码，并了解所有这些代码如何协同工作。
@@ -55,21 +80,3 @@
 - Lowcoder 完美地支持管理面板等内部工具，但面向客户的应用程序也可以开发和发布。
 - Lowcoder UI构建器比Bubble简单易用。
 - 应用发布周期和更新几乎每天都可以完成，而不会为客户和用户造成服务停机。
-
-## 👐 支持和社区
-如果您有任何疑问，请随时与我们联系或与我们的社区分享。我们的团队随时准备为您提供帮助。
-
-📮 最好的方法是在[Discord](https://discord.gg/qMG9uTmAx2)上与我们聊天
-
-📑 在我们的 [Documentation](https://docs.lowcoder.cloud/lowcoder-documentation/)搜索解决方案
-
-🔎 在 [GitHub](https://github.com/lowcoder-org/lowcoder/issues)上在此处提交问题
-
-## 💻 部署选项
-You can access Lowcoder from [cloud-hosted version](https://www.lowcoder.cloud/) at any time, or use the following resources for deploying Lowcoder on different platforms:
-- [Docker](docs/self-hosting/README.md)
-
-## 💪 贡献
-- 语言支持：如果你使用我们的产品当前不支持的语言，请向我们发送拉取请求。
-- 创建和共享组件或演示：如果您创建了可能对其他人有用的内容，请在此处添加链接。
-- [前端贡献指南](https://github.com/lowcoder-org/lowcoder/tree/develop/client)
