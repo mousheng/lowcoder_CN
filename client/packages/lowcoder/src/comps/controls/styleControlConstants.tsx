@@ -376,8 +376,6 @@ export const TextStyle = [
     transformer: toSelf,
   },
   TEXT,
-  MARGIN,	
-  PADDING,
   {
     name: "links",
     label: trans("style.links"),

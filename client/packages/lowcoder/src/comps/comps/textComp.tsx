@@ -10,13 +10,10 @@ import { UICompBuilder } from "../generators";
 import { NameConfig, NameConfigHidden, withExposingConfigs } from "../generators/withExposing";
 import { markdownCompCss, TacoMarkDown } from "lowcoder-design";
 import { styleControl } from "comps/controls/styleControl";
-import { TextStyle, TextStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
+import { TextStyle, TextStyleType } from "comps/controls/styleControlConstants";
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
 import { alignWithJustifyControl } from "comps/controls/alignControl";
-
-import { MarginControl } from "../controls/marginControl";
-import { PaddingControl } from "../controls/paddingControl";
 import { BoolControl } from "../controls/boolControl";
 
 const getStyle = (style: TextStyleType) => {
@@ -28,15 +25,26 @@ const getStyle = (style: TextStyleType) => {
       color: ${style.links};
     }
     .markdown-body {
-      margin: ${style.margin} !important;	
-      padding: ${style.padding};	
-      width: ${widthCalculator(style.margin)};	
-      height: ${heightCalculator(style.margin)};
       h1 {
-        line-height: 1.5;
+        line-height: 32px;
+      }
+      h2 {
+        line-height: 25px;
+      }
+      h3 {
+        line-height: 14px;
+      }
+      h4 {
+        line-height: 10px;
       }
       h5 {
-        line-height: 2.2;
+        line-height: 10px;
+      }
+      h6 {
+        line-height: 10px;
+      }
+      p {
+        line-height: 10px!important;
       }
     }
 
@@ -68,7 +76,7 @@ const TextContainer = styled.div<{ type: string; styleConfig: TextStyleType }>`
   overflow: auto;
   margin: 0;
   ${(props) =>
-    props.type === "text" && "white-space:break-spaces;line-height: 1.9;"};
+    props.type === "text" && "white-space:break-spaces;line-height: 1.9;padding: 3px 0;"};
   ${(props) => props.styleConfig && getStyle(props.styleConfig)}
   display: flex;
   ${markdownCompCss};
@@ -142,14 +150,26 @@ let TextTmpComp = (function () {
     horizontalAlignment: alignWithJustifyControl(),
     verticalAlignment: dropdownControl(VerticalAlignmentOptions, "center"),
     style: styleControl(TextStyle),
-    margin: MarginControl,	
-    padding: PaddingControl,
     fontSize: dropdownControl(fontSizeOptions, "0.875rem"),
     bold: BoolControl,
     italic: BoolControl,
   };
   return new UICompBuilder(childrenMap, (props) => {
     const value = props.text.value;
+    const calcLineHeight = (fontSize: string) => {
+      if (fontSize === '0.875rem')
+        return '18px';
+      else if (fontSize === '1rem')
+        return '18px'
+      else if (fontSize === '1.25rem')
+        return '24px'
+      else if (fontSize === '1.875rem')
+        return '40px'
+      else if (fontSize === '3rem')
+        return '66px'
+      else if (fontSize === '3.75rem')
+        return '80px'
+    }
     return (
       <TextContainer
         type={props.type}
@@ -161,7 +181,7 @@ let TextTmpComp = (function () {
           fontSize: props.fontSize,
           fontWeight: props.bold ? "bold" : "normal",
           fontStyle: props.italic ? "italic" : "normal",
-          lineHeight: 'normal',
+          lineHeight: calcLineHeight(props.fontSize),
         }}
       >
         {props.type === "markdown" ? <TacoMarkDown>{value}</TacoMarkDown> : value}
@@ -180,18 +200,18 @@ let TextTmpComp = (function () {
             {children.text.propertyView({})}
           </Section>
 
-          {children.type.getView()==='text' &&
-          (<Section name={trans("textShow.fontStyle")}>
-            {children.fontSize.propertyView({
-              label: trans("textShow.fontSize"),
-            })}
-            {children.bold.propertyView({
-              label: trans("textShow.bold"),
-            })}
-            {children.italic.propertyView({
-              label: trans("textShow.italic"),
-            })}
-          </Section>)}
+          {children.type.getView() === 'text' &&
+            (<Section name={trans("textShow.fontStyle")}>
+              {children.fontSize.propertyView({
+                label: trans("textShow.fontSize"),
+              })}
+              {children.bold.propertyView({
+                label: trans("textShow.bold"),
+              })}
+              {children.italic.propertyView({
+                label: trans("textShow.italic"),
+              })}
+            </Section>)}
 
           <Section name={sectionNames.layout}>
             {children.autoHeight.getPropertyView()}
