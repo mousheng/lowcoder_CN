@@ -435,8 +435,8 @@ export function AppHeader() {
   const headerStart = (
     <StyledLink onClick={() => history.push(ALL_APPLICATIONS_URL)}>
       {LOWCODER_SHOW_BRAND === 'true' ? 
-      LOWCODER_CUSTOM_LOGO !== "" ? <img src={LOWCODER_CUSTOM_LOGO}  height={28} alt="logo" /> :<LogoWithName branding={!user.orgDev} /> : 
-      <LogoHome />}
+      (LOWCODER_CUSTOM_LOGO !== "" ? <img src={LOWCODER_CUSTOM_LOGO}  height={28} alt="logo" /> :<LogoHome />) : 
+      <LogoWithName branding={!user.orgDev} />}
     </StyledLink>
   );
   const headerEnd = <HeaderProfile user={user} />;
