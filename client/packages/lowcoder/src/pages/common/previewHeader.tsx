@@ -15,8 +15,9 @@ import ProfileDropdown from "./profileDropdown";
 import { trans } from "i18n";
 import { Logo } from "@lowcoder-ee/assets/images";
 import { AppPermissionDialog } from "../../components/PermissionDialog/AppPermissionDialog";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { getBrandingConfig } from "../../redux/selectors/configSelectors";
+import { EditorContext } from "@lowcoder-ee/comps/editorState";
 
 const HeaderFont = styled.div<{ bgColor: string }>`
   font-weight: 500;
@@ -102,7 +103,7 @@ const Wrapper = styled.div`
   }
 `;
 
-export function HeaderProfile(props: { user: User }) {
+export function HeaderProfile(props: { user: User,allowClick: boolean }) {
   const { user } = props;
   const fetchingUser = useSelector(isFetchingUser);
   const templateId = useSelector(getTemplateId);
@@ -112,8 +113,8 @@ export function HeaderProfile(props: { user: User }) {
   return (
     <div>
       {user.isAnonymous ? (
-        !templateId ? (
-          <LoginBtn buttonType="primary" onClick={() => history.push(AUTH_LOGIN_URL)}>
+        !templateId && !props.allowClick ? (
+          <LoginBtn buttonType="primary" onClick={() => history.push(AUTH_LOGIN_URL)} >
             {trans("userAuth.login")}
           </LoginBtn>
         ) : null
@@ -125,16 +126,17 @@ export function HeaderProfile(props: { user: User }) {
 }
 
 export const PreviewHeader = () => {
+  const editorState = useContext(EditorContext);
   const user = useSelector(getUser);
   const application = useSelector(currentApplication);
   const applicationId = useApplicationId();
   const templateId = useSelector(getTemplateId);
   const brandingConfig = useSelector(getBrandingConfig);
   const [permissionDialogVisible, setPermissionDialogVisible] = useState(false);
-
+  const allowClick = !(editorState.getAppSettings()?.allowClick === 'false')
   const headerStart = (
     <>
-      <StyledLink onClick={() => history.push(ALL_APPLICATIONS_URL)}>
+      <StyledLink onClick={() => allowClick ? history.push(ALL_APPLICATIONS_URL) : undefined}>
         <LogoIcon branding={true} />
       </StyledLink>
       <HeaderFont bgColor={brandingConfig?.headerColor ?? "#2c2c2c"}>
@@ -179,7 +181,7 @@ export const PreviewHeader = () => {
           {trans("header.clone")}
         </CloneBtn>
       )}
-      <HeaderProfile user={user} />
+      <HeaderProfile user={user} allowClick/>
     </Wrapper>
   );
   return (

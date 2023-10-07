@@ -349,8 +349,8 @@ function EditorView(props: EditorViewProps) {
               {menuKey === SiderKey.Setting && (
                 <SettingsDiv>
                   <ScrollBar>
-                    {application &&
-                      !isAggregationApp(AppUILayoutType[application.applicationType]) && (
+                    {application && 
+                      (
                         <>
                           {appSettingsComp.getPropertyView()}
                           <Divider />

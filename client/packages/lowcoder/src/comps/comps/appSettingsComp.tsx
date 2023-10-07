@@ -15,6 +15,9 @@ import { THEME_SETTING } from "constants/routesURL";
 import { CustomShortcutsComp } from "./customShortcutsComp";
 import { DEFAULT_THEMEID } from "comps/utils/themeUtil";
 import { dropdownControl } from "../controls/dropdownControl";
+import { isAggregationApp } from "@lowcoder-ee/util/appUtils";
+import { AppUILayoutType } from "@lowcoder-ee/constants/applicationConstants";
+import { currentApplication } from "@lowcoder-ee/redux/selectors/applicationSelector";
 
 const TITLE = trans("appSetting.title");
 const USER_DEFINE = "__USER_DEFINE";
@@ -26,6 +29,10 @@ const ItemSpan = styled.span`
   max-width: 218px;
 `;
 const HiddenItem = styled.div`
+  margin: 0px 0px 10px;
+`;
+
+const AllowClickItem = styled.div`
   margin: 0px 0px 10px;
 `;
 
@@ -170,12 +177,24 @@ const headerOptions = [
   },
 ] as const;
 
+const allowClickOptions = [
+  {
+    label: trans("appSetting.yes"),
+    value: 'true',
+  },
+  {
+    label: trans("appSetting.no"),
+    value: 'false',
+  },
+] as const;
+
 const childrenMap = {
   maxWidth: dropdownInputSimpleControl(OPTIONS, USER_DEFINE, "1920"),
-  hiddenHeader: dropdownControl(headerOptions,"showHeader"),
+  hiddenHeader: dropdownControl(headerOptions, "showHeader"),
+  allowClick: dropdownControl(allowClickOptions, "true"),
   themeId: valueComp<string>(DEFAULT_THEMEID),
   customShortcuts: CustomShortcutsComp,
-  pcPadding: dropdownControl(PaddingOptions, '20' ),
+  pcPadding: dropdownControl(PaddingOptions, '20'),
   mobilePadding: dropdownControl(PaddingOptions.slice(3), '5'),
 };
 type ChildrenInstance = RecordConstructorToComp<typeof childrenMap> & {
@@ -184,15 +203,17 @@ type ChildrenInstance = RecordConstructorToComp<typeof childrenMap> & {
 };
 
 function AppSettingsModal(props: ChildrenInstance) {
-  const { themeList, defaultTheme, themeId, maxWidth, hiddenHeader, pcPadding, mobilePadding } = props;
+  const { themeList, defaultTheme, themeId, maxWidth, hiddenHeader, pcPadding, mobilePadding, allowClick } = props;
+  const application = useSelector(currentApplication);
+  const InAggregationAppHidden = !(application && isAggregationApp(AppUILayoutType[application.applicationType]))
   const THEME_OPTIONS = themeList?.map((theme) => ({
     label: theme.name,
     value: theme.id + "",
   }));
   const themeWithDefault = (
     themeId.getView() === DEFAULT_THEMEID ||
-    (!!themeId.getView() &&
-      THEME_OPTIONS.findIndex((item) => item.value === themeId.getView()) === -1)
+      (!!themeId.getView() &&
+        THEME_OPTIONS.findIndex((item) => item.value === themeId.getView()) === -1)
       ? DEFAULT_THEMEID
       : themeId.getView()
   ) as string;
@@ -220,18 +241,18 @@ function AppSettingsModal(props: ChildrenInstance) {
     <SettingsStyled>
       <Title>{trans("appSetting.pageSetting")}</Title>
       <DivStyled>
-        {maxWidth.propertyView({
+        {InAggregationAppHidden && maxWidth.propertyView({
           dropdownLabel: trans("appSetting.canvasMaxWidth"),
           inputLabel: trans("appSetting.userDefinedMaxWidth"),
           inputPlaceholder: trans("appSetting.inputUserDefinedPxValue"),
           placement: "bottom",
           min: 350,
           lastNode: <span>{trans("appSetting.maxWidthTip")}</span>,
-          labelStyle: {marginBottom: "8px"},
-          dropdownStyle: {marginBottom: "12px"},
-          inputStyle: {marginBottom: "12px"}
+          labelStyle: { marginBottom: "8px" },
+          dropdownStyle: { marginBottom: "12px" },
+          inputStyle: { marginBottom: "12px" }
         })}
-        </DivStyled>
+      </DivStyled>
       <HiddenItem>
         {hiddenHeader.propertyView({
           label: trans("appSetting.HeaderSetting"),
@@ -239,32 +260,42 @@ function AppSettingsModal(props: ChildrenInstance) {
           tooltip: trans("appSetting.HeaderSettingDes"),
         })}
       </HiddenItem>
+      {props.hiddenHeader.getView() === 'showHeader' &&
+        (<AllowClickItem >
+          {
+            allowClick.propertyView({
+              label: trans("appSetting.allowClick"),
+              radioButton: true,
+              tooltip: trans("appSetting.allowClickDes"),
+            })
+          }
+        </AllowClickItem>)}
       <PaddingItem>
-        {pcPadding.propertyView({
+        {InAggregationAppHidden && pcPadding.propertyView({
           label: trans("appSetting.PCPadding"),
           tooltip: trans("appSetting.PCPaddingDes"),
         })}
-        {mobilePadding.propertyView({
+        {InAggregationAppHidden && mobilePadding.propertyView({
           label: trans("appSetting.MobilePadding"),
           tooltip: trans("appSetting.MobilePaddingDes"),
         })}
       </PaddingItem>
-      <Title>{TITLE}</Title>
-      <DivStyled>
+      {InAggregationAppHidden && <Title>{TITLE}</Title>}
+      {InAggregationAppHidden && (<DivStyled>
         <Dropdown
           defaultValue={
             themeWithDefault === ""
               ? undefined
               : themeWithDefault === DEFAULT_THEMEID
-              ? defaultTheme || undefined
-              : themeWithDefault
+                ? defaultTheme || undefined
+                : themeWithDefault
           }
           placeholder={trans("appSetting.themeSettingDefault")}
           options={THEME_OPTIONS}
           label={trans("appSetting.themeSetting")}
           placement="bottom"
-          labelStyle={{marginBottom: "8px"}}
-          dropdownStyle={{marginBottom: "12px"}}
+          labelStyle={{ marginBottom: "8px" }}
+          dropdownStyle={{ marginBottom: "12px" }}
           itemNode={(value) => <DropdownItem value={value} />}
           preNode={() => (
             <>
@@ -282,7 +313,7 @@ function AppSettingsModal(props: ChildrenInstance) {
             );
           }}
         />
-      </DivStyled>
+      </DivStyled>)}
       {props.customShortcuts.getPropertyView()}
     </SettingsStyled>
   );
