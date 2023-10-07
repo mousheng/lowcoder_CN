@@ -124,6 +124,30 @@ docker logs -f lowcoder
 ![](assets/2-20231002181225-34pfxhn.png)​
 
 
+### 安装证书（SSl）
+
+安装证书后可开启HTTPS加密，让您安全的访问您的服务器
+
+**步骤1：** 将您申请的**证书文件**(扩展名为crt)和**私钥**(扩展名为key)上传到实例数据存放目录的**ssl**文件夹下
+
+**步骤2：** 修改**证书文件**(扩展名为crt) 为 **fullchain.pem**
+
+**步骤3：** 修改**私钥**(扩展名为key) 为 **privkey.pem**
+<!-- tabs:start -->
+<!-- tab:Docker-Compose部署方式 -->
+**步骤4：** 修改**docker-compose.yml**文件中端口为 "3443:3443"
+
+**步骤5：** 重新启动容器
+<!-- tab:Docker命令行部署方式 -->
+**步骤4：** 关闭容器
+
+**步骤5：** 修改启动命令
+```
+docker run -d --name lowcoder -p 3443:3443 -v "$PWD/stacks:/lowcoder-stacks" moushengkoo/lowcoder_cn:latest
+
+```
+<!-- tabs:end -->
+
 ### 常见问题
 
 #### linux下权限不足错误
