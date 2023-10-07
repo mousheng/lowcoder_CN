@@ -15,7 +15,7 @@ import { config as AmapReactConfig, ControlBar, Scale, Toolbar } from '@amap/ama
 import { Amap, Marker } from '@amap/amap-react';
 
 import { akeyTooltip, markersTooltip } from './amapConstants';
-import { JSONObject, addedMarkerEvent, amapMoveEndEvent, clickEvent, clickMarkerEvent, delteMarkerEvent, eventHandlerControl, jsonValueControl, withDefault } from '@lowcoder-ee/index.sdk';
+import { JSONObject, addedMarkerEvent, amapMoveEndEvent, clickEvent, clickMarkerEvent, delteMarkerEvent, eventHandlerControl, jsonValueControl, useIsMobile, withDefault } from '@lowcoder-ee/index.sdk';
 import _ from "lodash"
 
 const EventOptions = [
@@ -52,7 +52,7 @@ const AmapView = (props: RecordConstructorToView<typeof childrenMap>) => {
   const mapRef = useRef();
   const [marks, setMarks] = useState(props.markers.value ?? []);
   const [zoom, setZoom] = useState(props.zoom.value)
-
+  const ISMobile = useIsMobile()
   useEffect(() => {
     setMarks(props.markers.value)
     props.markers.onChange(props.markers.value)
@@ -113,7 +113,7 @@ const AmapView = (props: RecordConstructorToView<typeof childrenMap>) => {
       >
         {props.showControlBar && <ControlBar position={{ top: '10px', left: '10px' }} />}
         <Scale ></Scale>
-        {props.showZoomButton && <Toolbar position={{ top: '110px', left: '40px' }} />}
+        {props.showZoomButton && <Toolbar position={ISMobile ? { bottom: '20px', right: '10px' } : { top: '110px', left: '40px' }} />}
         {
           (marks as JSONObject[]).map((m, i) => (
             <Marker
