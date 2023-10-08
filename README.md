@@ -11,7 +11,7 @@ Lowcoder_cn（以下简称lowcoder）是[lowcoder](https://github.com/lowcoder-o
 
 ## 文档
 
-[Document On Github](https://mousheng.github.io/lowcoder_CN)
+[Document On Github](https://mousheng.github.io/lowcoder_CN) 国内推荐访问 [Document On Gitee](https://moushengkoo.gitee.io/lowcoder_cn)
 
 ## 快速开始
 
