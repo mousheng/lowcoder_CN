@@ -112,7 +112,7 @@ export const zhObj: I18nObjects = {
         ],
     },
     editorTutorials: {
-        mockDataUrl: "https://651ecf7a44a3a8aa47690c6d.mockapi.io/api/lowcoder/user",
+        mockDataUrl: "https://www.fastmock.site/mock/dc511bdcb9d31c119d948d12e61a5781/lowcoder/user",
         data: (code) => (
             <>
                 这里列出了组件和查询数据，可以通过

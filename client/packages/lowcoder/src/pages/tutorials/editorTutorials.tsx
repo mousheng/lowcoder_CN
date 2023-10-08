@@ -267,7 +267,7 @@ export default function EditorTutorials() {
       openTableData();
       const tableComp = editorState.getUICompByName("table1");
       tableComp &&
-        tableComp.children.comp.children.data.dispatchChangeValueAction("{{query1.data}}");
+        tableComp.children.comp.children.data.dispatchChangeValueAction("{{query1.data.data}}");
       setTimeout(() => setStepIndex(nextIndex), 0);
     } else if (index === 1 && action === ACTIONS.PREV) {
       // cancel select
