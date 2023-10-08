@@ -2239,7 +2239,9 @@ export const zh = {
         iconPosition: "图标位置",
         showText: "显示文本",
         alignment: "对齐方式",
-        showBorder: "显示边框"
+        showBorder: "显示边框",
+        expandClickArea: "扩展点击区域",
+        expandClickAreaDesc: "勾选后整组件可以响应点击事件",
     },
     docUrls: {
         docHome: "https://moushengkoo.gitee.io/lowcoder_cn/#/",

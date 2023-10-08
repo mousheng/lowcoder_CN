@@ -24,7 +24,7 @@ const IconWrapper = styled.div`
   display: flex;
 `;
 
-const ButtonCompWrapperStyled = styled(ButtonCompWrapper)<{
+const ButtonCompWrapperStyled = styled(ButtonCompWrapper) <{
   align: "left" | "center" | "right" | "stretch";
   showBorder: boolean;
 }>`
@@ -55,6 +55,7 @@ const ToggleTmpComp = (function () {
     style: styleControl(ToggleButtonStyle),
     showBorder: withDefault(BoolControl, true),
     viewRef: RefControl<HTMLElement>,
+    expandClickArea: BoolControl.DEFAULT_TRUE,
   };
   return new UICompBuilder(childrenMap, (props) => {
     const text = props.showText
@@ -65,6 +66,12 @@ const ToggleTmpComp = (function () {
         disabled={props.disabled}
         align={props.alignment}
         showBorder={props.showBorder}
+        onClick={() => {
+          if (props.expandClickArea) {
+            props.onEvent("change");
+            props.value.onChange(!props.value.value);
+          }
+        }}
       >
         <Button100
           ref={props.viewRef}
@@ -90,6 +97,7 @@ const ToggleTmpComp = (function () {
             label: trans("prop.defaultValue"),
             tooltip: trans("toggleButton.valueDesc"),
           })}
+          {children.expandClickArea.propertyView({ label: trans("toggleButton.expandClickArea"), tooltip: trans("toggleButton.expandClickAreaDesc") })}
           {children.showText.propertyView({ label: trans("toggleButton.showText") })}
           {children.showText.getView() &&
             children.trueText.propertyView({ label: trans("toggleButton.trueLabel") })}

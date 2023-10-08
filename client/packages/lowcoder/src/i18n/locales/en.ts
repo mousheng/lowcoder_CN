@@ -2275,6 +2275,8 @@ export const en = {
     showText: "Show text",
     alignment: "Alignment",
     showBorder: "Show border",
+    expandClickArea: "Expand Click Area",
+    expandClickAreaDesc: "After checking, the entire component can respond to click events",
   },
   docUrls: {
     docHome: "https://mousheng.github.io/lowcoder_CN/#/",
