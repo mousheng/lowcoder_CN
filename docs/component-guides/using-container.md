@@ -58,4 +58,4 @@
 
 * ​**表单**​：表单组件是一系列用于表单提交的输入组件的容器。可参阅[使用表单组件](../component-guides/using-form.md)文档。
 * ​**对话框**​：按钮的单击事件触发弹出对话框，可以行使确认信息、填写信息等功能。可参阅[使用对话框](../component-guides/using-modal.md)文档。
-* ​**列表**​：列表组件可用于展示自定义的多形式数据行。列表也可以嵌入其他组件。可参阅[使用列表组件 (ListView)](../component-guides/listView.md) 文档。
+* ​**列表**​：列表组件可用于展示自定义的多形式数据行。列表也可以嵌入其他组件。可参阅[使用列表组件 (ListView)](../component-guides/using-listView.md) 文档。

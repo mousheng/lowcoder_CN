@@ -106,7 +106,7 @@ select * from new_movie_list limit {{offset.value}}, 5
 
 ![](../assets/10-20231002175910-utpiwsv.png)​
 
-将查询的数据分别绑定到列表中的各个组件上（请参考[使用列表组件](../listView.md)文档），如列表的图片组件就绑定了`{{movie_list.data[i].movie_cover}}`​：
+将查询的数据分别绑定到列表中的各个组件上（请参考[使用列表组件](../using-listView.md)文档），如列表的图片组件就绑定了`{{movie_list.data[i].movie_cover}}`​：
 
 ![](../assets/11-20231002175910-z2mhuvj.png)​
 

@@ -18,7 +18,7 @@
 
 ### Demo: 上传图片并显示
 
-[文件上传组件](file-uploader.md#访问已上传文件) 上传文件后，可通过 `file1.value[0]` 来获取文件的**Base64**编码数据，因此，我们使用 JS拼接上他的描述符前缀即可显示。
+[文件上传组件](using-file.md#访问已上传文件) 上传文件后，可通过 `file1.value[0]` 来获取文件的**Base64**编码数据，因此，我们使用 JS拼接上他的描述符前缀即可显示。
 
 ```javascript
 {{"data:image/jpeg;base64," + file1.value[0]}}
