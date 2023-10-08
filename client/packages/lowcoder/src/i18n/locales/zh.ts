@@ -2242,8 +2242,8 @@ export const zh = {
         showBorder: "显示边框"
     },
     docUrls: {
-        docHome: "https://docs.lowcoder.cloud/",
-        components: "https://cloud.lowcoder.dev/components?n={compType}",
+        docHome: "https://moushengkoo.gitee.io/lowcoder_cn/#/",
+        components: "https://moushengkoo.gitee.io/lowcoder_cn/#/component-guides/using-{compType}",
         module: "",
         optionList: "",
         terms: "",
@@ -2251,12 +2251,12 @@ export const zh = {
         aboutUs: "",
         changeLog: "",
         introVideo: "",
-        devNpmPlugin: "https://docs.lowcoder.cloud/build-plugins/develop-your-first-plugin",
+        devNpmPlugin: "https://moushengkoo.gitee.io/lowcoder_cn/#/develop-plugins",
         devNpmPluginText: "如何开发npm插件?",
-        useHost: "https://docs.lowcoder.cloud/self-hosting/access-local-database-or-api",
+        useHost: "https://moushengkoo.gitee.io/lowcoder_cn/#/visit-host-api-or-db",
         eventHandlerSlowdown:
-            "https://docs.lowcoder.cloud/build-apps/event-handlers#debounce-and-throttle",
-        thirdLib: "https://docs.lowcoder.cloud/build-apps/write-javascript/use-third-party-libraries",
+            "https://moushengkoo.gitee.io/lowcoder_cn/#/event-handler?id=%e9%98%b2%e6%8a%96%e8%8a%82%e6%b5%81",
+        thirdLib: "https://moushengkoo.gitee.io/lowcoder_cn/#/javascript-in-lowcoder/use-third-party-libraries",
         thirdLibUrlText: "使用第三方插件库",
     },
     datasourceTutorial: {
