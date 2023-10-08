@@ -1931,7 +1931,7 @@ export const en = {
     hashParam: "URL Hash params",
     tabBar: "Tab bar",
     emptyTabTooltip: "Configure this page on the right pane",
-    selectedKey: "current selected key",
+    selectedKey: "Current Selected Index",
   },
   appSetting: {
     title: "App settings",

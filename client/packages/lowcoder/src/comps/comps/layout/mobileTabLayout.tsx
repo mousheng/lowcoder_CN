@@ -1,6 +1,6 @@
 import { MultiCompBuilder, withViewFn } from "comps/generators";
 import { trans } from "i18n";
-import { Section } from "components/Section";
+import { Section, sectionNames } from "components/Section";
 import { manualOptionsControl } from "comps/controls/optionsControl";
 import { BoolCodeControl, StringControl } from "comps/controls/codeControl";
 import { IconControl } from "comps/controls/iconControl";
@@ -18,6 +18,10 @@ import { ExternalEditorContext } from "util/context/ExternalEditorContext";
 import { Skeleton } from "antd";
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
 import { numberExposingStateControl } from "@lowcoder-ee/index.sdk";
+import {
+  changeEvent,
+  eventHandlerControl,
+} from "comps/controls/eventHandlerControl";
 
 const TabBar = React.lazy(() => import("antd-mobile/es/components/tab-bar"));
 const TabBarItem = React.lazy(() =>
@@ -26,6 +30,9 @@ const TabBarItem = React.lazy(() =>
   }))
 );
 
+const EventOptions = [
+  changeEvent,
+] as const;
 const TabBarHeight = 56;
 const MaxWidth = 450;
 const AppViewContainer = styled.div`
@@ -71,6 +78,7 @@ type TabBarProps = {
   selectedKey: string;
   onChange: (key: string) => void;
   readOnly: boolean;
+  onEvent: any;
 };
 
 function TabBarView(props: TabBarProps) {
@@ -82,6 +90,7 @@ function TabBarView(props: TabBarProps) {
             if (key) {
               props.onChange(key);
             }
+            props.onEvent('change')
           }}
           style={{ width: "100%" }}
           activeKey={props.selectedKey}
@@ -133,6 +142,7 @@ let MobileTabLayoutTmp = (function () {
       ],
     }),
     selectedKey: numberExposingStateControl('selectedKey', 0),
+    onEvent: eventHandlerControl(EventOptions),
   };
   return new MultiCompBuilder(childrenMap, (props) => {
     return null;
@@ -142,10 +152,13 @@ let MobileTabLayoutTmp = (function () {
         <>
           <Section name={trans("aggregation.tabBar")}>
             {children.tabs.propertyView({})}
+          </Section>
+          <Section name={sectionNames.interaction}>
             {children.selectedKey.propertyView({
               label: trans("aggregation.selectedKey")
             })}
-            </Section>
+            {children.onEvent.getPropertyView()}
+          </Section>
         </>
       );
     })
@@ -155,24 +168,25 @@ let MobileTabLayoutTmp = (function () {
 MobileTabLayoutTmp = withViewFn(MobileTabLayoutTmp, (comp) => {
   const [tabIndex, setTabIndex] = useState(0);
   const { readOnly } = useContext(ExternalEditorContext);
+  const onEvent = comp.children.onEvent.getView();
   const tabViews = (
     comp.children.tabs.children.manual.getView() as unknown as Array<
       ConstructorToComp<typeof TabOptionComp>
     >
   ).filter((tab) => !tab.children.hidden.getView());
-  useEffect(()=>{
+  useEffect(() => {
     setTabIndex(comp.children.selectedKey.getView().value)
-  },[comp.children.selectedKey])
+  }, [comp.children.selectedKey])
   const currentTab = tabViews[tabIndex];
   const appView = (currentTab &&
     currentTab.children.app.getAppId() &&
     currentTab.children.app.getView()) || (
-    <EmptyContent
-      text={readOnly ? "" : trans("aggregation.emptyTabTooltip")}
-      style={{ height: "100%", backgroundColor: "white" }}
-    />
-  );
-  
+      <EmptyContent
+        text={readOnly ? "" : trans("aggregation.emptyTabTooltip")}
+        style={{ height: "100%", backgroundColor: "white" }}
+      />
+    );
+
   const tabBarView = (
     <TabBarView
       tabs={tabViews.map((tab, index) => ({
@@ -183,6 +197,7 @@ MobileTabLayoutTmp = withViewFn(MobileTabLayoutTmp, (comp) => {
       selectedKey={tabIndex + ""}
       onChange={(key) => setTabIndex(Number(key))}
       readOnly={!!readOnly}
+      onEvent={onEvent}
     />
   );
 
