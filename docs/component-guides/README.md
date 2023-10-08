@@ -8,7 +8,7 @@ Lowcoder为您提供了一套功能强大且开箱即用的组件库，帮助您
 -   [使用表单组件](component-guides/using-form.md)
 -   [使用图片组件](component-guides/using-image.md)
 -   [使用对话框 (Modal)](component-guides/using-modal.md)
--   [使用图表组件](component-guides/use-chart.md)
+-   [使用图表组件](component-guides/using-chart.md)
 -   [使用文件上传组件](component-guides/using-file.md)
 -   [使用扫码组件](component-guides/using-scanner.md)
 -   [使用自定义组件](component-guides/using-custom.md)
