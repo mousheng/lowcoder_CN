@@ -5,6 +5,7 @@ import styled from "styled-components";
 import DroppablePlaceholder from "./DroppablePlaceHolder";
 import MenuItem, { ICommonItemProps } from "./MenuItem";
 import { IDragData, IDropData } from "./types";
+import { genRandomKey } from "@lowcoder-ee/comps/utils/idGenerator";
 
 const DraggableMenuItemWrapper = styled.div`
   position: relative;
@@ -36,6 +37,8 @@ export default function DraggableMenuItem(props: IDraggableMenuItemProps) {
 
   const handleAddSubMenu = (path: number[]) => {
     onAddSubMenu?.(path, {
+      itemKey: genRandomKey(),
+      id: genRandomKey(),
       label: trans("droppadbleMenuItem.subMenu", { number: items.length + 1 }),
     });
   };
