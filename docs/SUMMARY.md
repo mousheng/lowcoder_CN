@@ -82,4 +82,8 @@
 * [开发Lowcoder插件](develop-plugins.md)
 * [使用 SDK 嵌入码匠应用](embed-using-sdk.md)
 
+开发者
+
+* [二次开发](developer/README.md)
+  * [打包Docker镜像](developer/build-image.md)
 
