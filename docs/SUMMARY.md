@@ -85,5 +85,8 @@
 开发者
 
 * [二次开发](developer/README.md)
+  * [快速调试前端](developer/README.md#快速调试前端)
+  * [添加原生组件](developer/addComponent.md)
+  * [组件文件简单介绍](developer/component-file.md)
   * [打包Docker镜像](developer/build-image.md)
 
