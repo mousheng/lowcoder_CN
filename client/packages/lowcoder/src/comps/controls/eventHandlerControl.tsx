@@ -350,6 +350,16 @@ export const refreshEvent: EventConfigType = {
   value: "refresh",
   description: trans("event.refreshDesc"),
 };
+export const dbClickEvent: EventConfigType = {
+  label: trans("event.dbClick"),
+  value: "dbClick",
+  description: trans("event.dbClickDesc"),
+};
+export const expanderClickEvent: EventConfigType = {
+  label: trans("event.expanderClick"),
+  value: "expanderClick",
+  description: trans("event.expanderClickDesc"),
+};
 
 export const InputEventHandlerControl = eventHandlerControl([
   changeEvent,

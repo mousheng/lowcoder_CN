@@ -8927,6 +8927,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gantt-task-react@npm:^0.3.9":
+  version: 0.3.9
+  resolution: "gantt-task-react@npm:0.3.9"
+  peerDependencies:
+    react: ^18.0.0
+  checksum: b0559ff812f26375d14355262eb01bdb7d34bf072a18376168af58e50c9f03be31996159d3fff345733c9a3bd844258ffd4a6324a6b8ff8f766d723d0ecf23c4
+  languageName: node
+  linkType: hard
+
 "gauge@npm:^4.0.3":
   version: 4.0.4
   resolution: "gauge@npm:4.0.4"
@@ -11791,6 +11800,7 @@ __metadata:
     eslint-plugin-only-ascii: ^0.0.0
     eslint4b-prebuilt-2: ^7.32.0
     file-saver: ^2.0.5
+    gantt-task-react: ^0.3.9
     github-markdown-css: ^5.1.0
     hotkeys-js: ^3.8.7
     http-proxy-middleware: ^2.0.6

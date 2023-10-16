@@ -48,6 +48,7 @@
     "echarts": "^5.4.2",
     "eslint4b-prebuilt-2": "^7.32.0",
     "file-saver": "^2.0.5",
+    "gantt-task-react": "^0.3.9",
     "github-markdown-css": "^5.1.0",
     "hotkeys-js": "^3.8.7",
     "immer": "^9.0.7",

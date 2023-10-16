@@ -115,6 +115,7 @@ import {
   AntLayoutIcon,
   FloatButtonIcon,
   ColorPickerIcon,
+  GanteeIcon,
 } from "lowcoder-design";
 
 import { defaultFormData, FormComp } from "./comps/formComp/formComp";
@@ -151,11 +152,10 @@ import { DescriptionsComp } from "./comps/descriptionsComp";
 import { CalendarComp } from "./comps/calendarComp/calendarComp";
 import { AntLayoutComp } from "./comps/navComp/antLayout";
 import { ColorPickerComp } from "./comps/textInputComp/colorPickerComp";
-
-//Added by Aqib Mirza
 import { JsonLottieComp } from "./comps/jsonComp/jsonLottieComp";
 import { ResponsiveLayoutComp } from "./comps/responsiveLayout";
 import { FloatButtonComp } from "./comps/buttonComp/floatButtonComp";
+import { GanteeComp } from "./comps/gantee";
 
 type Registry = {
   [key in UICompType]?: UICompManifest;
@@ -1079,7 +1079,20 @@ const uiCompMap: Registry = {
       h: 0,
     },
     withoutLoading: true,
-  }
+  },
+  gantee: {
+    name: trans("uiComp.ganteeName"),
+    enName: "gantee",
+    description: trans("uiComp.ganteeDesc"),
+    categories: ["dataDisplay"],
+    icon: GanteeIcon,
+    keywords: trans("uiComp.ganteeKeywords"),
+    comp: GanteeComp,
+    layoutInfo: {
+      w: 24,
+      h: 60,
+    },
+  },
 };
 
 export function loadComps() {

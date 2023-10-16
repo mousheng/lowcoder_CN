@@ -894,6 +894,11 @@ export const QRCodeStyle = [
   PADDING,
 ] as const;
 
+export const GanteeStyle = [
+  MARGIN,	
+  PADDING,
+] as const;
+
 export const FloatButtonStyle = [
   {
     name: "badgeColor",
@@ -1108,6 +1113,7 @@ export type AntLayoutMenuStyleType = StyleConfigType<typeof AntLayoutMenuStyle>;
 export type FloatButtonStyleType = StyleConfigType<typeof FloatButtonStyle>;
 export type AvatarStyleType = StyleConfigType<typeof AvatarStyle>;
 export type QRCodeStyleType = StyleConfigType<typeof QRCodeStyle>;
+export type GanteeStyleType = StyleConfigType<typeof GanteeStyle>;
 
 export function widthCalculator(margin: string) {
   const marginArr = margin?.trim().replace(/\s+/g,' ').split(" ") || "";
