@@ -72,6 +72,7 @@
     * [使用扫码组件](component-guides/using-scanner.md)
     * [使用自定义组件](component-guides/using-custom.md)
     * [使用 Markdown](component-guides/using-markdown.md)
+    * [使用甘特图组价 (Gantee)](component-guides/using-gantee.md)
 * [模块 (Module)](module.md)
 * [样式、主题与友好交互](style/README.md)
     * [表单设计技巧](style/form-desgin.md)
