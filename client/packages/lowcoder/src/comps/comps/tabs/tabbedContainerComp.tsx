@@ -92,7 +92,7 @@ const getStyle = (style: TabContainerStyleType) => {
         background-color: ${style.background};
         border-radius: 0;
       }
-
+    
       > .ant-tabs-nav {
         background-color: ${style.headerBackground};
 
@@ -117,7 +117,7 @@ const getStyle = (style: TabContainerStyleType) => {
   `;
 };
 
-const StyledTabs = styled(Tabs) <{ $style: TabContainerStyleType; $isMobile?: boolean, hiddenTabNav: boolean }>`
+const StyledTabs = styled(Tabs) <{ $style: TabContainerStyleType; $isMobile?: boolean, hiddenTabNav: boolean, autoHeight: boolean }>`
   &.ant-tabs {
     height: 100%;
   }
@@ -139,13 +139,18 @@ const StyledTabs = styled(Tabs) <{ $style: TabContainerStyleType; $isMobile?: bo
 
   .ant-tabs-nav {
     padding: 0 ${(props) => (props.$isMobile ? 16 : props.tabPosition === "top" || props.tabPosition === "bottom" ? 24 : 0)}px;
-    display: ${props=> props.hiddenTabNav ? 'none' : ''};
+    display: ${props => props.hiddenTabNav ? 'none' : ''};
     background: white;
     margin: 0px;
   }
 
   .ant-tabs-tab + .ant-tabs-tab {
     margin: 0 0 0 20px;
+  }
+
+  > .ant-tabs-content-holder > .ant-tabs-content > div > .react-grid-layout > div {
+    min-height: calc(100% - 2px)!important;
+    height: ${props => props.autoHeight ? '120px' : '10px'}!important;
   }
 
   ${(props) => props.$style && getStyle(props.$style)}
@@ -225,6 +230,7 @@ const TabbedContainer = (props: TabbedContainerProps) => {
       <StyledTabs
         activeKey={activeKey}
         $style={style}
+        autoHeight={props.autoHeight}
         onChange={(key) => {
           if (key !== props.selectedTabKey.value) {
             props.selectedTabKey.onChange(key);
