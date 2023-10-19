@@ -150,7 +150,6 @@ const GanteeView = (props: RecordConstructorToView<typeof childrenMap>) => {
   useEffect(() => {
     let temp = transToTasks(props.tasks.value)
     setTasks(temp)
-    props.tasks.onChange(temp as any)
   }, [JSON.stringify(props.tasks.value)])
   const onResize = () => {
     const container = conRef.current;
@@ -159,14 +158,13 @@ const GanteeView = (props: RecordConstructorToView<typeof childrenMap>) => {
   };
 
   const handleTasks = (tasks: any, task: Task): Task[] => {
-    return tasks.map((t:Task) => (t.id === task.id ? task : t))
+    return tasks.map((t: Task) => (t.id === task.id ? { ...t, hideChildren: !t.hideChildren } : t))
   }
 
 
   const handleExpanderClick = (task: Task) => {
     let temp = handleTasks(tasks, task)
-    setTasks(transToTasks(temp))
-    // props.tasks.onChange(temp as any)
+    props.tasks.onChange(transToTasks(temp) as any)
     props.otherEvents('expanderClick')
   }
 
@@ -189,7 +187,11 @@ const GanteeView = (props: RecordConstructorToView<typeof childrenMap>) => {
   }
 
   const handleTaskChange = (task: Task) => {
-    let newTasks = tasks.map((t) => (t.id === task.id ? task : t))
+    let newTasks = tasks.map((t) => (t.id === task.id ? {
+      ...t,
+      start: task.start,
+      end: task.end,
+    } : t))
     if (task.project) {
       const [start, end] = getStartEndDateForProject(newTasks, task.project)
       const project = newTasks[newTasks.findIndex((t) => t.id === task.project)]
@@ -198,7 +200,6 @@ const GanteeView = (props: RecordConstructorToView<typeof childrenMap>) => {
         newTasks = newTasks.map((t) => (t.id === task.project ? changedProject : t))
       }
     }
-    setTasks(newTasks)
     props.tasks.onChange(newTasks as any)
     props.currentTaskObject.onChange(task as any)
     props.onChangeEvent('change')
@@ -290,7 +291,8 @@ let GanteeBasicComp = (function () {
     .setPropertyViewFn((children) => (
       <>
         <Section name={sectionNames.basic}>
-          {children.Columns.propertyView({ title: trans('gantee.ColumnsData'), newOptionLabel: trans('gantee.CustomColumn') })}
+          {children.hiddenListCell.propertyView({ label: trans("gantee.hiddenListCell") })}
+          {!children.hiddenListCell.getView() && children.Columns.propertyView({ title: trans('gantee.ColumnsData'), newOptionLabel: trans('gantee.CustomColumn') })}
           {children.tasks.propertyView({
             label: trans("gantee.tasks"),
           })}
@@ -307,7 +309,6 @@ let GanteeBasicComp = (function () {
         </Section>
         <Section name={sectionNames.layout}>
           {children.autoHeight.getPropertyView()}
-          {children.hiddenListCell.propertyView({ label: trans("gantee.hiddenListCell") })}
           {hiddenPropertyView(children)}
         </Section>
         <Section name={sectionNames.interaction}>
