@@ -33,7 +33,7 @@ import { DisabledContext } from "comps/generators/uiCompBuilder";
 import { EditorContext } from "comps/editorState";
 import { checkIsMobile } from "util/commonUtils";
 import { messageInstance } from "lowcoder-design";
-import { PositionControl } from "@lowcoder-ee/index.sdk";
+import { BoolControl, PositionControl } from "@lowcoder-ee/index.sdk";
 
 const EVENT_OPTIONS = [
   {
@@ -73,7 +73,8 @@ const childrenMap = {
   onEvent: eventHandlerControl(EVENT_OPTIONS),
   disabled: BoolCodeControl,
   style: styleControl(TabContainerStyle),
-  position: withDefault(PositionControl , "top")
+  position: withDefault(PositionControl, "top"),
+  hiddenTabNav: BoolControl,
 };
 
 type ViewProps = RecordConstructorToView<typeof childrenMap>;
@@ -116,7 +117,7 @@ const getStyle = (style: TabContainerStyleType) => {
   `;
 };
 
-const StyledTabs = styled(Tabs)<{ $style: TabContainerStyleType; $isMobile?: boolean }>`
+const StyledTabs = styled(Tabs) <{ $style: TabContainerStyleType; $isMobile?: boolean, hiddenTabNav: boolean }>`
   &.ant-tabs {
     height: 100%;
   }
@@ -127,8 +128,8 @@ const StyledTabs = styled(Tabs)<{ $style: TabContainerStyleType; $isMobile?: boo
 
   .ant-tabs-tabpane {
     height: 100%;
-    padding-left: ${(props) => (props.tabPosition==="left"?"2px!important":"0px!important")};
-    padding-right: ${(props) => (props.tabPosition==="right"?"2px!important":"0px!important")};
+    padding-left: ${(props) => (props.tabPosition === "left" ? "2px!important" : "0px!important")};
+    padding-right: ${(props) => (props.tabPosition === "right" ? "2px!important" : "0px!important")};
   }
 
   .ant-tabs-content {
@@ -137,7 +138,8 @@ const StyledTabs = styled(Tabs)<{ $style: TabContainerStyleType; $isMobile?: boo
   }
 
   .ant-tabs-nav {
-    padding: 0 ${(props) => (props.$isMobile ? 16 : props.tabPosition==="top" || props.tabPosition==="bottom"? 24 : 0)}px;
+    padding: 0 ${(props) => (props.$isMobile ? 16 : props.tabPosition === "top" || props.tabPosition === "bottom" ? 24 : 0)}px;
+    display: ${props=> props.hiddenTabNav ? 'none' : ''};
     background: white;
     margin: 0px;
   }
@@ -163,8 +165,8 @@ const TabbedContainer = (props: TabbedContainerProps) => {
   const activeKey = selectedTab
     ? selectedTab.key
     : visibleTabs.length > 0
-    ? visibleTabs[0].key
-    : undefined;
+      ? visibleTabs[0].key
+      : undefined;
 
   const onTabClick = useCallback(
     (key: string, event: React.KeyboardEvent<Element> | React.MouseEvent<Element, MouseEvent>) => {
@@ -211,7 +213,7 @@ const TabbedContainer = (props: TabbedContainerProps) => {
             dispatch={childDispatch}
             autoHeight={props.autoHeight}
             // containerPadding={[paddingWidth, 20]}
-            style={{padding: style.containerbodypadding}}
+            style={{ padding: style.containerbodypadding }}
           />
         </BackgroundColorContext.Provider>
       )
@@ -219,24 +221,25 @@ const TabbedContainer = (props: TabbedContainerProps) => {
   })
 
   return (
-    <div style={{padding: props.style.margin, height: '100%'}}>
-    <StyledTabs
-      activeKey={activeKey}
-      $style={style}
-      onChange={(key) => {
-        if (key !== props.selectedTabKey.value) {
-          props.selectedTabKey.onChange(key);
-          props.onEvent("change");
-        }
-      }}
-      onTabClick={onTabClick}
-      animated
-      $isMobile={isMobile}
-      // tabBarGutter={32}
-      items={tabItems}
-      tabPosition={props.position ?? "top"}
-    >
-    </StyledTabs>
+    <div style={{ padding: props.style.margin, height: '100%' }}>
+      <StyledTabs
+        activeKey={activeKey}
+        $style={style}
+        onChange={(key) => {
+          if (key !== props.selectedTabKey.value) {
+            props.selectedTabKey.onChange(key);
+            props.onEvent("change");
+          }
+        }}
+        onTabClick={onTabClick}
+        animated
+        $isMobile={isMobile}
+        // tabBarGutter={32}
+        items={tabItems}
+        tabPosition={props.position ?? "top"}
+        hiddenTabNav={props.hiddenTabNav}
+      >
+      </StyledTabs>
     </div>
   );
 };
@@ -258,7 +261,8 @@ export const TabbedContainerBaseComp = (function () {
               newOptionLabel: "Tab",
             })}
             {children.selectedTabKey.propertyView({ label: trans("tabbedContainer.defaultKey") })}
-            {children.position.propertyView({ label: trans("tabbedContainer.TabPosition"), radioButton: true })}
+            {children.hiddenTabNav.propertyView({ label: trans("tabbedContainer.hiddenTabNav") })}
+            {!children.hiddenTabNav.getView() && children.position.propertyView({ label: trans("tabbedContainer.TabPosition"), radioButton: true })}
             {children.autoHeight.getPropertyView()}
           </Section>
           <Section name={sectionNames.interaction}>

@@ -1581,6 +1581,7 @@ export const zh = {
         top: "上",
         bottom: "下",
         defaultKey: "默认选中标签",
+        hiddenTabNav: "隐藏选项标签",
     },
     formComp: {
         containerPlaceholder: "从右侧窗格拖动组件或",
