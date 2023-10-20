@@ -2,7 +2,7 @@ import table from "./componentDocExtra/table.md?url";
 
 export const en = {
   productName: "Lowcoder",
-  productDesc: "Build internal tools fast, with no limitations",
+  productDesc: "Create software applications for your Company and your Customers with minimal coding experience. Lowcoder is the best Retool, Appsmith or Tooljet Alternative.",
   notSupportedBrowser:
     "Your current browser may have compatibility issues. For a better user experience, it is recommended to use the latest version of the Chrome browser.",
   create: "Create",
@@ -1433,7 +1433,7 @@ export const en = {
   },
   audio: {
     src: "Audio URL",
-    defaultSrcUrl: "https://cdn-files.lowcoder.dev/canon-excerpt.mp3",
+    defaultSrcUrl: "https://cdn-files.lowcoder.cloud/canon-excerpt.mp3",
     autoPlay: "Autoplay",
     loop: "Loop",
     srcDesc: "Current audio URL",
@@ -1801,7 +1801,7 @@ export const en = {
     phoneColumn: "Phone",
     subTitle: "Title",
     linkLabel: "Link",
-    linkUrl: "cloud.lowcoder.dev",
+    linkUrl: "app.lowcoder.cloud",
     progressLabel: "Progress",
     sliderLabel: "Slider",
     radioLabel: "Radio",
@@ -2337,9 +2337,9 @@ export const en = {
   },
   componentDoc: {
     markdownDemoText:
-      "**Lowcoder** is a _developer-friendly_ open-source low code platform to build internal apps within minutes.",
+      "**Lowcoder** | Create software applications for your Company and your Customers with minimal coding experience. Lowcoder is the best Retool, Appsmith or Tooljet Alternative.",
     demoText:
-      "Lowcoder is a developer-friendly open-source low code platform to build internal apps within minutes.",
+      "Lowcoder | Create software applications for your Company and your Customers with minimal coding experience. Lowcoder is the best Retool, Appsmith or Tooljet Alternative.",
     submit: "Submit",
     style: "style",
     danger: "Danger",
