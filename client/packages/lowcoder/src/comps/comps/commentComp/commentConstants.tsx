@@ -52,22 +52,22 @@ export const commentDate = [
       avatar:
         "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
     },
-    value: "What is the use of this component?",
+    value: trans('comment.comment1'),
     createdAt: "2023-06-15T08:40:41.658Z",
   },
   {
     user: { name: "mou" },
-    value: "This component allows you to post or delete comments, as well as mention people who appear in the chat.",
+    value: trans('comment.comment2'),
     createdAt: "2023-06-16T08:43:42.658Z",
   },
   {
     user: { name: "Han Meimei", displayName: "Han" },
-    value: "I want to give it a try",
+    value: trans('comment.comment3'),
     createdAt: "2023-06-17T08:49:01.658Z",
   },
   {
     user: { name: "mou" },
-    value: "Enter the content in the input box below and press shift+enter to send it immediately",
+    value: trans('comment.comment4'),
     createdAt: "2023-06-18T08:50:11.658Z",
   },
 ];

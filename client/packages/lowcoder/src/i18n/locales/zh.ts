@@ -2746,6 +2746,11 @@ export const zh = {
         helpdisplayName: "头像文字(低优先)",
         helpvalue: "评论内容",
         helpcreatedAt: "创建时间",
+        autoScroll: "自动滚动",
+        comment1: '这个组件干嘛用的？',
+        comment2: '此组件允许您发布或删除评论，以及提及聊天中出现的人。',
+        comment3: '很棒的样子！',
+        comment4: '在下面的输入框中输入内容，然后按shift+Enter就能立即发送。',
     },
     iconComp: {
         icon: "图标",

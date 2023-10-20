@@ -1,10 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 // 渲染组件到编辑器
-import {
-  changeChildAction,
-  CompAction,
-  RecordConstructorToView,
-} from "lowcoder-core";
+import { changeChildAction, CompAction, RecordConstructorToView, } from "lowcoder-core";
 // 文字国际化转换api
 import { trans } from "i18n";
 // 右侧属性栏总框架
@@ -20,38 +16,14 @@ import { styleControl } from "comps/controls/styleControl"; //样式输入框
 import { jsonValueExposingStateControl } from "comps/controls/codeStateControl";
 import { jsonControl, StringControl } from "comps/controls/codeControl";
 // 事件控制
-import {
-  clickEvent,
-  submitEvent,
-  eventHandlerControl,
-  deleteEvent,
-  mentionEvent,
-} from "comps/controls/eventHandlerControl";
-
+import { clickEvent, submitEvent, eventHandlerControl, deleteEvent, mentionEvent, } from "comps/controls/eventHandlerControl";
 // 引入样式
-import {
-  CommentStyle,
-  heightCalculator,
-  widthCalculator,
-} from "comps/controls/styleControlConstants";
+import { CommentStyle, heightCalculator, widthCalculator, } from "comps/controls/styleControlConstants";
 // 初始化暴露值
 import { stateComp, valueComp } from "comps/generators/simpleGenerators";
 // 组件对外暴露属性的api
-import {
-  NameConfig,
-  NameConfigHidden,
-  withExposingConfigs,
-} from "comps/generators/withExposing";
-
-import {
-  commentDate,
-  commentDataTYPE,
-  CommentDataTooltip,
-  CommentUserDataTooltip,
-  convertCommentData,
-  checkUserInfoData,
-  checkMentionListData,
-} from "./commentConstants";
+import { NameConfig, NameConfigHidden, withExposingConfigs } from "comps/generators/withExposing";
+import { commentDate, commentDataTYPE, CommentDataTooltip, CommentUserDataTooltip, convertCommentData, checkUserInfoData, checkMentionListData, } from "./commentConstants";
 import { Avatar, List, Button, Mentions, Tooltip } from "antd";
 import VirtualList, { ListRef } from "rc-virtual-list";
 import _ from "lodash";
@@ -63,12 +35,7 @@ import { CloseOutlined } from "@ant-design/icons";
 dayjs.extend(relativeTime);
 dayjs.locale("zh-cn");
 
-const EventOptions = [
-  clickEvent,
-  submitEvent,
-  deleteEvent,
-  mentionEvent,
-] as const;
+const EventOptions = [clickEvent, submitEvent, deleteEvent, mentionEvent] as const;
 
 const childrenMap = {
   value: jsonControl(convertCommentData, commentDate),
@@ -92,6 +59,7 @@ const childrenMap = {
   submitedItem: jsonValueExposingStateControl("submitedItem", {}),
   mentionName: valueComp<string>(""),
   clickedItem: jsonValueExposingStateControl('clickedItem', {}),
+  autoScroll: BoolControl.DEFAULT_TRUE,
 };
 
 const CommentCompBase = (
@@ -99,8 +67,7 @@ const CommentCompBase = (
     dispatch: (action: CompAction) => void;
   }
 ) => {
-  // const VirtualListRef = useRef<ListRef>(null);
-  const divRef = useRef<HTMLDivElement>(null);
+  const VirtualListRef = useRef<ListRef>(null);
   const {
     value,
     dispatch,
@@ -149,11 +116,11 @@ const CommentCompBase = (
   useEffect(() => {
     props.commentList.onChange(commentListData);
     mergeAllMentionList(mentionList);
-    //   Used to scroll the list to the bottom after submission
-    setTimeout(() => {
-      // VirtualListRef?.current?.scrollTo(999999);
-      if (divRef.current) divRef.current.scrollTop = 999999;
-    }, 50);
+    if (props.autoScroll) {
+      setTimeout(() => {
+        VirtualListRef?.current?.scrollTo(999999);
+      }, 50);
+    }
   }, [commentListData]);
 
   // 获取提及搜索关键字
@@ -259,7 +226,7 @@ const CommentCompBase = (
           <VirtualList
             data={commentListData}
             height={height - (sendCommentAble ? 145 : 45) + (title === "" ? 40 : 0)}
-            ref={divRef as any}
+            ref={VirtualListRef}
             itemKey="createdAt"
           >
             {(item, index) => (
@@ -330,14 +297,12 @@ const CommentCompBase = (
               rows={2}
               onPressEnter={onPressEnter}
               placeholder={placeholder}
+              options={(MentionListData[prefix] || []).map((value:string) => ({
+                key: value,
+                value,
+                label: value,
+              }))}
             >
-              {(MentionListData[prefix] || []).map(
-                (value: string, index: number) => (
-                  <Mentions.Option key={index.toString()} value={value}>
-                    {value}
-                  </Mentions.Option>
-                )
-              )}
             </Mentions>
             <Button
               type="primary"
@@ -388,6 +353,10 @@ let CommentBasicComp = (function () {
           {children.sendCommentAble.getView() &&
             children.buttonText.propertyView({
               label: trans("comment.buttonTextDec"),
+            })}
+          {children.sendCommentAble.getView() &&
+            children.autoScroll.propertyView({
+              label: trans("comment.autoScroll"),
             })}
           {children.placeholder.propertyView({
             label: trans("comment.placeholderDec"),
