@@ -150,7 +150,7 @@ const StyledTabs = styled(Tabs) <{ $style: TabContainerStyleType; $isMobile?: bo
 
   > .ant-tabs-content-holder > .ant-tabs-content > div > .react-grid-layout > div {
     min-height: calc(100% - 2px)!important;
-    height: ${props => props.autoHeight ? '120px' : '10px'}!important;
+    height: ${props => props.autoHeight ? '' : '10px'}!important;
   }
 
   ${(props) => props.$style && getStyle(props.$style)}
