@@ -297,6 +297,10 @@ export const en = {
     dbClickDesc: "Triggers on double click",
     expanderClick: 'Expander Click',
     expanderClickDesc: "Triggers on expander click",
+    search: 'Search',
+    searchDesc: "Triggers on Search",
+    selectedChange: 'Selected Change',
+    selectedChangeDesc: "Triggers on Selected Change",
   },
   themeDetail: {
     primary: "Brand color",
@@ -956,6 +960,9 @@ export const en = {
     ganteeName: "Gantee",
     ganteeDesc: "Gantee",
     ganteeKeywords: "",
+    transferName: "Transfer",
+    transferDesc: "Transfer",
+    transferKeywords: "",
   },
   comp: {
     menuViewDocs: "View documentation",
@@ -2921,5 +2928,19 @@ export const en = {
     exampleDeveloping: 'Developing',
     exampleReview: 'Review',
     exampleRelease: 'Release',
+  },
+  transfer: {
+    sourceTitle: 'Source Data',
+    targetTitle: 'Target Data',
+    content: 'Content {i}',
+    items: 'Items',
+    targetKeys: 'Selected Keys',
+    oneWay: 'One Way',
+    pagination: 'Pagination',
+    pageSize: 'Page Size',
+    allowSearch: 'Allow Search',
+    selectedKeys: 'Selected Keys',
+    searchInfo: 'Search Info',
+    targerObject: 'Targer Object',
   }
 };

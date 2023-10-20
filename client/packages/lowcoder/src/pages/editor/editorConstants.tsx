@@ -53,6 +53,7 @@ import {
   FloatButtonIcon,
   ColorPickerIcon,
   GanteeIcon,
+  TransferIcon,
 } from "lowcoder-design";
 
 export const CompStateIcon: {
@@ -135,4 +136,5 @@ export const CompStateIcon: {
   floatButton: <FloatButtonIcon />,
   colorPicker: <ColorPickerIcon />,
   gantee: <GanteeIcon />,
+  transfer: <TransferIcon />,
 };

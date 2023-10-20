@@ -360,6 +360,16 @@ export const expanderClickEvent: EventConfigType = {
   value: "expanderClick",
   description: trans("event.expanderClickDesc"),
 };
+export const searchEvent: EventConfigType = {
+  label: trans("event.search"),
+  value: "search",
+  description: trans("event.searchDesc"),
+};
+export const selectedChangeEvent: EventConfigType = {
+  label: trans("event.selectedChange"),
+  value: "selectedChange",
+  description: trans("event.selectedChangeDesc"),
+};
 
 export const InputEventHandlerControl = eventHandlerControl([
   changeEvent,

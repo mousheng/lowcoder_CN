@@ -309,3 +309,4 @@ export { ReactComponent as AntLayoutIcon } from "icons/icon-antLayout-comp.svg";
 export { ReactComponent as FloatButtonIcon } from "icons/icon-floatbutton-comp.svg";
 export { ReactComponent as ColorPickerIcon } from "icons/icon-colorPicker-comp.svg";
 export { ReactComponent as GanteeIcon } from "icons/icon-comp-gantee.svg";
+export { ReactComponent as TransferIcon } from "icons/icon-comp-transfer.svg";

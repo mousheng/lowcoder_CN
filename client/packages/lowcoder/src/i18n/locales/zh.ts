@@ -294,6 +294,10 @@ export const zh = {
         dbClickDesc: "在双击时触发",
         expanderClick: '点击展开按钮',
         expanderClickDesc: "在点击展开按钮时触发",
+        search: '搜索',
+        searchDesc: "在搜索时触发",
+        selectedChange: '选择改变',
+        selectedChangeDesc: "在选择改变时触发",
     },
     themeDetail: {
         primary: "颜色主题",
@@ -939,6 +943,9 @@ export const zh = {
         ganteeName: "甘特图",
         ganteeDesc: "甘特图组件",
         ganteeKeywords: "gtt",
+        transferName: "穿梭框",
+        transferDesc: "穿梭框",
+        transferKeywords: "csk",
     },
     comp: {
         menuViewDocs: "查看文档",
@@ -2905,6 +2912,20 @@ export const zh = {
         exampleDeveloping: '开发',
         exampleReview: '复审',
         exampleRelease: '发布',
-    }
+    },
+    transfer: {
+        sourceTitle: '源数据',
+        targetTitle: '目标数据',
+        content: '内容 {i}',
+        items: '数据项',
+        targetKeys: '选中值',
+        targerObject: '选择对象',
+        oneWay: '单向选择',
+        pagination: '允许分页',
+        pageSize: '页面大小',
+        allowSearch: '允许搜索',
+        selectedKeys: '选中的项',
+        searchInfo: '搜索信息',
+}
 };
 

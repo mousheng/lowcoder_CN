@@ -2,6 +2,7 @@ import { ThemeDetail } from "api/commonSettingApi";
 import { darkenColor, isDarkColor, lightenColor, toHex } from "lowcoder-design";
 import { trans } from "i18n";
 import { StyleConfigType } from "./styleControl";
+import { BackgroundColor } from "@lowcoder-ee/constants/style";
 
 type SupportPlatform = "pc" | "mobile";
 
@@ -899,6 +900,10 @@ export const GanteeStyle = [
   PADDING,
 ] as const;
 
+export const TransferStyle = [
+  MARGIN,	
+] as const;
+
 export const FloatButtonStyle = [
   {
     name: "badgeColor",
@@ -1114,6 +1119,7 @@ export type FloatButtonStyleType = StyleConfigType<typeof FloatButtonStyle>;
 export type AvatarStyleType = StyleConfigType<typeof AvatarStyle>;
 export type QRCodeStyleType = StyleConfigType<typeof QRCodeStyle>;
 export type GanteeStyleType = StyleConfigType<typeof GanteeStyle>;
+export type TransferStyleType = StyleConfigType<typeof TransferStyle>;
 
 export function widthCalculator(margin: string) {
   const marginArr = margin?.trim().replace(/\s+/g,' ').split(" ") || "";

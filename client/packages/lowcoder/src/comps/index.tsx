@@ -116,6 +116,8 @@ import {
   FloatButtonIcon,
   ColorPickerIcon,
   GanteeIcon,
+  TransferIcon,
+  TransformerIcon,
 } from "lowcoder-design";
 
 import { defaultFormData, FormComp } from "./comps/formComp/formComp";
@@ -156,6 +158,7 @@ import { JsonLottieComp } from "./comps/jsonComp/jsonLottieComp";
 import { ResponsiveLayoutComp } from "./comps/responsiveLayout";
 import { FloatButtonComp } from "./comps/buttonComp/floatButtonComp";
 import { GanteeComp } from "./comps/gantee";
+import { TransferComp } from "./comps/TransferComp";
 
 type Registry = {
   [key in UICompType]?: UICompManifest;
@@ -1091,6 +1094,19 @@ const uiCompMap: Registry = {
     layoutInfo: {
       w: 24,
       h: 60,
+    },
+  },
+  transfer: {
+    name: trans("uiComp.transferName"),
+    enName: "transfer",
+    icon: TransferIcon,
+    description: trans("uiComp.transferDesc"),
+    categories: ["dataDisplay"],
+    keywords: trans("uiComp.transferKeywords"),
+    comp: TransferComp,
+    layoutInfo: {
+      h: 47,
+      w: 13,
     },
   },
 };
