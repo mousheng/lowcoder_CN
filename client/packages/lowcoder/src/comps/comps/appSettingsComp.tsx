@@ -239,6 +239,7 @@ function AppSettingsModal(props: ChildrenInstance) {
       </ItemSpan>
     );
   };
+  let ShowPCPadding = maxWidth.getView() === 'Infinity' || parseInt(maxWidth.getView()) >= 500
   return (
     <SettingsStyled>
       <Title>{trans("appSetting.pageSetting")}</Title>
@@ -278,11 +279,11 @@ function AppSettingsModal(props: ChildrenInstance) {
           }
         </AllowClickItem>)}
       <PaddingItem>
-        {InAggregationAppHidden && pcPadding.propertyView({
+        {(InAggregationAppHidden && ShowPCPadding) && pcPadding.propertyView({
           label: trans("appSetting.PCPadding"),
           tooltip: trans("appSetting.PCPaddingDes"),
         })}
-        {InAggregationAppHidden && mobilePadding.propertyView({
+        {(InAggregationAppHidden && !ShowPCPadding) && mobilePadding.propertyView({
           label: trans("appSetting.MobilePadding"),
           tooltip: trans("appSetting.MobilePaddingDes"),
         })}
