@@ -1029,7 +1029,7 @@ export const SignatureStyle = [
   PADDING,
 ] as const;
 
-//Added by Aqib Mirza
+// Added by Aqib Mirza
 export const LottieStyle = [
   {
     name: "background",

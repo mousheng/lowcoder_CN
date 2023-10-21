@@ -103,6 +103,7 @@ import {
   MentionIcon,
   AutoCompleteCompIcon,
   ResponsiveLayoutCompIcon,
+  MermaidIcon,
   CommentIcon,
   IconCompIcon,
   WeekPickerIcon,
@@ -117,12 +118,27 @@ import {
   ColorPickerIcon,
   GanteeIcon,
   TransferIcon,
-  TransformerIcon,
 } from "lowcoder-design";
 
 import { defaultFormData, FormComp } from "./comps/formComp/formComp";
 import { IFrameComp } from "./comps/iframeComp";
 import { defaultGridData, defaultListViewData, GridComp, ListViewComp } from "./comps/listViewComp";
+import { CommentComp } from "./comps/commentComp/commentComp";
+import { IconComp } from "./comps/iconComp";
+import { AmapComp } from "./comps/amap/amapComp"
+import { AvatarComp } from "./comps/avatar"
+import { DescriptionsComp } from "./comps/descriptionsComp";
+import { CalendarComp } from "./comps/calendarComp/calendarComp";
+import { AntLayoutComp } from "./comps/navComp/antLayout";
+import { ColorPickerComp } from "./comps/textInputComp/colorPickerComp";
+import { JsonLottieComp } from "./comps/jsonComp/jsonLottieComp";
+import { ResponsiveLayoutComp } from "./comps/responsiveLayout";
+import { VideoMeetingStreamComp } from "./comps/meetingComp/videoMeetingStreamComp";
+import { ControlButton } from "./comps/meetingComp/controlButton";
+import { VideoMeetingControllerComp } from "./comps/meetingComp/videoMeetingControllerComp";
+import { FloatButtonComp } from "./comps/buttonComp/floatButtonComp";
+import { GanteeComp } from "./comps/gantee";
+import { TransferComp } from "./comps/TransferComp";
 import { ModuleComp } from "./comps/moduleComp/moduleComp";
 import { NavComp } from "./comps/navComp/navComp";
 import { TableComp } from "./comps/tableComp";
@@ -145,20 +161,7 @@ import { ScannerComp } from "./comps/buttonComp/scannerComp";
 import { SignatureComp } from "./comps/signatureComp";
 import { TimeLineComp } from "./comps/timelineComp/timelineComp";
 import { MentionComp } from "./comps/textInputComp/mentionComp";
-import { AutoCompleteComp } from "./comps/autoCompleteComp/autoCompleteComp";
-import { CommentComp } from "./comps/commentComp/commentComp";
-import { IconComp } from "./comps/iconComp";
-import { AmapComp } from "./comps/amap/amapComp"
-import { AvatarComp } from "./comps/avatar"
-import { DescriptionsComp } from "./comps/descriptionsComp";
-import { CalendarComp } from "./comps/calendarComp/calendarComp";
-import { AntLayoutComp } from "./comps/navComp/antLayout";
-import { ColorPickerComp } from "./comps/textInputComp/colorPickerComp";
-import { JsonLottieComp } from "./comps/jsonComp/jsonLottieComp";
-import { ResponsiveLayoutComp } from "./comps/responsiveLayout";
-import { FloatButtonComp } from "./comps/buttonComp/floatButtonComp";
-import { GanteeComp } from "./comps/gantee";
-import { TransferComp } from "./comps/TransferComp";
+import { AutoCompleteComp } from "./comps/autoCompleteComp/autoCompleteComp";;
 
 type Registry = {
   [key in UICompType]?: UICompManifest;
@@ -413,7 +416,7 @@ const uiCompMap: Registry = {
     keywords: trans("uiComp.buttonCompKeywords"),
     comp: ButtonComp,
     layoutInfo: {
-      w: 3,
+      w: 2,
       h: 5,
     },
     withoutLoading: true,
@@ -585,6 +588,27 @@ const uiCompMap: Registry = {
       delayCollision: true,
     },
     defaultDataFn: defaultContainerData,
+  },
+
+  videocomponent: {
+    name: trans("meeting.videoCompName"),
+    enName: "Video",
+    description: trans("meeting.videoCompName"),
+    categories: ["meeting"],
+    icon: VideoCompIcon,
+    keywords: trans("meeting.meetingCompKeywords"),
+    comp: VideoMeetingStreamComp,
+    withoutLoading: true,
+  },
+  controlButton: {
+    name: trans("meeting.meetingControlCompName"),
+    enName: "Controls",
+    description: trans("meeting.meetingCompDesc"),
+    categories: ["meeting"],
+    icon: ButtonCompIcon,
+    keywords: trans("meeting.meetingCompKeywords"),
+    comp: ControlButton,
+    withoutLoading: true,
   },
   tabbedContainer: {
     name: trans("uiComp.tabbedContainerCompName"),
@@ -782,6 +806,16 @@ const uiCompMap: Registry = {
     comp: DrawerComp,
     withoutLoading: true,
   },
+  meeting: {
+    name: trans("meeting.meetingCompName"),
+    enName: "Drawer",
+    description: trans("meeting.meetingCompDesc"),
+    categories: ["meeting"],
+    icon: DrawerCompIcon,
+    keywords: trans("meeting.meetingCompKeywords"),
+    comp: VideoMeetingControllerComp,
+    withoutLoading: true,
+  },
   carousel: {
     name: trans("uiComp.carouselCompName"),
     enName: "Carousel",
@@ -834,6 +868,19 @@ const uiCompMap: Registry = {
     categories: ["dataDisplay"],
     icon: imageEditorIcon,
     keywords: trans("uiComp.imageEditorCompKeywords"),
+    layoutInfo: {
+      w: 15,
+      h: 60,
+    },
+  },
+  mermaid: {
+    name: trans("uiComp.mermaidCompName"),
+    enName: "Mermaid Charts",
+    comp: remoteComp({ ...builtInRemoteComps, compName: "mermaid" }),
+    description: trans("uiComp.mermaidCompDesc"),
+    categories: ["dataDisplay"],
+    icon: MermaidIcon,
+    keywords: trans("uiComp.mermaidCompKeywords"),
     layoutInfo: {
       w: 15,
       h: 60,
@@ -902,6 +949,19 @@ const uiCompMap: Registry = {
       h: 55,
     },
   },
+  comment: {
+    name: trans("uiComp.commentCompName"),
+    enName: "comment",
+    description: trans("uiComp.commentCompDesc"),
+    categories: ["dataDisplay"],
+    icon: CommentIcon,
+    keywords: trans("uiComp.commentCompKeywords"),
+    comp: CommentComp,
+    layoutInfo: {
+      w: 13,
+      h: 55,
+    }
+  },
   mention: {
     name: trans("uiComp.mentionCompName"),
     enName: "mention",
@@ -917,12 +977,12 @@ const uiCompMap: Registry = {
     description: trans("uiComp.autoCompleteCompDesc"),
     categories: ["dataInputText"],
     icon: AutoCompleteCompIcon,
-    keywords: cnchar.spell(trans("uiComp.autoCompleteCompName"), "first", "low").toString(),
+    keywords: trans("uiComp.autoCompleteCompKeywords"),
     comp: AutoCompleteComp,
     layoutInfo: {
       w: 7,
       h: 5,
-    }
+    },
   },
   responsiveLayout: {
     name: trans("uiComp.responsiveLayoutCompName"),
@@ -937,19 +997,6 @@ const uiCompMap: Registry = {
       w: 15,
       h: 27,
       delayCollision: true,
-    },
-  },
-  comment: {
-    name: trans("uiComp.commentCompName"),
-    enName: "comment",
-    description: trans("uiComp.commentCompDesc"),
-    categories: ["dataDisplay"],
-    icon: CommentIcon,
-    keywords: trans("uiComp.commentCompKeywords"),
-    comp: CommentComp,
-    layoutInfo: {
-      w: 13,
-      h: 55,
     },
   },
   icon: {

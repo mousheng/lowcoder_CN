@@ -889,6 +889,9 @@ export const zh = {
         imageEditorCompName: "图片编辑器",
         imageEditorCompDesc: "图片编辑器组件",
         imageEditorCompKeywords: "tpbjq",
+        mermaidCompName: "Mermaid图表",
+        mermaidCompDesc: "用文本创建图标的组件",
+        mermaidCompKeywords: "Mermaidtb",
         calendarCompName: "日历",
         calendarCompDesc: "日历组件",
         calendarCompKeywords: "rl",
@@ -2932,6 +2935,6 @@ export const zh = {
         allowSearch: '允许搜索',
         selectedKeys: '选中的项',
         searchInfo: '搜索信息',
-}
+    }
 };
 
