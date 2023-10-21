@@ -26,7 +26,7 @@ const HeaderFont = styled.div<{ bgColor: string }>`
   font-style: normal;
   line-height: 24px;
   margin-right: 8px;
-  margin-left: 20px;
+  margin-left: 12px;
   max-width: 264px;
   ${EllipsisTextCss};
 `;
@@ -52,6 +52,15 @@ const CloneBtn = styled(TacoButton)`
   min-width: 60px;
   height: 28px;
 `;
+
+const CustomICON = styled.div`
+color: white;
+height: 32px;
+font-size: 25px;
+display: flex;
+-webkit-box-align: center;
+align-items: center;
+`
 
 const PreviewBtn = styled(TacoButton)`
   &&& {
@@ -103,7 +112,7 @@ const Wrapper = styled.div`
   }
 `;
 
-export function HeaderProfile(props: { user: User,allowClick: boolean }) {
+export function HeaderProfile(props: { user: User, allowClick: boolean }) {
   const { user } = props;
   const fetchingUser = useSelector(isFetchingUser);
   const templateId = useSelector(getTemplateId);
@@ -137,7 +146,9 @@ export const PreviewHeader = () => {
   const headerStart = (
     <>
       <StyledLink onClick={() => allowClick ? history.push(ALL_APPLICATIONS_URL) : undefined}>
-        <LogoIcon branding={true} />
+        {(editorState.getAppSettings()?.customIcon as any)?.props?.value ? (<CustomICON>
+          {editorState.getAppSettings()?.customIcon}
+        </CustomICON>) : (<LogoIcon branding={true} />)}
       </StyledLink>
       <HeaderFont bgColor={brandingConfig?.headerColor ?? "#2c2c2c"}>
         {application && application.name}

@@ -1943,8 +1943,8 @@ export const zh = {
         themeCreate: "创建主题",
         HeaderSetting: "顶部菜单",
         HeaderSettingDes: "预览时你也可以手动设置url参数template=true来隐藏标题",
-        allowClick: "允许点击Logo",
-        allowClickDes: "允许点击logo返回主页",
+        allowClick: "允许点击图标",
+        allowClickDes: "允许点击图标返回主页",
         yes: "允许",
         no: "不允许",
         PCPadding: "PC页面内边距",
@@ -1953,6 +1953,7 @@ export const zh = {
         MobilePaddingDes: "设置移动端页面容器的内边距",
         showHeader: "显示",
         hiddenHeader: "隐藏",
+        appIcon: '程序图标',
     },
     customShortcut: {
         title: "自定义快捷键",

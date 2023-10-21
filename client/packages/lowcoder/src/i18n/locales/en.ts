@@ -1979,6 +1979,7 @@ export const en = {
     MobilePaddingDes: "Setting the padding of the Mobile page container",
     showHeader: "Show",
     hiddenHeader: "hidden",
+    appIcon: 'App Logo',
   },
   customShortcut: {
     title: "Custom shortcuts",

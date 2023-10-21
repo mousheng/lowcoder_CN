@@ -1,7 +1,7 @@
 import { ThemeDetail, ThemeType } from "api/commonSettingApi";
 import { RecordConstructorToComp } from "lowcoder-core";
 import { dropdownInputSimpleControl } from "comps/controls/dropdownInputSimpleControl";
-import { MultiCompBuilder, valueComp } from "comps/generators";
+import { MultiCompBuilder, valueComp, withDefault } from "comps/generators";
 import { AddIcon, Dropdown } from "lowcoder-design";
 import { EllipsisSpan } from "pages/setting/theme/styledComponents";
 import { useEffect } from "react";
@@ -18,6 +18,7 @@ import { dropdownControl } from "../controls/dropdownControl";
 import { isAggregationApp } from "@lowcoder-ee/util/appUtils";
 import { AppUILayoutType } from "@lowcoder-ee/constants/applicationConstants";
 import { currentApplication } from "@lowcoder-ee/redux/selectors/applicationSelector";
+import { IconControl } from "../controls/iconControl";
 
 const TITLE = trans("appSetting.title");
 const USER_DEFINE = "__USER_DEFINE";
@@ -192,6 +193,7 @@ const childrenMap = {
   maxWidth: dropdownInputSimpleControl(OPTIONS, USER_DEFINE, "1920"),
   hiddenHeader: dropdownControl(headerOptions, "showHeader"),
   allowClick: dropdownControl(allowClickOptions, "true"),
+  customIcon: withDefault(IconControl, ""),
   themeId: valueComp<string>(DEFAULT_THEMEID),
   customShortcuts: CustomShortcutsComp,
   pcPadding: dropdownControl(PaddingOptions, '20'),
@@ -259,6 +261,11 @@ function AppSettingsModal(props: ChildrenInstance) {
           radioButton: true,
           tooltip: trans("appSetting.HeaderSettingDes"),
         })}
+      </HiddenItem>
+      <HiddenItem>
+        {props.hiddenHeader.getView() === 'showHeader' && (
+          props.customIcon.propertyView({ label: trans('appSetting.appIcon') })
+        )}
       </HiddenItem>
       {props.hiddenHeader.getView() === 'showHeader' &&
         (<AllowClickItem >
