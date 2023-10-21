@@ -2264,7 +2264,7 @@ export const zh = {
     },
     docUrls: {
         docHome: "https://moushengkoo.gitee.io/lowcoder_cn/#/",
-        components: "https://moushengkoo.gitee.io/lowcoder_cn/#/component-guides/using-{compType}",
+        components: "https://lowcoder.mousheng.top/components/{compType}",
         module: "",
         optionList: "",
         terms: "",

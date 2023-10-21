@@ -2423,7 +2423,7 @@ export const en = {
   },
   docUrls: {
     docHome: "https://mousheng.github.io/lowcoder_CN/#/",
-        components: "https://mousheng.github.io/lowcoder_CN/#/component-guides/using-{compType}",
+        components: "https://lowcoder.mousheng.top/components/{compType}",
         module: "",
         optionList: "",
         terms: "",
