@@ -67,7 +67,7 @@ const IconContain = (props: { Icon: React.FunctionComponent<React.SVGProps<SVGSV
   const { Icon } = props;
   return (
     <CompIconDiv w={64} h={64}>
-      <Icon />
+      <Icon height={64} width={64}/>
     </CompIconDiv>
   );
 };
