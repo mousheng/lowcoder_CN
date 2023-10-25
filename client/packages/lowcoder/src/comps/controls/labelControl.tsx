@@ -108,7 +108,7 @@ const HelpWrapper = styled.div<{
 
 const TooltipWrapper = styled.span`
   word-wrap: break-word;
-  word-break: break-all;
+  word-break: break-word;
   white-space: pre-wrap;
 `;
 
