@@ -12,7 +12,7 @@ Simply run the below command to start a backend server.
 docker run -d --name lowcoder -p 3000:3000 -v "$PWD/stacks:/lowcoder-stacks" lowcoderorg/lowcoder-ce
 ```
 
-For more information, view our [docs](../docs/self-hosting)
+For more information, view our [docs](https://moushengkoo.gitee.io/lowcoder_cn/#/docker)
 
 #### Build Docker image from source
 

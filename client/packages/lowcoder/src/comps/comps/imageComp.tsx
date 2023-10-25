@@ -1,15 +1,27 @@
 import styled, { css } from "styled-components";
 import { Section, sectionNames } from "lowcoder-design";
-import { clickEvent, eventHandlerControl } from "../controls/eventHandlerControl";
+import {
+  clickEvent,
+  eventHandlerControl,
+} from "../controls/eventHandlerControl";
 import { StringStateControl } from "../controls/codeStateControl";
 import { UICompBuilder, withDefault } from "../generators";
-import { NameConfig, NameConfigHidden, withExposingConfigs } from "../generators/withExposing";
+import {
+  NameConfig,
+  NameConfigHidden,
+  withExposingConfigs,
+} from "../generators/withExposing";
 import { RecordConstructorToView } from "lowcoder-core";
 import { useEffect, useRef, useState } from "react";
 import _ from "lodash";
 import ReactResizeDetector from "react-resize-detector";
 import { styleControl } from "comps/controls/styleControl";
-import { ImageStyle, ImageStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
+import {
+  ImageStyle,
+  ImageStyleType,
+  heightCalculator,
+  widthCalculator,
+} from "comps/controls/styleControlConstants";
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
 import { AutoHeightControl } from "comps/controls/autoHeightControl";

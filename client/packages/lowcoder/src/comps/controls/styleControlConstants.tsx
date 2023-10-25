@@ -1042,19 +1042,6 @@ export const LottieStyle = [
   PADDING,
 ] as const;
 /////////////////////
-
-export const ResponsiveLayoutRowStyle = [
-  ...BG_STATIC_BORDER_RADIUS,
-  MARGIN,	
-  PADDING,
-] as const;
-
-export const ResponsiveLayoutColStyle = [
-  ...BG_STATIC_BORDER_RADIUS,
-  MARGIN,	
-  PADDING,
-] as const;
-
 export const CommentStyle = [
   {
     name: "background",
@@ -1067,6 +1054,17 @@ export const CommentStyle = [
   PADDING,
   RADIUS,
 ] as const
+export const ResponsiveLayoutRowStyle = [
+  ...BG_STATIC_BORDER_RADIUS,
+  MARGIN,	
+  PADDING,
+] as const;
+
+export const ResponsiveLayoutColStyle = [
+  ...BG_STATIC_BORDER_RADIUS,
+  MARGIN,	
+  PADDING,
+] as const;
 
 export const CarouselStyle = [getBackground("canvas")] as const;
 

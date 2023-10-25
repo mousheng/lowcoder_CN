@@ -5,7 +5,10 @@ import { ModalComp } from "comps/hooks/modalComp";
 import { ButtonComp } from "./comps/buttonComp/buttonComp";
 import { DropdownComp } from "./comps/buttonComp/dropdownComp";
 import { LinkComp } from "./comps/buttonComp/linkComp";
-import { ContainerComp, defaultContainerData } from "./comps/containerComp/containerComp";
+import {
+  ContainerComp,
+  defaultContainerData,
+} from "./comps/containerComp/containerComp";
 import { CustomComp } from "./comps/customComp/customComp";
 import { 
   DatePickerComp, 
@@ -123,7 +126,6 @@ import {
 import { defaultFormData, FormComp } from "./comps/formComp/formComp";
 import { IFrameComp } from "./comps/iframeComp";
 import { defaultGridData, defaultListViewData, GridComp, ListViewComp } from "./comps/listViewComp";
-import { CommentComp } from "./comps/commentComp/commentComp";
 import { IconComp } from "./comps/iconComp";
 import { AmapComp } from "./comps/amap/amapComp"
 import { AvatarComp } from "./comps/avatar"
@@ -160,6 +162,7 @@ import { RemoteCompInfo } from "types/remoteComp";
 import { ScannerComp } from "./comps/buttonComp/scannerComp";
 import { SignatureComp } from "./comps/signatureComp";
 import { TimeLineComp } from "./comps/timelineComp/timelineComp";
+import { CommentComp } from "./comps/commentComp/commentComp";
 import { MentionComp } from "./comps/textInputComp/mentionComp";
 import { AutoCompleteComp } from "./comps/autoCompleteComp/autoCompleteComp";;
 

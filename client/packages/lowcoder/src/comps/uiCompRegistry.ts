@@ -123,7 +123,6 @@ export type UICompType =
   | "mention"
   | "autocomplete"
   | "responsiveLayout"
-  | "comment"
   | "icon"
   | "weekPicker"
   | "monthPicker"
