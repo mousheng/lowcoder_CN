@@ -48,8 +48,11 @@ export default function EditorSkeletonView() {
   const panelStatus = getPanelStatus();
   const panelStyle = getPanelStyle();
   const isUserViewMode = useUserViewMode();
-  const isTemplate = useTemplateViewMode();
-
+  const isTemplateValue = useTemplateViewMode();
+  let isTemplate = true;
+  setTimeout(() => {
+    isTemplate = isTemplateValue
+  }, 1000);
   if (isUserViewMode) {
     return <ProductLoading hideHeader={isTemplate} />;
   }
