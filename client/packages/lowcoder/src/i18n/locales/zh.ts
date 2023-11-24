@@ -2937,6 +2937,7 @@ export const zh = {
         taskText: "任务 #{i}",
         AutoCalculateProgress: "自动计算进度",
         allowProjectDrag: "允许拖动项目",
+        showColumns: "显示列",
     },
     transfer: {
         sourceTitle: '源数据',

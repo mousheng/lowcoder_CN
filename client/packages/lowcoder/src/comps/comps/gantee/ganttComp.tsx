@@ -41,6 +41,7 @@ const childrenMap = {
   links: arrayObjectExposingStateControl('links', links),
   level: dropdownControl(viewModeOptions, 'day'),
   Columns: GanttColumns,
+  showColumns: BoolControl.DEFAULT_TRUE,
   allowTaskDrag: BoolControl,
   allowProjectDrag: BoolControl,
   onChangeEvent: eventHandlerControl([changeEvent]),
@@ -76,7 +77,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   const [markId, setMarkId] = useState('')
   const [initFlag, setInitFlag] = useState(false)
   var idParentBeforeDeleteTask: taskType = 0;
-  
+
   type taskType = number | string
   // 计算总进度
   function calculateSummaryProgress(task: any) {
@@ -166,6 +167,10 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   useEffect(() => {
     gantt.config.drag_project = props.allowProjectDrag;
   }, [props.allowProjectDrag])
+  useEffect(() => {
+    gantt.config.show_grid = props.showColumns;
+    gantt.render();
+  }, [props.showColumns])
   // 设置是否自动计算进度
   useEffect(() => {
     setAutoCalculateCallBack()
@@ -173,6 +178,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   }, [props.AutoCalculateProgress])
   // 初始化
   useEffect(() => {
+    gantt.clearAll()
     gantt.i18n.setLocale("cn");
     gantt.plugins({
       marker: true,
@@ -362,7 +368,10 @@ let GanttBasicComp = (function () {
           {children.links.propertyView({
             label: trans("gantt.links"),
           })}
-          {children.Columns.propertyView({
+          {children.showColumns.propertyView({
+            label: trans("gantt.showColumns"),
+          })}
+          {children.showColumns.getView() && children.Columns.propertyView({
             title: trans("gantt.ColumnsData"),
           })}
           {children.level.propertyView({
