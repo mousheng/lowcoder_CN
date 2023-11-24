@@ -3074,6 +3074,8 @@ export const en = {
     taskIDDesc: "Supports arrays of IDs or single ID",
     add: "Add",
     skins: "skins",
+    expandingAll: "Expanding All",
+    collapsingAll: "Collapsing All",
   },
   transfer: {
     sourceTitle: 'Source Data',

@@ -60,6 +60,32 @@ export function ganttMethods(): MethodConfigInfo<GanttCompType>[] {
                 }
             },
         },
+        {
+            method: {
+                name: "expandingAll",
+                description: trans("gantt.expandingAll"),
+                params: [],
+            },
+            execute: () => {
+                gantt.eachTask(function (task) {
+                    task.$open = true;
+                });
+                gantt.render();
+            },
+        },
+        {
+            method: {
+                name: "collapsingAll",
+                description: trans("gantt.collapsingAll"),
+                params: [],
+            },
+            execute: () => {
+                gantt.eachTask(function (task) {
+                    task.$open = false;
+                });
+                gantt.render();
+            },
+        },
     ];
 }
 

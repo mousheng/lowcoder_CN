@@ -2928,6 +2928,8 @@ export const zh = {
         taskIDDesc: "支持单个ID或者ID数组",
         add: "添加",
         skins: "主题",
+        expandingAll: "展开所有",
+        collapsingAll: "折叠所有",
 },
     transfer: {
         sourceTitle: '源数据',
