@@ -3072,6 +3072,7 @@ export const en = {
     removeTask: "Remove Task",
     taskID: "Task ID",
     taskIDDesc: "Supports arrays of IDs or single ID",
+    add: "Add",
   },
   transfer: {
     sourceTitle: 'Source Data',

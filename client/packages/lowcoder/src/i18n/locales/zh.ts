@@ -2926,6 +2926,7 @@ export const zh = {
         removeTask: "删除任务",
         taskID: "任务ID",
         taskIDDesc: "支持单个ID或者ID数组",
+        add: "添加",
 },
     transfer: {
         sourceTitle: '源数据',

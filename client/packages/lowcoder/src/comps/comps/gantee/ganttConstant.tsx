@@ -66,6 +66,7 @@ export function ganttMethods(): MethodConfigInfo<GanttCompType>[] {
 export const cloumnsTypeOptions = [
     { label: trans('gantt.text'), value: "text" },
     { label: trans('gantt.progress'), value: "progress" },
+    { label: trans('gantt.add'), value: "add" },
 ] as const;
 
 export const viewModeOptions = [
@@ -92,7 +93,7 @@ export const ColumnsOption = new MultiCompBuilder(
     <>
         {children.ColumnsType.propertyView({ label: trans("gantt.ColumnsType") })}
         {children.ColumnsType.getView() === 'text' && children.name.propertyView({ label: trans("gantt.key") })}
-        {children.label.propertyView({ label: trans("gantt.title") })}
+        {children.ColumnsType.getView() !== 'add' && children.label.propertyView({ label: trans("gantt.title") })}
         {children.tree.propertyView({ label: trans("gantt.tree") })}
         {children.width.propertyView({ label: trans("gantt.width") })}
         {children.align.propertyView({
@@ -109,11 +110,7 @@ export const tasks =
         {
             id: "A1",
             text: "Project #2",
-            // start_date: "",
-            // duration: 0,
-            // end_date: "",
             progress: 0.4,
-            // open: true,
             showCode: 1,
             code: 0.1,
             task_user: "A",
@@ -137,25 +134,18 @@ export const tasks =
             id: "A3",
             text: "Task #2",
             start_date: "2023-08-30",
-            // duration: 6,
-            // end_date: "2023-09-06",
             progress: 0,
             parent: "A1",
             pre_task: "A2",
             showCode: 1.2,
             code: 0.2,
-            // task_user: "A",
             type: 'milestone',
             other: '其他数据3',
         },
         {
             id: "A4",
             text: "Project #3",
-            // start_date: "",
-            // duration: 0,
-            // end_date: "",
             progress: 0.6,
-            // open: true,
             showCode: 1,
             code: 0.1,
             task_user: "A",

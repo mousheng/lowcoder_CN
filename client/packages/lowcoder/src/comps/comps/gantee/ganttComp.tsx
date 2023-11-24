@@ -13,10 +13,10 @@ import ReactResizeDetector from "react-resize-detector";
 import { changeEvent, addedLinkEvent, eventHandlerControl, deletedLinkEvent, ProgressDragEvent, selectedChangeEvent, addTaskEvent } from "../../controls/eventHandlerControl";
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
-import { gantt, GanttStatic } from 'dhtmlx-gantt';
+import { gantt } from 'dhtmlx-gantt';
 import 'dhtmlx-gantt/codebase/dhtmlxgantt.css';
 import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods } from "./ganttConstant";
-import { RefControl, StringOrNumberControl, manualOptionsControl, valueComp } from "@lowcoder-ee/index.sdk";
+import { StringOrNumberControl, manualOptionsControl, valueComp } from "@lowcoder-ee/index.sdk";
 import _ from "lodash"
 
 
@@ -29,10 +29,10 @@ const EventOptions = [selectedChangeEvent, addTaskEvent] as const;
 
 const GanttColumns = manualOptionsControl(ColumnsOption, {
   initOptions: [
-    { name: 'text', label: trans('gantt.project'), align: 'center', tree: true },
+    { name: 'text', label: trans('gantt.project'), align: 'center', tree: true, width: '120' },
     { name: 'start_date', label: trans('gantt.from'), align: 'center' },
     { name: 'progress', label: trans('gantt.progress'), align: 'center', ColumnsType: 'progress' },
-    { name: 'add', label: '', align: 'center', ColumnsType: 'progress' },
+    { name: 'add', label: '+', align: 'center', ColumnsType: 'add' },
   ],
   uniqField: "name",
 });
@@ -187,10 +187,16 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   useEffect(() => {
     gantt.config.columns = props.Columns.map((c: any) => {
       let rt = { ...c }
-      if ('ColumnsType' in c && c.ColumnsType === 'progress') {
-        rt['template'] = (item: any) => {
-          if (item?.type === "milestone") return '100%'
-          return `${Math.round(item.progress * 100)}%`
+      if ('ColumnsType' in c) {
+        if (c.ColumnsType === 'progress') {
+          rt['name'] = ''
+          rt['template'] = (item: any) => {
+            if (item?.type === "milestone") return '100%'
+            return `${Math.round(item.progress * 100)}%`
+          }
+        } else if (c.ColumnsType === 'add') {
+          rt['name'] = 'add'
+          rt['label'] = ''
         }
       }
       return rt
