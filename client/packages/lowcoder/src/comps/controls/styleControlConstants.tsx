@@ -895,9 +895,7 @@ export const QRCodeStyle = [
   PADDING,
 ] as const;
 
-export const GanteeStyle = [
-  MARGIN,	
-  PADDING,
+export const GanttStyle = [
 ] as const;
 
 export const TransferStyle = [
@@ -1116,7 +1114,7 @@ export type AntLayoutMenuStyleType = StyleConfigType<typeof AntLayoutMenuStyle>;
 export type FloatButtonStyleType = StyleConfigType<typeof FloatButtonStyle>;
 export type AvatarStyleType = StyleConfigType<typeof AvatarStyle>;
 export type QRCodeStyleType = StyleConfigType<typeof QRCodeStyle>;
-export type GanteeStyleType = StyleConfigType<typeof GanteeStyle>;
+export type GanttStyleType = StyleConfigType<typeof GanttStyle>;
 export type TransferStyleType = StyleConfigType<typeof TransferStyle>;
 
 export function widthCalculator(margin: string) {

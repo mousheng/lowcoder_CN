@@ -383,6 +383,26 @@ export const addedMarkerEvent: EventConfigType = {
   value: "addedMarker",
   description: trans("event.addedMarkerDesc"),
 };
+export const addedLinkEvent: EventConfigType = {
+  label: trans("event.addedLink"),
+  value: "addedLink",
+  description: trans("event.addedLinkDesc"),
+};
+export const addTaskEvent: EventConfigType = {
+  label: trans("event.addTask"),
+  value: "addTask",
+  description: trans("event.addTaskDesc"),
+};
+export const deletedLinkEvent: EventConfigType = {
+  label: trans("event.deletedLink"),
+  value: "deletedLink",
+  description: trans("event.deletedLinkDesc"),
+};
+export const ProgressDragEvent: EventConfigType = {
+  label: trans("event.progressDrag"),
+  value: "progressDrag",
+  description: trans("event.progressDragDesc"),
+};
 export const delteMarkerEvent: EventConfigType = {
   label: trans("event.delteMarker"),
   value: "delteMarker",

@@ -53,7 +53,7 @@ import {
   AntLayoutIcon,
   FloatButtonIcon,
   ColorPickerIcon,
-  GanteeIcon,
+  GanttIcon,
   TransferIcon,
 } from "lowcoder-design";
 
@@ -140,6 +140,6 @@ export const CompStateIcon: {
   antLayout: <AntLayoutIcon />,
   floatButton: <FloatButtonIcon />,
   colorPicker: <ColorPickerIcon />,
-  gantee: <GanteeIcon />,
+  gantt: <GanttIcon />,
   transfer: <TransferIcon />,
 };

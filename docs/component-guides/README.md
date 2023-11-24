@@ -13,4 +13,4 @@ Lowcoder为您提供了一套功能强大且开箱即用的组件库，帮助您
 -   [使用扫码组件](component-guides/using-scanner.md)
 -   [使用自定义组件](component-guides/using-custom.md)
 -   [使用 Markdown](component-guides/using-markdown.md)
--   [使用甘特图组件](component-guides/using-gantee.md)
+-   [使用甘特图组件](component-guides/using-gantt.md)

@@ -119,7 +119,7 @@ import {
   AntLayoutIcon,
   FloatButtonIcon,
   ColorPickerIcon,
-  GanteeIcon,
+  GanttIcon,
   TransferIcon,
 } from "lowcoder-design";
 
@@ -139,7 +139,7 @@ import { VideoMeetingStreamComp } from "./comps/meetingComp/videoMeetingStreamCo
 import { ControlButton } from "./comps/meetingComp/controlButton";
 import { VideoMeetingControllerComp } from "./comps/meetingComp/videoMeetingControllerComp";
 import { FloatButtonComp } from "./comps/buttonComp/floatButtonComp";
-import { GanteeComp } from "./comps/gantee";
+import { GanttComp } from "./comps/gantee";
 import { TransferComp } from "./comps/TransferComp";
 import { ModuleComp } from "./comps/moduleComp/moduleComp";
 import { NavComp } from "./comps/navComp/navComp";
@@ -1133,14 +1133,14 @@ const uiCompMap: Registry = {
     },
     withoutLoading: true,
   },
-  gantee: {
-    name: trans("uiComp.ganteeName"),
-    enName: "gantee",
-    description: trans("uiComp.ganteeDesc"),
+  gantt: {
+    name: trans("uiComp.ganttName"),
+    enName: "gantt",
+    description: trans("uiComp.ganttDesc"),
     categories: ["dataDisplay"],
-    icon: GanteeIcon,
-    keywords: trans("uiComp.ganteeKeywords"),
-    comp: GanteeComp,
+    icon: GanttIcon,
+    keywords: trans("uiComp.ganttKeywords"),
+    comp: GanttComp,
     layoutInfo: {
       w: 24,
       h: 60,

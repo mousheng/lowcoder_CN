@@ -7616,6 +7616,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dhtmlx-gantt@npm:^8.0.6":
+  version: 8.0.6
+  resolution: "dhtmlx-gantt@npm:8.0.6"
+  checksum: acbcb5e603eec0a70f139034b6d38dfec88f3717153e7b644cab15c3992381f49f960f59710a1cfd47af8226ec3e05e8fc818af59d3609a32d5bc6cfbf3b29a7
+  languageName: node
+  linkType: hard
+
 "diff-sequences@npm:^29.4.3":
   version: 29.4.3
   resolution: "diff-sequences@npm:29.4.3"
@@ -9206,15 +9213,6 @@ __metadata:
   dependencies:
     readable-stream: ~1.0.26-4
   checksum: db4dcf68f214b3fabd6cd9658630dfd1d7ed8d43f7f45408027a90220cd75276e782d1e958821775d7a3a4a83034778e75a097bdc7002c758e8896f76213c65d
-  languageName: node
-  linkType: hard
-
-"gantt-task-react@npm:^0.3.9":
-  version: 0.3.9
-  resolution: "gantt-task-react@npm:0.3.9"
-  peerDependencies:
-    react: ^18.0.0
-  checksum: b0559ff812f26375d14355262eb01bdb7d34bf072a18376168af58e50c9f03be31996159d3fff345733c9a3bd844258ffd4a6324a6b8ff8f766d723d0ecf23c4
   languageName: node
   linkType: hard
 
@@ -12091,6 +12089,7 @@ __metadata:
     cnchar: ^3.2.4
     copy-to-clipboard: ^3.3.3
     core-js: ^3.25.2
+    dhtmlx-gantt: ^8.0.6
     dotenv: ^16.0.3
     echarts: ^5.4.3
     echarts-wordcloud: ^2.1.0
@@ -12099,7 +12098,6 @@ __metadata:
     eslint-plugin-only-ascii: ^0.0.0
     eslint4b-prebuilt-2: ^7.32.0
     file-saver: ^2.0.5
-    gantt-task-react: ^0.3.9
     github-markdown-css: ^5.1.0
     hotkeys-js: ^3.8.7
     http-proxy-middleware: ^2.0.6

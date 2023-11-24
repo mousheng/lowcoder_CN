@@ -30,7 +30,7 @@
 在 `index.ts` 文件中末尾添加引入。
 
 ```javascript
-export { ReactComponent as GanteeIcon } from "icons/icon-comp-gantee.svg";
+export { ReactComponent as GanttIcon } from "icons/icon-comp-gantt.svg";
 ```
 
 保存所有文件，没有浏览器没有报错的话继续下一步骤。
@@ -41,13 +41,13 @@ export { ReactComponent as GanteeIcon } from "icons/icon-comp-gantee.svg";
 
 #### 复制模板
 
-定位到 `qrCodeComp.tsx` 文件后，复制一份，并改名为 `ganteeComp.tsx`
+定位到 `qrCodeComp.tsx` 文件后，复制一份，并改名为 `ganttComp.tsx`
 
 ![Alt text](../assets/image-13.png)
 
 #### 修改导出名
 
-修改导出名为 `GanteeComp` ，保存文件。这时浏览器不会报错，因为还没有任何文件引用我们的组件。
+修改导出名为 `GanttComp` ，保存文件。这时浏览器不会报错，因为还没有任何文件引用我们的组件。
 
 !> 注意导出的组件名首字母必须为大写
 
@@ -56,7 +56,7 @@ export { ReactComponent as GanteeIcon } from "icons/icon-comp-gantee.svg";
 ### 步骤四：引入组件
 
 #### 注册组件类型
-定位到 `client/packages/lowcoder/src/comps/uiCompRegistry.ts` 下拉到底部，添加 `| gantee` ，这时保存浏览器会提示未发现 `gantee` 类型图标的错误，不用管，请接下去注册左侧边栏图标。
+定位到 `client/packages/lowcoder/src/comps/uiCompRegistry.ts` 下拉到底部，添加 `| gantt` ，这时保存浏览器会提示未发现 `gantt` 类型图标的错误，不用管，请接下去注册左侧边栏图标。
 
 ![Alt text](../assets/image-15.png)
 
@@ -97,7 +97,7 @@ client/packages/lowcoder/src/i18n/locales/zh.ts
 ![Alt text](../assets/image-21.png)
 ![Alt text](../assets/image-20.png)
 
-!> en.ts为默认语言包，在中文环境中使用 `trans("uiComp.ganteeName")` 调用时，如果en.ts中找不到对应的字符串就会报错，如果在zh.ts中找不到对应的字符串，则返回en.ts中的字符串。所以，如果碰到字符串不显示中文且没有报错，请检查是否路径或者大小写输入错误。
+!> en.ts为默认语言包，在中文环境中使用 `trans("uiComp.ganttName")` 调用时，如果en.ts中找不到对应的字符串就会报错，如果在zh.ts中找不到对应的字符串，则返回en.ts中的字符串。所以，如果碰到字符串不显示中文且没有报错，请检查是否路径或者大小写输入错误。
 
 ##### 注册到组件列表
 
