@@ -42,6 +42,7 @@ const childrenMap = {
   level: dropdownControl(viewModeOptions, 'day'),
   Columns: GanttColumns,
   allowTaskDrag: BoolControl,
+  allowProjectDrag: BoolControl,
   onChangeEvent: eventHandlerControl([changeEvent]),
   allowLinkDelete: BoolControl,
   onDeletedLinkEvent: eventHandlerControl([deletedLinkEvent]),
@@ -75,7 +76,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   const [markId, setMarkId] = useState('')
   const [initFlag, setInitFlag] = useState(false)
   var idParentBeforeDeleteTask: taskType = 0;
-
+  
   type taskType = number | string
   // 计算总进度
   function calculateSummaryProgress(task: any) {
@@ -161,6 +162,10 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   useEffect(() => {
     import(props.skins)
   }, [props.skins])
+  // 设置是否允许拖动项目
+  useEffect(() => {
+    gantt.config.drag_project = props.allowProjectDrag;
+  }, [props.allowProjectDrag])
   // 设置是否自动计算进度
   useEffect(() => {
     setAutoCalculateCallBack()
@@ -370,6 +375,9 @@ let GanttBasicComp = (function () {
         <Section name={sectionNames.interaction}>
           {children.allowTaskDrag.propertyView({
             label: trans("gantt.allowTaskDrag"),
+          })}
+          {children.allowTaskDrag.getView() && children.allowProjectDrag.propertyView({
+            label: trans("gantt.allowProjectDrag"),
           })}
           {children.allowTaskDrag.getView() && children.onChangeEvent.propertyView({
             title: trans("gantt.handleDateChange"),

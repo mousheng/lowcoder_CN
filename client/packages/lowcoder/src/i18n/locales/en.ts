@@ -3082,6 +3082,7 @@ export const en = {
     projectText: "Project #{i}",
     taskText: "Task #{i}",
     AutoCalculateProgress: "Auto Calculation Progress",
+    allowProjectDrag: "Allow Project Drag",
   },
   transfer: {
     sourceTitle: 'Source Data',
