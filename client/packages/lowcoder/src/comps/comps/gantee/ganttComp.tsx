@@ -406,11 +406,11 @@ let GanttBasicComp = (function () {
           {children.allowProgressDrag.propertyView({
             label: trans("gantt.allowProgressDrag"),
           })}
+          {children.allowProgressDrag.getView() && children.AutoCalculateProgress.propertyView({
+            label: trans("gantt.AutoCalculateProgress"),
+          })}
           {children.allowProgressDrag.getView() && children.onProgressDragEvent.propertyView({
             title: trans("gantt.handleProgressDrag"),
-          })}
-          {children.AutoCalculateProgress.propertyView({
-            label: trans("gantt.AutoCalculateProgress"),
           })}
         </Section>
         <Section name={sectionNames.layout}>
