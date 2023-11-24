@@ -2930,7 +2930,12 @@ export const zh = {
         skins: "主题",
         expandingAll: "展开所有",
         collapsingAll: "折叠所有",
-},
+        addTaskFail: "添加任务失败，参数类型应该为对象或数组对象",
+        removeTaskFail: "删除任务失败，参数类型应该为字符串或字符串数组",
+        otherData: "其他数据{i}",
+        projectText: "项目 #{i}",
+        taskText: "任务 #{i}",
+    },
     transfer: {
         sourceTitle: '源数据',
         targetTitle: '目标数据',

@@ -3076,6 +3076,11 @@ export const en = {
     skins: "skins",
     expandingAll: "Expanding All",
     collapsingAll: "Collapsing All",
+    addTaskFail: "The addition task failed, and the parameter type should be an object or an array object",
+    removeTaskFail: "The deletion task failed, and the parameter type should be string or string array",
+    otherData: "Other Data{i}",
+    projectText: "Project #{i}",
+    taskText: "Task #{i}",
   },
   transfer: {
     sourceTitle: 'Source Data',

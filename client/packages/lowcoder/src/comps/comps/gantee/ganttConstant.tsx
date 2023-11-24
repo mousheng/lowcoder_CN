@@ -6,6 +6,7 @@ import { alignControl } from "comps/controls/alignControl";
 import { dropdownControl } from "comps/controls/dropdownControl";
 import { withDefault } from "../../generators";
 import { CodeTextControl } from "@lowcoder-ee/index.sdk";
+import dayjs from "dayjs"
 
 export const ganttCommonChildren = {
     viewRef: RefControl<GanttStatic>,
@@ -32,7 +33,7 @@ export function ganttMethods(): MethodConfigInfo<GanttCompType>[] {
                         gantt.addTask(params[0])
                     } else {
                         gantt.message({
-                            text: "添加任务失败，参数类型应该为对象或数组对象",
+                            text: trans('gantt.addTaskFail'),
                             type: "error",
                         });
                     }
@@ -53,7 +54,7 @@ export function ganttMethods(): MethodConfigInfo<GanttCompType>[] {
                         gantt.deleteTask(params[0])
                     } else {
                         gantt.message({
-                            text: "删除任务失败，参数类型应该为字符串或字符串数组",
+                            text: trans('gantt.removeTaskFail'),
                             type: "error",
                         });
                     }
@@ -141,65 +142,78 @@ export const ColumnsOption = new MultiCompBuilder(
 ))
     .build();
 
+const exampleDate = dayjs()
 export const tasks =
     [
         {
             id: "A1",
-            text: "Project #2",
-            progress: 0.4,
+            text: trans("gantt.projectText", { i: 1 }),
+            progress: 0.7,
             showCode: 1,
             code: 0.1,
             task_user: "A",
             parent: 0,
-            other: '其他数据',
+            other: trans('gantt.otherData', { i: 1 }),
+            color: '#46ad51',
         },
         {
             id: "A2",
-            text: "Task #1",
-            start_date: "2023-08-29",
+            text: trans("gantt.taskText", { i: 1 }),
+            start_date: exampleDate.add(-5,'d').format('YYYY-MM-DD'),
             duration: 4,
-            end_date: "2023-09-01",
-            progress: 0.6,
+            progress: 1,
             parent: "A1",
             showCode: 1.1,
             code: 0.1,
             task_user: "A",
-            other: '其他数据2',
+            other: trans('gantt.otherData', { i: 2 }),
         },
         {
             id: "A3",
-            text: "Task #2",
-            start_date: "2023-08-30",
+            text: trans("gantt.taskText", { i: 2 }),
+            start_date: exampleDate.add(3,'d').format('YYYY-MM-DD'),
             progress: 0,
             parent: "A1",
             pre_task: "A2",
             showCode: 1.2,
             code: 0.2,
             type: 'milestone',
-            other: '其他数据3',
+            other: trans('gantt.otherData', { i: 3 }),
         },
         {
             id: "A4",
-            text: "Project #3",
+            text: trans("gantt.projectText", { i: 2 }),
             progress: 0.6,
             showCode: 1,
             code: 0.1,
             task_user: "A",
             parent: 0,
-            other: '其他数据4',
+            other: trans('gantt.otherData', { i: 4 }),
+            color: '#46ad51',
         },
         {
             id: "A5",
-            text: "Task #1",
-            start_date: "2023-08-29",
-            duration: 6,
-            end_date: "2023-09-04",
-            progress: 1,
+            text: trans("gantt.taskText", { i: 1 }),
+            start_date: exampleDate.add(-3,'d').format('YYYY-MM-DD'),
+            duration: 5,
+            progress: 0.7,
             showCode: 2,
             code: 0.2,
             task_user: "A",
             parent: 'A4',
-            other: '其他数据5',
+            other: trans('gantt.otherData', { i: 5 }),
+        },
+        {
+            id: "A6",
+            text: trans("gantt.taskText", { i: 2 }),
+            start_date: exampleDate.format('YYYY-MM-DD'),
+            duration: 6,
+            progress: 0.1,
+            showCode: 2,
+            code: 0.2,
+            task_user: "A",
+            parent: 'A4',
+            other: trans('gantt.otherData', { i: 6 }),
         }
     ]
 
@@ -208,6 +222,12 @@ export const links = [
         "id": 1,
         "source": 'A2',
         "target": 'A3',
+        "type": "0"
+    },
+    {
+        "id": 2,
+        "source": 'A5',
+        "target": 'A6',
         "type": "0"
     },
 ]
