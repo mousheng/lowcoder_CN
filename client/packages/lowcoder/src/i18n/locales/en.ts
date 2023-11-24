@@ -3081,6 +3081,7 @@ export const en = {
     otherData: "Other Data{i}",
     projectText: "Project #{i}",
     taskText: "Task #{i}",
+    AutoCalculateProgress: "Auto Calculation Progress",
   },
   transfer: {
     sourceTitle: 'Source Data',

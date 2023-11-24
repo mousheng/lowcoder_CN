@@ -56,6 +56,7 @@ const childrenMap = {
   currentObject: valueComp({}),
   openAllBranchInit: BoolControl,
   skins: dropdownControl(skinsOptions, './skins/dhtmlxgantt.css'),
+  AutoCalculateProgress: BoolControl,
 };
 
 const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
@@ -65,11 +66,105 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
   const [handleDBClickLinkRef, sethandleDBClickLinkRef] = useState('')
+  const [handleParseRef, sethandleParseRef] = useState('')
+  const [handleAfterTaskUpdateRef, sethandleAfterTaskUpdateRef] = useState('')
+  const [handleTaskDragRef, sethandleTaskDragRef] = useState('')
+  const [handleAfterTaskAddRef, sethandleAfterTaskAddRef] = useState('')
+  const [handleBeforeTaskDeleteRef, sethandleBeforeTaskDeleteRef] = useState('')
+  const [handleAfterTaskDeleteRef, sethandleAfterTaskDeleteRef] = useState('')
   const [markId, setMarkId] = useState('')
   const [initFlag, setInitFlag] = useState(false)
+  var idParentBeforeDeleteTask: taskType = 0;
+
+  type taskType = number | string
+  function calculateSummaryProgress(task: any) {
+    if (task.type != gantt.config.types.project)
+      return task.progress;
+    var totalToDo = 0;
+    var totalDone = 0;
+    gantt.eachTask(function (child) {
+      if (child.type != gantt.config.types.project) {
+        totalToDo += child.duration;
+        totalDone += (child.progress || 0) * child.duration;
+      }
+    }, task.id);
+    if (!totalToDo) return 0;
+    else return totalDone / totalToDo;
+  }
+
+  function refreshSummaryProgress(id: taskType, submit: any) {
+    if (!gantt.isTaskExists(id))
+      return;
+
+    var task = gantt.getTask(id);
+    var newProgress = calculateSummaryProgress(task);
+
+    if (newProgress !== task.progress) {
+      task.progress = newProgress;
+
+      if (!submit) {
+        gantt.refreshTask(id);
+      } else {
+        gantt.updateTask(id);
+      }
+    }
+
+    if (!submit && gantt.getParent(id) !== gantt.config.root_id) {
+      refreshSummaryProgress(gantt.getParent(id), submit);
+    }
+  }
+
+  function setAutoCalculateCallBack() {
+    handleParseRef && gantt.detachEvent(handleParseRef)
+    sethandleParseRef(gantt.attachEvent("onParse", function () {
+      gantt.eachTask(function (task) {
+        console.log('onParse', props.AutoCalculateProgress);
+        props.AutoCalculateProgress && (task.progress = calculateSummaryProgress(task))
+      });
+    }))
+
+    handleAfterTaskUpdateRef && gantt.detachEvent(handleAfterTaskUpdateRef)
+    sethandleAfterTaskUpdateRef(gantt.attachEvent("onAfterTaskUpdate", function (id) {
+      console.log('onAfterTaskUpdate', props.AutoCalculateProgress);
+      props.AutoCalculateProgress && refreshSummaryProgress(gantt.getParent(id), true);
+    }))
+
+    handleTaskDragRef && gantt.detachEvent(handleTaskDragRef)
+    sethandleTaskDragRef(gantt.attachEvent("onTaskDrag", function (id) {
+      if (props.AutoCalculateProgress) {
+        console.log('onTaskDrag', props.AutoCalculateProgress);
+        refreshSummaryProgress(gantt.getParent(id), false);
+      }
+    }))
+
+    handleAfterTaskAddRef && gantt.detachEvent(handleAfterTaskAddRef)
+    sethandleAfterTaskAddRef(gantt.attachEvent("onAfterTaskAdd", function (id) {
+      console.log('onAfterTaskAdd', props.AutoCalculateProgress);
+      props.AutoCalculateProgress && refreshSummaryProgress(gantt.getParent(id), true);
+    }))
+
+    handleBeforeTaskDeleteRef && gantt.detachEvent(handleBeforeTaskDeleteRef)
+    sethandleBeforeTaskDeleteRef(gantt.attachEvent("onBeforeTaskDelete", function (id) {
+      console.log('onBeforeTaskDelete', props.AutoCalculateProgress);
+      idParentBeforeDeleteTask = gantt.getParent(id);
+    }))
+
+    handleAfterTaskDeleteRef && gantt.detachEvent(handleAfterTaskDeleteRef)
+    sethandleAfterTaskDeleteRef(gantt.attachEvent("onAfterTaskDelete", function () {
+      console.log('onBeforeTaskDelete', props.AutoCalculateProgress);
+      props.AutoCalculateProgress && refreshSummaryProgress(idParentBeforeDeleteTask, true);
+    }))
+  }
+
+  // 切换主题
   useEffect(() => {
     import(props.skins)
   }, [props.skins])
+  // 设置是否自动计算进度
+  useEffect(() => {
+    setAutoCalculateCallBack()
+    gantt.config.auto_types = props.AutoCalculateProgress;
+  }, [props.AutoCalculateProgress])
   // 初始化
   useEffect(() => {
     gantt.i18n.setLocale("cn");
@@ -295,6 +390,9 @@ let GanttBasicComp = (function () {
           })}
           {children.allowProgressDrag.getView() && children.onProgressDragEvent.propertyView({
             title: trans("gantt.handleProgressDrag"),
+          })}
+          {children.AutoCalculateProgress.propertyView({
+            label: trans("gantt.AutoCalculateProgress"),
           })}
         </Section>
         <Section name={sectionNames.layout}>
