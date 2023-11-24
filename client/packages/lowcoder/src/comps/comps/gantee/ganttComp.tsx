@@ -14,8 +14,7 @@ import { changeEvent, addedLinkEvent, eventHandlerControl, deletedLinkEvent, Pro
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { gantt } from 'dhtmlx-gantt';
-import 'dhtmlx-gantt/codebase/dhtmlxgantt.css';
-import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods } from "./ganttConstant";
+import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, skinsOptions } from "./ganttConstant";
 import { StringOrNumberControl, manualOptionsControl, valueComp } from "@lowcoder-ee/index.sdk";
 import _ from "lodash"
 
@@ -56,6 +55,7 @@ const childrenMap = {
   onEvent: eventHandlerControl(EventOptions),
   currentObject: valueComp({}),
   openAllBranchInit: BoolControl,
+  skins: dropdownControl(skinsOptions, './skins/dhtmlxgantt.css'),
 };
 
 const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
@@ -67,6 +67,10 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   const [handleDBClickLinkRef, sethandleDBClickLinkRef] = useState('')
   const [markId, setMarkId] = useState('')
   const [initFlag, setInitFlag] = useState(false)
+  useEffect(() => {
+    import(props.skins)
+  }, [props.skins])
+  // 初始化
   useEffect(() => {
     gantt.i18n.setLocale("cn");
     gantt.plugins({
@@ -305,7 +309,12 @@ let GanttBasicComp = (function () {
           )}
           {hiddenPropertyView(children)}
         </Section>
-        {/* <Section name={sectionNames.style}>{children.style.getPropertyView()}</Section> */}
+        <Section name={sectionNames.style}>
+          {children.skins.propertyView({
+            label: trans('gantt.skins')
+          })}
+          {/* {children.style.getPropertyView()} */}
+        </Section>
       </>
     ))
     .setExposeMethodConfigs(ganttMethods() as any)

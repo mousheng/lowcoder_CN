@@ -3073,6 +3073,7 @@ export const en = {
     taskID: "Task ID",
     taskIDDesc: "Supports arrays of IDs or single ID",
     add: "Add",
+    skins: "skins",
   },
   transfer: {
     sourceTitle: 'Source Data',

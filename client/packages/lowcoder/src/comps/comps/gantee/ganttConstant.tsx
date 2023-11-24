@@ -69,6 +69,16 @@ export const cloumnsTypeOptions = [
     { label: trans('gantt.add'), value: "add" },
 ] as const;
 
+export const skinsOptions = [
+    { label: 'default', value: "./skins/dhtmlxgantt.css" },
+    { label: 'skyblue', value: "./skins/dhtmlxgantt_skyblue.css" },
+    { label: 'terrace', value: "./skins/dhtmlxgantt_terrace.css" },
+    { label: 'broadway', value: "./skins/dhtmlxgantt_broadway.css" },
+    { label: 'contrast_white', value: "./skins/dhtmlxgantt_contrast_white.css" },
+    { label: 'material', value: "./skins/dhtmlxgantt_material.css" },
+    { label: 'meadow', value: "./skins/dhtmlxgantt_meadow.css" },
+] as const;
+
 export const viewModeOptions = [
     { label: trans("gantt.hour"), value: 'hour' },
     { label: trans("gantt.day"), value: 'day' },
