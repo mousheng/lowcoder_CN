@@ -2942,6 +2942,9 @@ export const zh = {
         AutoCalculateProgress: "自动计算进度",
         allowProjectDrag: "允许拖动项目",
         showColumns: "显示列",
+        exportToPNG: "导出为PNG",
+        exportToPDF: "导出为PDF",
+        exportToExcel: "导出为Excel",
     },
     transfer: {
         sourceTitle: '源数据',

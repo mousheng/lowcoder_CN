@@ -3088,6 +3088,9 @@ export const en = {
     AutoCalculateProgress: "Auto Calculation Progress",
     allowProjectDrag: "Allow Project Drag",
     showColumns: "Show Columns",
+    exportToPNG: "Export to PNG",
+    exportToPDF: "Export to PDF",
+    exportToExcel: "Export to Excel",
   },
   transfer: {
     sourceTitle: 'Source Data',

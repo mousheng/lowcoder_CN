@@ -186,6 +186,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     gantt.plugins({
       marker: true,
       drag_timeline: true,
+      export_api: true,
     });
     // 取消原组件弹出框
     gantt.attachEvent(
