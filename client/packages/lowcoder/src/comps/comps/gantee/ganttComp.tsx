@@ -77,6 +77,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   var idParentBeforeDeleteTask: taskType = 0;
 
   type taskType = number | string
+  // 计算总进度
   function calculateSummaryProgress(task: any) {
     if (task.type != gantt.config.types.project)
       return task.progress;
@@ -91,7 +92,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     if (!totalToDo) return 0;
     else return totalDone / totalToDo;
   }
-
+  // 刷新总进度
   function refreshSummaryProgress(id: taskType, submit: any) {
     if (!gantt.isTaskExists(id))
       return;
@@ -113,45 +114,45 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       refreshSummaryProgress(gantt.getParent(id), submit);
     }
   }
-
+  // 添加、删除回调事件
   function setAutoCalculateCallBack() {
     handleParseRef && gantt.detachEvent(handleParseRef)
     sethandleParseRef(gantt.attachEvent("onParse", function () {
       gantt.eachTask(function (task) {
-        console.log('onParse', props.AutoCalculateProgress);
+        // console.log('onParse', props.AutoCalculateProgress);
         props.AutoCalculateProgress && (task.progress = calculateSummaryProgress(task))
       });
     }))
 
     handleAfterTaskUpdateRef && gantt.detachEvent(handleAfterTaskUpdateRef)
     sethandleAfterTaskUpdateRef(gantt.attachEvent("onAfterTaskUpdate", function (id) {
-      console.log('onAfterTaskUpdate', props.AutoCalculateProgress);
+      // console.log('onAfterTaskUpdate', props.AutoCalculateProgress);
       props.AutoCalculateProgress && refreshSummaryProgress(gantt.getParent(id), true);
     }))
 
     handleTaskDragRef && gantt.detachEvent(handleTaskDragRef)
     sethandleTaskDragRef(gantt.attachEvent("onTaskDrag", function (id) {
       if (props.AutoCalculateProgress) {
-        console.log('onTaskDrag', props.AutoCalculateProgress);
+        // console.log('onTaskDrag', props.AutoCalculateProgress);
         refreshSummaryProgress(gantt.getParent(id), false);
       }
     }))
 
     handleAfterTaskAddRef && gantt.detachEvent(handleAfterTaskAddRef)
     sethandleAfterTaskAddRef(gantt.attachEvent("onAfterTaskAdd", function (id) {
-      console.log('onAfterTaskAdd', props.AutoCalculateProgress);
+      // console.log('onAfterTaskAdd', props.AutoCalculateProgress);
       props.AutoCalculateProgress && refreshSummaryProgress(gantt.getParent(id), true);
     }))
 
     handleBeforeTaskDeleteRef && gantt.detachEvent(handleBeforeTaskDeleteRef)
     sethandleBeforeTaskDeleteRef(gantt.attachEvent("onBeforeTaskDelete", function (id) {
-      console.log('onBeforeTaskDelete', props.AutoCalculateProgress);
+      // console.log('onBeforeTaskDelete', props.AutoCalculateProgress);
       idParentBeforeDeleteTask = gantt.getParent(id);
     }))
 
     handleAfterTaskDeleteRef && gantt.detachEvent(handleAfterTaskDeleteRef)
     sethandleAfterTaskDeleteRef(gantt.attachEvent("onAfterTaskDelete", function () {
-      console.log('onBeforeTaskDelete', props.AutoCalculateProgress);
+      // console.log('onBeforeTaskDelete', props.AutoCalculateProgress);
       props.AutoCalculateProgress && refreshSummaryProgress(idParentBeforeDeleteTask, true);
     }))
   }
