@@ -10,7 +10,7 @@ import { Section, sectionNames } from "lowcoder-design";
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
 import ReactResizeDetector from "react-resize-detector";
-import { changeEvent, addedLinkEvent, eventHandlerControl, deletedLinkEvent, ProgressDragEvent, selectedChangeEvent, addTaskEvent } from "../../controls/eventHandlerControl";
+import { changeEvent, addedLinkEvent, eventHandlerControl, deletedLinkEvent, ProgressDragEvent, selectedChangeEvent, addTaskEvent, TaskChangeEvent } from "../../controls/eventHandlerControl";
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { gantt } from 'dhtmlx-gantt';
@@ -51,6 +51,8 @@ const childrenMap = {
   onAddedLinkEvent: eventHandlerControl([addedLinkEvent]),
   allowProgressDrag: BoolControl,
   onProgressDragEvent: eventHandlerControl([ProgressDragEvent]),
+  allowTaskChange: BoolControl,
+  onTaskChangeEvent: eventHandlerControl([TaskChangeEvent]),
   showToday: BoolControl.DEFAULT_TRUE,
   style: styleControl(GanttStyle),
   currentId: StringOrNumberControl,
@@ -68,6 +70,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
   const [handleDBClickLinkRef, sethandleDBClickLinkRef] = useState('')
+  const [handleDBClickTaskRef, sethandleDBClickTaskRef] = useState('')
   const [handleParseRef, sethandleParseRef] = useState('')
   const [handleAfterTaskUpdateRef, sethandleAfterTaskUpdateRef] = useState('')
   const [handleTaskDragRef, sethandleTaskDragRef] = useState('')
@@ -267,6 +270,17 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     }))
   }, [props.allowLinkDelete])
 
+  // 设置是否允许修改任务
+  useEffect(() => {
+    handleDBClickTaskRef && gantt.detachEvent(handleDBClickTaskRef)
+    sethandleDBClickTaskRef(
+      gantt.attachEvent("onTaskDblClick", function (id, e) {
+        props.allowTaskChange && props.onTaskChangeEvent('TaskChange')
+        return true;
+      })
+    )
+  }, [props.allowTaskChange])
+
   // 设置允许添加链接
   useEffect(() => {
     gantt.config.drag_links = props.allowAddLink;
@@ -382,6 +396,12 @@ let GanttBasicComp = (function () {
           })}
         </Section>
         <Section name={sectionNames.interaction}>
+          {children.allowTaskChange.propertyView({
+            label: trans("gantt.allowChangeTask"),
+          })}
+          {children.allowTaskChange.getView() && children.onTaskChangeEvent.propertyView({
+            title: trans("gantt.handleTaskChange"),
+          })}
           {children.allowTaskDrag.propertyView({
             label: trans("gantt.allowTaskDrag"),
           })}

@@ -403,6 +403,11 @@ export const ProgressDragEvent: EventConfigType = {
   value: "progressDrag",
   description: trans("event.progressDragDesc"),
 };
+export const TaskChangeEvent: EventConfigType = {
+  label: trans("event.TaskChange"),
+  value: "TaskChange",
+  description: trans("event.TaskChangeDesc"),
+};
 export const delteMarkerEvent: EventConfigType = {
   label: trans("event.delteMarker"),
   value: "delteMarker",
