@@ -236,7 +236,6 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       }));
     }
   }
-  props.dispatch(changeChildAction("ganttRef", gantt, false));
   return (
     <ReactResizeDetector onResize={onResize}>
       <Container
