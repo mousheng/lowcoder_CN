@@ -3045,6 +3045,8 @@ export const en = {
     weekScalesFormat2: "%j %D",
     monthScalesFormat1: '%F, %Y',
     monthScalesFormat2: 'Week #%W',
+    quarterScalesFormat: '{y} Q{i}',
+    yearScalesFormat: '%Y',
     tree: "tree",
     ColumnsData: 'Columns Data',
     allowChangeTask: 'DbClick Task',
@@ -3105,6 +3107,7 @@ export const en = {
     link_s2s: "Link S2S",
     link_f2f: "Link F2F",
     link_s2f: "Link S2F",
+    weekScale: "#{i}, ",
   },
   transfer: {
     sourceTitle: 'Source Data',

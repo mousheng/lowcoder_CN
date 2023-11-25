@@ -262,21 +262,34 @@ export const links = [
     },
 ]
 
+function getQuarterFromDate(date: Date) {
+    const month = date.getMonth();
+    if (month >= 0 && month < 3) {
+        return 1;
+    } else if (month >= 3 && month < 6) {
+        return 2;
+    } else if (month >= 6 && month < 9) {
+        return 3;
+    } else {
+        return 4;
+    }
+}
+
 export const zoomConfig = {
     levels: [
         {
             name: "hour",
             scale_height: 50,
-            min_column_width: 80,
+            min_column_width: 20,
             scales: [
                 { unit: "day", format: trans('gantt.hourScalesFormat') },
-                { unit: "hour", step: 1, format: "%H:%i" }
+                { unit: "hour", step: 1, format: "%G" }
             ]
         },
         {
             name: "day",
             scale_height: 27,
-            min_column_width: 80,
+            min_column_width: 40,
             scales: [
                 { unit: "day", step: 1, format: trans('gantt.dayScalesFormat') }
             ]
@@ -289,9 +302,9 @@ export const zoomConfig = {
                 {
                     unit: "week", step: 1, format: function (date: Date) {
                         var dateToStr = gantt.date.date_to_str(trans('gantt.weekScalesFormat1'));
-                        var endDate = gantt.date.add(date, -6, "day");
+                        var endDate = gantt.date.add(date, 6, "day");
                         var weekNum = gantt.date.date_to_str("%W")(date);
-                        return "#" + weekNum + ", " + dateToStr(date).replace('月', '') + " - " + dateToStr(endDate).replace('月', '');
+                        return trans('gantt.weekScale', { i: weekNum }) + dateToStr(date).replace('月', '') + " - " + dateToStr(endDate).replace('月', '');
                     }
                 },
                 { unit: "day", step: 1, format: trans('gantt.weekScalesFormat2') }
@@ -314,9 +327,9 @@ export const zoomConfig = {
                 { unit: "month", step: 1, format: "%M" },
                 {
                     unit: "quarter", step: 1, format: function (date: Date) {
-                        var dateToStr = gantt.date.date_to_str("%M");
-                        var endDate = gantt.date.add(gantt.date.add(date, 3, "month"), -1, "day");
-                        return dateToStr(date) + " - " + dateToStr(endDate);
+                        var year = gantt.date.date_to_str("%Y");
+                        var quarter = getQuarterFromDate(date);
+                        return trans('gantt.quarterScalesFormat', { y: year(date), i: quarter, });
                     }
                 }
             ]
@@ -326,7 +339,7 @@ export const zoomConfig = {
             scale_height: 50,
             min_column_width: 30,
             scales: [
-                { unit: "year", step: 1, format: "%Y" }
+                { unit: "year", step: 1, format: trans('gantt.yearScalesFormat') }
             ]
         }
     ]

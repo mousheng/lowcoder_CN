@@ -274,6 +274,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   }, [props.AutoCalculateProgress])
   // 初始化
   useEffect(() => {
+    gantt.ext.zoom.init(zoomConfig);
     gantt.clearAll()
     gantt.i18n.setLocale("cn");
     gantt.plugins({
@@ -395,11 +396,8 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
 
   // 设置缩放等级
   useEffect(() => {
-    gantt.ext.zoom.init(zoomConfig);
-    setTimeout(() => {
-      gantt.ext.zoom.setLevel(props.level);
-      gantt.render()
-    }, 100);
+    gantt.ext.zoom.setLevel(props.level);
+    gantt.render()
   }, [props.level])
 
   // 设置左侧列表
