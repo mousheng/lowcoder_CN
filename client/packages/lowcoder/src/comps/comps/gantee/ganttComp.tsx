@@ -15,13 +15,39 @@ import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { gantt } from 'dhtmlx-gantt';
 import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, skinsOptions } from "./ganttConstant";
-import { StringOrNumberControl, manualOptionsControl, valueComp } from "@lowcoder-ee/index.sdk";
+import { NumberControl, StringOrNumberControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
 import _ from "lodash"
-
 
 const Container = styled.div<{ $style: GanttStyleType | undefined }>`
   height: 100%;
   width: 100%;
+  .gantt_task_line.low_task {
+    background-color: ${props => props.$style?.progressLowBg};
+    border: 1px solid ${props => props.$style?.progressLowColor};
+    .gantt_task_progress {
+      background: ${props => props.$style?.progressLowColor};
+    }
+  }
+  .Medium_task {
+    background-color: ${props => props.$style?.progressMediumBg};
+    border: 1px solid ${props => props.$style?.progressMediumColor};
+    .gantt_task_progress {
+      background: ${props => props.$style?.progressMediumColor};
+    }
+  }
+  .High_task {
+    background-color: ${props => props.$style?.progressHighBg};
+    border: 1px solid ${props => props.$style?.progressHighColor};
+    .gantt_task_progress {
+      background: ${props => props.$style?.progressHighColor};
+    }
+  }
+  .completed_task {
+    border: 1px solid ${props => props.$style?.progresscompletedColor};
+    .gantt_task_progress {
+      background: ${props => props.$style?.progresscompletedColor};
+    }
+  }
 `;
 
 const EventOptions = [selectedChangeEvent, addTaskEvent] as const;
@@ -61,6 +87,9 @@ const childrenMap = {
   openAllBranchInit: BoolControl,
   skins: dropdownControl(skinsOptions, './skins/dhtmlxgantt.css'),
   AutoCalculateProgress: BoolControl,
+  SegmentedColor: BoolControl,
+  lowLine: withDefault(NumberControl, 0.2),
+  mediumLine: withDefault(NumberControl, 0.5),
 };
 
 const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
@@ -119,6 +148,18 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       refreshSummaryProgress(gantt.getParent(id), submit);
     }
   }
+  useEffect(() => {
+    // 设置 任务的 class 类名
+    gantt.templates.task_class = (start, end, task) => {
+      if (!props.SegmentedColor) return ""
+      if (task.progress && task.progress <= Math.min(props.lowLine, props.mediumLine)) return "low_task";
+      if (task.progress && task.progress <= Math.max(props.lowLine, props.mediumLine)) return "Medium_task";
+      if (task.progress && task.progress < 1) return "High_task";
+      if (task.progress === 1) return "completed_task";
+      return "";
+    }
+    gantt.render();
+  }, [props.lowLine, props.mediumLine, props.SegmentedColor])
   // 添加、删除回调事件
   function setAutoCalculateCallBack() {
     handleParseRef && gantt.detachEvent(handleParseRef)
@@ -436,20 +477,27 @@ let GanttBasicComp = (function () {
         </Section>
         <Section name={sectionNames.layout}>
           {children.openAllBranchInit.propertyView({
-            label: trans("gantt.openAllBranchInit"),
-          }
-          )}
+            label: trans("gantt.openAllBranchInit")
+          })}
           {children.onEvent.propertyView({
             title: trans("gantt.otherEvents"),
-          }
-          )}
+          })}
           {hiddenPropertyView(children)}
         </Section>
         <Section name={sectionNames.style}>
           {children.skins.propertyView({
             label: trans('gantt.skins')
           })}
-          {/* {children.style.getPropertyView()} */}
+          {children.SegmentedColor.propertyView({
+            label: trans('gantt.SegmentedColor')
+          })}
+          {children.SegmentedColor.getView() && children.lowLine.propertyView({
+            label: trans('gantt.lowProgressLine')
+          })}
+          {children.SegmentedColor.getView() && children.mediumLine.propertyView({
+            label: trans('gantt.mediumProgressLine')
+          })}
+          {children.style.getPropertyView()}
         </Section>
       </>
     ))

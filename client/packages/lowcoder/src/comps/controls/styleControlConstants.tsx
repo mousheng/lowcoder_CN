@@ -896,6 +896,46 @@ export const QRCodeStyle = [
 ] as const;
 
 export const GanttStyle = [
+  {
+    name: "progressLowColor",
+    label: trans("gantt.progressLowColor"),
+    color: "#d96e6c",
+  },
+  {
+    name: "progressLowBg",
+    label: trans("gantt.progressLowBg"),
+    color: "#3db9d3",
+  },
+  {
+    name: "progressMediumColor",
+    label: trans("gantt.progressMediumColor"),
+    color: "#f57730",
+  },
+  {
+    name: "progressMediumBg",
+    label: trans("gantt.progressMediumBg"),
+    color: "#3db9d3",
+  },
+  {
+    name: "progressHighColor",
+    label: trans("gantt.progressHighColor"),
+    color: "#0c80b4",
+  },
+  {
+    name: "progressHighBg",
+    label: trans("gantt.progressHighBg"),
+    color: "#3db9d3",
+  },
+  {
+    name: "progresscompletedColor",
+    label: trans("gantt.progresscompletedColor"),
+    color: "#accaac",
+  },
+  // {
+  //   name: "progresscompletedBg",
+  //   label: trans("gantt.progresscompletedBg"),
+  //   color: "#accaac",
+  // },
 ] as const;
 
 export const TransferStyle = [
