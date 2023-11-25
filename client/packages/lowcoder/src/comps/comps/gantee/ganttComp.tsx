@@ -48,6 +48,41 @@ const Container = styled.div<{ $style: GanttStyleType | undefined }>`
       background: ${props => props.$style?.progresscompletedColor};
     }
   }
+  .gantt_task_link.start_to_start .gantt_line_wrapper div {
+    background-color: ${props => props.$style?.link_s2s};
+  }
+
+  .gantt_task_link.start_to_start:hover .gantt_line_wrapper div {
+    box-shadow: 0 0 5px 0px ${props => props.$style?.link_s2s};
+  }
+
+  .gantt_task_link.start_to_start .gantt_link_arrow_right {
+    border-left-color: ${props => props.$style?.link_s2s};
+  }
+
+  .gantt_task_link.finish_to_start .gantt_line_wrapper div {
+    background-color: ${props => props.$style?.link_f2s};
+  }
+
+  .gantt_task_link.finish_to_start:hover .gantt_line_wrapper div {
+    box-shadow: 0 0 5px 0px ${props => props.$style?.link_f2s};
+  }
+
+  .gantt_task_link.finish_to_start .gantt_link_arrow_right {
+    border-left-color: ${props => props.$style?.link_f2s};
+  }
+
+  .gantt_task_link.finish_to_finish .gantt_line_wrapper div {
+    background-color: ${props => props.$style?.link_f2f};
+  }
+
+  .gantt_task_link.finish_to_finish:hover .gantt_line_wrapper div {
+    box-shadow: 0 0 5px 0px ${props => props.$style?.link_f2f};
+  }
+
+  .gantt_task_link.finish_to_finish .gantt_link_arrow_left {
+    border-right-color: ${props => props.$style?.link_f2f};
+  }
 `;
 
 const EventOptions = [selectedChangeEvent, addTaskEvent] as const;
@@ -160,6 +195,23 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     }
     gantt.render();
   }, [props.lowLine, props.mediumLine, props.SegmentedColor])
+  // 设置四种连接线的类型
+  useEffect(() => {
+    gantt.templates.link_class = function (link) {
+      var types = gantt.config.links;
+      switch (link.type) {
+        case types.finish_to_start:
+          return "finish_to_start";
+        case types.start_to_start:
+          return "start_to_start";
+        case types.finish_to_finish:
+          return "finish_to_finish";
+        default:
+          return "start_to_finish";
+      }
+    };
+    gantt.render()
+  }, [props.style.link_f2f, props.style.link_f2s, props.style.link_s2f, props.style.link_s2s])
   // 添加、删除回调事件
   function setAutoCalculateCallBack() {
     handleParseRef && gantt.detachEvent(handleParseRef)

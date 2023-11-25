@@ -3101,6 +3101,10 @@ export const en = {
     lowProgressLine: "Low Progress Line",
     mediumProgressLine: "Medium Progress Line",
     SegmentedColor: "Segmented Color",
+    link_f2s: "Link F2S",
+    link_s2s: "Link S2S",
+    link_f2f: "Link F2F",
+    link_s2f: "Link S2F",
   },
   transfer: {
     sourceTitle: 'Source Data',

@@ -931,11 +931,26 @@ export const GanttStyle = [
     label: trans("gantt.progresscompletedColor"),
     color: "#accaac",
   },
-  // {
-  //   name: "progresscompletedBg",
-  //   label: trans("gantt.progresscompletedBg"),
-  //   color: "#accaac",
-  // },
+  {
+    name: "link_f2s",
+    label: trans("gantt.link_f2s"),
+    color: "#ffac2f",
+  },
+  {
+    name: "link_s2s",
+    label: trans("gantt.link_s2s"),
+    color: "#ffac2f",
+  },
+  {
+    name: "link_f2f",
+    label: trans("gantt.link_f2f"),
+    color: "#ffac2f",
+  },
+  {
+    name: "link_s2f",
+    label: trans("gantt.link_s2f"),
+    color: "#ffac2f",
+  },
 ] as const;
 
 export const TransferStyle = [
