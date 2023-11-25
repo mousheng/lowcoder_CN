@@ -9,7 +9,6 @@ import { NameConfig, NameConfigHidden, withExposingConfigs } from "comps/generat
 import { Section, sectionNames } from "lowcoder-design";
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
-import ReactResizeDetector from "react-resize-detector";
 import { changeEvent, addedLinkEvent, eventHandlerControl, deletedLinkEvent, ProgressDragEvent, selectedChangeEvent, addTaskEvent, TaskChangeEvent } from "../../controls/eventHandlerControl";
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
@@ -421,18 +420,6 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     gantt.render();
   }, [JSON.stringify(props.Columns)])
 
-  useEffect(() => {
-    if (height && width) {
-      onResize();
-    }
-  }, [height, width]);
-
-  const onResize = () => {
-    const container = conRef.current;
-    setWidth(container?.clientWidth ?? 0);
-    setHeight(container?.clientHeight ?? 0);
-  };
-
   const initGantt = () => {
     gantt.templates.parse_date = function (date) {
       return new Date(date);
@@ -450,7 +437,6 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     }
   }
   return (
-    <ReactResizeDetector onResize={onResize}>
       <Container
         ref={conRef}
         $style={props.style}
@@ -459,7 +445,6 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
         }}
       >
       </Container>
-    </ReactResizeDetector>
   );
 };
 
