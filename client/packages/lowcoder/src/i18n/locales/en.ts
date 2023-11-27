@@ -3108,6 +3108,9 @@ export const en = {
     link_f2f: "Link F2F",
     link_s2f: "Link S2F",
     weekScale: "#{i}, ",
+    showHolidays: "Show Holidays",
+    StatutoryHolidays: "Statutory Holidays Data",
+    skipOffTime: "Hides Non-Working Time",
   },
   transfer: {
     sourceTitle: 'Source Data',

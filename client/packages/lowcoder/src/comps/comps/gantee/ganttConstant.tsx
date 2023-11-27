@@ -344,3 +344,44 @@ export const zoomConfig = {
         }
     ]
 };
+
+export type StatutoryHolidaysDataType = typeof StatutoryHolidaysData
+
+export const StatutoryHolidaysData = [
+    { "date": "2024-01-01", "holiday": true },   // 元旦
+    { "date": "2024-02-04", "holiday": false },  // 上班
+    { "date": "2024-02-10", "holiday": true },   // 春节
+    { "date": "2024-02-11", "holiday": true },
+    { "date": "2024-02-12", "holiday": true },
+    { "date": "2024-02-13", "holiday": true },
+    { "date": "2024-02-14", "holiday": true },
+    { "date": "2024-02-15", "holiday": true },
+    { "date": "2024-02-16", "holiday": true },
+    { "date": "2024-02-17", "holiday": true },
+    { "date": "2024-02-18", "holiday": false },  // 春节调休上班
+    { "date": "2024-04-04", "holiday": true },   // 清明节
+    { "date": "2024-04-05", "holiday": true },
+    { "date": "2024-04-06", "holiday": true },
+    { "date": "2024-04-07", "holiday": false },  // 清明节调休上班
+    { "date": "2024-04-28", "holiday": false },  // 劳动节调休上班
+    { "date": "2024-05-01", "holiday": true },   // 劳动节
+    { "date": "2024-05-02", "holiday": true },
+    { "date": "2024-05-03", "holiday": true },
+    { "date": "2024-05-04", "holiday": true },
+    { "date": "2024-05-05", "holiday": true },
+    { "date": "2024-05-11", "holiday": false },
+    { "date": "2024-06-10", "holiday": true },   // 端午节
+    { "date": "2024-09-15", "holiday": true },   // 中秋节
+    { "date": "2024-09-16", "holiday": true },
+    { "date": "2024-09-17", "holiday": true },
+    { "date": "2024-09-14", "holiday": false },  // 中秋节调休上班
+    { "date": "2024-09-29", "holiday": false },  // 国庆节调休上班
+    { "date": "2024-10-01", "holiday": true },   // 国庆节
+    { "date": "2024-10-02", "holiday": true },
+    { "date": "2024-10-03", "holiday": true },
+    { "date": "2024-10-04", "holiday": true },
+    { "date": "2024-10-05", "holiday": true },
+    { "date": "2024-10-06", "holiday": true },
+    { "date": "2024-10-07", "holiday": true },
+    { "date": "2024-10-12", "holiday": false }
+]

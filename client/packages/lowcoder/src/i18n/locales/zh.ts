@@ -2962,6 +2962,9 @@ export const zh = {
         link_f2f: "终-终连线",
         link_s2f: "起-始连线",
         weekScale: "{i}周, ",
+        showHolidays: "显示节假日",
+        StatutoryHolidays: "法定节日数据",
+        skipOffTime: "隐藏非工作时间",
     },
     transfer: {
         sourceTitle: '源数据',

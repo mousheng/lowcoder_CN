@@ -13,7 +13,7 @@ import { changeEvent, addedLinkEvent, eventHandlerControl, deletedLinkEvent, Pro
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { gantt } from 'dhtmlx-gantt';
-import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, skinsOptions } from "./ganttConstant";
+import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, skinsOptions, StatutoryHolidaysData, StatutoryHolidaysDataType } from "./ganttConstant";
 import { NumberControl, StringOrNumberControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
 import _ from "lodash"
 
@@ -82,6 +82,13 @@ const Container = styled.div<{ $style: GanttStyleType | undefined }>`
   .gantt_task_link.finish_to_finish .gantt_link_arrow_left {
     border-right-color: ${props => props.$style?.link_f2f};
   }
+  .gantt_task_cell.week_end {
+    background-color: #EFF5FD;
+  }
+
+  .gantt_task_row.gantt_selected .gantt_task_cell.week_end {
+    background-color: #F8EC9C;
+  }
 `;
 
 const EventOptions = [selectedChangeEvent, addTaskEvent] as const;
@@ -124,6 +131,9 @@ const childrenMap = {
   SegmentedColor: BoolControl,
   lowLine: withDefault(NumberControl, 0.2),
   mediumLine: withDefault(NumberControl, 0.5),
+  showHolidays: BoolControl,
+  StatutoryHolidays: arrayObjectExposingStateControl('StatutoryHolidays', StatutoryHolidaysData),
+  // skipOffTime: BoolControl.DEFAULT_TRUE,
 };
 
 const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
@@ -253,6 +263,30 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       props.AutoCalculateProgress && refreshSummaryProgress(idParentBeforeDeleteTask, true);
     }))
   }
+
+  function setStatutoryHolidays() {
+    Array.isArray(props.StatutoryHolidays.value) && (props.StatutoryHolidays.value as StatutoryHolidaysDataType).map((d) => {
+      gantt.setWorkTime({ date: new Date(d.date), hours: !d.holiday })
+    })
+  }
+
+  useEffect(() => {
+    gantt.config.work_time = props.showHolidays;
+    gantt.templates.timeline_cell_class = function (task, date) {
+      if (!gantt.isWorkTime(date))
+        return "week_end";
+      return "";
+    };
+    if (props.showHolidays) {
+      setStatutoryHolidays()
+    }
+    gantt.render();
+  }, [props.showHolidays, props.StatutoryHolidays.value])
+
+  // useEffect(() => {
+  //   gantt.config.skip_off_time = props.skipOffTime;
+  //   gantt.render();
+  // }, [props.skipOffTime])
 
   // 切换主题
   useEffect(() => {
@@ -437,14 +471,14 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     }
   }
   return (
-      <Container
-        ref={conRef}
-        $style={props.style}
-        onMouseDown={(e) => {
-          e.preventDefault();
-        }}
-      >
-      </Container>
+    <Container
+      ref={conRef}
+      $style={props.style}
+      onMouseDown={(e) => {
+        e.preventDefault();
+      }}
+    >
+    </Container>
   );
 };
 
@@ -470,6 +504,17 @@ let GanttBasicComp = (function () {
           })}
           {children.showToday.propertyView({
             label: trans("gantt.showTodayMark"),
+          })}
+        </Section>
+        <Section name={sectionNames.advanced}>
+          {children.showHolidays.propertyView({
+            label: trans("gantt.showHolidays")
+          })}
+          {/* {children.skipOffTime.propertyView({
+            label: trans("gantt.skipOffTime")
+          })} */}
+          {children.showHolidays.getView() && children.StatutoryHolidays.propertyView({
+            label: trans("gantt.StatutoryHolidays")
           })}
         </Section>
         <Section name={sectionNames.interaction}>
