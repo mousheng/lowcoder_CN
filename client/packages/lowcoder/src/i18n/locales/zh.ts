@@ -2956,7 +2956,7 @@ export const zh = {
         progresscompletedColor: "进度完成颜色",
         lowProgressLine: "低进度线",
         mediumProgressLine: "中进度线",
-        SegmentedColor: "分段颜色",
+        SegmentedColor: "进度分段颜色",
         link_f2s: "终-起连线",
         link_s2s: "起-起连线",
         link_f2f: "终-终连线",

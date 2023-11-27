@@ -3102,7 +3102,7 @@ export const en = {
     progresscompletedColor: "Completed Progress Color",
     lowProgressLine: "Low Progress Line",
     mediumProgressLine: "Medium Progress Line",
-    SegmentedColor: "Segmented Color",
+    SegmentedColor: "Progress Segmented Color",
     link_f2s: "Link F2S",
     link_s2s: "Link S2S",
     link_f2f: "Link F2F",
