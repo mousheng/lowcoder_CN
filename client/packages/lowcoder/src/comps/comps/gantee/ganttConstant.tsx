@@ -145,6 +145,11 @@ export const viewModeOptions = [
     { label: trans("gantt.year"), value: 'year' },
 ] as const;
 
+export const scaleMode = [
+    { label: trans("gantt.fit"), value: 'fit' },
+    { label: trans("gantt.manual"), value: 'manual' },
+]as const;
+
 export const ColumnsOption = new MultiCompBuilder(
     {
         align: alignControl(),

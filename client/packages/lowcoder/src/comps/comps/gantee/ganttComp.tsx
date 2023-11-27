@@ -13,9 +13,10 @@ import { changeEvent, addedLinkEvent, eventHandlerControl, deletedLinkEvent, Pro
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { gantt } from 'dhtmlx-gantt';
-import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, skinsOptions, StatutoryHolidaysData, StatutoryHolidaysDataType } from "./ganttConstant";
-import { NumberControl, StringOrNumberControl, jsonObjectControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
+import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, skinsOptions, StatutoryHolidaysData, StatutoryHolidaysDataType, scaleMode } from "./ganttConstant";
+import { NumberControl, StringControl, StringOrNumberControl, jsonObjectControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
 import _ from "lodash"
+import dayjs from "dayjs"
 
 const Container = styled.div<{ $style: GanttStyleType | undefined }>`
   height: 100%;
@@ -145,6 +146,9 @@ const childrenMap = {
   StatutoryHolidays: arrayObjectExposingStateControl('StatutoryHolidays', StatutoryHolidaysData),
   showWorkTimes: BoolControl,
   workTimeData: jsonObjectControl({ hours: ['8:00-12:00', '14:00-17:00'] }),
+  scaleMode: dropdownControl(scaleMode, 'fit'),
+  startDate: withDefault(StringControl, dayjs().add(-5, 'd').format('YYYY-MM-DD')),
+  endDate: withDefault(StringControl, dayjs().add(7, 'd').format('YYYY-MM-DD')),
 };
 
 const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
@@ -389,7 +393,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
 
   useEffect(() => {
     initGantt()
-  }, [JSON.stringify(props.tasks.value), JSON.stringify(props.links.value)])
+  }, [JSON.stringify(props.tasks.value), JSON.stringify(props.links.value), props.scaleMode, props.startDate, props.endDate])
 
   // 是否显示今日标签
   useEffect(() => {
@@ -474,6 +478,15 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   }, [JSON.stringify(props.Columns)])
 
   const initGantt = () => {
+    if (props.scaleMode === 'fit') {
+      gantt.config.start_date = undefined;
+      gantt.config.end_date = undefined;
+      gantt.config.fit_tasks = true;
+    }
+    else {
+      gantt.config.start_date = dayjs(props.startDate).toDate();
+      gantt.config.end_date = dayjs(props.endDate).toDate();
+    }
     gantt.templates.parse_date = function (date) {
       return new Date(date);
     };
@@ -506,6 +519,16 @@ let GanttBasicComp = (function () {
     .setPropertyViewFn((children) => (
       <>
         <Section name={sectionNames.basic}>
+          {children.scaleMode.propertyView({
+            label: trans("gantt.scaleMode"),
+            radioButton: true,
+          })}
+          {children.scaleMode.getView() === 'manual' && children.startDate.propertyView({
+            label: trans("gantt.startDate"),
+          })}
+          {children.scaleMode.getView() === 'manual' && children.endDate.propertyView({
+            label: trans("gantt.endDate"),
+          })}
           {children.tasks.propertyView({
             label: trans("gantt.tasks"),
           })}

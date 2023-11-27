@@ -2974,6 +2974,11 @@ export const zh = {
         noWorkHourSelected: "非工作时间选中时",
         showWorkTimes: "显示工作时间",
         workTimeData: "工作时间数据",
+        fit: "自动",
+        manual: "手动",
+        scaleMode: "时间轴模式",
+        startDate: "开始日期",
+        endDate: "结束日期",
     },
     transfer: {
         sourceTitle: '源数据',

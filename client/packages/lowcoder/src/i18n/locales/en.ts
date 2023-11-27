@@ -3120,6 +3120,11 @@ export const en = {
     noWorkHourSelected: "no Work Hour Selected",
     showWorkTimes: "Show Work Times",
     workTimeData: "Work Time Data",
+    fit: "fit",
+    manual: "manual",
+    scaleMode: "Scale Mode",
+    startDate: "Start Date",
+    endDate: "End Date",
   },
   transfer: {
     sourceTitle: 'Source Data',
