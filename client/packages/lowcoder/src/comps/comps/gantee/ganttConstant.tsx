@@ -148,7 +148,7 @@ export const viewModeOptions = [
 export const scaleMode = [
     { label: trans("gantt.fit"), value: 'fit' },
     { label: trans("gantt.manual"), value: 'manual' },
-]as const;
+] as const;
 
 export const ColumnsOption = new MultiCompBuilder(
     {
@@ -177,7 +177,7 @@ export const ColumnsOption = new MultiCompBuilder(
 ))
     .build();
 
-const exampleDate = dayjs()
+const exampleDate = dayjs().startOf('day');
 export const tasks =
     [
         {
@@ -194,7 +194,7 @@ export const tasks =
         {
             id: "A2",
             text: trans("gantt.taskText", { i: 1 }),
-            start_date: exampleDate.add(-5, 'd').format('YYYY-MM-DD'),
+            start_date: exampleDate.add(-5, 'd').format('YYYY-MM-DDTHH:mm:ss'),
             duration: 4,
             progress: 1,
             parent: "A1",
@@ -206,7 +206,7 @@ export const tasks =
         {
             id: "A3",
             text: trans("gantt.taskText", { i: 2 }),
-            start_date: exampleDate.add(3, 'd').format('YYYY-MM-DD'),
+            start_date: exampleDate.add(3, 'd').format('YYYY-MM-DDTHH:mm:ss'),
             progress: 0,
             parent: "A1",
             pre_task: "A2",
@@ -229,7 +229,7 @@ export const tasks =
         {
             id: "A5",
             text: trans("gantt.taskText", { i: 1 }),
-            start_date: exampleDate.add(-3, 'd').format('YYYY-MM-DD'),
+            start_date: exampleDate.add(-3, 'd').format('YYYY-MM-DDTHH:mm:ss'),
             duration: 5,
             progress: 0.7,
             showCode: 2,
@@ -241,7 +241,7 @@ export const tasks =
         {
             id: "A6",
             text: trans("gantt.taskText", { i: 2 }),
-            start_date: exampleDate.format('YYYY-MM-DD'),
+            start_date: exampleDate.format('YYYY-MM-DDTHH:mm:ss'),
             duration: 6,
             progress: 0.1,
             showCode: 2,
