@@ -2965,6 +2965,12 @@ export const zh = {
         showHolidays: "显示节假日",
         StatutoryHolidays: "法定节日数据",
         skipOffTime: "隐藏非工作时间",
+        weekend: "节假日",
+        weekendSelected: "节假日选中时",
+        noWorkHour: "非工作时间",
+        noWorkHourSelected: "非工作时间选中时",
+        showWorkTimes: "显示工作时间",
+        workTimeData: "工作时间数据",
     },
     transfer: {
         sourceTitle: '源数据',

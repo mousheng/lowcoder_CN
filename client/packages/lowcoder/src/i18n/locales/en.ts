@@ -3111,6 +3111,12 @@ export const en = {
     showHolidays: "Show Holidays",
     StatutoryHolidays: "Statutory Holidays Data",
     skipOffTime: "Hides Non-Working Time",
+    weekend: "Weekend",
+    weekendSelected: "Weekend Selected",
+    noWorkHour: "No Work Hour",
+    noWorkHourSelected: "no Work Hour Selected",
+    showWorkTimes: "Show Work Times",
+    workTimeData: "Work Time Data",
   },
   transfer: {
     sourceTitle: 'Source Data',

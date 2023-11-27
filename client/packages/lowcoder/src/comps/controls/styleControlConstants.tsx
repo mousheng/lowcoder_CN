@@ -951,6 +951,26 @@ export const GanttStyle = [
     label: trans("gantt.link_s2f"),
     color: "#ffac2f",
   },
+  {
+    name: "weekend",
+    label: trans("gantt.weekend"),
+    color: "#EFF5FD",
+  },
+  {
+    name: "weekendSelected",
+    label: trans("gantt.weekendSelected"),
+    color: "#EAE1A5",
+  },
+  {
+    name: "noWorkHour",
+    label: trans("gantt.noWorkHour"),
+    color: "#EFF5FD",
+  },
+  {
+    name: "noWorkHourSelected",
+    label: trans("gantt.noWorkHourSelected"),
+    color: "#EAE1A5",
+  },
 ] as const;
 
 export const TransferStyle = [

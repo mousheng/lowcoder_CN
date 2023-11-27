@@ -14,7 +14,7 @@ import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { gantt } from 'dhtmlx-gantt';
 import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, skinsOptions, StatutoryHolidaysData, StatutoryHolidaysDataType } from "./ganttConstant";
-import { NumberControl, StringOrNumberControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
+import { NumberControl, StringOrNumberControl, jsonObjectControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
 import _ from "lodash"
 
 const Container = styled.div<{ $style: GanttStyleType | undefined }>`
@@ -83,11 +83,19 @@ const Container = styled.div<{ $style: GanttStyleType | undefined }>`
     border-right-color: ${props => props.$style?.link_f2f};
   }
   .gantt_task_cell.week_end {
-    background-color: #EFF5FD;
+    background-color: ${props => props.$style?.weekend};
   }
 
   .gantt_task_row.gantt_selected .gantt_task_cell.week_end {
-    background-color: #F8EC9C;
+    background-color: ${props => props.$style?.weekendSelected};
+  }
+
+  .gantt_task_cell.no_work_hour {
+    background-color: ${props => props.$style?.noWorkHour};
+  }
+
+  .gantt_task_row.gantt_selected .gantt_task_cell.no_work_hour {
+    background-color: ${props => props.$style?.noWorkHourSelected};
   }
 `;
 
@@ -133,7 +141,8 @@ const childrenMap = {
   mediumLine: withDefault(NumberControl, 0.5),
   showHolidays: BoolControl,
   StatutoryHolidays: arrayObjectExposingStateControl('StatutoryHolidays', StatutoryHolidaysData),
-  // skipOffTime: BoolControl.DEFAULT_TRUE,
+  showWorkTimes: BoolControl,
+  workTimeData: jsonObjectControl({ hours: ['8:00-12:00', '14:00-17:00'] }),
 };
 
 const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
@@ -226,40 +235,34 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     handleParseRef && gantt.detachEvent(handleParseRef)
     sethandleParseRef(gantt.attachEvent("onParse", function () {
       gantt.eachTask(function (task) {
-        // console.log('onParse', props.AutoCalculateProgress);
         props.AutoCalculateProgress && (task.progress = calculateSummaryProgress(task))
       });
     }))
 
     handleAfterTaskUpdateRef && gantt.detachEvent(handleAfterTaskUpdateRef)
     sethandleAfterTaskUpdateRef(gantt.attachEvent("onAfterTaskUpdate", function (id) {
-      // console.log('onAfterTaskUpdate', props.AutoCalculateProgress);
       props.AutoCalculateProgress && refreshSummaryProgress(gantt.getParent(id), true);
     }))
 
     handleTaskDragRef && gantt.detachEvent(handleTaskDragRef)
     sethandleTaskDragRef(gantt.attachEvent("onTaskDrag", function (id) {
       if (props.AutoCalculateProgress) {
-        // console.log('onTaskDrag', props.AutoCalculateProgress);
         refreshSummaryProgress(gantt.getParent(id), false);
       }
     }))
 
     handleAfterTaskAddRef && gantt.detachEvent(handleAfterTaskAddRef)
     sethandleAfterTaskAddRef(gantt.attachEvent("onAfterTaskAdd", function (id) {
-      // console.log('onAfterTaskAdd', props.AutoCalculateProgress);
       props.AutoCalculateProgress && refreshSummaryProgress(gantt.getParent(id), true);
     }))
 
     handleBeforeTaskDeleteRef && gantt.detachEvent(handleBeforeTaskDeleteRef)
     sethandleBeforeTaskDeleteRef(gantt.attachEvent("onBeforeTaskDelete", function (id) {
-      // console.log('onBeforeTaskDelete', props.AutoCalculateProgress);
       idParentBeforeDeleteTask = gantt.getParent(id);
     }))
 
     handleAfterTaskDeleteRef && gantt.detachEvent(handleAfterTaskDeleteRef)
     sethandleAfterTaskDeleteRef(gantt.attachEvent("onAfterTaskDelete", function () {
-      // console.log('onBeforeTaskDelete', props.AutoCalculateProgress);
       props.AutoCalculateProgress && refreshSummaryProgress(idParentBeforeDeleteTask, true);
     }))
   }
@@ -273,20 +276,23 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   useEffect(() => {
     gantt.config.work_time = props.showHolidays;
     gantt.templates.timeline_cell_class = function (task, date) {
-      if (!gantt.isWorkTime(date))
-        return "week_end";
-      return "";
+      var css = [];
+      if (!gantt.isWorkTime(date, 'day') && ['day', 'hour', 'week'].includes(props.level)) {
+        css.push("week_end");
+      } else if (props.showWorkTimes && !gantt.isWorkTime(date, 'hour') && props.level === 'hour') {
+        css.push("no_work_hour");
+      }
+      return css.join(" ");
     };
     if (props.showHolidays) {
       setStatutoryHolidays()
     }
+    if (props.showWorkTimes) {
+      gantt.setWorkTime(props.workTimeData)
+      gantt.config.duration_unit = "hour";
+    }
     gantt.render();
-  }, [props.showHolidays, props.StatutoryHolidays.value])
-
-  // useEffect(() => {
-  //   gantt.config.skip_off_time = props.skipOffTime;
-  //   gantt.render();
-  // }, [props.skipOffTime])
+  }, [props.showHolidays, props.StatutoryHolidays.value, props.level, props.showWorkTimes, props.workTimeData])
 
   // 切换主题
   useEffect(() => {
@@ -499,23 +505,31 @@ let GanttBasicComp = (function () {
           {children.showColumns.getView() && children.Columns.propertyView({
             title: trans("gantt.ColumnsData"),
           })}
-          {children.level.propertyView({
-            label: trans("gantt.level"),
-          })}
+        </Section>
+        <Section name={sectionNames.advanced}>
           {children.showToday.propertyView({
             label: trans("gantt.showTodayMark"),
           })}
-        </Section>
-        <Section name={sectionNames.advanced}>
           {children.showHolidays.propertyView({
             label: trans("gantt.showHolidays")
           })}
-          {/* {children.skipOffTime.propertyView({
-            label: trans("gantt.skipOffTime")
-          })} */}
           {children.showHolidays.getView() && children.StatutoryHolidays.propertyView({
             label: trans("gantt.StatutoryHolidays")
           })}
+          {children.level.propertyView({
+            label: trans("gantt.level"),
+          })}
+          {children.level.getView() === 'hour' &&
+            children.showHolidays.getView() &&
+            children.showWorkTimes.propertyView({
+              label: trans("gantt.showWorkTimes")
+            })}
+          {children.level.getView() === 'hour' &&
+            children.showWorkTimes.getView() &&
+            children.showHolidays.getView() &&
+            children.workTimeData.propertyView({
+              label: trans("gantt.workTimeData")
+            })}
         </Section>
         <Section name={sectionNames.interaction}>
           {children.allowTaskChange.propertyView({
