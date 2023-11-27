@@ -106,6 +106,7 @@ const GanttColumns = manualOptionsControl(ColumnsOption, {
     { name: 'text', label: trans('gantt.project'), align: 'center', tree: true, width: '120' },
     { name: 'start_date', label: trans('gantt.from'), align: 'center' },
     { name: 'progress', label: trans('gantt.progress'), align: 'center', ColumnsType: 'progress' },
+    { name: 'duration', label: trans('gantt.duration'), align: 'center', ColumnsType: 'progress' },
     { name: 'add', label: '+', align: 'center', ColumnsType: 'add' },
   ],
   uniqField: "name",
@@ -115,6 +116,7 @@ const childrenMap = {
   tasks: arrayObjectExposingStateControl('tasks', tasks),
   links: arrayObjectExposingStateControl('links', links),
   level: dropdownControl(viewModeOptions, 'day'),
+  durationUnit: dropdownControl([{ label: trans("gantt.minute"), value: 'minute' }, ...viewModeOptions], 'day'),
   Columns: GanttColumns,
   showColumns: BoolControl.DEFAULT_TRUE,
   allowTaskDrag: BoolControl,
@@ -149,8 +151,6 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   dispatch: (action: CompAction) => void;
 }) => {
   const conRef = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
   const [handleDBClickLinkRef, sethandleDBClickLinkRef] = useState('')
   const [handleDBClickTaskRef, sethandleDBClickTaskRef] = useState('')
   const [handleParseRef, sethandleParseRef] = useState('')
@@ -289,10 +289,15 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     }
     if (props.showWorkTimes) {
       gantt.setWorkTime(props.workTimeData)
-      gantt.config.duration_unit = "hour";
     }
     gantt.render();
   }, [props.showHolidays, props.StatutoryHolidays.value, props.level, props.showWorkTimes, props.workTimeData])
+
+
+  useEffect(() => {
+    gantt.config.duration_unit = props.durationUnit;
+    initGantt();
+  }, [props.durationUnit])
 
   // 切换主题
   useEffect(() => {
@@ -439,6 +444,14 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     gantt.render()
   }, [props.level])
 
+  // 展开或关闭所有分支
+  useEffect(() => {
+    gantt.eachTask(function (task) {
+      task.$open = props.openAllBranchInit;
+    });
+    gantt.render();
+  }, [props.openAllBranchInit])
+
   // 设置左侧列表
   useEffect(() => {
     gantt.config.columns = props.Columns.map((c: any) => {
@@ -518,6 +531,9 @@ let GanttBasicComp = (function () {
           })}
           {children.level.propertyView({
             label: trans("gantt.level"),
+          })}
+          {children.durationUnit.propertyView({
+            label: trans("gantt.durationUnit"),
           })}
           {children.level.getView() === 'hour' &&
             children.showHolidays.getView() &&
