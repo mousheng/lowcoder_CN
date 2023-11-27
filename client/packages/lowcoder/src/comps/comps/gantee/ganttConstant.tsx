@@ -294,7 +294,7 @@ export const zoomConfig = {
         {
             name: "day",
             scale_height: 27,
-            min_column_width: 40,
+            min_column_width: 55,
             scales: [
                 { unit: "day", step: 1, format: trans('gantt.dayScalesFormat') }
             ]
@@ -302,7 +302,7 @@ export const zoomConfig = {
         {
             name: "week",
             scale_height: 50,
-            min_column_width: 50,
+            min_column_width: 70,
             scales: [
                 {
                     unit: "week", step: 1, format: function (date: Date) {
