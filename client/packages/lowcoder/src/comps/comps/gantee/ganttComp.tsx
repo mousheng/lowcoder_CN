@@ -17,6 +17,8 @@ import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods,
 import { NumberControl, StringControl, StringOrNumberControl, jsonObjectControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
 import _ from "lodash"
 import dayjs from "dayjs"
+import minmax from "dayjs/plugin/minMax"
+dayjs.extend(minmax)
 
 const Container = styled.div<{ $style: GanttStyleType | undefined }>`
   height: 100%;
@@ -484,8 +486,8 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       gantt.config.fit_tasks = true;
     }
     else {
-      gantt.config.start_date = dayjs(props.startDate).toDate();
-      gantt.config.end_date = dayjs(props.endDate).toDate();
+      gantt.config.start_date = dayjs.min(dayjs(props.endDate), dayjs(props.startDate))?.toDate();
+      gantt.config.end_date = dayjs.max(dayjs(props.endDate), dayjs(props.startDate))?.toDate();
     }
     gantt.templates.parse_date = function (date) {
       return new Date(date);
