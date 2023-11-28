@@ -13,6 +13,7 @@ import { changeEvent, addedLinkEvent, eventHandlerControl, deletedLinkEvent, Pro
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { gantt } from 'dhtmlx-gantt';
+import "dhtmlx-gantt/codebase/dhtmlxgantt.css";
 import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, skinsOptions, StatutoryHolidaysData, StatutoryHolidaysDataType, scaleMode } from "./ganttConstant";
 import { NumberControl, StringControl, StringOrNumberControl, jsonObjectControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
 import _ from "lodash"
@@ -139,7 +140,6 @@ const childrenMap = {
   onEvent: eventHandlerControl(EventOptions),
   currentObject: valueComp({}),
   openAllBranchInit: BoolControl,
-  skins: dropdownControl(skinsOptions, './skins/dhtmlxgantt.css'),
   AutoCalculateProgress: BoolControl,
   SegmentedColor: BoolControl,
   lowLine: withDefault(NumberControl, 0.2),
@@ -305,10 +305,6 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     initGantt();
   }, [props.durationUnit])
 
-  // 切换主题
-  useEffect(() => {
-    import(props.skins)
-  }, [props.skins])
   // 设置是否允许拖动项目
   useEffect(() => {
     gantt.config.drag_project = props.allowProjectDrag;
@@ -620,9 +616,6 @@ let GanttBasicComp = (function () {
           {hiddenPropertyView(children)}
         </Section>
         <Section name={sectionNames.style}>
-          {children.skins.propertyView({
-            label: trans('gantt.skins')
-          })}
           {children.SegmentedColor.propertyView({
             label: trans('gantt.SegmentedColor')
           })}

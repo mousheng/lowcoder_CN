@@ -2776,7 +2776,6 @@ idSource: {
         taskID: "任务ID",
         taskIDDesc: "支持单个ID或者ID数组",
         add: "添加",
-        skins: "主题",
         expandingAll: "展开所有",
         collapsingAll: "折叠所有",
         addTaskFail: "添加任务失败，参数类型应该为对象或数组对象",

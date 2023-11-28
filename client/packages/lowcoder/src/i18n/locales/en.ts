@@ -3103,7 +3103,6 @@ export const en = {
     taskID: "Task ID",
     taskIDDesc: "Supports arrays of IDs or single ID",
     add: "Add",
-    skins: "skins",
     expandingAll: "Expanding All",
     collapsingAll: "Collapsing All",
     addTaskFail: "The addition task failed, and the parameter type should be an object or an array object",
