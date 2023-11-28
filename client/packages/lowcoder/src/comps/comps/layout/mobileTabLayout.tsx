@@ -75,7 +75,7 @@ type TabBarProps = {
     title: string;
     icon?: React.ReactNode;
     key: number | string;
-    onEvent: any;
+    onEvent?: any;
   }>;
   selectedKey: string;
   onChange: (key: string) => void;
@@ -100,7 +100,9 @@ function TabBarView(props: TabBarProps) {
           activeKey={props.selectedKey}
         >
           {props.tabs.map((tab) => {
-            return <TabBarItem key={tab.key} icon={tab.icon} title={tab.title} />;
+            return (
+              <TabBarItem key={tab.key} icon={tab.icon} title={tab.title} />
+            );
           })}
         </TabBar>
       </TabBarWrapper>
@@ -142,9 +144,18 @@ let MobileTabLayoutTmp = (function () {
   const childrenMap = {
     tabs: manualOptionsControl(TabOptionComp, {
       initOptions: [
-        { label: trans("optionsControl.optionI", { i: 1 }), icon: "/icon:solid/1" },
-        { label: trans("optionsControl.optionI", { i: 2 }), icon: "/icon:solid/2" },
-        { label: trans("optionsControl.optionI", { i: 3 }), icon: "/icon:solid/3" },
+        {
+          label: trans("optionsControl.optionI", { i: 1 }),
+          icon: "/icon:solid/1",
+        },
+        {
+          label: trans("optionsControl.optionI", { i: 2 }),
+          icon: "/icon:solid/2",
+        },
+        {
+          label: trans("optionsControl.optionI", { i: 3 }),
+          icon: "/icon:solid/3",
+        },
       ],
     }),
     selectedKey: numberExposingStateControl('selectedKey', 0),
@@ -157,11 +168,6 @@ let MobileTabLayoutTmp = (function () {
         <>
           <Section name={trans("aggregation.tabBar")}>
             {children.tabs.propertyView({})}
-          </Section>
-          <Section name={sectionNames.interaction}>
-            {children.selectedKey.propertyView({
-              label: trans("aggregation.selectedKey")
-            })}
           </Section>
         </>
       );
@@ -195,8 +201,9 @@ MobileTabLayoutTmp = withViewFn(MobileTabLayoutTmp, (comp) => {
       tabs={tabViews.map((tab, index) => ({
         key: index,
         title: tab.children.label.getView(),
-        icon: tab.children.icon.toJsonValue() ? tab.children.icon.getView() : undefined,
-        onEvent: tab.children.onEvent.getView(),
+        icon: tab.children.icon.toJsonValue()
+          ? tab.children.icon.getView()
+          : undefined,
       }))}
       selectedKey={tabIndex + ""}
       onChange={(key) => setTabIndex(Number(key))}

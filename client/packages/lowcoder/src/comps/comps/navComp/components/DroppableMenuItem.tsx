@@ -1,11 +1,12 @@
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { trans } from "i18n";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import styled from "styled-components";
 import DroppablePlaceholder from "./DroppablePlaceHolder";
 import MenuItem, { ICommonItemProps } from "./MenuItem";
 import { IDragData, IDropData } from "./types";
-import { genRandomKey } from "@lowcoder-ee/comps/utils/idGenerator";
+import { LayoutMenuItemComp } from "comps/comps/layout/layoutMenuItemComp";
+import { genRandomKey } from "comps/utils/idGenerator";
 
 const DraggableMenuItemWrapper = styled.div`
   position: relative;
@@ -66,6 +67,22 @@ export default function DraggableMenuItem(props: IDraggableMenuItemProps) {
     disabled: isDragging || disabled || disableDropIn,
     data: dropData,
   });
+
+  // TODO: Remove this later.
+  // Set ItemKey for previously added sub-menus
+  useEffect(() => {
+    if(!items.length) return;
+    if(!(items[0] instanceof LayoutMenuItemComp)) return;
+
+    return items.forEach(item  => {
+      const subItem = item as LayoutMenuItemComp;
+      const itemKey = subItem.children.itemKey.getView();
+      if(itemKey === '') {
+        subItem.children.itemKey.dispatchChangeValueAction(genRandomKey())
+      }
+    })
+  }, [items])
+
   return (
     <>
       <DraggableMenuItemWrapper>
@@ -102,7 +119,7 @@ export default function DraggableMenuItem(props: IDraggableMenuItemProps) {
                 item={subItem}
                 level={0}
                 disabled={disabled || isDragging || disableDropIn}
-                // onAddSubMenu={onAddSubMenu}
+                onAddSubMenu={onAddSubMenu}
                 onDelete={onDelete}
                 parentDragging={isDragging}
               />

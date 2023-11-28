@@ -1032,7 +1032,7 @@ export const TreeStyle = [
 
 export const TreeSelectStyle = [...multiSelectCommon, ...ACCENT_VALIDATE] as const;
 
-export const DrawerStyle = [getBackground()] as const;
+export const DrawerStyle = [getBackground()] as const
 
 export const JsonEditorStyle = [LABEL] as const;
 
@@ -1139,6 +1139,59 @@ export const ResponsiveLayoutColStyle = [
   PADDING,
 ] as const;
 
+export const NavLayoutStyle = [
+  ...getBgBorderRadiusByBg(),
+  {
+    name: "text",
+    label: trans("text"),
+    depName: "background",
+    // depTheme: "primary",
+    depType: DEP_TYPE.CONTRAST_TEXT,
+    transformer: contrastText,
+  },
+  MARGIN,
+  PADDING,
+] as const;
+
+export const NavLayoutItemStyle = [
+  getBackground("primarySurface"),
+  getStaticBorder('transparent'),
+  RADIUS,
+  {
+    name: "text",
+    label: trans("text"),
+    depName: "background",
+    depType: DEP_TYPE.CONTRAST_TEXT,
+    transformer: contrastText,
+  },
+  MARGIN,
+  PADDING,
+] as const;
+
+export const NavLayoutItemHoverStyle = [
+  getBackground("canvas"),
+  getStaticBorder('transparent'),
+  {
+    name: "text",
+    label: trans("text"),
+    depName: "background",
+    depType: DEP_TYPE.CONTRAST_TEXT,
+    transformer: contrastText,
+  },
+] as const;
+
+export const NavLayoutItemActiveStyle = [
+  getBackground("primary"),
+  getStaticBorder('transparent'),
+  {
+    name: "text",
+    label: trans("text"),
+    depName: "background",
+    depType: DEP_TYPE.CONTRAST_TEXT,
+    transformer: contrastText,
+  },
+] as const;
+
 export const CarouselStyle = [getBackground("canvas")] as const;
 
 export const RichTextEditorStyle = [getStaticBorder(), RADIUS] as const;
@@ -1182,6 +1235,10 @@ export type CarouselStyleType = StyleConfigType<typeof CarouselStyle>;
 export type RichTextEditorStyleType = StyleConfigType<typeof RichTextEditorStyle>;
 export type ResponsiveLayoutRowStyleType = StyleConfigType<typeof ResponsiveLayoutRowStyle>;
 export type ResponsiveLayoutColStyleType = StyleConfigType<typeof ResponsiveLayoutColStyle>;
+export type NavLayoutStyleType = StyleConfigType<typeof NavLayoutStyle>;
+export type NavLayoutItemStyleType = StyleConfigType<typeof NavLayoutItemStyle>;
+export type NavLayoutItemHoverStyleType = StyleConfigType<typeof NavLayoutItemHoverStyle>;
+export type NavLayoutItemActiveStyleType = StyleConfigType<typeof NavLayoutItemActiveStyle>;
 export type AntLayoutLogoStyleType = StyleConfigType<typeof AntLayoutLogoStyle>;
 export type AntLayoutBodyStyleType = StyleConfigType<typeof AntLayoutBodyStyle>;
 export type AntLayoutFramerStyleType = StyleConfigType<typeof AntLayoutFramerStyle>;

@@ -31,6 +31,7 @@ docker run -d --name lowcoder-dev -p 3000:3000 -v "$PWD/stacks:/lowcoder-stacks"
 
 ### Start develop
 
+
 1. Check out the source code.
 2. Change to client dir in the repository root via cd client.
 
@@ -52,5 +53,63 @@ yarn install
 In addition, before submitting a pull request, please make sure the following is done:
 
 1. If you’ve fixed a bug or added code that should be tested and add unit test suite.
-2. Run `yarn test` and ensure all test suites pass.
-3. If you add new dependency, use yarn workspace lowcoder some-package to make sure yarn.lock is also updated.
+2. Run test and ensure all test suites pass.
+
+```bash
+yarn test
+```
+
+3. If you add new dependency, use the yarn worspace tool to make sure yarn.lock is also updated.
+
+```bash
+yarn workspace lowcoder <package name>
+```
+
+### Developing and publishung UI components for Lowcoder
+
+1. Initialization
+
+Project initiation
+
+```bash
+yarn create Lowcoder-plugin <your plugin name>
+```
+
+Go to the project root
+
+```bash
+cd my-plugin
+```
+
+Start the development environment
+
+```bash
+yarn start
+```
+
+After executing yarn start, the browser is automatically opened and you enter the component development environment.
+Please find more information in our [docs](https://docs.lowcoder.cloud/lowcoder-documentation/lowcoder-extension/develop-ui-components-for-apps)
+
+2. Export components
+
+To export all the components, use src/index.ts, for example:
+
+```bash
+import HelloWorldComp from "./HelloWorldComp";
+
+export default {
+  hello_world: HelloWorldComp,
+};
+```
+
+import HelloWorldComp from "./HelloWorldComp";
+
+3. Publish plugins
+
+When you finish developing and testing the plugin, you can publish it into the npm registry. Login in to the npm registry locally, and then execute the following command:
+
+```bash
+yarn build --publish
+```
+
+You can check a code demo here:  [Code Demo on Github](https://github.com/lowcoder-org/lowcoder/tree/main/client/packages/lowcoder-plugin-demo)

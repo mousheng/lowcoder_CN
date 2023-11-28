@@ -11,6 +11,7 @@ import { GreyTextColor } from "constants/style";
 import { UICompType } from "comps/uiCompRegistry";
 import { trans } from "i18n";
 import { getComponentDocUrl } from "comps/utils/compDocUtil";
+import { getComponentPlaygroundUrl } from "comps/utils/compDocUtil";
 import { parseCompType } from "comps/utils/remote";
 
 const CompDiv = styled.div<{ width?: number; hasSearch?: boolean; showSearch?: boolean }>`
@@ -78,6 +79,7 @@ export const CompName = (props: Iprops) => {
   const compType = selectedComp.children.compType.getView() as UICompType;
   const compInfo = parseCompType(compType);
   const docUrl = getComponentDocUrl(compType);
+  const playgroundUrl = getComponentPlaygroundUrl(compType);
 
   const items: EditPopoverItemType[] = [];
 
@@ -98,6 +100,16 @@ export const CompName = (props: Iprops) => {
       },
     });
   }
+
+  if (playgroundUrl) {
+    items.push({
+      text: trans("comp.menuViewPlayground"),
+      onClick: () => {
+        window.open(playgroundUrl, "_blank");
+      },
+    });
+  }
+
 
   if (compInfo.isRemote) {
     items.push({
@@ -143,12 +155,22 @@ export const CompName = (props: Iprops) => {
           style={{ color: showSearch ? "#315EFB" : "#8B8FA3" }}
         />
       )}
-      <EditPopover
-        items={items}
-        del={() => GridCompOperator.deleteComp(editorState, editorState.selectedComps())}
-      >
-        <Icon tabIndex={-1} />
-      </EditPopover>
+      { compType === "module" ? (
+        <EditPopover
+          items={items}
+          edit={() => GridCompOperator.editComp(editorState)}
+          del={() => GridCompOperator.deleteComp(editorState, editorState.selectedComps())}
+        >
+          <Icon tabIndex={-1} />
+        </EditPopover>
+      ) : (
+        <EditPopover
+          items={items}
+          del={() => GridCompOperator.deleteComp(editorState, editorState.selectedComps())}
+        >
+          <Icon tabIndex={-1} />
+        </EditPopover>
+      )}
     </CompDiv>
   );
   return (

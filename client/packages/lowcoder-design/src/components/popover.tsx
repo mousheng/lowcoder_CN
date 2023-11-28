@@ -126,6 +126,7 @@ export interface EditPopoverProps extends PopoverProps {
   items?: EditPopoverItemType[]; // FIXME: refactor props below into this structure
   addText?: string;
   add?: () => void;
+  edit?: () => void;
   rename?: () => void;
   copy?: () => void;
   del?: () => void;
@@ -138,6 +139,7 @@ const EditPopover = (props: EditPopoverProps) => {
     items,
     addText,
     add,
+    edit,
     rename,
     copy,
     del,
@@ -195,6 +197,17 @@ const EditPopover = (props: EditPopoverProps) => {
               }}
             >
               <HandleText>{addText || trans("addItem")}</HandleText>
+            </Handle>
+          )}
+          {edit && (
+            <Handle
+              onClick={(e) => {
+                e.stopPropagation();
+                edit?.();
+                hide();
+              }}
+            >
+              <HandleText>{trans("edit")}</HandleText>
             </Handle>
           )}
           {copy && (

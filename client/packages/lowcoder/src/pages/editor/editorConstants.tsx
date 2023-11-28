@@ -101,6 +101,7 @@ export const CompStateIcon: {
   meeting: <LeftMeeting />,
   mermaid: <LeftChart />,
   videocomponent: <LeftMeeting />,
+  sharingcomponent: <LeftMeeting />,
   controlButton: <LeftButton />,
   tabbedContainer: <LeftContainer />,
   modal: <LeftModal />,

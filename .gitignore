@@ -4,4 +4,5 @@ stacks/
 client/.yarn/cache/*.zip
 server/node-service/.yarn/cache/*.zip
 .metadata/
+.DS_Store
 client/packages/lowcoder/*.mjs

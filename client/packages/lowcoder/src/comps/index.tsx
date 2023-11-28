@@ -125,7 +125,12 @@ import {
 
 import { defaultFormData, FormComp } from "./comps/formComp/formComp";
 import { IFrameComp } from "./comps/iframeComp";
-import { defaultGridData, defaultListViewData, GridComp, ListViewComp } from "./comps/listViewComp";
+import {
+  defaultGridData,
+  defaultListViewData,
+  GridComp,
+  ListViewComp,
+} from "./comps/listViewComp";
 import { IconComp } from "./comps/iconComp";
 import { AmapComp } from "./comps/amap/amapComp"
 import { AvatarComp } from "./comps/avatar"
@@ -138,6 +143,7 @@ import { ResponsiveLayoutComp } from "./comps/responsiveLayout";
 import { VideoMeetingStreamComp } from "./comps/meetingComp/videoMeetingStreamComp";
 import { ControlButton } from "./comps/meetingComp/controlButton";
 import { VideoMeetingControllerComp } from "./comps/meetingComp/videoMeetingControllerComp";
+import { VideoSharingStreamComp } from "./comps/meetingComp/videoSharingStreamComp";
 import { FloatButtonComp } from "./comps/buttonComp/floatButtonComp";
 import { GanttComp } from "./comps/gantee";
 import { TransferComp } from "./comps/TransferComp";
@@ -164,7 +170,7 @@ import { SignatureComp } from "./comps/signatureComp";
 import { TimeLineComp } from "./comps/timelineComp/timelineComp";
 import { CommentComp } from "./comps/commentComp/commentComp";
 import { MentionComp } from "./comps/textInputComp/mentionComp";
-import { AutoCompleteComp } from "./comps/autoCompleteComp/autoCompleteComp";;
+import { AutoCompleteComp } from "./comps/autoCompleteComp/autoCompleteComp";;;
 
 type Registry = {
   [key in UICompType]?: UICompManifest;
@@ -592,7 +598,17 @@ const uiCompMap: Registry = {
     },
     defaultDataFn: defaultContainerData,
   },
-
+  //ADDED BY FRED
+  sharingcomponent: {
+    name: trans("meeting.sharingCompName"),
+    enName: "Sharing",
+    description: trans("meeting.sharingCompName"),
+    categories: ["meeting"],
+    icon: VideoCompIcon,
+    keywords: trans("meeting.meetingCompKeywords"),
+    comp: VideoSharingStreamComp,
+    withoutLoading: true,
+  },
   videocomponent: {
     name: trans("meeting.videoCompName"),
     enName: "Video",
@@ -613,6 +629,7 @@ const uiCompMap: Registry = {
     comp: ControlButton,
     withoutLoading: true,
   },
+  //END
   tabbedContainer: {
     name: trans("uiComp.tabbedContainerCompName"),
     enName: "Tabbed Container",
@@ -952,6 +969,7 @@ const uiCompMap: Registry = {
       h: 55,
     },
   },
+
   comment: {
     name: trans("uiComp.commentCompName"),
     enName: "comment",
@@ -963,7 +981,7 @@ const uiCompMap: Registry = {
     layoutInfo: {
       w: 13,
       h: 55,
-    }
+    },
   },
   mention: {
     name: trans("uiComp.mentionCompName"),
