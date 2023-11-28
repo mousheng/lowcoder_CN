@@ -94,11 +94,24 @@ public class AuthenticationController implements AuthenticationEndpoints
                 .map(ResponseView::success);
     }
 
-    /**
-     * @param loginId phone number or email for now.
-     * @param register register or login
-     * @param source {@link AuthSourceConstants#PHONE} or {@link AuthSourceConstants#EMAIL}
-     */
-    public record FormLoginRequest(String loginId, String password, boolean register, String source, String authId) {
+    // ----------- API Key Management ----------------
+    @Override
+    public Mono<ResponseView<APIKeyVO>> createAPIKey(@RequestBody APIKeyRequest apiKeyRequest) {
+        return authenticationApiService.createAPIKey(apiKeyRequest)
+                .map(ResponseView::success);
     }
+
+    @Override
+    public Mono<ResponseView<Void>> deleteAPIKey(@PathVariable("id") String id) {
+        return authenticationApiService.deleteAPIKey(id)
+                .thenReturn(ResponseView.success(null));
+    }
+
+    @Override
+    public Mono<ResponseView<List<APIKey>>> getAllAPIKeys() {
+        return authenticationApiService.findAPIKeys()
+                .collectList()
+                .map(ResponseView::success);
+    }
+
 }
