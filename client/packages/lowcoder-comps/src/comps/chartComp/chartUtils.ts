@@ -51,12 +51,7 @@ export function transformData(
 }
 
 const notAxisChartSet: Set<CharOptionCompType> = new Set(["pie"] as const);
-export const echartsConfigOmitChildren = [
-  "hidden",
-  "selectedPoints",
-  "onUIEvent",
-  "mapInstance"
-] as const;
+export const echartsConfigOmitChildren = ["hidden", "selectedPoints", "onEvent"] as const;
 type EchartsConfigProps = Omit<ChartCompPropsType, typeof echartsConfigOmitChildren[number]>;
 
 export function isAxisChart(type: CharOptionCompType) {
