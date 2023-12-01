@@ -2921,7 +2921,7 @@ idSource: {
         allowLinkDelete: '删除链接',
         allowProgressDrag: '拖动进度条',
         allowTaskDrag: '拖动任务',
-        links: '连接数据',
+        links: '连线数据',
         dataFormat: '日期解析格式',
         showTodayMark: '显示当日线',
         handleDateChange: '处理任务拖动',
