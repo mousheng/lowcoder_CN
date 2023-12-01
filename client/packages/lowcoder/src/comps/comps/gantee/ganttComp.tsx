@@ -110,7 +110,7 @@ const GanttColumns = manualOptionsControl(ColumnsOption, {
     { name: 'text', label: trans('gantt.project'), align: 'center', tree: true, width: '120' },
     { name: 'start_date', label: trans('gantt.from'), align: 'center' },
     { name: 'progress', label: trans('gantt.progress'), align: 'center', ColumnsType: 'progress' },
-    { name: 'duration', label: trans('gantt.duration'), align: 'center', ColumnsType: 'progress' },
+    { name: 'duration', label: trans('gantt.duration'), align: 'center', ColumnsType: 'text' },
     { name: 'add', label: '+', align: 'center', ColumnsType: 'add' },
   ],
   uniqField: "name",
