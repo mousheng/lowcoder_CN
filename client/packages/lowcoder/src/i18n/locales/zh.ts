@@ -615,6 +615,9 @@ snowflake: {
 },
 lowcoderQuery: {
     queryOrgUsers: "查询工作区用户",
+    queryFolderApps: "查询Apps",
+    folderNamePlaceHolder: "文件夹名或ID，留空则返回全部",
+    folderNameLabel: "文件夹",
 },
 redisQuery: {
     rawCommand: "原始命令",

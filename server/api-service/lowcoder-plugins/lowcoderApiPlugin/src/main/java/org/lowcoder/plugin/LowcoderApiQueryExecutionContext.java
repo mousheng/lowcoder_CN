@@ -16,4 +16,5 @@ public class LowcoderApiQueryExecutionContext extends QueryExecutionContext {
     private String visitorId;
     private String applicationOrgId;
     private MultiValueMap<String, HttpCookie> requestCookies;
+    private String folderName;
 }
