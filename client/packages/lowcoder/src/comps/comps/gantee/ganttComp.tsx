@@ -8,13 +8,13 @@ import { UICompBuilder } from "comps/generators/uiCompBuilder";
 import { NameConfig, NameConfigHidden, withExposingConfigs } from "comps/generators/withExposing";
 import { Section, sectionNames } from "lowcoder-design";
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
-import { trans } from "i18n";
+import { trans, language } from "i18n";
 import { changeEvent, addedLinkEvent, eventHandlerControl, deletedLinkEvent, ProgressDragEvent, selectedChangeEvent, addTaskEvent, TaskChangeEvent } from "../../controls/eventHandlerControl";
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { gantt } from 'dhtmlx-gantt';
 import "dhtmlx-gantt/codebase/dhtmlxgantt.css";
-import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, skinsOptions, StatutoryHolidaysData, StatutoryHolidaysDataType, scaleMode } from "./ganttConstant";
+import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, skinsOptions, StatutoryHolidaysData, StatutoryHolidaysDataType, scaleMode, taskDataDescZh, taskDataDescEn, LinkDataDescZh, LinkDataDescEn } from "./ganttConstant";
 import { NumberControl, StringControl, StringOrNumberControl, jsonObjectControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
 import _ from "lodash"
 import dayjs from "dayjs"
@@ -529,9 +529,12 @@ let GanttBasicComp = (function () {
           })}
           {children.tasks.propertyView({
             label: trans("gantt.tasks"),
+            tooltip: language === 'zh' ? taskDataDescZh : taskDataDescEn,
+
           })}
           {children.links.propertyView({
             label: trans("gantt.links"),
+            tooltip: language === 'zh' ? LinkDataDescZh : LinkDataDescEn,
           })}
           {children.showColumns.propertyView({
             label: trans("gantt.showColumns"),

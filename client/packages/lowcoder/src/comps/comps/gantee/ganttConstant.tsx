@@ -63,6 +63,48 @@ export function ganttMethods(): MethodConfigInfo<GanttCompType>[] {
         },
         {
             method: {
+                name: "addLink",
+                description: trans("gantt.addLink"),
+                params: [{ name: trans("gantt.linkObject"), type: "JSONValue", description: trans("gantt.linkObject") }],
+            },
+            execute: (comp, params) => {
+                if (params.length) {
+                    if (Array.isArray(params[0])) {
+                        params[0].map(i => gantt.addLink(i))
+                    } else if (typeof (params[0]) === 'object') {
+                        gantt.addLink(params[0])
+                    } else {
+                        gantt.message({
+                            text: trans('gantt.addLinkFail'),
+                            type: "error",
+                        });
+                    }
+                }
+            },
+        },
+        {
+            method: {
+                name: "removeLink",
+                description: trans("gantt.removeLink"),
+                params: [{ name: trans("gantt.linkID"), type: "arrayString", description: trans("gantt.linkIDDesc") }],
+            },
+            execute: (comp, params) => {
+                if (params.length) {
+                    if (Array.isArray(params[0])) {
+                        params[0].map(i => gantt.deleteLink(i as string))
+                    } else if (typeof (params[0]) === 'string' && params[0].length > 0) {
+                        gantt.deleteLink(params[0])
+                    } else {
+                        gantt.message({
+                            text: trans('gantt.removeLinkFail'),
+                            type: "error",
+                        });
+                    }
+                }
+            },
+        },
+        {
+            method: {
                 name: "expandingAll",
                 description: trans("gantt.expandingAll"),
                 params: [],
@@ -390,3 +432,122 @@ export const StatutoryHolidaysData = [
     { "date": "2024-10-07", "holiday": true },
     { "date": "2024-10-12", "holiday": false }
 ]
+
+export const taskDataDescZh = (
+    <li>
+        接受对象数组，具体可参考<a href='https://docs.dhtmlx.com/gantt/desktop__task_properties.html'>任务属性（部分不支持）</a>，对象可包含以下属性：
+        <br />
+        id (string or number): 任务的唯一标识符，可以是字符串或数字。
+        <br />
+        start_date (Date): 任务的开始日期。
+        <br />
+        end_date (Date): 任务的结束日期。
+        <br />
+        text (string): 任务的显示文本。
+        <br />
+        progress (number): 任务完成的百分比。
+        <br />
+        duration (number): 任务的持续时间，以时间单位（例如天）表示。
+        <br />
+        parent (string or number): 如果任务是子任务，则指定父任务的id。
+        <br />
+        type (string): 任务的类型，例如project、task或milestone。
+        <br />
+        open (boolean): 指示任务是否展开显示其子任务。
+        <br />
+        color (string): 任务的颜色。
+        <br />
+        textColor (string): 任务文本的颜色。
+        <br />
+        progressColor (string): 任务进度条的颜色。
+        <br />
+        readonly (boolean): 指示任务是否为只读。
+        <br />
+    </li>
+);
+
+export const taskDataDescEn = (<li>
+    Accepts an array of objects,For specific details, please refer to here<a href='https://docs.dhtmlx.com/gantt/desktop__task_properties.html'>Task Properties (Some Not Supported)</a>, where each object can include the following properties:
+    <br />
+    id (string or number): A unique identifier for the task, can be a string or number.
+    <br />
+    start_date (Date): The start date of the task.
+    <br />
+    end_date (Date): The end date of the task.
+    <br />
+    text (string): The display text of the task.
+    <br />
+    progress (number): The percentage of completion for the task.
+    <br />
+    duration (number): The duration of the task, represented in time units (e.g., days).
+    <br />
+    parent (string or number): If the task is a subtask, specifies the id of the parent task.
+    <br />
+    type (string): The type of the task, such as project, task, or milestone.
+    <br />
+    open (boolean): Indicates whether the task should be expanded to show its subtasks.
+    <br />
+    color (string): The color of the task.
+    <br />
+    textColor (string): The color of the task text.
+    <br />
+    progressColor (string): The color of the task progress bar.
+    <br />
+    readonly (boolean): Indicates whether the task is read-only.
+    <br />
+</li>
+)
+
+export const LinkDataDescZh = (
+    <li>
+        接受对象数组，具体可参考<a href='https://docs.dhtmlx.com/gantt/desktop__link_properties.html'>任务属性（部分不支持）</a>，对象可包含以下属性：
+        <br />
+        id (string or number): 任务的唯一标识符，可以是字符串或数字。
+        <br />
+        id (string or number): 链接的唯一标识符。
+        <br />
+        source (string or number): 链接的起始任务的id。
+        <br />
+        target (string or number): 链接的目标任务的id。
+        <br />
+        color (string): 链接的颜色。
+        <br />
+        type (string): 链接的类型。
+        <br />
+        &nbsp;&nbsp;0:终-起连线
+        <br />
+        &nbsp;&nbsp;1:起-起连线
+        <br />
+        &nbsp;&nbsp;2:终-终连线
+        <br />
+        &nbsp;&nbsp;3:起-始连线
+        <br />
+        readonly (boolean): 指示链接是否为只读。
+    </li>
+);
+
+export const LinkDataDescEn = (
+    <li>
+        Accepts an array of objects,For specific details, please refer to here<a href='https://docs.dhtmlx.com/gantt/desktop__link_properties.html'>Task Properties (Some Not Supported)</a>, where each object can include the following properties:
+        <br />
+        ID (string or number): The unique identifier of the link.
+        <br />
+        Source (string or number): The ID of the starting task of the link.
+        <br />
+        Target (string or number): The ID of the target task of the link.
+        <br />
+        Color (string): The color of the link.
+        <br />
+        Type (string): The type of link.
+        <br />
+        &nbsp;&nbsp;0: End Start Connection
+        <br />
+        &nbsp;&nbsp;1: Start up connection
+        <br />
+        &nbsp;&nbsp;2: End to End Connection
+        <br />
+        &nbsp;&nbsp;3: Starting and Starting Lines
+        <br />
+        Readonly (boolean): Indicates whether the link is read-only.
+    </li>
+);
