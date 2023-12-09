@@ -3,6 +3,7 @@
 Lowcoder支持连接多种类型的 API，可通过以下文档了解如何连接各种 API：
 
 * [连接 REST API](../api/rest-api.md)
+* [连接 Lowcoder API](../api/lowcoderAPI.md)
 * [连接 GraphQL](../api/graphql.md)
 
 ^
