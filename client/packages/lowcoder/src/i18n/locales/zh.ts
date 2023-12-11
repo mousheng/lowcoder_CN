@@ -2995,6 +2995,7 @@ idSource: {
         addLink: "(批量)添加链接",
         linkObject: "链接对象",
         removeLink: "(批量)添加链接",
+        allowSort: '允许排序',
     },
     transfer: {
         sourceTitle: '源数据',

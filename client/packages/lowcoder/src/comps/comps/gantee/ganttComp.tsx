@@ -320,6 +320,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   }, [props.AutoCalculateProgress])
   // 初始化
   useEffect(() => {
+    gantt.config.sort = true;
     gantt.ext.zoom.init(zoomConfig);
     gantt.clearAll()
     gantt.i18n.setLocale("cn");

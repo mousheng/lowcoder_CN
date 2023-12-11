@@ -3155,6 +3155,7 @@ export const en = {
     addLink: "Add Link(s)",
     linkObject: "link Object",
     removeLink: "remove Link",
+    allowSort: 'Allow Sort',
   },
   transfer: {
     sourceTitle: 'Source Data',

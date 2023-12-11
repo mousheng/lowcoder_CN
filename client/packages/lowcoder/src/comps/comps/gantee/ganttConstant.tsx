@@ -201,6 +201,7 @@ export const ColumnsOption = new MultiCompBuilder(
         ColumnsType: dropdownControl(cloumnsTypeOptions, 'text'),
         width: withDefault(CodeTextControl, '*'),
         hide: BoolControl,
+        sort: BoolControl,
     },
     (props) => props
 ).setPropertyViewFn((children) => (
@@ -209,6 +210,7 @@ export const ColumnsOption = new MultiCompBuilder(
         {children.ColumnsType.getView() === 'text' && children.name.propertyView({ label: trans("gantt.key") })}
         {children.ColumnsType.getView() !== 'add' && children.label.propertyView({ label: trans("gantt.title") })}
         {children.tree.propertyView({ label: trans("gantt.tree") })}
+        {children.sort.propertyView({ label: trans("gantt.allowSort") })}
         {children.width.propertyView({ label: trans("gantt.width") })}
         {children.align.propertyView({
             label: trans("textShow.horizontalAlignment"),
