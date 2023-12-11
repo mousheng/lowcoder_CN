@@ -3156,6 +3156,7 @@ export const en = {
     linkObject: "link Object",
     removeLink: "remove Link",
     allowSort: 'Allow Sort',
+    showTask: 'Show Task',
   },
   transfer: {
     sourceTitle: 'Source Data',

@@ -105,6 +105,17 @@ export function ganttMethods(): MethodConfigInfo<GanttCompType>[] {
         },
         {
             method: {
+                name: "showTask",
+                description: trans("gantt.showTask"),
+                params: [{ name: trans("gantt.taskID"), type: "string", description: trans("gantt.taskID") }],
+            },
+            execute: (comp, params) => {
+                gantt.showTask(params[0] as string | number)
+                gantt.selectTask(params[0] as string | number);
+            },
+        },
+        {
+            method: {
                 name: "expandingAll",
                 description: trans("gantt.expandingAll"),
                 params: [],
