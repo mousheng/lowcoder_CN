@@ -2997,6 +2997,7 @@ idSource: {
         removeLink: "(批量)添加链接",
         allowSort: '允许排序',
         showTask: '显示任务',
+        toggleOnDBClick: '双击时切换'
     },
     transfer: {
         sourceTitle: '源数据',

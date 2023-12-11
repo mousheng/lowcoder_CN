@@ -3157,6 +3157,7 @@ export const en = {
     removeLink: "remove Link",
     allowSort: 'Allow Sort',
     showTask: 'Show Task',
+    toggleOnDBClick: 'Toggle On DBClick',
   },
   transfer: {
     sourceTitle: 'Source Data',

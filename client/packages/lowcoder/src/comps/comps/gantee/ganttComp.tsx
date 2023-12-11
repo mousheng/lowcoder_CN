@@ -151,6 +151,7 @@ const childrenMap = {
   scaleMode: dropdownControl(scaleMode, 'fit'),
   startDate: withDefault(StringControl, dayjs().add(-5, 'd').format('YYYY-MM-DD')),
   endDate: withDefault(StringControl, dayjs().add(7, 'd').format('YYYY-MM-DD')),
+  toggleOnDBClick: BoolControl.DEFAULT_TRUE,
 };
 
 const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
@@ -418,10 +419,11 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     sethandleDBClickTaskRef(
       gantt.attachEvent("onTaskDblClick", function (id, e) {
         props.allowTaskChange && props.onTaskChangeEvent('TaskChange')
+        props.allowTaskChange && props.toggleOnDBClick && (gantt.getTask(id).$open ? gantt.close(id) : gantt.open(id))
         return true;
       })
     )
-  }, [props.allowTaskChange])
+  }, [props.allowTaskChange, props.toggleOnDBClick])
 
   // 设置允许添加链接
   useEffect(() => {
@@ -575,6 +577,9 @@ let GanttBasicComp = (function () {
         <Section name={sectionNames.interaction}>
           {children.allowTaskChange.propertyView({
             label: trans("gantt.allowChangeTask"),
+          })}
+          {children.allowTaskChange.getView() && children.toggleOnDBClick.propertyView({
+            label: trans("gantt.toggleOnDBClick"),
           })}
           {children.allowTaskChange.getView() && children.onTaskChangeEvent.propertyView({
             title: trans("gantt.handleTaskChange"),
