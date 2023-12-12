@@ -3003,6 +3003,7 @@ idSource: {
         rowHeight: '行高度',
         showTooltip: '显示工具提示',
         tooltipTemplates: '工具提示模板',
+        allowResizeTask: '允许调整任务起始',
     },
     transfer: {
         sourceTitle: '源数据',

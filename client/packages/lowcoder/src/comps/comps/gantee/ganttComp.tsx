@@ -124,6 +124,7 @@ const childrenMap = {
   Columns: GanttColumns,
   showColumns: BoolControl.DEFAULT_TRUE,
   allowTaskDrag: BoolControl,
+  allowResizeTask: BoolControl,
   allowProjectDrag: BoolControl,
   onChangeEvent: eventHandlerControl([changeEvent]),
   allowLinkDelete: BoolControl,
@@ -353,7 +354,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
         , false));
       if (mode === 'progress') {
         props.onProgressDragEvent('progressDrag')
-      } else if (mode === 'move') {
+      } else if (mode === 'move' || mode === 'resize') {
         props.onChangeEvent('change')
       }
       return true;
@@ -464,8 +465,9 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   // 设置允许拖动任务
   useEffect(() => {
     gantt.config.drag_move = props.allowTaskDrag;
+    gantt.config.drag_resize = props.allowTaskDrag && props.allowResizeTask;
     gantt.render()
-  }, [props.allowTaskDrag])
+  }, [props.allowTaskDrag, props.allowResizeTask])
 
   // 设置允许拖动进度
   useEffect(() => {
@@ -627,6 +629,9 @@ let GanttBasicComp = (function () {
           })}
           {children.allowTaskDrag.propertyView({
             label: trans("gantt.allowTaskDrag"),
+          })}
+          {children.allowTaskDrag.getView() && children.allowResizeTask.propertyView({
+            label: trans("gantt.allowResizeTask"),
           })}
           {children.allowTaskDrag.getView() && children.allowProjectDrag.propertyView({
             label: trans("gantt.allowProjectDrag"),

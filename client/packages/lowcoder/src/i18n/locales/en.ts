@@ -3163,6 +3163,7 @@ export const en = {
     rowHeight: 'Row Height',
     showTooltip: 'Show Tooltip',
     tooltipTemplates: 'Tooltip Template',
+    allowResizeTask: 'Allow Resize Task',
   },
   transfer: {
     sourceTitle: 'Source Data',
