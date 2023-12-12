@@ -567,7 +567,7 @@ export const LinkDataDescEn = (
 
 export function checkSortKey(data: any) {
     if (data === "") return {}
-    check(data.sortKey, ["string"], "name")
+    check(data.sortKey, ["string"], "sortKey")
     check(data.asc, ["boolean"], "asc")
     return data
 }
