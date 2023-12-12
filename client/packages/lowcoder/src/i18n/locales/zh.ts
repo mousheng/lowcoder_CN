@@ -192,6 +192,7 @@ prop: {
     budgeTitle: "提示",
     dot: "点",
     number: "数字",
+    tooltip: "工具提示",
 },
 autoHeightProp: {
     auto: "自动",
@@ -3000,6 +3001,8 @@ idSource: {
         toggleOnDBClick: '双击时切换',
         sortOptions: '初始时排序选项',
         rowHeight: '行高度',
+        showTooltip: '显示工具提示',
+        tooltipTemplates: '工具提示模板',
     },
     transfer: {
         sourceTitle: '源数据',

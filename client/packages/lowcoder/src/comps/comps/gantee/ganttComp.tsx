@@ -154,6 +154,10 @@ const childrenMap = {
   toggleOnDBClick: BoolControl.DEFAULT_TRUE,
   sortOptions: jsonControl(checkSortKey, { sortKey: 'start_date', asc: true }),
   rowHeight: withDefault(NumberControl, 20),
+  showTooltip: BoolControl,
+  tooltipTemplates: withDefault(StringControl, `<b>{text_title}:</b>{text}</br>
+<b>{start_date_title}:</b>{$start}</br>
+<b>${trans('date.end')}:</b>{$end}</br>`),
 };
 
 const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
@@ -331,6 +335,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       marker: true,
       drag_timeline: true,
       export_api: true,
+      tooltip: true,
     });
     // 取消原组件弹出框
     gantt.attachEvent(
@@ -396,6 +401,29 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   useEffect(() => {
     initGantt()
   }, [JSON.stringify(props.tasks.value), JSON.stringify(props.links.value), props.scaleMode, props.startDate, props.endDate, props.rowHeight])
+
+  useEffect(() => {
+    gantt.templates.tooltip_text = function (start, end, task) {
+      if (!props.showTooltip) return ''
+      // 标题映射
+      let titleMapping: any = {}
+      // 获取提示模板
+      let template = props.tooltipTemplates
+      props.Columns.map((item: any) => {
+        titleMapping[item?.name] = item?.label
+      })
+      for (let k in task) {
+        if (!k.startsWith('$')) {
+          template = template.replaceAll(`{${k}}`, task[k])
+          template = template.replaceAll(`{${k}_title}`, titleMapping[k])
+        }
+      }
+      template = template.replaceAll(`{$start}`, gantt.templates.tooltip_date_format(start))
+      template = template.replaceAll(`{$end}`, gantt.templates.tooltip_date_format(end))
+      template = template.replaceAll(`{$today}`, gantt.templates.tooltip_date_format(new Date()))
+      return template
+    };
+  }, [props.tooltipTemplates, props.showTooltip])
 
   // 是否显示今日标签
   useEffect(() => {
@@ -626,6 +654,17 @@ let GanttBasicComp = (function () {
           })}
           {children.allowProgressDrag.getView() && children.onProgressDragEvent.propertyView({
             title: trans("gantt.handleProgressDrag"),
+          })}
+        </Section>
+        <Section name={trans("prop.tooltip")}>
+          {children.showTooltip.propertyView({
+            label: trans("gantt.showTooltip")
+          })}
+          {children.tooltipTemplates.propertyView({
+            label: trans("gantt.tooltipTemplates"),
+            tooltip: language === "en" ?
+              "The template replaces text based on {key} and {key_title} in the task data, with built-in {$start}、{$end} and {$today} to replace start and end dates"
+              : "模板根据任务数据中的{key}和{key_title}来替换文本，内置{$start}、{$end}和{$today}来替换开始和结束日期",
           })}
         </Section>
         <Section name={sectionNames.layout}>

@@ -203,6 +203,7 @@ export const en = {
     budgeTitle: "Budge title",
     dot: "Dot",
     number: "Number",
+    tooltip: "Tooltip",
   },
   autoHeightProp: {
     auto: "Auto",
@@ -3160,6 +3161,8 @@ export const en = {
     toggleOnDBClick: 'Toggle On DBClick',
     sortOptions: 'Initial Sorting Options',
     rowHeight: 'Row Height',
+    showTooltip: 'Show Tooltip',
+    tooltipTemplates: 'Tooltip Template',
   },
   transfer: {
     sourceTitle: 'Source Data',
