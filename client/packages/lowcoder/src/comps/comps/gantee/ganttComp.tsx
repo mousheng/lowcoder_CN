@@ -14,8 +14,8 @@ import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { gantt } from 'dhtmlx-gantt';
 import "dhtmlx-gantt/codebase/dhtmlxgantt.css";
-import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, skinsOptions, StatutoryHolidaysData, StatutoryHolidaysDataType, scaleMode, taskDataDescZh, taskDataDescEn, LinkDataDescZh, LinkDataDescEn } from "./ganttConstant";
-import { NumberControl, StringControl, StringOrNumberControl, jsonObjectControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
+import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, StatutoryHolidaysData, StatutoryHolidaysDataType, scaleMode, taskDataDescZh, taskDataDescEn, LinkDataDescZh, LinkDataDescEn, checkSortKey } from "./ganttConstant";
+import { NumberControl, StringControl, StringOrNumberControl, jsonControl, jsonObjectControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
 import _ from "lodash"
 import dayjs from "dayjs"
 import minmax from "dayjs/plugin/minMax"
@@ -152,6 +152,8 @@ const childrenMap = {
   startDate: withDefault(StringControl, dayjs().add(-5, 'd').format('YYYY-MM-DD')),
   endDate: withDefault(StringControl, dayjs().add(7, 'd').format('YYYY-MM-DD')),
   toggleOnDBClick: BoolControl.DEFAULT_TRUE,
+  sortOptions: jsonControl(checkSortKey, { sortKey: 'start_date', asc: true }),
+  rowHeight: withDefault(NumberControl, 20),
 };
 
 const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
@@ -393,7 +395,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
 
   useEffect(() => {
     initGantt()
-  }, [JSON.stringify(props.tasks.value), JSON.stringify(props.links.value), props.scaleMode, props.startDate, props.endDate])
+  }, [JSON.stringify(props.tasks.value), JSON.stringify(props.links.value), props.scaleMode, props.startDate, props.endDate, props.rowHeight])
 
   // 是否显示今日标签
   useEffect(() => {
@@ -479,6 +481,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   }, [JSON.stringify(props.Columns)])
 
   const initGantt = () => {
+    gantt.config.row_height = props.rowHeight;
     if (props.scaleMode === 'fit') {
       gantt.config.start_date = undefined;
       gantt.config.end_date = undefined;
@@ -495,6 +498,10 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     if (conRef.current) {
       if (!initFlag) {
         gantt.init(conRef.current)
+        setTimeout(() => {
+          gantt.sort(props.sortOptions?.sortKey, !props.sortOptions?.asc)
+          gantt.showTask(gantt.getTaskByIndex(0)?.id)
+        }, 100);
       }
       setInitFlag(true)
       gantt.parse(_.cloneDeep({
@@ -544,6 +551,12 @@ let GanttBasicComp = (function () {
           })}
           {children.showColumns.getView() && children.Columns.propertyView({
             title: trans("gantt.ColumnsData"),
+          })}
+          {children.sortOptions.propertyView({
+            label: trans("gantt.sortOptions"),
+          })}
+          {children.rowHeight.propertyView({
+            label: trans("gantt.rowHeight"),
           })}
         </Section>
         <Section name={sectionNames.advanced}>

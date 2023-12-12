@@ -3158,6 +3158,8 @@ export const en = {
     allowSort: 'Allow Sort',
     showTask: 'Show Task',
     toggleOnDBClick: 'Toggle On DBClick',
+    sortOptions: 'Initial Sorting Options',
+    rowHeight: 'Row Height',
   },
   transfer: {
     sourceTitle: 'Source Data',

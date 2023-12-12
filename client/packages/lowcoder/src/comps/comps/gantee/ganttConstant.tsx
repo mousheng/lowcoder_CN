@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { GanttStatic, gantt } from 'dhtmlx-gantt';
 import { trans } from '@lowcoder-ee/i18n';
-import { BoolControl, ExposeMethodCompConstructor, MethodConfigInfo, MultiBaseComp, MultiCompBuilder, RefControl, StringControl, ToInstanceType } from '@lowcoder-ee/index.sdk';
+import { BoolControl, ExposeMethodCompConstructor, MethodConfigInfo, MultiBaseComp, MultiCompBuilder, RefControl, StringControl, ToInstanceType, check } from '@lowcoder-ee/index.sdk';
 import { alignControl } from "comps/controls/alignControl";
 import { dropdownControl } from "comps/controls/dropdownControl";
 import { withDefault } from "../../generators";
@@ -564,3 +564,10 @@ export const LinkDataDescEn = (
         Readonly (boolean): Indicates whether the link is read-only.
     </li>
 );
+
+export function checkSortKey(data: any) {
+    if (data === "") return {}
+    check(data.sortKey, ["string"], "name")
+    check(data.asc, ["boolean"], "asc")
+    return data
+}
