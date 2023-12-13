@@ -3004,6 +3004,11 @@ idSource: {
         showTooltip: '显示工具提示',
         tooltipTemplates: '工具提示模板',
         allowResizeTask: '允许调整任务起始',
+        projectColor: '项目颜色',
+        projectColorBg: '项目背景颜色',
+        taskColor: '任务颜色',
+        taskColorBg: '任务背景色',
+        milestoneColor: '里程碑颜色',
     },
     transfer: {
         sourceTitle: '源数据',

@@ -897,6 +897,31 @@ export const QRCodeStyle = [
 
 export const GanttStyle = [
   {
+    name: "projectColor",
+    label: trans("gantt.projectColor"),
+    color: "#46ad51",
+  },
+  {
+    name: "projectColorBg",
+    label: trans("gantt.projectColorBg"),
+    color: "#65c16f",
+  },
+  {
+    name: "taskColor",
+    label: trans("gantt.taskColor"),
+    color: "#299cb4",
+  },
+  {
+    name: "taskColorBg",
+    label: trans("gantt.taskColorBg"),
+    color: "#3db9d3",
+  },
+  {
+    name: "milestoneColor",
+    label: trans("gantt.milestoneColor"),
+    color: "#3db9d3",
+  },
+  {
     name: "progressLowColor",
     label: trans("gantt.progressLowColor"),
     color: "#d96e6c",

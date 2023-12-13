@@ -24,6 +24,24 @@ dayjs.extend(minmax)
 const Container = styled.div<{ $style: GanttStyleType | undefined }>`
   height: 100%;
   width: 100%;
+  .gantt_task_line.project {
+    background-color: ${props => props.$style?.projectColorBg};
+    border: 1px solid ${props => props.$style?.projectColor};
+    .gantt_task_progress {
+      background: ${props => props.$style?.projectColor};
+    }
+  }
+  .gantt_task_line.task {
+    background-color: ${props => props.$style?.taskColorBg};
+    border: 1px solid ${props => props.$style?.taskColor};
+    .gantt_task_progress {
+      background: ${props => props.$style?.taskColor};
+    }
+  }
+  .gantt_task_line.milestone {
+    background-color: ${props => props.$style?.milestoneColor};
+    border: 1px solid ${props => props.$style?.milestoneColor};
+  }
   .gantt_task_line.low_task {
     background-color: ${props => props.$style?.progressLowBg};
     border: 1px solid ${props => props.$style?.progressLowColor};
@@ -218,7 +236,17 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   useEffect(() => {
     // 设置 任务的 class 类名
     gantt.templates.task_class = (start, end, task) => {
-      if (!props.SegmentedColor) return ""
+      if (task?.type === 'project' || task?.parent === 0) {
+        return 'project';
+      }
+      if (!props.SegmentedColor) {
+        if (task?.type === 'task' || task?.parent != 0) {
+          return 'task';
+        } else if (task?.type === 'milestone')
+          return 'milestone'
+        else
+          return ''
+      }
       if (task.progress && task.progress <= Math.min(props.lowLine, props.mediumLine)) return "low_task";
       if (task.progress && task.progress <= Math.max(props.lowLine, props.mediumLine)) return "Medium_task";
       if (task.progress && task.progress < 1) return "High_task";

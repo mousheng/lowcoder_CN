@@ -3164,6 +3164,11 @@ export const en = {
     showTooltip: 'Show Tooltip',
     tooltipTemplates: 'Tooltip Template',
     allowResizeTask: 'Allow Resize Task',
+    projectColor: 'Project Color',
+    projectColorBg: 'Project BgColor',
+    taskColor: 'Task Color',
+    taskColorBg: 'Task BgColor',
+    milestoneColor: 'Milestone Color',
   },
   transfer: {
     sourceTitle: 'Source Data',
