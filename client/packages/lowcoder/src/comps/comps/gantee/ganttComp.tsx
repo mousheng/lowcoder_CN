@@ -14,11 +14,12 @@ import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { gantt } from 'dhtmlx-gantt';
 import "dhtmlx-gantt/codebase/dhtmlxgantt.css";
-import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, StatutoryHolidaysData, StatutoryHolidaysDataType, scaleMode, taskDataDescZh, taskDataDescEn, LinkDataDescZh, LinkDataDescEn, checkSortKey } from "./ganttConstant";
+import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, StatutoryHolidaysData, StatutoryHolidaysDataType, scaleMode, taskDataDescZh, taskDataDescEn, LinkDataDescZh, LinkDataDescEn, checkSortKey, isValidTag } from "./ganttConstant";
 import { NumberControl, StringControl, StringOrNumberControl, jsonControl, jsonObjectControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
 import _ from "lodash"
 import dayjs from "dayjs"
 import minmax from "dayjs/plugin/minMax"
+import { Tag } from 'antd';
 dayjs.extend(minmax)
 
 const Container = styled.div<{ $style: GanttStyleType | undefined }>`
@@ -252,9 +253,9 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     // 设置 任务的 class 类名
     gantt.templates.task_class = (start, end, task) => {
       if (task?.type === 'project' || task?.parent === 0) {
-        if(props.highlightOverdue && new Date() > end){
+        if (props.highlightOverdue && new Date() > end) {
           return 'project_overdue'
-        }else if (task?.progress === 1 || task?.completed ){
+        } else if (task?.progress === 1 || task?.completed) {
           return 'project_completed'
         }
         return 'project';
@@ -551,6 +552,11 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
         } else if (c.ColumnsType === 'add') {
           rt['name'] = 'add'
           rt['label'] = ''
+        } else if (c.ColumnsType === 'tag') {
+          rt['template'] = (task: any) => {
+            console.log(task?.tagType, isValidTag(task?.tagType));
+            return c.name in task ? `<span class="ant-tag ant-tag-${isValidTag(task?.tagType) ? task.tagType : 'default'}">${task[c.name]}</span>` : '';
+          }
         }
       }
       return rt
@@ -596,6 +602,12 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
         e.preventDefault();
       }}
     >
+      {/* 空标签用于引入tag的样式 */}
+      <Tag color="error"></Tag>
+      <Tag color="warning"></Tag>
+      <Tag color="processing"></Tag>
+      <Tag color="warning"></Tag>
+      <Tag></Tag>
     </Container>
   );
 };
