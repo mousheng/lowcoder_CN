@@ -244,7 +244,6 @@ export const tasks =
             task_user: "A",
             parent: 0,
             other: trans('gantt.otherData', { i: 1 }),
-            color: '#46ad51',
         },
         {
             id: "A2",
@@ -279,7 +278,6 @@ export const tasks =
             task_user: "A",
             parent: 0,
             other: trans('gantt.otherData', { i: 4 }),
-            color: '#46ad51',
         },
         {
             id: "A5",

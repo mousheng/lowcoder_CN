@@ -179,7 +179,7 @@ const childrenMap = {
   endDate: withDefault(StringControl, dayjs().add(7, 'd').format('YYYY-MM-DD')),
   toggleOnDBClick: BoolControl.DEFAULT_TRUE,
   sortOptions: jsonControl(checkSortKey, { sortKey: 'start_date', asc: true }),
-  rowHeight: withDefault(NumberControl, 20),
+  rowHeight: withDefault(NumberControl, 30),
   showTooltip: BoolControl,
   tooltipTemplates: withDefault(StringControl, `<b>{text_title}:</b>{text}</br>
 <b>{start_date_title}:</b>{$start}</br>
