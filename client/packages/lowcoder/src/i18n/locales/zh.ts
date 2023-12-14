@@ -3016,6 +3016,7 @@ idSource: {
         projectCompletedColor: '项目完成颜色',
         tag: '标签',
         tasksTableWidth: '列表宽度',
+        allowErrorMessage: '允许错误提示',
     },
     transfer: {
         sourceTitle: '源数据',

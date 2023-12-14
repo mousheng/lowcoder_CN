@@ -193,6 +193,7 @@ const childrenMap = {
 <b>{start_date_title}:</b>{$start}</br>
 <b>${trans('date.end')}:</b>{$end}</br>`),
   highlightOverdue: BoolControl,
+  allowErrorMessage: BoolControl.DEFAULT_TRUE,
 };
 
 const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
@@ -207,6 +208,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   const [handleAfterTaskAddRef, sethandleAfterTaskAddRef] = useState('')
   const [handleBeforeTaskDeleteRef, sethandleBeforeTaskDeleteRef] = useState('')
   const [handleAfterTaskDeleteRef, sethandleAfterTaskDeleteRef] = useState('')
+  const [handleOnErrorRef, setHandleOnErrorRef] = useState('')
   const [markId, setMarkId] = useState('')
   const [initFlag, setInitFlag] = useState(false)
   var idParentBeforeDeleteTask: taskType = 0;
@@ -336,6 +338,13 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       gantt.setWorkTime({ date: new Date(d.date), hours: !d.holiday })
     })
   }
+
+  useEffect(() => {
+    handleOnErrorRef && gantt.detachEvent(handleOnErrorRef)
+    setHandleOnErrorRef(gantt.attachEvent("onError", function (errorMessage) {
+      return props.allowErrorMessage;
+    }))
+  }, [props.allowErrorMessage])
 
   useEffect(() => {
     gantt.config.work_time = props.showHolidays;
@@ -750,6 +759,9 @@ let GanttBasicComp = (function () {
           })}
         </Section>
         <Section name={trans("prop.tooltip")}>
+          {children.allowErrorMessage.propertyView({
+            label: trans("gantt.allowErrorMessage")
+          })}
           {children.showTooltip.propertyView({
             label: trans("gantt.showTooltip")
           })}
