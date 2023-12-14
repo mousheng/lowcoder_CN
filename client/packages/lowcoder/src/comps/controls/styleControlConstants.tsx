@@ -897,6 +897,16 @@ export const QRCodeStyle = [
 
 export const GanttStyle = [
   {
+    name: "overdueColor",
+    label: trans("gantt.overdueColor"),
+    color: "#dc2626",
+  },
+  {
+    name: "overdueBgColor",
+    label: trans("gantt.overdueBgColor"),
+    color: "#ff5c5c",
+  },
+  {
     name: "projectColor",
     label: trans("gantt.projectColor"),
     color: "#46ad51",

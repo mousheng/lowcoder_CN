@@ -3009,6 +3009,9 @@ idSource: {
         taskColor: '任务颜色',
         taskColorBg: '任务背景色',
         milestoneColor: '里程碑颜色',
+        highlightOverdue: '突出超期项目',
+        overdueColor: '超期项目颜色',
+        overdueBgColor: '超期项目背景颜色',
     },
     transfer: {
         sourceTitle: '源数据',

@@ -3169,6 +3169,9 @@ export const en = {
     taskColor: 'Task Color',
     taskColorBg: 'Task BgColor',
     milestoneColor: 'Milestone Color',
+    highlightOverdue: 'Highlight Overdue',
+    overdueColor: 'Overdue Color',
+    overdueBgColor: 'Overdue BgColor',
   },
   transfer: {
     sourceTitle: 'Source Data',

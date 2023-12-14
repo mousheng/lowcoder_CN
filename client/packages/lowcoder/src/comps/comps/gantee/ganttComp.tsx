@@ -24,6 +24,13 @@ dayjs.extend(minmax)
 const Container = styled.div<{ $style: GanttStyleType | undefined }>`
   height: 100%;
   width: 100%;
+  .gantt_task_line.project_overdue {
+    background-color: ${props => props.$style?.overdueBgColor};
+    border: 1px solid ${props => props.$style?.overdueColor};
+    .gantt_task_progress {
+      background: ${props => props.$style?.overdueColor};
+    }
+  }
   .gantt_task_line.project {
     background-color: ${props => props.$style?.projectColorBg};
     border: 1px solid ${props => props.$style?.projectColor};
@@ -177,6 +184,7 @@ const childrenMap = {
   tooltipTemplates: withDefault(StringControl, `<b>{text_title}:</b>{text}</br>
 <b>{start_date_title}:</b>{$start}</br>
 <b>${trans('date.end')}:</b>{$end}</br>`),
+  highlightOverdue: BoolControl,
 };
 
 const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
@@ -237,6 +245,9 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     // 设置 任务的 class 类名
     gantt.templates.task_class = (start, end, task) => {
       if (task?.type === 'project' || task?.parent === 0) {
+        if(props.highlightOverdue && new Date() > end){
+          return 'project_overdue'
+        }
         return 'project';
       }
       if (!props.SegmentedColor) {
@@ -254,7 +265,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       return "";
     }
     gantt.render();
-  }, [props.lowLine, props.mediumLine, props.SegmentedColor])
+  }, [props.lowLine, props.mediumLine, props.SegmentedColor, props.highlightOverdue])
   // 设置四种连接线的类型
   useEffect(() => {
     gantt.templates.link_class = function (link) {
@@ -718,6 +729,9 @@ let GanttBasicComp = (function () {
           })}
           {children.SegmentedColor.getView() && children.mediumLine.propertyView({
             label: trans('gantt.mediumProgressLine')
+          })}
+          {children.highlightOverdue.propertyView({
+            label: trans('gantt.highlightOverdue')
           })}
           {children.style.getPropertyView()}
         </Section>
