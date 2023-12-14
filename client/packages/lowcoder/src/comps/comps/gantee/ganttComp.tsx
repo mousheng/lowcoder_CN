@@ -140,11 +140,11 @@ const EventOptions = [selectedChangeEvent, addTaskEvent] as const;
 
 const GanttColumns = manualOptionsControl(ColumnsOption, {
   initOptions: [
-    { name: 'text', label: trans('gantt.project'), align: 'center', tree: true, width: '120' },
-    { name: 'start_date', label: trans('gantt.from'), align: 'center' },
-    { name: 'progress', label: trans('gantt.progress'), align: 'center', ColumnsType: 'progress' },
-    { name: 'duration', label: trans('gantt.duration'), align: 'center', ColumnsType: 'text' },
-    { name: 'add', label: '+', align: 'center', ColumnsType: 'add' },
+    { name: 'text', label: trans('gantt.project'), align: 'center', tree: true, width: '100' },
+    { name: 'start_date', label: trans('gantt.from'), align: 'center', width: '100' },
+    { name: 'progress', label: trans('gantt.progress'), align: 'center', ColumnsType: 'progress', width: '50' },
+    { name: 'duration', label: trans('gantt.duration'), align: 'center', ColumnsType: 'text', width: '50' },
+    { name: 'add', label: '+', align: 'center', ColumnsType: 'add', width: '50' },
   ],
   uniqField: "name",
 });
@@ -450,7 +450,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
 
   useEffect(() => {
     initGantt()
-  }, [JSON.stringify(props.tasks.value), JSON.stringify(props.links.value), props.scaleMode, props.startDate, props.endDate, props.rowHeight])
+  }, [JSON.stringify(props.tasks.value), JSON.stringify(props.links.value), props.scaleMode, props.startDate, props.endDate, props.rowHeight, props.style.padding])
 
   useEffect(() => {
     gantt.templates.tooltip_text = function (start, end, task) {
@@ -554,7 +554,6 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
           rt['label'] = ''
         } else if (c.ColumnsType === 'tag') {
           rt['template'] = (task: any) => {
-            console.log(task?.tagType, isValidTag(task?.tagType));
             return c.name in task ? `<span class="ant-tag ant-tag-${isValidTag(task?.tagType) ? task.tagType : 'default'}">${task[c.name]}</span>` : '';
           }
         }
@@ -566,6 +565,31 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
 
   const initGantt = () => {
     gantt.config.row_height = props.rowHeight;
+    gantt.config.layout = {
+      css: "gantt_container",
+      cols: [
+        {
+          // 借用padding输入框来获取宽度信息
+          width: parseInt(props.style.padding ?? 350),
+          rows: [
+            {
+              view: "grid",
+              scrollX: "gridScroll",
+              scrollable: true,
+              scrollY: "scrollVer"
+            },
+            { view: "scrollbar", id: "gridScroll", group: "horizontal" }
+          ]
+        },
+        {
+          rows: [
+            { view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer" },
+            { view: "scrollbar", id: "scrollHor", group: "horizontal" }
+          ]
+        },
+        { view: "scrollbar", id: "scrollVer" }
+      ]
+    };
     if (props.scaleMode === 'fit') {
       gantt.config.start_date = undefined;
       gantt.config.end_date = undefined;
@@ -586,6 +610,8 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
           gantt.sort(props.sortOptions?.sortKey, !props.sortOptions?.asc)
           gantt.showTask(gantt.getTaskByIndex(0)?.id)
         }, 100);
+      } else {
+        gantt.resetLayout();
       }
       setInitFlag(true)
       gantt.parse(_.cloneDeep({

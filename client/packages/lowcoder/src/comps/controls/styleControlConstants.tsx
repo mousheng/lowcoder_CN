@@ -1011,6 +1011,11 @@ export const GanttStyle = [
     label: trans("gantt.noWorkHourSelected"),
     color: "#EAE1A5",
   },
+  {
+    name: "padding",
+    label: trans("gantt.tasksTableWidth"),
+    padding: "",
+  },
 ] as const;
 
 export const TransferStyle = [

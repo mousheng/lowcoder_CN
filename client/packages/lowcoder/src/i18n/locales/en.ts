@@ -3175,6 +3175,7 @@ export const en = {
     projectCompletedBgColor: 'Project Completed BgColor',
     projectCompletedColor: 'Project Completed Color',
     tag: 'tag',
+    tasksTableWidth: 'Tasks Table Width',
   },
   transfer: {
     sourceTitle: 'Source Data',

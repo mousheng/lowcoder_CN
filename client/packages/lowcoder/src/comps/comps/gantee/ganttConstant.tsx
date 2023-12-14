@@ -201,7 +201,7 @@ export const ColumnsOption = new MultiCompBuilder(
         label: StringControl,
         tree: BoolControl,
         ColumnsType: dropdownControl(cloumnsTypeOptions, 'text'),
-        width: withDefault(CodeTextControl, '*'),
+        width: withDefault(CodeTextControl, '50'),
         hide: BoolControl,
         sort: BoolControl,
     },
