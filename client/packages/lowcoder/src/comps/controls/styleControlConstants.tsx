@@ -934,7 +934,7 @@ export const GanttStyle = [
   {
     name: "milestoneColor",
     label: trans("gantt.milestoneColor"),
-    color: "#3db9d3",
+    color: "#d33daf",
   },
   {
     name: "progressLowColor",

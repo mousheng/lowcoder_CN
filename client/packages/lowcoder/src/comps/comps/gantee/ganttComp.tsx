@@ -252,6 +252,8 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   useEffect(() => {
     // 设置 任务的 class 类名
     gantt.templates.task_class = (start, end, task) => {
+      if (task?.type === 'milestone')
+        return 'milestone'
       if (task?.type === 'project' || task?.parent === 0) {
         if (props.highlightOverdue && new Date() > end) {
           return 'project_overdue'
@@ -263,8 +265,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       if (!props.SegmentedColor) {
         if (task?.type === 'task' || task?.parent != 0) {
           return 'task';
-        } else if (task?.type === 'milestone')
-          return 'milestone'
+        }
         else
           return ''
       }
@@ -430,6 +431,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     gantt.attachEvent("onBeforeTaskSelected", function (id) {
       props.dispatch(changeChildAction("currentId", id, false));
       props.dispatch(changeChildAction("currentObject", _.pickBy(gantt.getTask(id), (value, key) => !key.startsWith('$')), false));
+      // props.dispatch(changeChildAction("currentObject", gantt.getTask(id), false));
       props.onEvent('selectedChange')
       return true;
     });
