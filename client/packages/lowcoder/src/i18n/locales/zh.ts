@@ -3014,6 +3014,7 @@ idSource: {
         overdueBgColor: '超期项目背景颜色',
         projectCompletedBgColor: '项目完成背景色',
         projectCompletedColor: '项目完成颜色',
+        tag: '标签',
     },
     transfer: {
         sourceTitle: '源数据',
