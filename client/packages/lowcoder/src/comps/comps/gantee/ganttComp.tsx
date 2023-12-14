@@ -257,12 +257,12 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       if (task?.type === 'milestone')
         return 'milestone'
       if (task?.type === 'project' || task?.parent === 0) {
-        if (props.highlightOverdue && new Date() > end) {
-          return 'project_overdue'
-        } else if (task?.progress === 1 || task?.completed) {
+        if (task?.progress === 1 || task?.completed) {
           return 'project_completed'
-        }
-        return 'project';
+        } else if (props.highlightOverdue && new Date() > end) {
+          return 'project_overdue'
+        } else
+          return 'project';
       }
       if (!props.SegmentedColor) {
         if (task?.type === 'task' || task?.parent != 0) {
