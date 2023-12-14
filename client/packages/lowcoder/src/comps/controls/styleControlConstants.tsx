@@ -907,6 +907,11 @@ export const GanttStyle = [
     color: "#ff5c5c",
   },
   {
+    name: "projectCompletedColor",
+    label: trans("gantt.projectCompletedColor"),
+    color: "#46ad51",
+  },
+  {
     name: "projectColor",
     label: trans("gantt.projectColor"),
     color: "#46ad51",

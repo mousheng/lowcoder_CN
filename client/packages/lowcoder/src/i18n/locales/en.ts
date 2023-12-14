@@ -3172,6 +3172,8 @@ export const en = {
     highlightOverdue: 'Highlight Overdue',
     overdueColor: 'Overdue Color',
     overdueBgColor: 'Overdue BgColor',
+    projectCompletedBgColor: 'Project Completed BgColor',
+    projectCompletedColor: 'Project Completed Color',
   },
   transfer: {
     sourceTitle: 'Source Data',

@@ -24,6 +24,13 @@ dayjs.extend(minmax)
 const Container = styled.div<{ $style: GanttStyleType | undefined }>`
   height: 100%;
   width: 100%;
+  .gantt_task_line.project_completed {
+    background-color: ${props => props.$style?.projectCompletedColor};
+    border: 1px solid ${props => props.$style?.projectCompletedColor};
+    .gantt_task_progress {
+      background: ${props => props.$style?.projectCompletedColor};
+    }
+  }
   .gantt_task_line.project_overdue {
     background-color: ${props => props.$style?.overdueBgColor};
     border: 1px solid ${props => props.$style?.overdueColor};
@@ -247,6 +254,8 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       if (task?.type === 'project' || task?.parent === 0) {
         if(props.highlightOverdue && new Date() > end){
           return 'project_overdue'
+        }else if (task?.progress === 1 || task?.completed ){
+          return 'project_completed'
         }
         return 'project';
       }
