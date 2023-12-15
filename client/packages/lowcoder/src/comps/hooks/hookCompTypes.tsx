@@ -8,6 +8,7 @@ const AllHookComp = [
   "windowSize",
   "currentTime",
   "lodashJsLib",
+  "chcharLib",
   "dayJsLib",
   "momentJsLib",
   "utils",
@@ -47,6 +48,9 @@ const HookCompConfig: Record<
     singleton: false,
   },
   lodashJsLib: {
+    category: "hide",
+  },
+  chcharLib: {
     category: "hide",
   },
   dayJsLib: {

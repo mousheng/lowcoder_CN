@@ -33,12 +33,15 @@ import { ThemeComp } from "./themeComp";
 import UrlParamsHookComp from "./UrlParamsHookComp";
 import { UtilsComp } from "./utilsComp";
 import { VideoMeetingControllerComp } from "../comps/meetingComp/videoMeetingControllerComp";
+import cnchar from "cnchar";
+
 
 window._ = _;
 window.dayjs = dayjs;
 
 const LodashJsLib = simpleValueComp(_);
 const DayJsLib = simpleValueComp(dayjs);
+const chcharLib = simpleValueComp(cnchar);
 
 const WindowSizeComp = hookToStateComp(useWindowSize);
 
@@ -91,6 +94,7 @@ const HookMap: HookCompMapRawType = {
   lodashJsLib: LodashJsLib,
   dayJsLib: DayJsLib,
   momentJsLib: DayJsLib, // old components use this hook
+  chcharLib: chcharLib,
   utils: UtilsComp,
   message: MessageComp,
   localStorage: LocalStorageComp,
