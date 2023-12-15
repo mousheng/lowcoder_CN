@@ -7,7 +7,7 @@ import {
 import { BoolControl } from "../../controls/boolControl";
 import { LabelControl } from "../../controls/labelControl";
 import { BoolCodeControl, StringControl } from "../../controls/codeControl";
-import { PaddingControl } from "../../controls/paddingControl";	
+import { PaddingControl } from "../../controls/paddingControl";
 import { MarginControl } from "../../controls/marginControl";
 import {
   ControlNode,
@@ -84,18 +84,18 @@ export const getStyle = (
       .ant-select-clear {
         background-color: ${style.background};
         color: ${style.text === "#222222"
-          ? "#8B8FA3"
-          : isDarkColor(style.text)
-          ? lightenColor(style.text, 0.2)
-          : style.text};
+      ? "#8B8FA3"
+      : isDarkColor(style.text)
+        ? lightenColor(style.text, 0.2)
+        : style.text};
       }
 
       .ant-select-clear:hover {
         color: ${style.text === "#222222"
-          ? "#8B8FA3"
-          : isDarkColor(style.text)
-          ? lightenColor(style.text, 0.1)
-          : style.text};
+      ? "#8B8FA3"
+      : isDarkColor(style.text)
+        ? lightenColor(style.text, 0.1)
+        : style.text};
       }
 
       &.ant-select-multiple .ant-select-selection-item {
@@ -143,7 +143,7 @@ const getDropdownStyle = (style: MultiSelectStyleType) => {
   `;
 };
 
-const Select = styled(AntdSelect)<{ $style: SelectStyleType & MultiSelectStyleType }>`
+const Select = styled(AntdSelect) <{ $style: SelectStyleType & MultiSelectStyleType }>`
   width: 100%;
 
   ${(props) => props.$style && getStyle(props.$style)}
@@ -177,7 +177,7 @@ export const SelectChildrenMap = {
   inputValue: stateComp<string>(""), // user's input value when search
   showSearch: BoolControl.DEFAULT_TRUE,
   viewRef: RefControl<BaseSelectRef>,
-  margin: MarginControl,	
+  margin: MarginControl,
   padding: PaddingControl,
   ...SelectInputValidationChildren,
   ...formDataChildren,
@@ -201,7 +201,15 @@ export const SelectUIView = (
     placeholder={props.placeholder}
     value={props.value}
     showSearch={props.showSearch}
-    filterOption={(input, option) => option?.label.toLowerCase().includes(input.toLowerCase())}
+    filterOption={(input, option) => {
+      // 支持首拼搜索
+      if (input.charCodeAt(0) >= 32 && input.charCodeAt(0) <= 126) {
+        return option?.label && option.label.spell('first').toLowerCase().indexOf(input.toLowerCase()) >= 0;
+        //如果以中文输入搜索
+      } else {
+        return option?.label && option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+      }
+    }}
     dropdownRender={(originNode: ReactNode) => (
       <DropdownStyled $style={props.style as MultiSelectStyleType}>{originNode}</DropdownStyled>
     )}
@@ -215,8 +223,8 @@ export const SelectUIView = (
     onSearch={
       props.showSearch
         ? (value) => {
-            props.dispatch(changeChildAction("inputValue", value, false));
-          }
+          props.dispatch(changeChildAction("inputValue", value, false));
+        }
         : undefined
     }
   >
