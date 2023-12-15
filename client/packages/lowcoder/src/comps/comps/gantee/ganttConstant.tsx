@@ -572,3 +572,15 @@ enum TagType {
 export function isValidTag(tag: string): tag is TagType {
     return Object.values(TagType).includes(tag as TagType);
 }
+
+export function findProjectId(taskId: string | number, depth = 20): string | number {
+    const task = gantt.getTask(taskId);
+    if (depth <= 0) return ''
+    if (task) {
+        if (task?.parent) {
+            return findProjectId(task.parent, depth - 1);
+        }
+        return task.id;
+    }
+    return '';
+}

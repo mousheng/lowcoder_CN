@@ -3177,6 +3177,7 @@ export const en = {
     tag: 'tag',
     tasksTableWidth: 'Tasks Table Width',
     allowErrorMessage: 'Allow Error Message',
+    currentProjectId: 'Current Project Id',
   },
   transfer: {
     sourceTitle: 'Source Data',

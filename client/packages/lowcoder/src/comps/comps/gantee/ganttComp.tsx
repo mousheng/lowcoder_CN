@@ -14,7 +14,7 @@ import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { gantt } from 'dhtmlx-gantt';
 import "dhtmlx-gantt/codebase/dhtmlxgantt.css";
-import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, StatutoryHolidaysData, StatutoryHolidaysDataType, scaleMode, taskDataDescZh, taskDataDescEn, LinkDataDescZh, LinkDataDescEn, checkSortKey, isValidTag } from "./ganttConstant";
+import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, StatutoryHolidaysData, StatutoryHolidaysDataType, scaleMode, taskDataDescZh, taskDataDescEn, LinkDataDescZh, LinkDataDescEn, checkSortKey, isValidTag, findProjectId } from "./ganttConstant";
 import { NumberControl, StringControl, StringOrNumberControl, jsonControl, jsonObjectControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
 import _ from "lodash"
 import dayjs from "dayjs"
@@ -171,6 +171,7 @@ const childrenMap = {
   showToday: BoolControl.DEFAULT_TRUE,
   style: styleControl(GanttStyle),
   currentId: StringOrNumberControl,
+  currentProjectId: StringOrNumberControl,
   onEvent: eventHandlerControl(EventOptions),
   currentObject: valueComp({}),
   openAllBranchInit: BoolControl,
@@ -408,6 +409,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     // 任务拖动、进度条拖动后
     gantt.attachEvent("onAfterTaskDrag", function (id, mode, e) {
       props.dispatch(changeChildAction("currentId", id, false));
+      props.dispatch(changeChildAction("currentProjectId", findProjectId(id), false));
       props.dispatch(changeChildAction("currentObject",
         _.pickBy(gantt.getTask(id), (value, key) => !key.startsWith('$'))
         , false));
@@ -424,6 +426,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       props.dispatch(changeChildAction("currentObject",
         _.pickBy(item, (value, key) => !key.startsWith('$'))
         , false));
+        props.dispatch(changeChildAction("currentProjectId", findProjectId(gantt.getLink(id).source), false));
       props.onAddedLinkEvent('addedLink')
     });
     // 删除链接时
@@ -433,6 +436,8 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     // 创建新任务时
     gantt.attachEvent("onTaskCreated", function (item) {
       props.dispatch(changeChildAction("currentId", item.parent, false));
+      props.dispatch(changeChildAction("currentProjectId", findProjectId(item.parent), false));
+      props.dispatch(changeChildAction("currentObject", _.pickBy(gantt.getTask(item.parent), (value, key) => !key.startsWith('$')), false));
       props.onEvent('addTask')
       return false;
     });
@@ -440,7 +445,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     gantt.attachEvent("onBeforeTaskSelected", function (id) {
       props.dispatch(changeChildAction("currentId", id, false));
       props.dispatch(changeChildAction("currentObject", _.pickBy(gantt.getTask(id), (value, key) => !key.startsWith('$')), false));
-      // props.dispatch(changeChildAction("currentObject", gantt.getTask(id), false));
+      props.dispatch(changeChildAction("currentProjectId", findProjectId(id), false));
       props.onEvent('selectedChange')
       return true;
     });
@@ -448,6 +453,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     gantt.attachEvent("onLinkClick", function (id, e) {
       props.dispatch(changeChildAction("currentId", id, false));
       props.dispatch(changeChildAction("currentObject", _.pickBy(gantt.getLink(id), (value, key) => !key.startsWith('$')), false));
+      props.dispatch(changeChildAction("currentProjectId", findProjectId(gantt.getLink(id).source), false));
       props.onEvent('selectedChange')
     });
     // 里程碑节点显示右侧文字
@@ -812,6 +818,7 @@ export const GanttComp = withExposingConfigs(GanttBasicComp, [
   new NameConfig("tasks", trans("gantt.tasks")),
   new NameConfig("links", trans("gantt.links")),
   new NameConfig("currentId", trans("gantt.currentId")),
+  new NameConfig("currentProjectId", trans("gantt.currentProjectId")),
   new NameConfig("currentObject", trans("gantt.currentObject")),
   NameConfigHidden,
 ]);
