@@ -615,5 +615,5 @@ export function findLatestEndDateTask(projectId: string | number): any {
             }
         }
     });
-    return latestEndDateTask;
+    return _.pickBy(latestEndDateTask, (value, key) => !key.startsWith('$'));
 }
