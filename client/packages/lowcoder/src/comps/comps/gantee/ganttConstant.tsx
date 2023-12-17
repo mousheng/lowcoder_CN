@@ -584,3 +584,36 @@ export function findProjectId(taskId: string | number, depth = 20): string | num
     }
     return '';
 }
+
+export function findLatestEndDateTask(projectId: string | number): any {
+    const projectTasks = gantt.getChildren(projectId);
+    let latestEndDateTask = null;
+    let latestEndDate: any = new Date(1970, 1, 1);
+    projectTasks.forEach((taskId) => {
+        const task = gantt.getTask(taskId);
+        let end_date
+        // 检查任务的 end_date 是否存在
+        if (task.end_date instanceof Date) {
+            end_date = task.end_date
+        } else if (task?.end_date) {
+            end_date = new Date(task.end_date)
+        }
+        if (task && end_date) {
+            // 比较 end_date，找到最晚的任务
+            if (!latestEndDate || end_date > latestEndDate) {
+                latestEndDate = end_date;
+                latestEndDateTask = task;
+            }
+        }
+        // 递归处理子任务
+        const childLatestEndDateTask = findLatestEndDateTask(taskId);
+        if (childLatestEndDateTask) {
+            // 比较子任务的 end_date
+            if (childLatestEndDateTask.end_date > latestEndDate) {
+                latestEndDate = childLatestEndDateTask.end_date;
+                latestEndDateTask = childLatestEndDateTask;
+            }
+        }
+    });
+    return latestEndDateTask;
+}

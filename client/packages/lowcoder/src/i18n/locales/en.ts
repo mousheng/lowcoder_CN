@@ -3178,6 +3178,7 @@ export const en = {
     tasksTableWidth: 'Tasks Table Width',
     allowErrorMessage: 'Allow Error Message',
     currentProjectId: 'Current Project Id',
+    currentProjectLastTask: 'Current Project Last Task',
   },
   transfer: {
     sourceTitle: 'Source Data',

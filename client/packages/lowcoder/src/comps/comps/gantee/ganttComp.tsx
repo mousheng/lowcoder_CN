@@ -14,7 +14,7 @@ import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { gantt } from 'dhtmlx-gantt';
 import "dhtmlx-gantt/codebase/dhtmlxgantt.css";
-import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, StatutoryHolidaysData, StatutoryHolidaysDataType, scaleMode, taskDataDescZh, taskDataDescEn, LinkDataDescZh, LinkDataDescEn, checkSortKey, isValidTag, findProjectId } from "./ganttConstant";
+import { ColumnsOption, links, tasks, viewModeOptions, zoomConfig, ganttMethods, StatutoryHolidaysData, StatutoryHolidaysDataType, scaleMode, taskDataDescZh, taskDataDescEn, LinkDataDescZh, LinkDataDescEn, checkSortKey, isValidTag, findProjectId, findLatestEndDateTask } from "./ganttConstant";
 import { NumberControl, StringControl, StringOrNumberControl, jsonControl, jsonObjectControl, manualOptionsControl, valueComp, withDefault } from "@lowcoder-ee/index.sdk";
 import _ from "lodash"
 import dayjs from "dayjs"
@@ -172,6 +172,7 @@ const childrenMap = {
   style: styleControl(GanttStyle),
   currentId: StringOrNumberControl,
   currentProjectId: StringOrNumberControl,
+  currentProjectLastTask: valueComp({}),
   onEvent: eventHandlerControl(EventOptions),
   currentObject: valueComp({}),
   openAllBranchInit: BoolControl,
@@ -426,7 +427,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       props.dispatch(changeChildAction("currentObject",
         _.pickBy(item, (value, key) => !key.startsWith('$'))
         , false));
-        props.dispatch(changeChildAction("currentProjectId", findProjectId(gantt.getLink(id).source), false));
+      props.dispatch(changeChildAction("currentProjectId", findProjectId(gantt.getLink(id).source), false));
       props.onAddedLinkEvent('addedLink')
     });
     // 删除链接时
@@ -446,6 +447,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       props.dispatch(changeChildAction("currentId", id, false));
       props.dispatch(changeChildAction("currentObject", _.pickBy(gantt.getTask(id), (value, key) => !key.startsWith('$')), false));
       props.dispatch(changeChildAction("currentProjectId", findProjectId(id), false));
+      props.dispatch(changeChildAction("currentProjectLastTask", findLatestEndDateTask(findProjectId(id)), false));
       props.onEvent('selectedChange')
       return true;
     });
@@ -819,6 +821,7 @@ export const GanttComp = withExposingConfigs(GanttBasicComp, [
   new NameConfig("links", trans("gantt.links")),
   new NameConfig("currentId", trans("gantt.currentId")),
   new NameConfig("currentProjectId", trans("gantt.currentProjectId")),
+  new NameConfig("currentProjectLastTask", trans("gantt.currentProjectLastTask")),
   new NameConfig("currentObject", trans("gantt.currentObject")),
   NameConfigHidden,
 ]);
