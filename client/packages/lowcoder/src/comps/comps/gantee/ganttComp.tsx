@@ -213,6 +213,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   const [handleOnErrorRef, setHandleOnErrorRef] = useState('')
   const [markId, setMarkId] = useState('')
   const [initFlag, setInitFlag] = useState(false)
+  const [initSortFlag, setInitSortFlag] = useState(false)
   var idParentBeforeDeleteTask: taskType = 0;
 
   type taskType = number | string
@@ -582,6 +583,16 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     gantt.render();
   }, [JSON.stringify(props.Columns)])
 
+  gantt.attachEvent("onParse", function () {
+    if (!initSortFlag && props?.tasks?.value?.length) {
+      setInitSortFlag(true)
+      setTimeout(() => {
+        gantt.sort(props.sortOptions?.sortKey, !props.sortOptions?.asc)
+        gantt.showTask(gantt.getTaskByIndex(0)?.id)
+      }, 1);
+    }
+  });
+
   const initGantt = () => {
     gantt.config.row_height = props.rowHeight;
     gantt.config.layout = {
@@ -624,15 +635,11 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     gantt.config.open_tree_initially = props.openAllBranchInit;
     if (conRef.current) {
       if (!initFlag) {
+        setInitFlag(true)
         gantt.init(conRef.current)
-        setTimeout(() => {
-          gantt.sort(props.sortOptions?.sortKey, !props.sortOptions?.asc)
-          gantt.showTask(gantt.getTaskByIndex(0)?.id)
-        }, 100);
       } else {
         gantt.resetLayout();
       }
-      setInitFlag(true)
       gantt.parse(_.cloneDeep({
         data: props.tasks.value,
         links: props.links.value,
