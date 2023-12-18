@@ -3179,6 +3179,7 @@ export const en = {
     allowErrorMessage: 'Allow Error Message',
     currentProjectId: 'Current Project Id',
     currentProjectLastTask: 'Current Project Last Task',
+    onlySortProject: 'Only Sort Project',
   },
   transfer: {
     sourceTitle: 'Source Data',

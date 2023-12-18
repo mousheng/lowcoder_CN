@@ -3019,6 +3019,7 @@ idSource: {
         allowErrorMessage: '允许错误提示',
         currentProjectId: '当前项目ID',
         currentProjectLastTask: '当前项目最后任务',
+        onlySortProject: '仅排序项目',
     },
     transfer: {
         sourceTitle: '源数据',

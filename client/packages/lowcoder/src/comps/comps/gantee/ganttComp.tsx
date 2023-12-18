@@ -196,6 +196,7 @@ const childrenMap = {
 <b>${trans('date.end')}:</b>{$end}</br>`),
   highlightOverdue: BoolControl,
   allowErrorMessage: BoolControl.DEFAULT_TRUE,
+  onlySortProject: BoolControl,
 };
 
 const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
@@ -578,22 +579,35 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
           }
         }
       }
+      if (c?.sort && props.onlySortProject) {
+        rt['sort'] = (item1: any, item2: any) => {
+          if (item1.parent === 0 && item2.parent === 0) {
+            return item1[c.name] > item2[c.name] ? 1 : -1;
+          }
+          return 0
+        }
+      }
       return rt
     });
     gantt.render();
-  }, [JSON.stringify(props.Columns)])
-
-  gantt.attachEvent("onParse", function () {
-    if (!initSortFlag && props?.tasks?.value?.length) {
-      setInitSortFlag(true)
-      setTimeout(() => {
-        gantt.sort(props.sortOptions?.sortKey, !props.sortOptions?.asc)
-        gantt.showTask(gantt.getTaskByIndex(0)?.id)
-      }, 1);
-    }
-  });
+  }, [JSON.stringify(props.Columns), props.onlySortProject])
 
   const initGantt = () => {
+    gantt.attachEvent("onParse", function () {
+      if (!initSortFlag && props?.tasks?.value?.length) {
+        setInitSortFlag(true)
+        setTimeout(() => {
+          props.onlySortProject ?
+            gantt.sort((item1: any, item2: any) => {
+              if (item1.parent === 0 && item2.parent === 0) {
+                return item1[props.sortOptions?.sortKey] > item2[props.sortOptions?.sortKey] ? (props.sortOptions?.asc ? -1 : 1) : (props.sortOptions?.asc ? 1 : -1);
+              }
+              return 0
+            }) : gantt.sort(props.sortOptions?.sortKey, !props.sortOptions?.asc)
+          gantt.showTask(gantt.getTaskByIndex(0)?.id)
+        }, 1);
+      }
+    });
     gantt.config.row_height = props.rowHeight;
     gantt.config.layout = {
       css: "gantt_container",
@@ -693,6 +707,9 @@ let GanttBasicComp = (function () {
           })}
           {children.showColumns.getView() && children.Columns.propertyView({
             title: trans("gantt.ColumnsData"),
+          })}
+          {children.onlySortProject.propertyView({
+            label: trans("gantt.onlySortProject"),
           })}
           {children.sortOptions.propertyView({
             label: trans("gantt.sortOptions"),
