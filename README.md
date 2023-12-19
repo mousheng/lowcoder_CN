@@ -13,6 +13,14 @@ Lowcoder_cn（以下简称lowcoder）是[lowcoder](https://github.com/lowcoder-o
 
 [Document On Github](https://mousheng.github.io/lowcoder_CN) 国内推荐访问 [Document On Gitee](https://moushengkoo.gitee.io/lowcoder_cn)
 
+### 讨论群
+
+![讨论群](docs/assets/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231219083610.jpg)
+
+### 联系我
+
+![联系我](docs/assets/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231219083634.jpg)
+
 ## 快速开始
 
 ### 在线试用
