@@ -203,15 +203,6 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   dispatch: (action: CompAction) => void;
 }) => {
   const conRef = useRef<HTMLDivElement>(null);
-  const [handleDBClickLinkRef, sethandleDBClickLinkRef] = useState('')
-  const [handleDBClickTaskRef, sethandleDBClickTaskRef] = useState('')
-  const [handleParseRef, sethandleParseRef] = useState('')
-  const [handleAfterTaskUpdateRef, sethandleAfterTaskUpdateRef] = useState('')
-  const [handleTaskDragRef, sethandleTaskDragRef] = useState('')
-  const [handleAfterTaskAddRef, sethandleAfterTaskAddRef] = useState('')
-  const [handleBeforeTaskDeleteRef, sethandleBeforeTaskDeleteRef] = useState('')
-  const [handleAfterTaskDeleteRef, sethandleAfterTaskDeleteRef] = useState('')
-  const [handleOnErrorRef, setHandleOnErrorRef] = useState('')
   const [markId, setMarkId] = useState('')
   const [initFlag, setInitFlag] = useState(false)
   const [initSortFlag, setInitSortFlag] = useState(false)
@@ -302,39 +293,33 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   }, [props.style.link_f2f, props.style.link_f2s, props.style.link_s2f, props.style.link_s2s])
   // 添加、删除回调事件
   function setAutoCalculateCallBack() {
-    handleParseRef && gantt.detachEvent(handleParseRef)
-    sethandleParseRef(gantt.attachEvent("onParse", function () {
+    gantt.attachEvent("onParse", function () {
       gantt.eachTask(function (task) {
         props.AutoCalculateProgress && (task.progress = calculateSummaryProgress(task))
       });
-    }))
+    }, { id: 'handleParseRef' })
 
-    handleAfterTaskUpdateRef && gantt.detachEvent(handleAfterTaskUpdateRef)
-    sethandleAfterTaskUpdateRef(gantt.attachEvent("onAfterTaskUpdate", function (id) {
+    gantt.attachEvent("onAfterTaskUpdate", function (id) {
       props.AutoCalculateProgress && refreshSummaryProgress(gantt.getParent(id), true);
-    }))
+    }, { id: 'handleAfterTaskUpdateRef' })
 
-    handleTaskDragRef && gantt.detachEvent(handleTaskDragRef)
-    sethandleTaskDragRef(gantt.attachEvent("onTaskDrag", function (id) {
+    gantt.attachEvent("onTaskDrag", function (id) {
       if (props.AutoCalculateProgress) {
         refreshSummaryProgress(gantt.getParent(id), false);
       }
-    }))
+    }, { id: 'handleTaskDragRef' })
 
-    handleAfterTaskAddRef && gantt.detachEvent(handleAfterTaskAddRef)
-    sethandleAfterTaskAddRef(gantt.attachEvent("onAfterTaskAdd", function (id) {
+    gantt.attachEvent("onAfterTaskAdd", function (id) {
       props.AutoCalculateProgress && refreshSummaryProgress(gantt.getParent(id), true);
-    }))
+    }, 'handleAfterTaskAddRef')
 
-    handleBeforeTaskDeleteRef && gantt.detachEvent(handleBeforeTaskDeleteRef)
-    sethandleBeforeTaskDeleteRef(gantt.attachEvent("onBeforeTaskDelete", function (id) {
+    gantt.attachEvent("onBeforeTaskDelete", function (id) {
       idParentBeforeDeleteTask = gantt.getParent(id);
-    }))
+    }, { id: 'handleBeforeTaskDeleteRef' })
 
-    handleAfterTaskDeleteRef && gantt.detachEvent(handleAfterTaskDeleteRef)
-    sethandleAfterTaskDeleteRef(gantt.attachEvent("onAfterTaskDelete", function () {
+    gantt.attachEvent("onAfterTaskDelete", function () {
       props.AutoCalculateProgress && refreshSummaryProgress(idParentBeforeDeleteTask, true);
-    }))
+    }, { id: 'handleAfterTaskDeleteRef' })
   }
 
   function setStatutoryHolidays() {
@@ -344,10 +329,9 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
   }
 
   useEffect(() => {
-    handleOnErrorRef && gantt.detachEvent(handleOnErrorRef)
-    setHandleOnErrorRef(gantt.attachEvent("onError", function (errorMessage) {
+    gantt.attachEvent("onError", function (errorMessage) {
       return props.allowErrorMessage;
-    }))
+    }, { id: 'handleOnErrorRef' })
   }, [props.allowErrorMessage])
 
   useEffect(() => {
@@ -407,7 +391,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       function (id) {
         return false;
       },
-      {}
+      { id: 'cancerPopOut' }
     );
     // 任务拖动、进度条拖动后
     gantt.attachEvent("onAfterTaskDrag", function (id, mode, e) {
@@ -422,7 +406,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
         props.onChangeEvent('change')
       }
       return true;
-    })
+    }, { id: 'customTaskDrag' })
     // 链接添加后
     gantt.attachEvent("onAfterLinkAdd", function (id, item) {
       props.dispatch(changeChildAction("currentId", id, false));
@@ -431,11 +415,11 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
         , false));
       props.dispatch(changeChildAction("currentProjectId", findProjectId(gantt.getLink(id).source), false));
       props.onAddedLinkEvent('addedLink')
-    });
+    }, { id: 'customLinkAdd' });
     // 删除链接时
     gantt.attachEvent("onAfterLinkDelete", function (id, item) {
       props.onDeletedLinkEvent('deletedLink')
-    });
+    }, { id: 'customLinkDelete' });
     // 创建新任务时
     gantt.attachEvent("onTaskCreated", function (item) {
       props.dispatch(changeChildAction("currentId", item.parent, false));
@@ -443,7 +427,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       props.dispatch(changeChildAction("currentObject", _.pickBy(gantt.getTask(item.parent), (value, key) => !key.startsWith('$')), false));
       props.onEvent('addTask')
       return false;
-    });
+    }, { id: 'customTaskCreated' });
     // 选择任务时
     gantt.attachEvent("onBeforeTaskSelected", function (id) {
       props.dispatch(changeChildAction("currentId", id, false));
@@ -452,14 +436,14 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
       props.dispatch(changeChildAction("currentProjectLastTask", findLatestEndDateTask(findProjectId(id)), false));
       props.onEvent('selectedChange')
       return true;
-    });
+    }, { id: 'customTaskSelected' });
     // 点击链接时
     gantt.attachEvent("onLinkClick", function (id, e) {
       props.dispatch(changeChildAction("currentId", id, false));
       props.dispatch(changeChildAction("currentObject", _.pickBy(gantt.getLink(id), (value, key) => !key.startsWith('$')), false));
       props.dispatch(changeChildAction("currentProjectId", findProjectId(gantt.getLink(id).source), false));
       props.onEvent('selectedChange')
-    });
+    }, { id: 'customLinkClick' });
     // 里程碑节点显示右侧文字
     gantt.templates.rightside_text = function (start, end, task) {
       if (task.type == gantt.config.types.milestone) {
@@ -508,22 +492,18 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
 
   // 设置是否允许删除链接
   useEffect(() => {
-    handleDBClickLinkRef && gantt.detachEvent(handleDBClickLinkRef)
-    sethandleDBClickLinkRef(gantt.attachEvent("onLinkDblClick", function (id, e) {
+    gantt.attachEvent("onLinkDblClick", function (id, e) {
       return props.allowLinkDelete;
-    }))
+    }, { id: 'handleDBClickLink' })
   }, [props.allowLinkDelete])
 
   // 设置是否允许修改任务
   useEffect(() => {
-    handleDBClickTaskRef && gantt.detachEvent(handleDBClickTaskRef)
-    sethandleDBClickTaskRef(
-      gantt.attachEvent("onTaskDblClick", function (id, e) {
-        props.allowTaskChange && props.onTaskChangeEvent('TaskChange')
-        props.allowTaskChange && props.toggleOnDBClick && (gantt.getTask(id).$open ? gantt.close(id) : gantt.open(id))
-        return true;
-      })
-    )
+    gantt.attachEvent("onTaskDblClick", function (id, e) {
+      props.allowTaskChange && props.onTaskChangeEvent('TaskChange')
+      props.allowTaskChange && props.toggleOnDBClick && (gantt.getTask(id).$open ? gantt.close(id) : gantt.open(id))
+      return true;
+    }, { id: 'handleDBClickTask' })
   }, [props.allowTaskChange, props.toggleOnDBClick])
 
   // 设置允许添加链接
@@ -607,7 +587,7 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
           gantt.showTask(gantt.getTaskByIndex(0)?.id)
         }, 1);
       }
-    });
+    }, { id: 'customParse' });
     gantt.config.row_height = props.rowHeight;
     gantt.config.layout = {
       css: "gantt_container",
