@@ -1411,6 +1411,7 @@ select: {
         positionDes: "坐标经纬度",
         titleDes: "标记的标题",
         clickedMarkerDes: "点击的标记",
+        clickedPositionDes: "点击的经纬度坐标",
         showControlBar: "显示控制按钮",
         showZoomButton: "显示缩放按钮",
     },
@@ -1853,6 +1854,8 @@ select: {
         preloadLibsEmpty: "尚未添加 JavaScript 库",
         preloadLibsAddBtn: "添加库",
         saveSuccess: "保存成功",
+        AuthOrgTitle: "工作空间欢迎页",
+        AuthOrgDescrition: "用户登录到当前工作区的URL",
     },
     branding: {
         title: "品牌",
