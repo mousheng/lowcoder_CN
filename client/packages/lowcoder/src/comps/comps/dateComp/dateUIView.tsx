@@ -28,6 +28,8 @@ const DateMobileUIView = React.lazy(() =>
 export const DateUIView = (props: DataUIViewProps) => {
   const editorState = useContext(EditorContext);
 
+  const placeholder = Array.isArray(props.placeholder) ? props.placeholder[0] : props.placeholder;
+
   return useUIView(
     <DateMobileUIView {...props} />,
     <DatePickerStyled
@@ -36,6 +38,7 @@ export const DateUIView = (props: DataUIViewProps) => {
       disabledDate={(current) => disabledDate(current, props.minDate, props.maxDate)}
       picker={props?.picker ?? "date"}
       inputReadOnly={checkIsMobile(editorState?.getAppSettings().maxWidth)}
+      placeholder={placeholder}
     />
   );
 };

@@ -32,6 +32,7 @@ docker run -d --name lowcoder-dev -p 3000:3000 -v "$PWD/stacks:/lowcoder-stacks"
 ### Start develop
 
 
+
 1. Check out the source code.
 2. Change to client dir in the repository root via cd client.
 

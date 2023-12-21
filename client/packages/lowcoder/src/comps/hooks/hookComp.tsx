@@ -33,8 +33,8 @@ import { ThemeComp } from "./themeComp";
 import UrlParamsHookComp from "./UrlParamsHookComp";
 import { UtilsComp } from "./utilsComp";
 import { VideoMeetingControllerComp } from "../comps/meetingComp/videoMeetingControllerComp";
+import { ScreenInfoHookComp } from "./screenInfoComp";
 import cnchar from "cnchar";
-
 
 window._ = _;
 window.dayjs = dayjs;
@@ -101,6 +101,7 @@ const HookMap: HookCompMapRawType = {
   modal: ModalComp,
   meeting: VideoMeetingControllerComp,
   currentUser: CurrentUserHookComp,
+  screenInfo: ScreenInfoHookComp,
   urlParams: UrlParamsHookComp,
   drawer: DrawerComp,
   theme: ThemeComp,

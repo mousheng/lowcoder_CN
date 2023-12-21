@@ -14,8 +14,12 @@ import { QRCode } from "antd";
 import ReactResizeDetector from "react-resize-detector";
 import { clickEvent, eventHandlerControl, refreshEvent } from "../controls/eventHandlerControl";
 import styled, { css } from "styled-components";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { withDefault } from "../generators";
+import { EditorContext } from "comps/editorState";
+
+// TODO: add styling for image (size)
+// TODO: add styling for bouding box (individual backround)
 
 const Container = styled.div<{ $style: QRCodeStyleType | undefined }>`
   height: 100%;
@@ -65,7 +69,7 @@ const typeOptions = [
 const EventOptions = [clickEvent, refreshEvent] as const;
 
 const childrenMap = {
-  value: withDefault(stringExposingStateControl("value"),'https://lowcoder.mousheng.top'),
+  value: withDefault(stringExposingStateControl("value"), 'https://lowcoder.mousheng.top'),
   level: dropdownControl(levelOptions, "M"),
   includeMargin: BoolControl.DEFAULT_TRUE,
   image: StringControl,
@@ -111,28 +115,28 @@ const QRCodeView = (props: RecordConstructorToView<typeof childrenMap>) => {
         onClick={(e) => {
           props.onEvent("click")
       }}
-      >
-        {
-          (
-            <QRCode
-              value={value || '-'}
-              icon={image}
-              status={props.status.value as "active" | "expired" | "loading"}
-              bordered={props.includeMargin}
-              onRefresh={onRefresh}
-              color={props.style.color}
-              bgColor={props.style.background}
-              errorLevel={props.level}
-              type={renderType}
-              size={height > width ? width - 5 : height}
-              iconSize={height > width ? width / 4 : height / 4}
-              style={{
-                borderRadius: props.style.radius,
-              }}
-            />
-          )}
-      </Container>
-    </ReactResizeDetector>
+    >
+      {
+        (
+          <QRCode
+            value={value || '-'}
+            icon={image}
+            status={props.status.value as "active" | "expired" | "loading"}
+            bordered={props.includeMargin}
+            onRefresh={onRefresh}
+            color={props.style.color}
+            bgColor={props.style.background}
+            errorLevel={props.level}
+            type={renderType}
+            size={height > width ? width - 5 : height}
+            iconSize={height > width ? width / 4 : height / 4}
+            style={{
+              borderRadius: props.style.radius,
+            }}
+          />
+        )}
+    </Container>
+    </ReactResizeDetector >
   );
 };
 
@@ -150,23 +154,34 @@ let QRCodeBasicComp = (function () {
             tooltip: trans("QRCode.valueTooltip"),
             placeholder: "https://example.com",
           })}
-          {children.image.propertyView({
-            label: trans("QRCode.image"),
-            placeholder: "http://logo.jpg",
-            tooltip: trans("QRCode.imageTooltip"),
-          })}
-          {children.level.propertyView({
-            label: trans("QRCode.level"),
-            tooltip: trans("QRCode.levelTooltip"),
-          })}
-          {children.statusOption.propertyView({ label: trans("QRCode.status") })}
         </Section>
-        <Section name={sectionNames.layout}>
-          {children.includeMargin.propertyView({ label: trans("QRCode.includeMargin") })}
-          {children.onEvent.propertyView()}
-          {hiddenPropertyView(children)}
-        </Section>
-        <Section name={sectionNames.style}>{children.style.getPropertyView()}</Section>
+
+        {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+          <><Section name={sectionNames.interaction}>
+              {hiddenPropertyView(children)}
+            </Section>
+            <Section name={sectionNames.advanced}>
+              {children.level.propertyView({
+                label: trans("QRCode.level"),
+                tooltip: trans("QRCode.levelTooltip"),
+              })}
+              {children.image.propertyView({
+                label: trans("QRCode.image"),
+                placeholder: "http://logo.jpg",
+              })}
+              {children.statusOption.propertyView({ label: trans("QRCode.status") })}
+            </Section>
+          </>
+        )}
+
+        {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+          <Section name={sectionNames.style}>
+            {children.style.getPropertyView()}
+            {children.includeMargin.propertyView({ label: trans("QRCode.includeMargin") })}
+            {children.onEvent.propertyView()}
+
+          </Section>
+        )}
       </>
     ))
     .build();

@@ -269,14 +269,26 @@ export const TabbedContainerBaseComp = (function () {
             {children.selectedTabKey.propertyView({ label: trans("tabbedContainer.defaultKey") })}
             {children.hiddenTabNav.propertyView({ label: trans("tabbedContainer.hiddenTabNav") })}
             {!children.hiddenTabNav.getView() && children.position.propertyView({ label: trans("tabbedContainer.TabPosition"), radioButton: true })}
-            {children.autoHeight.getPropertyView()}
           </Section>
-          <Section name={sectionNames.interaction}>
-            {children.onEvent.getPropertyView()}
-            {disabledPropertyView(children)}
-          </Section>
-          <Section name={sectionNames.layout}>{hiddenPropertyView(children)}</Section>
-          <Section name={sectionNames.style}>{children.style.getPropertyView()}</Section>
+
+          {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+            <Section name={sectionNames.interaction}>
+              {children.onEvent.getPropertyView()}
+              {disabledPropertyView(children)}
+              {hiddenPropertyView(children)}
+            </Section>
+          )}
+
+          {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+            <>
+              <Section name={sectionNames.layout}>
+                {children.autoHeight.getPropertyView()}
+              </Section>
+              <Section name={sectionNames.style}>
+                {children.style.getPropertyView()}
+              </Section>
+            </>
+          )}
         </>
       );
     })
