@@ -1,5 +1,6 @@
 import "comps/comps/layout/navLayout";
 import "comps/comps/layout/mobileTabLayout";
+import cnchar from "cnchar";
 import { ModalComp } from "comps/hooks/modalComp";
 import { ButtonComp } from "./comps/buttonComp/buttonComp";
 import { DropdownComp } from "./comps/buttonComp/dropdownComp";
@@ -444,8 +445,7 @@ const uiCompMap: Registry = {
     categories: ["scheduling", "projectmanagement"],
     icon: CalendarCompIcon,
     keywords: trans("uiComp.calendarCompKeywords"),
-    // comp: remoteComp({ ...builtInRemoteComps, compName: "calendar" }),
-    comp: CalendarComp,//changed by mousheng
+    comp: remoteComp({ ...builtInRemoteComps, compName: "calendar" }),
     layoutInfo: {
       w: 19,
       h: 60,
@@ -815,7 +815,9 @@ const uiCompMap: Registry = {
     description: trans("uiComp.autoCompleteCompDesc"),
     categories: ["forms","collaboration"],
     icon: AutoCompleteCompIcon,
-    keywords: trans("uiComp.autoCompleteCompKeywords"),
+    keywords: cnchar
+      .spell(trans("uiComp.autoCompleteCompName"), "first", "low")
+      .toString(),
     comp: AutoCompleteComp,
     layoutInfo: {
       w: 6,
@@ -1280,7 +1282,7 @@ const uiCompMap: Registry = {
       h: 47,
       w: 13,
     },
-  },
+  }
   
 };
 

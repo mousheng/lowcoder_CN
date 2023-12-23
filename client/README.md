@@ -32,22 +32,25 @@ docker run -d --name lowcoder-dev -p 3000:3000 -v "$PWD/stacks:/lowcoder-stacks"
 ### Start develop
 
 
-
-1. Check out the source code.
-2. Change to client dir in the repository root via cd client.
+1. Check out source code.
+2. Change to **/client** dir in the source dir.
 
 ```bash
 cd client
 ```
-   
-4. Run yarn to install dependencies: .
+3. Run yarn to install dependencies.
 
 ```bash
 yarn install
 ```
 
-5. Start dev server: `LOWCODER_API_SERVICE_URL=http://localhost:3000 yarn start`.
-6. After the dev server starts successfully, it will be automatically opened in the default browser.
+4. Start dev server: 
+
+```bash
+LOWCODER_API_SERVICE_URL=http://localhost:3000 yarn start
+```
+
+5. After dev server starts successfully, it will be automatically opened in the default browser.
 
 ### Before submitting a pull request
 

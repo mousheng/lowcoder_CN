@@ -606,7 +606,7 @@ export const en = {
     "dynamicDataSourceConfigLoadingText": "Loading extra datasource configuration...",
     "dynamicDataSourceConfigErrText": "Failed to load extra datasource configuration.",
     "retry": "Retry",
-    "httpMethod": "Http Method",
+    "httpMethod": "Http Method",// added by mousheng
     "body": "Body",
     "URL": "URL",
     "headers": "Headers",
@@ -1751,13 +1751,13 @@ export const en = {
     "atLeastOneTabError": "The Tab Container Keeps at Least One Tab",
     "selectedTabKeyDesc": "Currently Selected Tab",
     "iconPosition": "Icon Position",
-    TabPosition: "Label Position",  //added by Mousheng
-    left: "Left",
-    right: "Right",
-    top: "Top",
-    bottom: "Bottom",
-    defaultKey: "Default Key",
-    hiddenTabNav: "Hide Tab Navigation",
+    "TabPosition": "Label Position",  //added by Mousheng
+    "left": "Left",
+    "right": "Right",
+    "top": "Top",
+    "bottom": "Bottom",
+    "defaultKey": "Default Key",
+    "hiddenTabNav": "Hide Tab Navigation",
   },
   "formComp": {
     "containerPlaceholder": "Drag Components from the Right Pane or",
@@ -1813,8 +1813,8 @@ export const en = {
     "modalHeightTooltip": "Pixel, Example: 222",
     "modalWidth": "Modal Width",
     "modalWidthTooltip": "Number or Percentage, Example: 520, 60%",
-    defaultStartHeight: "pop-up height",  //added by Mousheng
-    defaultStartHeightTooltip: "Default pop-up height for modal，Can be set to 20% or 200px",
+    "defaultStartHeight": "pop-up height",  //added by Mousheng
+    "defaultStartHeightTooltip": "Default pop-up height for modal，Can be set to 20% or 200px",
   },
   "listView": {
     "noOfRows": "Row Count",

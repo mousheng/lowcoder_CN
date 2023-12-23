@@ -849,6 +849,8 @@ export const NavigationStyle = [
   PADDING,
 ] as const;
 
+export const ImageStyle = [getStaticBorder("#00000000"), RADIUS, BORDER_WIDTH, MARGIN, PADDING] as const;
+
 export const AntLayoutLogoStyle = [
   {
     name: "containerColor",
@@ -935,13 +937,11 @@ export const AntLayoutBodyStyle = [
   PADDING,
 ] as const;
 
-export const ImageStyle = [getStaticBorder("#00000000"), RADIUS, BORDER_WIDTH, MARGIN, PADDING] as const;
-
 export const IconStyle = [getStaticBackground("#00000000"),
   getStaticBorder("#00000000"), FILL, RADIUS, MARGIN, PADDING] as const;
 
 
-export const ListViewStyle = [...BG_STATIC_BORDER_RADIUS, CONTAINERBODYPADDING];
+export const ListViewStyle = [...BG_STATIC_BORDER_RADIUS, CONTAINERBODYPADDING];  // added by mousheng
 
 export const JsonSchemaFormStyle = BG_STATIC_BORDER_RADIUS;
 

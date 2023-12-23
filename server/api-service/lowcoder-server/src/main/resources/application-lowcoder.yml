@@ -5,7 +5,7 @@ spring:
       auto-index-creation: false
       uri: mongodb://lowcoder:secret123@localhost:27017/lowcoder?authSource=admin
     redis:
-      url: redis://localhost:6379
+      url: redis://192.168.8.103:6379
   main:
     allow-bean-definition-overriding: true
     allow-circular-references: true

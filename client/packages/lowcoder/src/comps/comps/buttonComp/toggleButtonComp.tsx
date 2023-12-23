@@ -99,7 +99,6 @@ const ToggleTmpComp = (function () {
             label: trans("prop.defaultValue"),
             tooltip: trans("toggleButton.valueDesc"),
           })}
-          {children.expandClickArea.propertyView({ label: trans("toggleButton.expandClickArea"), tooltip: trans("toggleButton.expandClickAreaDesc") })}
         </Section>
 
         {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
@@ -131,8 +130,13 @@ const ToggleTmpComp = (function () {
         )}
 
         {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
-          <><Section name={sectionNames.style}>
+          <>
+          <Section name={sectionNames.layout}>
+          {children.expandClickArea.propertyView({ label: trans("toggleButton.expandClickArea"), tooltip: trans("toggleButton.expandClickAreaDesc") })}
+          </Section>
+          <Section name={sectionNames.style}>
             {children.showBorder.propertyView({ label: trans("toggleButton.showBorder") })}
+
             {children.style.getPropertyView()}
           </Section></>
         )}
