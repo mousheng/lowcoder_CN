@@ -1210,6 +1210,7 @@ file: {
         "如果解析文件解析成功,上传的文件将解析为对象、数组或字符串.解析后的数据可以通过parsedValue数组访问.",
     parsedValueTooltip2:
         "支持Excel、JSON、CSV和文本文件.其他格式将返回null.",
+    dataURLDesc: "用于直接将DataURL作为资源嵌入到Image、Icon、avatar等组件中",  //added by mousheng
 },
 date: {
     format: "格式",

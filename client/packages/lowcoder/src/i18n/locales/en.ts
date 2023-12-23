@@ -1242,7 +1242,8 @@ export const en = {
     "clearValueDesc": "Clear All Files",
     "parseFiles": "Parse Files",
     "parsedValueTooltip1": "If parseFiles Is True, Upload Files Will Parse to Object, Array, or String. Parsed Data Can Be Accessed via the parsedValue Array.",
-    "parsedValueTooltip2": "Supports Excel, JSON, CSV, and Text Files. Other Formats Will Return Null."
+    "parsedValueTooltip2": "Supports Excel, JSON, CSV, and Text Files. Other Formats Will Return Null.",
+    "dataURLDesc": "Used to directly embed DataURL as a resource into components such as Image, Icon, avatar, etc",  //added by mousheng
   },
   "date": {
     "format": "Format",

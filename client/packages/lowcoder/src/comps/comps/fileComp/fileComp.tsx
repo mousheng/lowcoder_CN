@@ -95,6 +95,7 @@ const validationChildren = {
 
 const commonChildren = {
   value: stateComp<Array<string | null>>([]),
+  dataURL: stateComp<Array<string | null>>([]), // added by mousheng
   files: stateComp<JSONObject[]>([]),
   fileType: ArrayStringControl,
   showUploadList: BoolControl.DEFAULT_TRUE,
@@ -161,7 +162,7 @@ const getStyle = (style: FileStyleType) => {
   `;
 };
 
-const StyledUpload = styled(AntdUpload)<{ $style: FileStyleType }>`
+const StyledUpload = styled(AntdUpload) <{ $style: FileStyleType }>`
   .ant-upload,
   .ant-btn {
     width: 100%;
@@ -290,6 +291,10 @@ const Upload = (
                 [...props.value.slice(0, index), ...props.value.slice(index + 1)],
                 false
               ),
+              dataURL: changeValueAction(
+                [...props.dataURL.slice(0, index), ...props.dataURL.slice(index + 1)],
+                false
+              ),
               files: changeValueAction(
                 [...props.files.slice(0, index), ...props.files.slice(index + 1)],
                 false
@@ -313,6 +318,7 @@ const Upload = (
             dispatch(
               multiChangeAction({
                 value: changeValueAction([...props.value, ...value].slice(-maxFiles), false),
+                dataURL: changeValueAction([...props.dataURL,`data:${uploadedFiles.slice(-maxFiles)[0].type};base64,${[...props.value, ...value].slice(-maxFiles)}`], false),
                 files: changeValueAction(
                   uploadedFiles
                     .map((file) => _.pick(file, ["uid", "name", "type", "size", "lastModified"]))
@@ -321,11 +327,11 @@ const Upload = (
                 ),
                 ...(props.parseFiles
                   ? {
-                      parsedValue: changeValueAction(
-                        [...props.parsedValue, ...parsedValue].slice(-maxFiles),
-                        false
-                      ),
-                    }
+                    parsedValue: changeValueAction(
+                      [...props.parsedValue, ...parsedValue].slice(-maxFiles),
+                      false
+                    ),
+                  }
                   : {}),
               })
             );
@@ -382,13 +388,13 @@ let FileTmpComp = new UICompBuilder(childrenMap, (props, dispatch) => (
           {children.uploadType.getView() !== "single" && children.maxFiles.propertyView({ label: trans("file.maxFiles") })}
           {commonValidationFields(children)}
         </Section>
-        <Section name={sectionNames.interaction}>
+          <Section name={sectionNames.interaction}>
             {children.onEvent.getPropertyView()}
             {disabledPropertyView(children)}
             {hiddenPropertyView(children)}
           </Section>
           <Section name={sectionNames.advanced}>
-              {children.fileType.propertyView({
+            {children.fileType.propertyView({
               label: trans("file.fileType"),
               placeholder: '[".png"]',
               tooltip: (
@@ -430,6 +436,7 @@ FileTmpComp = withMethodExposing(FileTmpComp, [
       comp.dispatch(
         multiChangeAction({
           value: changeValueAction([], false),
+          dataURL: changeValueAction([], false),
           files: changeValueAction([], false),
           parsedValue: changeValueAction([], false),
         })
@@ -439,6 +446,7 @@ FileTmpComp = withMethodExposing(FileTmpComp, [
 
 export const FileComp = withExposingConfigs(FileTmpComp, [
   new NameConfig("value", trans("file.filesValueDesc")),
+  new NameConfig("dataURL", trans("file.dataURLDesc")),
   new NameConfig(
     "files",
     (
