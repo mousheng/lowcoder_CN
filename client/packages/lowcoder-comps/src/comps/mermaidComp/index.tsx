@@ -9,6 +9,7 @@ import {
 } from "lowcoder-sdk";
 
 import Mermaid from "./mermaid";
+import { sectionNames } from "lowcoder-design";
 
 const childrenMap = {
   code: stringExposingStateControl(
@@ -32,8 +33,9 @@ const CompBase = new UICompBuilder(childrenMap, (props: any) => {
   .setPropertyViewFn((children: any) => {
     return (
       <>
-        <Section name="Basic">{children.code.propertyView({ label: "code" })}</Section>
-        <Section name="Interaction">{children.onEvent.propertyView()}</Section>
+        {/* 美人鱼组件属性设置页国际化标题 */}
+        <Section name={sectionNames.basic}>{children.code.propertyView({ label: "code" })}</Section>
+        <Section name={sectionNames.interaction}>{children.onEvent.propertyView()}</Section>
       </>
     );
   })
