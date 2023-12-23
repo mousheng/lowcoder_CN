@@ -121,7 +121,7 @@ function validate(
     return { validateStatus: "error", help: props.customRule };
   }
   // 修复必填验证失效bug
-  const currentDateTime = dayjs(props.value.value, DATE_FORMAT);
+  const currentDateTime = dayjs(dayjs(props.value.value), DATE_TIME_FORMAT);
 
   if (props.required && !currentDateTime.isValid()) {
     return { validateStatus: "error", help: trans("prop.required") };
@@ -208,8 +208,6 @@ export const datePickerControl = new UICompBuilder(childrenMap, (props) => {
             placeholder: "2022-04-07 21:39:59",
             tooltip: trans("date.formatTip")
           })}
-          {formatPropertyView({ children })}
-          {timeFields(children, isMobile)}
         </Section>
 
         <FormDataPropertyView {...children} />
@@ -337,8 +335,6 @@ export const dateRangeControl = (function () {
               placeholder: "2022-04-07 21:39:59",
               tooltip: trans("date.formatTip"),
             })}
-            {formatPropertyView({ children })}
-            {timeFields(children, isMobile)}
           </Section>
 
           {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
