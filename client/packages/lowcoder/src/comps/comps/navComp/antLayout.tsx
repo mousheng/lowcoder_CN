@@ -426,17 +426,26 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
   })
   .build();
 
+const iterateColumns = (columns: any[], ret: Record<string, string> = {}) => {
+  columns.forEach((item) => {
+    let data = item.getView();
+    ret[data.id.toString()] = data.label;
+
+    if (data.items && data.items.length > 0) {
+      // 递归处理嵌套的 items
+      iterateColumns(data.items, ret);
+    }
+  });
+
+  return ret;
+};
+
 type MenuItem = Required<MenuProps>['items'][number];
 class AntLayoutImplComp extends NavCompBase implements IContainer {
 
   private syncContainers(): this {
     const columns = this.children.items.getView();
-    const ids = _.reduce(columns, (ret: Record<string, string>, item) => {
-      let data = item.getView()
-      ret[data.id.toString()] = data.label
-      data.items.map((item, i) => ret[item.getView().id.toString()] = item.getView().label)
-      return ret
-    }, {})
+    const ids = iterateColumns(columns)
     ids['header'] = ""
     let containers = this.children.containers.getView();
     // delete
