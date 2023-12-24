@@ -2939,6 +2939,7 @@ export const en = {
     "icon": "icon",
     "autoSize": "icon AutoSize",
     "iconSize": "icon size",
+    "activateColor": "hover Color",
   },
   "weekPickerComp": {
     "format": "YYYY-wo",

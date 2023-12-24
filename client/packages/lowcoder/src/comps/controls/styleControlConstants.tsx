@@ -938,7 +938,15 @@ export const AntLayoutBodyStyle = [
 ] as const;
 
 export const IconStyle = [getStaticBackground("#00000000"),
-  getStaticBorder("#00000000"), FILL, RADIUS, MARGIN, PADDING] as const;
+  getStaticBorder("#00000000"), FILL,
+  {
+    name: "activateColor",
+    label: trans("iconComp.activateColor"),
+    depTheme: "primary",
+    depType: DEP_TYPE.SELF,
+    transformer: toSelf,
+  }
+  , RADIUS, MARGIN, PADDING] as const;
 
 
 export const ListViewStyle = [...BG_STATIC_BORDER_RADIUS, CONTAINERBODYPADDING];  // added by mousheng

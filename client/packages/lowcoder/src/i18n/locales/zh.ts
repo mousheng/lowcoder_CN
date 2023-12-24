@@ -2884,6 +2884,7 @@ idSource: {
         icon: "图标",
         autoSize: "图标自动大小",
         iconSize: "图标大小",
+        activateColor: "激活时颜色",
     },
     weekPickerComp: {
         format: "YYYY-wo"
