@@ -183,7 +183,7 @@ prop: {
     showFooter: "显示表尾",
     maskClosable: "点击蒙层关闭",
     showMask: "显示蒙层",
-    textOverflow: "Text Overflow",  //added by Mousheng
+    textOverflow: "文本溢出",  //added by Mousheng
     showCloseButton: "显示关闭按钮",
     budgeType: "徽标类型",
     budgeCount: "徽标数",
@@ -211,9 +211,9 @@ labelProp: {
     widthTooltip:
     "组件标题的宽度,支持百分比(%)和像素(px)为单位.",
 },
-"textOverflowProp": {
-    "ellipsis": "鼠标悬停",
-    "wrap": "包装"
+textOverflowProp: {
+    ellipsis: "鼠标悬停",
+    wrap: "自动换行"
 },
 eventHandler: {
     eventHandlers: "事件处理器",
