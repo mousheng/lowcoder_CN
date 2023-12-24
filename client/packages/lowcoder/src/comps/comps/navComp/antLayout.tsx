@@ -302,6 +302,9 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
     <FrameWrapper
       frameStyle={props.frameStyle}
       headerBgColor={props.headerStyle.containerColor}
+      onMouseDown={(e) => {
+        e.preventDefault();
+      }}
     >
       <Layout style={{ height: '100%', margin: '5px' }}>
         <SiderWarpper
