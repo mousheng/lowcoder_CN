@@ -48,7 +48,7 @@ const getStyle = (style: TextStyleType) => {
         line-height: 10px;
       }
       p {
-        line-height: 10px!important;
+        line-height: 11px!important;
       }
     }
 
