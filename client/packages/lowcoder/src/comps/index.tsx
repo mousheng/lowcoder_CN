@@ -445,7 +445,8 @@ const uiCompMap: Registry = {
     categories: ["scheduling", "projectmanagement"],
     icon: CalendarCompIcon,
     keywords: trans("uiComp.calendarCompKeywords"),
-    comp: remoteComp({ ...builtInRemoteComps, compName: "calendar" }),
+    // comp: remoteComp({ ...builtInRemoteComps, compName: "calendar" }),
+    comp: CalendarComp,//changed by mousheng
     layoutInfo: {
       w: 19,
       h: 60,
