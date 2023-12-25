@@ -1,6 +1,7 @@
 import {
   UICompBuilder,
   Section,
+  sectionNames,
   withExposingConfigs,
   stringExposingStateControl,
   NameConfig,
@@ -9,7 +10,6 @@ import {
 } from "lowcoder-sdk";
 
 import Mermaid from "./mermaid";
-import { sectionNames } from "lowcoder-design";
 
 const childrenMap = {
   code: stringExposingStateControl(
