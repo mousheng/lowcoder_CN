@@ -422,9 +422,10 @@ const GanttView = (props: RecordConstructorToView<typeof childrenMap> & {
     }, { id: 'customLinkDelete' });
     // 创建新任务时
     gantt.attachEvent("onTaskCreated", function (item) {
-      props.dispatch(changeChildAction("currentId", item.parent, false));
-      props.dispatch(changeChildAction("currentProjectId", findProjectId(item.parent), false));
-      props.dispatch(changeChildAction("currentObject", _.pickBy(gantt.getTask(item.parent), (value, key) => !key.startsWith('$')), false));
+      let parent = item?.parent
+      props.dispatch(changeChildAction("currentId", parent, false));
+      props.dispatch(changeChildAction("currentProjectId", parent ? findProjectId(item.parent) : '', false));
+      props.dispatch(changeChildAction("currentObject", parent ? _.pickBy(gantt.getTask(item.parent), (value, key) => !key.startsWith('$')) : {}, false));
       props.onEvent('addTask')
       return false;
     }, { id: 'customTaskCreated' });
