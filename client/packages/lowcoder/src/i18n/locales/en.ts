@@ -3005,6 +3005,10 @@ export const en = {
     "align": 'Align',
     "center": 'Center',
     "logoPosition": 'Logo Position',
+    "defaultOP": "default",
+    "titleOP": "title",
+    "dividerOP": "divider",
+    "itemType": "itemType",
   },
   "floatButton": {
     "custom": 'Custom',

@@ -2950,6 +2950,10 @@ idSource: {
         align: '对齐',
         center: '居中',
         logoPosition: '标题位置',
+        defaultOP: "默认",
+        titleOP: "标题",
+        dividerOP: "分割线",
+        itemType: "项目类型",
     },
     floatButton: {
         custom: '自定义',

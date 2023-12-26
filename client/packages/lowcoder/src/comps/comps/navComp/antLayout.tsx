@@ -120,19 +120,22 @@ function getItem(
   icon?: React.ReactNode,
   children?: MenuItem[],
   disabled?: boolean,
+  itemType?: string,
 ): MenuItem {
   return {
     key,
     icon,
     children,
     label,
-    disabled,
+    disabled: itemType == 'title' || disabled,
+    style: { marginLeft: itemType == 'title' ? '0px' : '24px' },
+    type: itemType == 'divider' ? 'divider' : ''
   } as MenuItem;
 }
 
 const TraversalNode = (data: any): any => {
   return data.map((item: any) => {
-    const { hidden, label, items, active, onEvent, icon, key, id } = item.getView();
+    const { hidden, label, items, active, onEvent, icon, key, id, itemType } = item.getView();
     if (hidden) return undefined
     let subItems = TraversalNode(items)
     let iconComp = undefined
@@ -143,7 +146,7 @@ const TraversalNode = (data: any): any => {
       } else
         iconComp = icon
     }
-    return getItem(label, id, iconComp, subItems.length ? subItems : undefined, !active)
+    return getItem(label, id, iconComp, subItems.length ? subItems : undefined, !active, itemType)
   })
 }
 

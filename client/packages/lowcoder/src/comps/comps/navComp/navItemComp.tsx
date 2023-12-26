@@ -10,14 +10,20 @@ import _ from "lodash";
 import { fromRecord, MultiBaseComp, Node, RecordNode, RecordNodeToValue } from "lowcoder-core";
 import { ReactNode } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { BoolControl } from "@lowcoder-ee/index.sdk";
+import { BoolControl, dropdownControl } from "@lowcoder-ee/index.sdk";
 
 const events = [clickEvent];
+const itemType = [
+  { label: trans("antLayoutComp.defaultOP"), value: "default" },
+  { label: trans("antLayoutComp.titleOP"), value: "title" },
+  { label: trans("antLayoutComp.dividerOP"), value: "divider" },
+] as const;
 
 const childrenMap = {
   label: StringControl,
   id: StringControl,
   hidden: BoolControl,
+  itemType: dropdownControl(itemType, 'default'),
   active: BoolControl.DEFAULT_TRUE,
   onEvent: withDefault(eventHandlerControl(events), [
     {
@@ -36,6 +42,7 @@ type ChildrenType = {
   id: InstanceType<typeof StringControl>;
   hidden: InstanceType<typeof BoolCodeControl>;
   active: InstanceType<typeof BoolCodeControl>;
+  itemType: InstanceType<typeof StringControl>;
   onEvent: InstanceType<ReturnType<typeof eventHandlerControl>>;
   items: InstanceType<ReturnType<typeof navListComp>>;
   icon: any;
@@ -77,6 +84,7 @@ export class NavItemComp extends MultiBaseComp<ChildrenType> {
       label: this.children.label.exposingNode(),
       id: this.children.id.exposingNode(),
       hidden: this.children.hidden.exposingNode(),
+      itemType: this.children.itemType.exposingNode(),
       active: this.children.active.exposingNode(),
       items: this.children.items.exposingNode(),
     });
@@ -87,6 +95,7 @@ type NavItemExposing = {
   label: Node<string>;
   id: Node<string>;
   hidden: Node<boolean>;
+  itemType: Node<string>;
   active: Node<boolean>;
   items: Node<RecordNodeToValue<NavItemExposing>[]>;
 };
@@ -127,7 +136,8 @@ export class MenuItemComp extends MultiBaseComp<ChildrenType> {
       <>
         {this.children.label.propertyView({ label: trans("label") })}
         {hiddenPropertyView(this.children)}
-        {this.children.active.propertyView({ label: trans("navItemComp.active") })}
+        {this.children.itemType.propertyView({ label: trans("antLayoutComp.itemType") })}
+        {this.children.itemType.getView() == 'default' && this.children.active.propertyView({ label: trans("navItemComp.active") })}
         {this.children.icon.propertyView({ label: trans("antLayoutComp.icon") })}
       </>
     );
@@ -153,6 +163,7 @@ export class MenuItemComp extends MultiBaseComp<ChildrenType> {
       label: this.children.label.exposingNode(),
       id: this.children.id.exposingNode(),
       hidden: this.children.hidden.exposingNode(),
+      itemType: this.children.itemType.exposingNode(),
       active: this.children.active.exposingNode(),
       items: this.children.items.exposingNode(),
     });
