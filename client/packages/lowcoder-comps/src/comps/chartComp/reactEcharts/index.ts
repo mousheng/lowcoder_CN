@@ -1,6 +1,5 @@
 import * as echarts from "echarts";
-import "echarts-wordcloud";
-import { EChartsReactProps, EChartsInstance, EChartsOptionWithMap } from "./types";
+import { EChartsReactProps, EChartsOption, EChartsInstance } from "./types";
 import EChartsReactCore from "./core";
 
 /**
