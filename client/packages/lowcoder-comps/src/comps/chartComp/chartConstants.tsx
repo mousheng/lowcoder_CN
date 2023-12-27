@@ -47,7 +47,7 @@ const chartModeOptions = [
   },
 ] as const;
 
-export const EventOptions = [
+export const UIEventOptions = [
   {
     label: trans("chart.select"),
     value: "select",
@@ -58,6 +58,24 @@ export const EventOptions = [
     label: trans("chart.unSelect"),
     value: "unselect",
     description: trans("chart.unselectDesc"),
+  },
+] as const;
+
+export const MapEventOptions = [
+  {
+    label: trans("chart.mapReady"),
+    value: "mapReady",
+    description: trans("chart.mapReadyDesc"),
+  },
+  {
+    label: trans("chart.zoomLevelChange"),
+    value: "zoomLevelChange",
+    description: trans("chart.zoomLevelChangeDesc"),
+  },
+  {
+    label: trans("chart.centerPositionChange"),
+    value: "centerPositionChange",
+    description: trans("chart.centerPositionChangeDesc"),
   },
 ] as const;
 
@@ -217,8 +235,8 @@ export const chartUiModeChildren = {
   xConfig: XAxisConfig,
   yConfig: YAxisConfig,
   legendConfig: LegendConfig,
-  onEvent: eventHandlerControl(EventOptions),
   chartConfig: ChartOptionComp,
+  onUIEvent: eventHandlerControl(UIEventOptions),
 };
 
 export const chartChildrenMap = {

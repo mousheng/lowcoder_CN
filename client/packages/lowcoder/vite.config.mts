@@ -8,9 +8,9 @@ import { visualizer } from "rollup-plugin-visualizer";
 import path from "path";
 import chalk from "chalk";
 import { createHtmlPlugin } from "vite-plugin-html";
-import { ensureLastSlash } from "lowcoder-dev-utils/util";
-import { buildVars } from "lowcoder-dev-utils/buildVars";
-import { globalDepPlugin } from "lowcoder-dev-utils/globalDepPlguin";
+import { ensureLastSlash } from "./src/dev-utils/util";
+import { buildVars } from "./src/dev-utils/buildVars";
+import { globalDepPlugin } from "./src/dev-utils/globalDepPlguin";
 
 dotenv.config();
 !process.env.LOWCODER_API_SERVICE_URL && console.log("默认连接http://localhost:3000,您可以使用以下启动命令指定地址：LOWCODER_API_SERVICE_URL=http://自定义地址:端口 yarn start");

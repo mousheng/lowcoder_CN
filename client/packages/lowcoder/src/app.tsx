@@ -88,9 +88,6 @@ class AppIndex extends React.Component<AppIndexProps, any> {
     if(prevProps.currentOrgId !== this.props.currentOrgId && this.props.currentOrgId !== '') {
       this.props.fetchConfig(this.props.currentOrgId);
     }
-    if(prevProps.currentOrgId !== this.props.currentOrgId) {
-      this.props.fetchConfig(this.props.currentOrgId);
-    }
   }
 
   render() {
@@ -162,7 +159,6 @@ class AppIndex extends React.Component<AppIndexProps, any> {
             )}
           </Switch>
         </Router>
-        <CodeEditorTooltipContainer />
       </Wrapper>
     );
   }

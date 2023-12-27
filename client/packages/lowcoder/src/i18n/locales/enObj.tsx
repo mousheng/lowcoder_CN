@@ -115,8 +115,8 @@ export const enObj: I18nObjects = {
     mockDataUrl: "https://www.fastmock.site/mock/dc511bdcb9d31c119d948d12e61a5781/lowcoder/user",
     data: (code) => (
       <>
-        The component and query data are listed here, which can be referenced through
-        {code("{{ }}")}. For example: {code("{{table1.selectedRow}}")}.
+        The current State of the Component with all Settings and Data listed here. You can reference to this data with the handlebar expression.
+        For example: {code("{{table1.selectedRow}}")}.
       </>
     ),
     compProperties: (code) => (

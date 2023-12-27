@@ -458,7 +458,6 @@ export const selectedChangeEvent: EventConfigType = {
   value: "selectedChange",
   description: trans("event.selectedChangeDesc"),
 };
-
 export const InputEventHandlerControl = eventHandlerControl([
   changeEvent,
   focusEvent,

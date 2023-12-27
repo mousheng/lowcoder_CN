@@ -18,6 +18,14 @@ export type RadiusConfig = CommonColorConfig & {
   readonly radius: string;
 };
 
+export type BorderWidthConfig = CommonColorConfig & {
+  readonly borderWidth: string;
+};
+
+export type TextSizeConfig = CommonColorConfig & {
+  readonly textSize: string;
+};
+
 export type ContainerHeaderPaddigConfig = CommonColorConfig & {
   readonly containerheaderpadding: string;
 };
@@ -43,7 +51,7 @@ export type DepColorConfig = CommonColorConfig & {
   readonly depType?: DEP_TYPE;
   transformer: (color: string, ...rest: string[]) => string;
 };
-export type SingleColorConfig = SimpleColorConfig | DepColorConfig | RadiusConfig | MarginConfig | PaddingConfig | ContainerHeaderPaddigConfig | ContainerFooterPaddigConfig | ContainerBodyPaddigConfig;
+export type SingleColorConfig = SimpleColorConfig | DepColorConfig | RadiusConfig | BorderWidthConfig | TextSizeConfig | MarginConfig | PaddingConfig | ContainerHeaderPaddigConfig | ContainerFooterPaddigConfig | ContainerBodyPaddigConfig;
 
 export const defaultTheme: ThemeDetail = {
   primary: "#3377FF",
@@ -55,6 +63,7 @@ export const defaultTheme: ThemeDetail = {
   margin: "0px",	
   padding: "0px",
   gridColumns: "24",
+  textSize: "14px",
 };
 
 export const SURFACE_COLOR = "#FFFFFF";
@@ -68,7 +77,7 @@ export enum DEP_TYPE {
 }
 
 export function contrastText(color: string, textDark: string, textLight: string) {
-  return isDarkColor(color) ? textLight : textDark;
+  return isDarkColor(color) && color !== '#00000000' ? textLight : textDark;
 }
 
 // return similar background color
@@ -249,6 +258,12 @@ const RADIUS = {
   radius: "borderRadius",
 } as const;
 
+const BORDER_WIDTH = {
+  name: "borderWidth",
+  label: trans("style.borderWidth"),
+  borderWidth: "borderWidth",
+} as const;
+
 const MARGIN = {	
   name: "margin",	
   label: trans("style.margin"),	
@@ -259,6 +274,12 @@ const PADDING = {
   name: "padding",	
   label: trans("style.padding"),	
   padding: "padding",	
+} as const;
+
+const TEXT_SIZE = {	
+  name: "textSize",
+  label: trans("style.textSize"),	
+  textSize: "textSize",	
 } as const;
 
 const CONTAINERHEADERPADDING = {	
@@ -377,6 +398,7 @@ export const TextStyle = [
     transformer: toSelf,
   },
   TEXT,
+  BORDER,
   {
     name: "links",
     label: trans("style.links"),
@@ -384,6 +406,8 @@ export const TextStyle = [
     depType: DEP_TYPE.SELF,
     transformer: toSelf,
   },
+  RADIUS,
+  BORDER_WIDTH
 ] as const;
 
 export const MarginStyle = [	
@@ -651,35 +675,30 @@ export const SegmentStyle = [
   PADDING,
 ] as const;
 
-export const TableStyle = [
-  ...BG_STATIC_BORDER_RADIUS,
+const LinkTextStyle = [
   {
-    name: "cellText",
-    label: trans("style.tableCellText"),
-    depName: "background",
-    depType: DEP_TYPE.CONTRAST_TEXT,
-    transformer: contrastText,
-  },
-  {
-    name: "selectedRowBackground",
-    label: trans("style.selectedRowBackground"),
-    depName: "background",
+    name: "text",
+    label: trans("text"),
     depTheme: "primary",
-    transformer: handleToSelectedRow,
-  },
-  {
-    name: "hoverRowBackground",
-    label: trans("style.hoverRowBackground"),
-    depName: "background",
-    transformer: handleToHoverRow,
-  },
-  {
-    name: "alternateBackground",
-    label: trans("style.alternateRowBackground"),
-    depName: "background",
     depType: DEP_TYPE.SELF,
     transformer: toSelf,
   },
+  {
+    name: "hoverText",
+    label: "Hover text", // trans("style.hoverRowBackground"),
+    depName: "text",
+    transformer: handleToHoverLink,
+  },
+  {
+    name: "activeText",
+    label: "Active text", // trans("style.hoverRowBackground"),
+    depName: "text",
+    transformer: handleToHoverLink,
+  },
+] as const;
+
+export const TableStyle = [
+  ...BG_STATIC_BORDER_RADIUS,
   {
     name: "headerBackground",
     label: trans("style.tableHeaderBackground"),
@@ -709,7 +728,44 @@ export const TableStyle = [
   },
 ] as const;
 
-export const FileStyle = [...getStaticBgBorderRadiusByBg(SURFACE_COLOR), TEXT, ACCENT, MARGIN] as const;
+export const TableRowStyle = [
+  getBackground(),
+  {
+    name: "selectedRowBackground",
+    label: trans("style.selectedRowBackground"),
+    depName: "background",
+    depTheme: "primary",
+    transformer: handleToSelectedRow,
+  },
+  {
+    name: "hoverRowBackground",
+    label: trans("style.hoverRowBackground"),
+    depName: "background",
+    transformer: handleToHoverRow,
+  },
+  {
+    name: "alternateBackground",
+    label: trans("style.alternateRowBackground"),
+    depName: "background",
+    depType: DEP_TYPE.SELF,
+    transformer: toSelf,
+  },
+] as const;
+
+export const TableColumnStyle = [
+  getStaticBackground("#00000000"),
+  getStaticBorder(),
+  BORDER_WIDTH,
+  RADIUS,
+  TEXT,
+  TEXT_SIZE,
+] as const;
+
+export const TableColumnLinkStyle = [
+  ...LinkTextStyle,
+] as const;
+
+export const FileStyle = [...getStaticBgBorderRadiusByBg(SURFACE_COLOR), TEXT, ACCENT, MARGIN, PADDING] as const;
 
 export const FileViewerStyle = [
   getStaticBackground("#FFFFFF"),
@@ -717,9 +773,10 @@ export const FileViewerStyle = [
   RADIUS,
   MARGIN,	
   PADDING,
+  BORDER_WIDTH
 ] as const;
 
-export const IframeStyle = [getBackground(), getStaticBorder("#00000000"), RADIUS, MARGIN, PADDING] as const;
+export const IframeStyle = [getBackground(), getStaticBorder("#00000000"), RADIUS, BORDER_WIDTH, MARGIN, PADDING] as const;
 
 export const DateTimeStyle = [
   LABEL,
@@ -729,16 +786,19 @@ export const DateTimeStyle = [
   ...ACCENT_VALIDATE,
 ] as const;
 
+function handleToHoverLink(color: string) {
+  if (isDarkColor(color)) {
+    return "#FFFFFF23";
+  } else {
+    return "#00000007";
+  }
+}
+
 export const LinkStyle = [
-  {
-    name: "text",
-    label: trans("text"),
-    depTheme: "primary",
-    depType: DEP_TYPE.SELF,
-    transformer: toSelf,
-  },
+  ...LinkTextStyle,
   MARGIN,	
   PADDING,
+  TEXT_SIZE
 ] as const;
 
 export const DividerStyle = [
@@ -755,6 +815,8 @@ export const DividerStyle = [
   },
   MARGIN,	
   PADDING,
+  TEXT_SIZE,
+  BORDER_WIDTH
 ] as const;
 
 export const ProgressStyle = [
@@ -786,6 +848,8 @@ export const NavigationStyle = [
   MARGIN,	
   PADDING,
 ] as const;
+
+export const ImageStyle = [getStaticBorder("#00000000"), RADIUS, BORDER_WIDTH, MARGIN, PADDING] as const;
 
 export const AntLayoutLogoStyle = [
   {
@@ -873,13 +937,19 @@ export const AntLayoutBodyStyle = [
   PADDING,
 ] as const;
 
-export const ImageStyle = [getStaticBorder("#00000000"), RADIUS, MARGIN, PADDING] as const;
-
 export const IconStyle = [getStaticBackground("#00000000"),
-  getStaticBorder("#00000000"), FILL, RADIUS, MARGIN, PADDING] as const;
+  getStaticBorder("#00000000"), FILL,
+  {
+    name: "activateColor",
+    label: trans("iconComp.activateColor"),
+    depTheme: "primary",
+    depType: DEP_TYPE.SELF,
+    transformer: toSelf,
+  }
+  , RADIUS, MARGIN, PADDING] as const;
 
 
-export const ListViewStyle = [...BG_STATIC_BORDER_RADIUS, CONTAINERBODYPADDING];
+export const ListViewStyle = [...BG_STATIC_BORDER_RADIUS, CONTAINERBODYPADDING];  // added by mousheng
 
 export const JsonSchemaFormStyle = BG_STATIC_BORDER_RADIUS;
 
@@ -890,12 +960,54 @@ export const QRCodeStyle = [
     label: trans("color"),
     color: "#000000",
   },
-  RADIUS,
   MARGIN,	
   PADDING,
+  BORDER,
+  RADIUS,
+  BORDER_WIDTH
 ] as const;
 
 export const GanttStyle = [
+  {
+    name: "overdueColor",
+    label: trans("gantt.overdueColor"),
+    color: "#dc2626",
+  },
+  {
+    name: "overdueBgColor",
+    label: trans("gantt.overdueBgColor"),
+    color: "#ff5c5c",
+  },
+  {
+    name: "projectCompletedColor",
+    label: trans("gantt.projectCompletedColor"),
+    color: "#46ad51",
+  },
+  {
+    name: "projectColor",
+    label: trans("gantt.projectColor"),
+    color: "#46ad51",
+  },
+  {
+    name: "projectColorBg",
+    label: trans("gantt.projectColorBg"),
+    color: "#65c16f",
+  },
+  {
+    name: "taskColor",
+    label: trans("gantt.taskColor"),
+    color: "#299cb4",
+  },
+  {
+    name: "taskColorBg",
+    label: trans("gantt.taskColorBg"),
+    color: "#3db9d3",
+  },
+  {
+    name: "milestoneColor",
+    label: trans("gantt.milestoneColor"),
+    color: "#d33daf",
+  },
   {
     name: "progressLowColor",
     label: trans("gantt.progressLowColor"),
@@ -970,6 +1082,11 @@ export const GanttStyle = [
     name: "noWorkHourSelected",
     label: trans("gantt.noWorkHourSelected"),
     color: "#EAE1A5",
+  },
+  {
+    name: "padding",
+    label: trans("gantt.tasksTableWidth"),
+    padding: "",
   },
 ] as const;
 
@@ -1100,6 +1217,7 @@ export const SignatureStyle = [
   },
   MARGIN,	
   PADDING,
+  BORDER_WIDTH
 ] as const;
 
 // Added by Aqib Mirza
@@ -1194,7 +1312,13 @@ export const NavLayoutItemActiveStyle = [
 
 export const CarouselStyle = [getBackground("canvas")] as const;
 
-export const RichTextEditorStyle = [getStaticBorder(), RADIUS] as const;
+export const RichTextEditorStyle = [
+  getStaticBorder(), 
+  getBackground("primarySurface"), 
+  RADIUS, 
+  BORDER_WIDTH
+] as const;
+
 export type InputLikeStyleType = StyleConfigType<typeof InputLikeStyle>;
 export type ColorPickerStyleType = StyleConfigType<typeof ColorPickerStyle>;
 export type ButtonStyleType = StyleConfigType<typeof ButtonStyle>;
@@ -1214,6 +1338,9 @@ export type CheckboxStyleType = StyleConfigType<typeof CheckboxStyle>;
 export type RadioStyleType = StyleConfigType<typeof RadioStyle>;
 export type SegmentStyleType = StyleConfigType<typeof SegmentStyle>;
 export type TableStyleType = StyleConfigType<typeof TableStyle>;
+export type TableRowStyleType = StyleConfigType<typeof TableRowStyle>;
+export type TableColumnStyleType = StyleConfigType<typeof TableColumnStyle>;
+export type TableColumnLinkStyleType = StyleConfigType<typeof TableColumnLinkStyle>;
 export type FileStyleType = StyleConfigType<typeof FileStyle>;
 export type FileViewerStyleType = StyleConfigType<typeof FileViewerStyle>;
 export type IframeStyleType = StyleConfigType<typeof IframeStyle>;

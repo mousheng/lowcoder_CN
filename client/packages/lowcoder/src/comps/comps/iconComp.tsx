@@ -27,7 +27,7 @@ import {
   eventHandlerControl,
 } from "../controls/eventHandlerControl";
 
-const Container = styled.div<{ $style: IconStyleType | undefined }>`
+const Container = styled.div<{ $style: IconStyleType | undefined, activateFlag: boolean }>`
   height: 100%;
   width: 100%;
   display: flex;
@@ -38,13 +38,13 @@ const Container = styled.div<{ $style: IconStyleType | undefined }>`
     object-fit: contain;
     pointer-events: auto;
   }
-  ${(props) => props.$style && getStyle(props.$style)}
+  ${(props) => props.$style && getStyle(props.$style, props.activateFlag)}
 `;
 
-const getStyle = (style: IconStyleType) => {
+const getStyle = (style: IconStyleType, activateFlag: boolean) => {
   return css`
     svg {
-      color: ${style.fill};
+      color: ${activateFlag ? style.activateColor : style.fill};
     }
     padding: ${style.padding};
     border: 1px solid ${style.border};
@@ -69,6 +69,7 @@ const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
   const conRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
+  const [mouseactivateFlags, setMouseactivateFlags] = useState(false);
 
   useEffect(() => {
     if (height && width) {
@@ -94,6 +95,9 @@ const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
           background: props.style.background,
         }}
         onClick={() => props.onEvent("click")}
+        onMouseEnter={() => setMouseactivateFlags(true)}
+        onMouseLeave={() => setMouseactivateFlags(false)}
+        activateFlag={mouseactivateFlags}
       >
         {props.icon}
       </Container>

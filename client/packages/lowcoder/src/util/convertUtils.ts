@@ -1,3 +1,4 @@
+import { language } from "@lowcoder-ee/i18n";
 import { JSONObject, JSONValue } from "util/jsonTypes";
 
 class EvalTypeError extends TypeError {
@@ -15,7 +16,9 @@ function typeErrorMsg(requiredType: string, value: any, actualType?: string) {
   if (displayActualType === "string") {
     displayValue = "`" + displayValue + "`";
   }
-  return `Type "${requiredType}" is required, but find "${displayActualType}" type with value: ${displayValue}`;
+  return language !== 'en' ? `Key "${displayActualType}",Type "${requiredType}" is required, but find value: ${displayValue}` :
+    `必须提供键为"${displayActualType}"，类型为"${requiredType}"的值, 但实际值为: ${displayValue}`
+
 }
 
 export function toStringOrNumber(value: any): string | number {
@@ -241,7 +244,7 @@ export function check(
     typeErrorMsg(
       types.filter((t) => t !== "undefined").join(" | "),
       value,
-      key !== undefined ? key + ": " : ""
+      key !== undefined ? key : ""
     )
   );
 }

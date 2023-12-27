@@ -23,6 +23,7 @@ import {
   UICompBuilder,
   withDefault,
   withExposingConfigs,
+  withMethodExposing,
   withViewFn,
   ThemeContext,
   chartColorPalette,
@@ -43,6 +44,16 @@ let ChartTmpComp = (function () {
 })();
 
 ChartTmpComp = withViewFn(ChartTmpComp, (comp) => {
+  const apiKey = comp.children.mapApiKey.getView();
+  const mode = comp.children.mode.getView();
+  const mapCenterPosition = {
+    lng: comp.children.mapCenterLng.getView(),
+    lat: comp.children.mapCenterLat.getView(),
+  }
+  const mapZoomlevel = comp.children.mapZoomLevel.getView();
+  const onUIEvent = comp.children.onUIEvent.getView();
+  const onMapEvent = comp.children.onMapEvent.getView();
+
   const echartsCompRef = useRef<ReactECharts | null>();
   const [chartSize, setChartSize] = useState<ChartSize>();
   const firstResize = useRef(true);
@@ -51,33 +62,36 @@ ChartTmpComp = withViewFn(ChartTmpComp, (comp) => {
     color: chartColorPalette,
     backgroundColor: "#fff",
   };
+
   let themeConfig = defaultChartTheme;
   try {
     themeConfig = theme?.theme.chart ? JSON.parse(theme?.theme.chart) : defaultChartTheme;
   } catch (error) {
     log.error('theme chart error: ', error);
   }
-  const onEvent = comp.children.onEvent.getView();
+
   useEffect(() => {
+    if(mode !== 'ui') return;
+    
     // bind events
     const echartsCompInstance = echartsCompRef?.current?.getEchartsInstance();
     if (!echartsCompInstance) {
       return _.noop;
     }
-    echartsCompInstance.on("selectchanged", (param: any) => {
-      const option: any = echartsCompInstance.getOption();
+    echartsCompInstance?.on("selectchanged", (param: any) => {
+      const option: any = echartsCompInstance?.getOption();
       //log.log("chart select change", param);
       if (param.fromAction === "select") {
         comp.dispatch(changeChildAction("selectedPoints", getSelectedPoints(param, option)));
-        onEvent("select");
+        onUIEvent("select");
       } else if (param.fromAction === "unselect") {
         comp.dispatch(changeChildAction("selectedPoints", getSelectedPoints(param, option)));
-        onEvent("unselect");
+        onUIEvent("unselect");
       }
     });
     // unbind
-    return () => echartsCompInstance.off("selectchanged");
-  }, [onEvent]);
+    return () => echartsCompInstance?.off("selectchanged");
+  }, [mode, onUIEvent]);
 
   const echartsConfigChildren = _.omit(comp.children, echartsConfigOmitChildren);
   const option = useMemo(() => {
@@ -207,7 +221,7 @@ ChartTmpComp = class extends ChartTmpComp {
   }
 };
 
-const ChartComp = withExposingConfigs(ChartTmpComp, [
+let ChartComp = withExposingConfigs(ChartTmpComp, [
   depsConfig({
     name: "selectedPoints",
     desc: trans("chart.selectedPointsDesc"),

@@ -40,6 +40,9 @@ import { CommonNameConfig, NameConfig, withExposingConfigs } from "../../generat
 import { formDataChildren, FormDataPropertyView } from "../formComp/formDataConstants";
 import { messageInstance } from "lowcoder-design";
 
+import React, { useContext } from "react";
+import { EditorContext } from "comps/editorState";
+
 const FileSizeControl = codeControl((value) => {
   if (typeof value === "number") {
     return value;
@@ -92,6 +95,7 @@ const validationChildren = {
 
 const commonChildren = {
   value: stateComp<Array<string | null>>([]),
+  dataURL: stateComp<Array<string | null>>([]), // added by mousheng
   files: stateComp<JSONObject[]>([]),
   fileType: ArrayStringControl,
   showUploadList: BoolControl.DEFAULT_TRUE,
@@ -158,7 +162,7 @@ const getStyle = (style: FileStyleType) => {
   `;
 };
 
-const StyledUpload = styled(AntdUpload)<{ $style: FileStyleType }>`
+const StyledUpload = styled(AntdUpload) <{ $style: FileStyleType }>`
   .ant-upload,
   .ant-btn {
     width: 100%;
@@ -206,7 +210,7 @@ export function resolveParsedValue(files: UploadFile[]) {
           .then((a) => {
             const ext = mime.getExtension(f.originFileObj?.type ?? "");
             if (ext === "xlsx" || ext === "csv") {
-              const workbook = XLSX.read(a, { raw: true });
+              const workbook = XLSX.read(a, { raw: true, codepage: 65001 });
               return XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], {
                 raw: false,
               });
@@ -287,6 +291,10 @@ const Upload = (
                 [...props.value.slice(0, index), ...props.value.slice(index + 1)],
                 false
               ),
+              dataURL: changeValueAction(
+                [...props.dataURL.slice(0, index), ...props.dataURL.slice(index + 1)],
+                false
+              ),
               files: changeValueAction(
                 [...props.files.slice(0, index), ...props.files.slice(index + 1)],
                 false
@@ -310,6 +318,7 @@ const Upload = (
             dispatch(
               multiChangeAction({
                 value: changeValueAction([...props.value, ...value].slice(-maxFiles), false),
+                dataURL: changeValueAction([...props.dataURL,`data:${uploadedFiles.slice(-maxFiles)[0].type};base64,${[...props.value, ...value].slice(-maxFiles)}`], false),
                 files: changeValueAction(
                   uploadedFiles
                     .map((file) => _.pick(file, ["uid", "name", "type", "size", "lastModified"]))
@@ -318,11 +327,11 @@ const Upload = (
                 ),
                 ...(props.parseFiles
                   ? {
-                      parsedValue: changeValueAction(
-                        [...props.parsedValue, ...parsedValue].slice(-maxFiles),
-                        false
-                      ),
-                    }
+                    parsedValue: changeValueAction(
+                      [...props.parsedValue, ...parsedValue].slice(-maxFiles),
+                      false
+                    ),
+                  }
                   : {}),
               })
             );
@@ -369,47 +378,49 @@ let FileTmpComp = new UICompBuilder(childrenMap, (props, dispatch) => (
         {children.text.propertyView({
           label: trans("text"),
         })}
-        {children.fileType.propertyView({
-          label: trans("file.fileType"),
-          placeholder: '[".png"]',
-          tooltip: (
-            <>
-              {trans("file.reference")}{" "}
-              <a href={trans("file.fileTypeTooltipUrl")} target="_blank" rel="noreferrer">
-                {trans("file.fileTypeTooltip")}
-              </a>
-            </>
-          ),
-        })}
         {children.uploadType.propertyView({ label: trans("file.uploadType") })}
-        {children.showUploadList.propertyView({ label: trans("file.showUploadList") })}
-        {children.parseFiles.propertyView({
-          label: trans("file.parseFiles"),
-          tooltip: ParseFileTooltip,
-          placement: "right",
-        })}
       </Section>
 
       <FormDataPropertyView {...children} />
 
-      <Section name={sectionNames.interaction}>
-        {children.onEvent.getPropertyView()}
-        {disabledPropertyView(children)}
-      </Section>
+      {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
+        <><Section name={sectionNames.validation}>
+          {children.uploadType.getView() !== "single" && children.maxFiles.propertyView({ label: trans("file.maxFiles") })}
+          {commonValidationFields(children)}
+        </Section>
+          <Section name={sectionNames.interaction}>
+            {children.onEvent.getPropertyView()}
+            {disabledPropertyView(children)}
+            {hiddenPropertyView(children)}
+          </Section>
+          <Section name={sectionNames.advanced}>
+            {children.fileType.propertyView({
+              label: trans("file.fileType"),
+              placeholder: '[".png"]',
+              tooltip: (
+                <>
+                  {trans("file.reference")}{" "}
+                  <a href={trans("file.fileTypeTooltipUrl")} target="_blank" rel="noreferrer">
+                    {trans("file.fileTypeTooltip")}
+                  </a>
+                </>
+              ),
+            })}
+            {children.prefixIcon.propertyView({ label: trans("button.prefixIcon") })}
+            {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
+            {children.showUploadList.propertyView({ label: trans("file.showUploadList") })}
+            {children.parseFiles.propertyView({
+              label: trans("file.parseFiles"),
+              tooltip: ParseFileTooltip,
+              placement: "right",
+            })}
+          </Section>
+        </>
+      )}
 
-      <Section name={sectionNames.validation}>
-        {children.uploadType.getView() !== "single" &&
-          children.maxFiles.propertyView({ label: trans("file.maxFiles") })}
-        {commonValidationFields(children)}
-      </Section>
-
-      <Section name={sectionNames.layout}>
-        {children.prefixIcon.propertyView({ label: trans("button.prefixIcon") })}
-        {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
-        {hiddenPropertyView(children)}
-      </Section>
-
-      <Section name={sectionNames.style}>{children.style.getPropertyView()}</Section>
+      {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
+        <><Section name={sectionNames.style}>{children.style.getPropertyView()}</Section></>
+      )}
     </>
   ))
   .build();
@@ -425,6 +436,7 @@ FileTmpComp = withMethodExposing(FileTmpComp, [
       comp.dispatch(
         multiChangeAction({
           value: changeValueAction([], false),
+          dataURL: changeValueAction([], false),
           files: changeValueAction([], false),
           parsedValue: changeValueAction([], false),
         })
@@ -434,6 +446,7 @@ FileTmpComp = withMethodExposing(FileTmpComp, [
 
 export const FileComp = withExposingConfigs(FileTmpComp, [
   new NameConfig("value", trans("file.filesValueDesc")),
+  new NameConfig("dataURL", trans("file.dataURLDesc")),
   new NameConfig(
     "files",
     (

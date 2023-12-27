@@ -117,6 +117,7 @@ const dsl = {
     { compType: "urlParams", comp: {}, name: "url" },
     { compType: "dayJsLib", comp: {}, name: "dayjs" },
     { compType: "lodashJsLib", comp: {}, name: "_" },
+    { compType: "chcharLib", name: "chchar" },
     { compType: "utils", comp: {}, name: "utils" },
     { compType: "message", comp: {}, name: "message" },
     { compType: "localStorage", comp: {}, name: "localStorage" },

@@ -17,10 +17,12 @@ const defaultHookListValue = [
   { compType: "urlParams", name: "url" },
   { compType: "dayJsLib", name: "dayjs" },
   { compType: "lodashJsLib", name: "_" },
+  { compType: "chcharLib", name: "chchar" },
   { compType: "utils", name: "utils" },
   { compType: "message", name: "message" },
   { compType: "localStorage", name: "localStorage" },
   { compType: "currentUser", name: "currentUser" },
+  { compType: "screenInfo", name: "screenInfo" },
   { compType: "theme", name: "theme" },
 ] as const;
 

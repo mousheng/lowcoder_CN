@@ -17,11 +17,13 @@ import {
 import { i18nObjs, trans } from "i18n";
 import { RefControl } from "comps/controls/refControl";
 import { CascaderRef } from "antd/lib/cascader";
+import { CascaderValidationSection } from "./selectInputConstants";
 
 import { MarginControl } from "../../controls/marginControl";	
 import { PaddingControl } from "../../controls/paddingControl";
 import { SelectChildrenMap } from "./selectCompConstants";
-import { CascaderValidationSection } from "./selectInputConstants";
+import { useContext } from "react";
+import { EditorContext } from "comps/editorState";
 
 export const defaultDataSource = JSON.stringify(i18nObjs.cascader, null, " ");
 
@@ -52,22 +54,33 @@ export const CascaderPropertyView = (
       {placeholderPropertyView(children)}
     </Section>
 
-    {children.label.getPropertyView()}
+    {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+      <Section name={sectionNames.interaction}>
+        {children.onEvent.getPropertyView()}
+        {disabledPropertyView(children)}
+        {hiddenPropertyView(children)}
+      </Section>
+    )}
 
-    <Section name={sectionNames.interaction}>
-      {children.onEvent.getPropertyView()}
-      {disabledPropertyView(children)}
-    </Section>
+    {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+      children.label.getPropertyView()
+    )}
 
+    {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+    <>
     <Section name={sectionNames.advanced}>
-      {allowClearPropertyView(children)}
-      {showSearchPropertyView(children)}
-    </Section>
+        {allowClearPropertyView(children)}
+        {showSearchPropertyView(children)}
+      </Section>
 
     <CascaderValidationSection {...children} />
+    </>
+    )}
 
-    <Section name={sectionNames.layout}>{hiddenPropertyView(children)}</Section>
-
-    <Section name={sectionNames.style}>{children.style.getPropertyView()}</Section>
+    {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+      <Section name={sectionNames.style}>
+        {children.style.getPropertyView()}
+      </Section>
+    )}
   </>
 );

@@ -29,6 +29,7 @@ export function getButtonStyle(buttonStyle: ButtonStyleType) {
         background-color: ${buttonStyle.background};
         border-radius: ${buttonStyle.radius};
         margin: ${buttonStyle.margin};
+
         :hover,
         :focus {
           color: ${buttonStyle.text};

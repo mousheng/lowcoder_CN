@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { GanttStatic, gantt } from 'dhtmlx-gantt';
 import { trans } from '@lowcoder-ee/i18n';
-import { BoolControl, ExposeMethodCompConstructor, MethodConfigInfo, MultiBaseComp, MultiCompBuilder, RefControl, StringControl, ToInstanceType } from '@lowcoder-ee/index.sdk';
+import { BoolControl, ExposeMethodCompConstructor, MethodConfigInfo, MultiBaseComp, MultiCompBuilder, RefControl, StringControl, ToInstanceType, check } from '@lowcoder-ee/index.sdk';
 import { alignControl } from "comps/controls/alignControl";
 import { dropdownControl } from "comps/controls/dropdownControl";
 import { withDefault } from "../../generators";
@@ -105,6 +105,17 @@ export function ganttMethods(): MethodConfigInfo<GanttCompType>[] {
         },
         {
             method: {
+                name: "showTask",
+                description: trans("gantt.showTask"),
+                params: [{ name: trans("gantt.taskID"), type: "string", description: trans("gantt.taskID") }],
+            },
+            execute: (comp, params) => {
+                gantt.showTask(params[0] as string | number)
+                gantt.selectTask(params[0] as string | number);
+            },
+        },
+        {
+            method: {
                 name: "expandingAll",
                 description: trans("gantt.expandingAll"),
                 params: [],
@@ -166,16 +177,7 @@ export const cloumnsTypeOptions = [
     { label: trans('gantt.text'), value: "text" },
     { label: trans('gantt.progress'), value: "progress" },
     { label: trans('gantt.add'), value: "add" },
-] as const;
-
-export const skinsOptions = [
-    { label: 'default', value: "./skins/dhtmlxgantt.css" },
-    { label: 'skyblue', value: "./skins/dhtmlxgantt_skyblue.css" },
-    { label: 'terrace', value: "./skins/dhtmlxgantt_terrace.css" },
-    { label: 'broadway', value: "./skins/dhtmlxgantt_broadway.css" },
-    { label: 'contrast_white', value: "./skins/dhtmlxgantt_contrast_white.css" },
-    { label: 'material', value: "./skins/dhtmlxgantt_material.css" },
-    { label: 'meadow', value: "./skins/dhtmlxgantt_meadow.css" },
+    { label: trans('gantt.tag'), value: "tag" },
 ] as const;
 
 export const viewModeOptions = [
@@ -199,16 +201,18 @@ export const ColumnsOption = new MultiCompBuilder(
         label: StringControl,
         tree: BoolControl,
         ColumnsType: dropdownControl(cloumnsTypeOptions, 'text'),
-        width: withDefault(CodeTextControl, '*'),
+        width: withDefault(CodeTextControl, '50'),
         hide: BoolControl,
+        sort: BoolControl,
     },
     (props) => props
 ).setPropertyViewFn((children) => (
     <>
         {children.ColumnsType.propertyView({ label: trans("gantt.ColumnsType") })}
-        {children.ColumnsType.getView() === 'text' && children.name.propertyView({ label: trans("gantt.key") })}
+        {(children.ColumnsType.getView() === 'text' || children.ColumnsType.getView() === 'tag') && children.name.propertyView({ label: trans("gantt.key") })}
         {children.ColumnsType.getView() !== 'add' && children.label.propertyView({ label: trans("gantt.title") })}
         {children.tree.propertyView({ label: trans("gantt.tree") })}
+        {children.sort.propertyView({ label: trans("gantt.allowSort") })}
         {children.width.propertyView({ label: trans("gantt.width") })}
         {children.align.propertyView({
             label: trans("textShow.horizontalAlignment"),
@@ -231,7 +235,6 @@ export const tasks =
             task_user: "A",
             parent: 0,
             other: trans('gantt.otherData', { i: 1 }),
-            color: '#46ad51',
         },
         {
             id: "A2",
@@ -266,7 +269,6 @@ export const tasks =
             task_user: "A",
             parent: 0,
             other: trans('gantt.otherData', { i: 4 }),
-            color: '#46ad51',
         },
         {
             id: "A5",
@@ -551,3 +553,67 @@ export const LinkDataDescEn = (
         Readonly (boolean): Indicates whether the link is read-only.
     </li>
 );
+
+export function checkSortKey(data: any) {
+    if (data === "") return {}
+    check(data.sortKey, ["string"], "sortKey")
+    check(data.asc, ["boolean"], "asc")
+    return data
+}
+
+
+enum TagType {
+    Success = 'success',
+    Error = 'error',
+    Warning = 'warning',
+    Processing = 'processing',
+}
+
+export function isValidTag(tag: string): tag is TagType {
+    return Object.values(TagType).includes(tag as TagType);
+}
+
+export function findProjectId(taskId: string | number, depth = 20): string | number {
+    const task = gantt.getTask(taskId);
+    if (depth <= 0) return ''
+    if (task) {
+        if (task?.parent) {
+            return findProjectId(task.parent, depth - 1);
+        }
+        return task.id;
+    }
+    return '';
+}
+
+export function findLatestEndDateTask(projectId: string | number): any {
+    const projectTasks = gantt.getChildren(projectId);
+    let latestEndDateTask = null;
+    let latestEndDate: any = new Date(1970, 1, 1);
+    projectTasks.forEach((taskId) => {
+        const task = gantt.getTask(taskId);
+        let end_date
+        // 检查任务的 end_date 是否存在
+        if (task.end_date instanceof Date) {
+            end_date = task.end_date
+        } else if (task?.end_date) {
+            end_date = new Date(task.end_date)
+        }
+        if (task && end_date) {
+            // 比较 end_date，找到最晚的任务
+            if (!latestEndDate || end_date > latestEndDate) {
+                latestEndDate = end_date;
+                latestEndDateTask = task;
+            }
+        }
+        // 递归处理子任务
+        const childLatestEndDateTask = findLatestEndDateTask(taskId);
+        if (childLatestEndDateTask) {
+            // 比较子任务的 end_date
+            if (childLatestEndDateTask.end_date > latestEndDate) {
+                latestEndDate = childLatestEndDateTask.end_date;
+                latestEndDateTask = childLatestEndDateTask;
+            }
+        }
+    });
+    return _.pickBy(latestEndDateTask, (value, key) => !key.startsWith('$'));
+}

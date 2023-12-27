@@ -25,6 +25,8 @@ import {
 } from "./buttonCompConstants";
 import { RefControl } from "comps/controls/refControl";
 import { BudgeBasicSection, budgeChildren } from "../budgeComp/budgeConstants";
+import React, { useContext } from "react";
+
 const FormLabel = styled(CommonBlueLabel)`
   font-size: 13px;
   margin-right: 4px;
@@ -171,25 +173,31 @@ const ButtonTmpComp = (function () {
           {children.text.propertyView({ label: trans("text") })}
         </Section>
 
-        <Section name={sectionNames.interaction}>
-          {children.type.propertyView({ label: trans("prop.type"), radioButton: true })}
-          {isDefault(children.type.getView())
-            ? [
+        {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
+          <><Section name={sectionNames.interaction}>
+            {children.type.propertyView({ label: trans("prop.type"), radioButton: true })}
+            {isDefault(children.type.getView())
+              ? [
                 children.onEvent.getPropertyView(),
                 disabledPropertyView(children),
+                hiddenPropertyView(children),
                 loadingPropertyView(children),
               ]
-            : children.form.getPropertyView()}
-        </Section>
-        <BudgeBasicSection {...children}/>
-        <Section name={sectionNames.layout}>
-          {children.prefixIcon.propertyView({ label: trans("button.prefixIcon") })}
-          {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
-          {hiddenPropertyView(children)}
-          {disabledPropertyView(children)}
-        </Section>
+              : children.form.getPropertyView()}
+            </Section>
+        <BudgeBasicSection {...children}/>          </>
+        )}
 
-        <Section name={sectionNames.style}>{children.style.getPropertyView()}</Section>
+        {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
+          <>
+            <Section name={sectionNames.layout}>
+              {children.prefixIcon.propertyView({ label: trans("button.prefixIcon") })}
+              {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
+          {disabledPropertyView(children)}
+            </Section>
+            <Section name={sectionNames.style}>{children.style.getPropertyView()}</Section>
+          </>
+        )}
       </>
     ))
     .setExposeMethodConfigs(buttonRefMethods)

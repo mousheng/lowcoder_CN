@@ -53,6 +53,8 @@ import { Timeline } from "antd";
 import { ANTDICON } from "./antIcon";
 import styled from "styled-components";
 import { debounce } from "lodash";
+import { useContext } from "react";
+import { EditorContext } from "comps/editorState"; 
 
 
 const Wrapper = styled.div<{ $style: TimeLineType, mode: string, offset: number }>`
@@ -211,28 +213,38 @@ let TimeLineBasicComp = (function () {
             tooltip: TimelineDataTooltip,
             placeholder: "[]",
           })}
-          {children.mode.propertyView({
-            label: trans("timeLine.mode"),
-            tooltip: trans("timeLine.modeTooltip"),
-          })}
+        </Section>
+
+        {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+          <Section name={sectionNames.interaction}>
+            {children.onEvent.getPropertyView()}
+            {hiddenPropertyView(children)}
+          </Section>
+        )}
+
+        {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+          <><Section name={sectionNames.layout}>
+              {children.mode.propertyView({
+                label: trans("timeLine.mode"),
+                tooltip: trans("timeLine.modeTooltip"),
+              })}
           {children.mode.getView() !== "alternate" && children.offset.propertyView({
             label: trans("timeLine.offset"),
             tooltip: trans("timeLine.offsetDes"),
           })}
-          {children.reverse.propertyView({
-            label: trans("timeLine.reverse"),
-          })}
-          {children.pending.propertyView({
-            label: trans("timeLine.pending"),
-          })}
-        </Section>
-        <Section name={sectionNames.layout}>
-          {children.onEvent.getPropertyView()}
-          {hiddenPropertyView(children)}
-        </Section>
-        <Section name={sectionNames.style}>
-          {children.style.getPropertyView()}
-        </Section>
+              {children.pending.propertyView({
+                label: trans("timeLine.pending"),
+                tooltip: trans("timeLine.pendingDescription"),
+              })}
+              {children.reverse.propertyView({
+                label: trans("timeLine.reverse"),
+              })}
+            </Section>
+            <Section name={sectionNames.style}>
+              {children.style.getPropertyView()}
+            </Section>
+          </>
+        )}
       </>
     ))
     .build();

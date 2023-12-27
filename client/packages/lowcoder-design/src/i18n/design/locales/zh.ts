@@ -10,20 +10,22 @@ export const zh = {
     nextStep: "下一步",
     finish: "完成",
     country: {
-      china: "中国",
+        china: "中国",
     },
     notification: {
-      copySuccess: "复制成功",
-      copyFail: "复制失败",
+        copySuccess: "复制成功",
+        copyFail: "复制失败",
     },
     prop: {
-      basic: "基础",
-      interaction: "交互",
-      advanced: "高级",
-      validation: "验证",
-      layout: "布局",
-      style: "样式",
-      badge: "徽标",
+        basic: "基础",
+        interaction: "交互",
+        advanced: "高级",
+        validation: "验证",
+        layout: "布局",
+        style: "样式",
+        meetings: "会议设置",// added by mousheng
+        data: "数据",
+        badge: "徽标",
     },
     passwordInput: {
         label: "密码:",
@@ -57,5 +59,5 @@ export const zh = {
     container: {
         hintPlaceHolder: "从右侧面板拖动组件",
     },
-  };
-  
+};
+

@@ -26,7 +26,8 @@ export type NewChildren<ChildrenCompMap extends Record<string, Comp<unknown>>> =
 export function HidableView(props: { children: JSX.Element | React.ReactNode; hidden: boolean }) {
   const { readOnly } = useContext(ExternalEditorContext);
   if (readOnly) {
-    return <>{props.children}</>;
+    return <>
+      {props.hidden ? <div style={{ visibility: 'hidden' }}>{props.children}</div> : (props.children)}</>;//设置隐藏后隐藏组件 added by mousheng
   } else {
     return (
       <>
