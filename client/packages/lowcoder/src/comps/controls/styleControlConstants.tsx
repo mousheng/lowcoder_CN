@@ -967,6 +967,24 @@ export const QRCodeStyle = [
   BORDER_WIDTH
 ] as const;
 
+export const CardStyle = [
+  getStaticBackground("#ffffff"),
+  BORDER,
+  {
+    name: "IconColor",
+    label: trans("card.IconColor"),
+    color: "#000000",
+  },
+  {
+    name: "activateColor",
+    label: trans("card.hoverColor"),
+    depTheme: "primary",
+    depType: DEP_TYPE.SELF,
+    transformer: toSelf,
+  },
+  CONTAINERBODYPADDING,
+] as const;
+
 export const GanttStyle = [
   {
     name: "overdueColor",
@@ -1375,6 +1393,7 @@ export type AvatarStyleType = StyleConfigType<typeof AvatarStyle>;
 export type QRCodeStyleType = StyleConfigType<typeof QRCodeStyle>;
 export type GanttStyleType = StyleConfigType<typeof GanttStyle>;
 export type TransferStyleType = StyleConfigType<typeof TransferStyle>;
+export type CardStyleType = StyleConfigType<typeof CardStyle>;
 
 export function widthCalculator(margin: string) {
   const marginArr = margin?.trim().replace(/\s+/g,' ').split(" ") || "";

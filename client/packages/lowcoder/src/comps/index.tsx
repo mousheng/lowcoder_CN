@@ -91,6 +91,7 @@ import { TimeLineComp } from "./comps/timelineComp/timelineComp";
 import { CommentComp } from "./comps/commentComp/commentComp";
 import { MentionComp } from "./comps/textInputComp/mentionComp";
 import { AutoCompleteComp } from "./comps/autoCompleteComp/autoCompleteComp";
+import { CardComp } from "./comps/containerComp/cardComp";
 
 import {
   AudioCompIcon,
@@ -169,6 +170,7 @@ import {
   ColorPickerIcon,
   GanttIcon,
   TransferIcon,
+  CardIcon,
 } from "lowcoder-design";
 
 type Registry = {
@@ -1282,6 +1284,19 @@ const uiCompMap: Registry = {
     layoutInfo: {
       h: 47,
       w: 13,
+    },
+  },
+  card: {
+    name: trans("uiComp.cardCompName"),
+    enName: "card",
+    icon: CardIcon,
+    description: trans("uiComp.cardCompDesc"),
+    categories: ["forms"],
+    keywords: trans("uiComp.cardCompKeywords"),
+    comp: CardComp,
+    layoutInfo: {
+      h: 47,
+      w: 4,
     },
   }
   

@@ -55,6 +55,7 @@ import {
   ColorPickerIcon,
   GanttIcon,
   TransferIcon,
+  CardIcon,
 } from "lowcoder-design";
 
 export const CompStateIcon: {
@@ -143,4 +144,5 @@ export const CompStateIcon: {
   colorPicker: <ColorPickerIcon />,
   gantt: <GanttIcon />,
   transfer: <TransferIcon />,
+  card: <CardIcon />,
 };

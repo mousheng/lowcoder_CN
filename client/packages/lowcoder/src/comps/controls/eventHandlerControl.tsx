@@ -458,6 +458,11 @@ export const selectedChangeEvent: EventConfigType = {
   value: "selectedChange",
   description: trans("event.selectedChangeDesc"),
 };
+export const clickExtraEvent: EventConfigType = {
+  label: trans("event.clickExtra"),
+  value: "clickExtra",
+  description: trans("event.clickExtraDesc"),
+};
 export const InputEventHandlerControl = eventHandlerControl([
   changeEvent,
   focusEvent,
@@ -491,4 +496,11 @@ export const MeetingEventHandlerControl = eventHandlerControl([
   videoOff,
   videoOn,
   videoClicked,
+] as const);
+
+export const CardEventHandlerControl = eventHandlerControl([
+  clickEvent,
+  clickExtraEvent,
+  focusEvent,
+  blurEvent,
 ] as const);

@@ -321,6 +321,8 @@ export const en = {
     "searchDesc": "Triggers on Search",
     "selectedChange": 'Selected Change',
     "selectedChangeDesc": "Triggers on Selected Change",
+    "clickExtra": 'Click Extra',
+    "clickExtraDesc": "Triggers on Click Extra",
   },
   "themeDetail": {
     "primary": "Brand Color",
@@ -1055,6 +1057,11 @@ export const en = {
     "transferName": "Transfer",
     "transferDesc": "Facilitates data transfer between two lists with drag-and-drop functionality.",
     "transferKeywords": "transfer, data, drag-and-drop",
+
+    "cardCompName": "Card",
+    "cardCompDesc": "A card component for displaying organized information or content in a structured manner.",
+    "cardCompKeywords": "card, information, content, display",
+
   },
 
 
@@ -3203,6 +3210,29 @@ export const en = {
     "clickedPositionDes": "clicked position",
     "showControlBar": "Show control bar",
     "showZoomButton": "Show zoom button",
+  },
+  "card": {
+    "cardType": "Card Type",
+    "common": "common",
+    "custom": "custom",
+    "default": "default",
+    "small": "small",
+    "showTitle": "Show title",
+    "title": "Title",
+    "more": "More",
+    "extraTitle": "extraTitle",
+    "CoverImg": "Cover Image",
+    "imgSrc": "Image Source",
+    "showMeta": "Show Content",
+    "metaTitle": "Content Title",
+    "metaDesc": "Content Description",
+    "imgHeight": "Image Height",
+    "showActionIcon": "Show Action Icon",
+    "actionOptions": "Action Options",
+    "menu": "Menu {i}",
+    "hoverColor": "hover Color",
+    "IconColor": "Icon Color",
+    "titleSize": "Title Size",
   },
 
   docUrls: {

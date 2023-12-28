@@ -137,6 +137,7 @@ export type UICompType =
   | "colorPicker" //Added By Mousheng
   | "gantt" //Added By Mousheng
   | "transfer" //Added By Mousheng
+  | "card"  //Added By Mousheng
 
 export const uiCompRegistry = {} as Record<UICompType | string, UICompManifest>;
 
