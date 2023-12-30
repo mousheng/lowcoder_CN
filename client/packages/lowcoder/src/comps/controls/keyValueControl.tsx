@@ -47,7 +47,18 @@ export type KeyValueControlParams = ControlParams & {
   typeTooltip?: ReactNode;
   keyFlexBasics?: number;
   valueFlexBasics?: number;
+  batchEditFun?: (value: Record<string, any>) => void;
+  data?: any; // added by mousheng 用于传入值
 };
+
+export function batchEditDispatch(value: Record<string, any>, disPatchTarget: any): void {
+  disPatchTarget.getView().forEach((k: any, i: number) => {
+    disPatchTarget.dispatch(disPatchTarget.deleteAction(0))
+  })
+  value.map((item: any) => {
+    disPatchTarget.dispatch(disPatchTarget.pushAction(item))
+  })
+}
 
 /**
  * Provide two input boxes for kv
@@ -136,6 +147,8 @@ export function keyValueListControl<T extends OptionsType>(
             list={this.getView().map((child) => child.propertyView(params))}
             onAdd={() => this.dispatch(this.pushAction({}))}
             onDelete={(item, index) => this.dispatch(this.deleteAction(index))}
+            onBatchAdd={params?.batchEditFun}
+            data={this.getView()} // added by mousheng
           />
         </ControlPropertyViewWrapper>
       );

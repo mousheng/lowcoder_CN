@@ -4,7 +4,7 @@ import { valueComp, withDefault } from "comps/generators";
 import { trans } from "i18n";
 import { includes } from "lodash";
 import { CompAction, MultiBaseComp } from "lowcoder-core";
-import { keyValueListControl } from "../../controls/keyValueControl";
+import { batchEditDispatch, keyValueListControl } from "../../controls/keyValueControl";
 import { ParamsJsonControl, ParamsStringControl } from "../../controls/paramsControl";
 import { withTypeAndChildrenAbstract } from "../../generators/withType";
 import { toQueryView } from "../queryCompUtils";
@@ -117,7 +117,9 @@ const ContentTypeKey = "Content-Type";
 const showBodyConfig = (children: ChildrenType) => {
   switch (children.bodyType.getView() as BodyTypeValue) {
     case "application/x-www-form-urlencoded":
-      return children.bodyFormData.propertyView({});
+      return children.bodyFormData.propertyView({// added by mousheng
+        batchEditFun: (value: Record<string, any>) => batchEditDispatch(value, children.bodyFormData)
+      });
     case "multipart/form-data":
       return children.bodyFormData.propertyView({
         showType: true,
@@ -126,6 +128,7 @@ const showBodyConfig = (children: ChildrenType) => {
           object: "{ data: base64 string, name: string }",
           example: "{{ {data: file1.value[0], name: file1.files[0].name} }}",
         }),
+        batchEditFun: (value: Record<string, any>) => batchEditDispatch(value, children.bodyFormData)
       });
     case "application/json":
     case "text/plain":

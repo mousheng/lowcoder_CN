@@ -315,3 +315,4 @@ export { ReactComponent as ColorPickerIcon } from "icons/icon-colorPicker-comp.s
 export { ReactComponent as GanttIcon } from "icons/icon-comp-gantt.svg";
 export { ReactComponent as TransferIcon } from "icons/icon-comp-transfer.svg";
 export { ReactComponent as CardIcon } from "icons/icon-comp-card.svg";
+export { ReactComponent as BatchAddIcon } from "icons/icon-batch-add.svg";

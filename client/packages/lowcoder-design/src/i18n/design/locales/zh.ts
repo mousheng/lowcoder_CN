@@ -1,5 +1,9 @@
 export const zh = {
     addItem: "添加",
+    batchEdit: "批量编辑",
+    batchAddDesc: "批量编辑key和value",
+    transform: "转换",
+    formatDesc: "解决直接从Edge浏览器复制headers时key和value单独一行的问题",
     duplicate: "复制",
     rename: "重命名",
     delete: "删除",

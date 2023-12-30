@@ -1,5 +1,9 @@
 export const en = {
   addItem: "Add",
+  batchEdit: "Batch Edit",
+  batchAddDesc: "batch edit keys and values",
+  transform: "transform",
+  formatDesc: "Resolve the issue of key and value being separated on a single line when copying headers directly from Edge browser",
   duplicate: "Duplicate",
   rename: "Rename",
   delete: "Delete",

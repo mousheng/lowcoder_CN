@@ -5,7 +5,7 @@ import { QueryConfigItemWrapper, QueryConfigLabel, QueryConfigWrapper } from "co
 import { simpleMultiComp } from "comps/generators/multi";
 import { ReactNode } from "react";
 import { JSONValue } from "../../../util/jsonTypes";
-import { keyValueListControl } from "../../controls/keyValueControl";
+import { batchEditDispatch, keyValueListControl } from "../../controls/keyValueControl";
 import { ParamsJsonControl, ParamsStringControl } from "../../controls/paramsControl";
 import { list } from "../../generators/list";
 import { valueComp, withDefault } from "../../generators/simpleGenerators";
@@ -65,6 +65,8 @@ export const VariablesControl = class extends list(VariableControl) {
           list={this.getView().map((child) => child.propertyView(params))}
           onAdd={() => this.dispatch(this.pushAction({}))}
           onDelete={(item, index) => this.dispatch(this.deleteAction(index))}
+          onBatchAdd={(params as any)?.batchEditFun}
+          data={this.getView()}
         />
       </ControlPropertyViewWrapper>
     );
@@ -126,6 +128,7 @@ const PropertyView = (props: { comp: InstanceType<typeof GraphqlQuery>; datasour
         <QueryConfigLabel>Variables</QueryConfigLabel>
         <QueryConfigItemWrapper>
           {children.variables.propertyView({
+            batchEditFun: (value: Record<string, any>) => batchEditDispatch(value, children.variables),
             // variables: parseVariables(children.body.children.text.getView()) ?? [],
           })}
         </QueryConfigItemWrapper>

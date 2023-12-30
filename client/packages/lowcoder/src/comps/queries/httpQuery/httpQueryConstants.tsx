@@ -7,6 +7,7 @@ import { QueryConfigItemWrapper, QueryConfigLabel, QueryConfigWrapper } from "co
 import { GraphqlQuery } from "./graphqlQuery";
 import { StreamQuery } from "./streamQuery";
 import { trans } from "@lowcoder-ee/i18n";
+import { batchEditDispatch } from "@lowcoder-ee/comps/controls/keyValueControl";
 
 const UrlInput = styled.div<{ hasAddonBefore: boolean }>`
   display: flex;
@@ -69,7 +70,11 @@ export const HttpHeaderPropertyView = (props: {
     <QueryConfigWrapper>
       <QueryConfigLabel>{trans("query.headers")}</QueryConfigLabel>
       <QueryConfigItemWrapper>
-        {props.comp.children.headers.propertyView({ keyFlexBasics: 184, valueFlexBasics: 232 })}
+        {props.comp.children.headers.propertyView({
+          keyFlexBasics: 184,
+          valueFlexBasics: 232,
+          batchEditFun: (value: Record<string, any>) => batchEditDispatch(value, props.comp.children.headers),
+        })}
       </QueryConfigItemWrapper>
     </QueryConfigWrapper>
   );
@@ -82,7 +87,11 @@ export const HttpParametersPropertyView = (props: {
     <QueryConfigWrapper>
       <QueryConfigLabel>{trans("query.Parameters")}</QueryConfigLabel>
       <QueryConfigItemWrapper>
-        {props.comp.children.params.propertyView({ keyFlexBasics: 184, valueFlexBasics: 232 })}
+        {props.comp.children.params.propertyView({
+          keyFlexBasics: 184,
+          valueFlexBasics: 232,
+          batchEditFun: (value: Record<string, any>) => batchEditDispatch(value, props.comp.children.params),
+        })}
       </QueryConfigItemWrapper>
     </QueryConfigWrapper>
   );
