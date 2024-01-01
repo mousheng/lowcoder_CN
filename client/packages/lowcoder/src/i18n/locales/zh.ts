@@ -2333,7 +2333,8 @@ home: {
 carousel: {
     dotPosition: "点位置",
     autoPlay: "自动播放",
-    showDots: "显示点"
+    showDots: "显示点",
+    fade: "渐显",   //added by mousheng
 },
 npm: {
     invalidNpmPackageName: "无效的npm包名称或URL链接.",

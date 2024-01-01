@@ -2447,7 +2447,8 @@ export const en = {
   "carousel": {
     "dotPosition": "Navigation Dots position",
     "autoPlay": "AutoPlay",
-    "showDots": "Show Navigation Dots"
+    "showDots": "Show Navigation Dots",
+    "fade": "Fade", //added by mousheng
   },
 
 

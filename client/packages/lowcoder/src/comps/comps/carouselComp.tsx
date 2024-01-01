@@ -44,6 +44,7 @@ let CarouselBasicComp = (function () {
     showDots: withDefault(BoolControl, true),
     dotPosition: withDefault(PositionControl, "bottom"),
     style: styleControl(CarouselStyle),
+    fade: BoolControl,  // added by mousheng
 
     ...formDataChildren,
   };
@@ -63,6 +64,7 @@ let CarouselBasicComp = (function () {
             dotPosition={props.dotPosition}
             autoplay={props.autoPlay}
             afterChange={() => props.onEvent("change")}
+            effect={props.fade ? "fade" : undefined}
           >
             {props.data.map((url, index) => (
               <div key={index}>
@@ -83,20 +85,21 @@ let CarouselBasicComp = (function () {
 
           {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
             <><FormDataPropertyView {...children} />
-            <Section name={sectionNames.interaction}>
-              {children.onEvent.getPropertyView()}
-              {hiddenPropertyView(children)}
-              {children.autoPlay.propertyView({ label: trans("carousel.autoPlay") })}
-            </Section></>
+              <Section name={sectionNames.interaction}>
+                {children.onEvent.getPropertyView()}
+                {hiddenPropertyView(children)}
+                {children.autoPlay.propertyView({ label: trans("carousel.autoPlay") })}
+                {children.fade.propertyView({ label: trans("carousel.fade") })}
+              </Section></>
           )}
           {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
             <><Section name={sectionNames.layout}>
-                {children.showDots.propertyView({ label: trans("carousel.showDots") })}
-                {children.dotPosition.propertyView({
-                  label: trans("carousel.dotPosition"),
-                  radioButton: true,
-                })}
-              </Section>
+              {children.showDots.propertyView({ label: trans("carousel.showDots") })}
+              {children.dotPosition.propertyView({
+                label: trans("carousel.dotPosition"),
+                radioButton: true,
+              })}
+            </Section>
               <Section name={sectionNames.style}>
                 {children.style.getPropertyView()}
               </Section>
