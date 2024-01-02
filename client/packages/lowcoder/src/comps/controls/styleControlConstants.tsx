@@ -851,7 +851,6 @@ export const NavigationStyle = [
   ACCENT,
   getStaticBackground("#FFFFFF00"),
   getStaticBorder("#FFFFFF00"),
-  MARGIN,	
   PADDING,
 ] as const;
 

@@ -22,14 +22,16 @@ type IProps = {
   justify: boolean;
   bgColor: string;
   borderColor: string;
+  padding: string;
 };
 
-const Wrapper = styled("div")<Pick<IProps, "bgColor" | "borderColor">>`
+const Wrapper = styled("div")<Pick<IProps, "bgColor" | "borderColor" | "padding">>`
   height: 100%;
   border-radius: 2px;
   box-sizing: border-box;
   border: 1px solid ${(props) => props.borderColor};
   background-color: ${(props) => props.bgColor};
+  padding: ${(props) => props.padding};
 `;
 
 const NavInner = styled("div")<Pick<IProps, "justify">>`
@@ -177,7 +179,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props) => {
   const justify = props.horizontalAlignment === "justify";
 
   return (
-    <Wrapper borderColor={props.style.border} bgColor={props.style.background}>
+    <Wrapper borderColor={props.style.border} bgColor={props.style.background} padding={props.style.padding}>
       <NavInner justify={justify}>
         {props.logoUrl && (
           <LogoWrapper onClick={() => props.logoEvent("click")}>
