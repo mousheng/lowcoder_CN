@@ -1745,6 +1745,7 @@ listView: {
     dataDesc: "当前列表中使用的原始数据",
     dataTooltip:
         "如果将其计算为数字,此字段将被视为行数,并且数据将被视为空.",
+    borderBottom: '边框底部',   //added by mousheng
 },
 navigation: {
     addText: "添加子菜单项",

@@ -949,7 +949,16 @@ export const IconStyle = [getStaticBackground("#00000000"),
   , RADIUS, MARGIN, PADDING] as const;
 
 
-export const ListViewStyle = [...BG_STATIC_BORDER_RADIUS, CONTAINERBODYPADDING];  // added by mousheng
+export const ListViewStyle = [
+  getBackground(), 
+  getStaticBorder(), 
+  {
+    name: "bottomBorderColor",
+    label: trans("listView.borderBottom"),
+    color: "#00000000",
+  }, 
+  RADIUS, 
+  CONTAINERBODYPADDING];  // added by mousheng
 
 export const JsonSchemaFormStyle = BG_STATIC_BORDER_RADIUS;
 

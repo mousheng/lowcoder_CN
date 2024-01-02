@@ -27,25 +27,29 @@ const ListViewWrapper = styled.div<{ $style: any; $paddingWidth: string }>`
   background-color: ${(props) => props.$style.background};
 `;
 
-const FooterWrapper = styled.div`
+const FooterWrapper = styled.div<{ showLastLine?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3px;
+  padding: ${(props) => props?.showLastLine ? '3px' : '0px'};
 `;
 
-const BodyWrapper = styled.div<{ $autoHeight: boolean }>`
-  overflow: auto;
+const BodyWrapper = styled.div<{ $autoHeight: boolean, $style?: any, showLastLine: boolean }>`
   overflow: overlay;
   height: ${(props) => (props.$autoHeight ? "100%" : "calc(100% - 32px)")};
-`;
+  & > div {
+    > div${(props) => props.showLastLine ? "" : ":not(:last-child)"} {
+      border-bottom: 1px solid ${(props) => props?.$style?.bottomBorderColor};
+    }
+  }
+`;//added by mousheng
 
 const FlexWrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-`;
+`;//added by mousheng
 
 const ContainerInListView = (props: ContainerBaseProps) => {
   return (
@@ -151,7 +155,7 @@ export function ListView(props: Props) {
     ? 1
     : Math.floor((pageInfo.currentPageSize + noOfColumns - 1) / noOfColumns);
   const rowHeight = isOneItem ? "100%" : dynamicHeight ? "auto" : heightUnitOfRow * 44 + "px";
-
+  const showLastLine = !(pageInfo.pagination.hideOnSinglePage && (pageInfo.pagination.pageSize > pageInfo.total))
   // minHeight is used to ensure that the container height will not shrink when dragging, and the current padding needs to be subtracted during calculation
   const minHeight = isDragging && autoHeight ? listHeight + "px" : "100%";
   // log.log("List. listHeight: ", listHeight, " minHeight: ", minHeight);
@@ -209,8 +213,8 @@ export function ListView(props: Props) {
   // log.debug("renders: ", renders);
   return (
     <BackgroundColorContext.Provider value={style.background}>
-      <ListViewWrapper $style={style} $paddingWidth={style.containerbodypadding?? "3px 0px"}>
-        <BodyWrapper ref={ref} $autoHeight={autoHeight}>
+      <ListViewWrapper $style={style} $paddingWidth={style.containerbodypadding ?? "3px 0px"}>
+        <BodyWrapper ref={ref} $autoHeight={autoHeight} $style={style} showLastLine={showLastLine}>
           <ReactResizeDetector
             onResize={(width?: number, height?: number) => {
               if (height) setListHeight(height);
@@ -220,7 +224,7 @@ export function ListView(props: Props) {
             <div style={{ height: autoHeight ? "auto" : "100%" }}>{renders}</div>
           </ReactResizeDetector>
         </BodyWrapper>
-        <FooterWrapper>
+        <FooterWrapper showLastLine={showLastLine}>
           <Pagination size="small" itemRender={pageItemRender} {...pageInfo.pagination} />
         </FooterWrapper>
       </ListViewWrapper>
