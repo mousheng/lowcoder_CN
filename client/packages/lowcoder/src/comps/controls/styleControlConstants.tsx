@@ -10,6 +10,7 @@ type CommonColorConfig = {
   readonly name: string;
   readonly label: string;
   readonly platform?: SupportPlatform; // support all if undefined
+  readonly defaultValue?: string; // added by mousheng 用于设置非主题内置属性的默认值
 };
 export type SimpleColorConfig = CommonColorConfig & {
   readonly color: string;
@@ -816,7 +817,12 @@ export const DividerStyle = [
   MARGIN,	
   PADDING,
   TEXT_SIZE,
-  BORDER_WIDTH
+  {
+    name: "borderWidth",
+    label: trans("style.borderWidth"),
+    borderWidth: "borderWidth",
+    defaultValue: '1px',
+  }
 ] as const;
 
 export const ProgressStyle = [

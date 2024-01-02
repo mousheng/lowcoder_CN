@@ -52,12 +52,12 @@ function isTextSizeConfig(config: SingleColorConfig): config is TextSizeConfig {
   return config.hasOwnProperty("textSize");
 }
 
-function isMarginConfig(config: SingleColorConfig): config is MarginConfig {	
-  return config.hasOwnProperty("margin");	
-}	
+function isMarginConfig(config: SingleColorConfig): config is MarginConfig {
+  return config.hasOwnProperty("margin");
+}
 
-function isPaddingConfig(config: SingleColorConfig): config is PaddingConfig {	
-  return config.hasOwnProperty("padding");	
+function isPaddingConfig(config: SingleColorConfig): config is PaddingConfig {
+  return config.hasOwnProperty("padding");
 }
 
 // function styleControl(colorConfig: Array<SingleColorConfig>) {
@@ -79,11 +79,11 @@ function isEmptyTextSize(textSize: string) {
   return _.isEmpty(textSize);
 }
 
-function isEmptyMargin(margin: string) {	
-  return _.isEmpty(margin);	
-}	
-function isEmptyPadding(padding: string) {	
-  return _.isEmpty(padding);	
+function isEmptyMargin(margin: string) {
+  return _.isEmpty(margin);
+}
+function isEmptyPadding(padding: string) {
+  return _.isEmpty(padding);
 }
 
 /**
@@ -100,25 +100,25 @@ function calcColors<ColorMap extends Record<string, string>>(
   let res: Record<string, string> = {};
   colorConfigs.forEach((config) => {
     const name = config.name;
-    if (!isEmptyRadius(props[name]) && isRadiusConfig(config)) {	
-      res[name] = props[name];	
-      return;	
+    if (!isEmptyRadius(props[name]) && isRadiusConfig(config)) {
+      res[name] = props[name];
+      return;
     }
-    if (!isEmptyBorderWidth(props[name]) && isBorderWidthConfig(config)) {	
-      res[name] = props[name];	
-      return;	
+    if (!isEmptyBorderWidth(props[name]) && isBorderWidthConfig(config)) {
+      res[name] = props[name];
+      return;
     }
-    if (!isEmptyTextSize(props[name]) && isTextSizeConfig(config)) {	
-      res[name] = props[name];	
-      return;	
-    }	
-    if (!isEmptyMargin(props[name]) && isMarginConfig(config)) {	
-      res[name] = props[name];	
-      return;	
-    }	
-    if (!isEmptyPadding(props[name]) && isPaddingConfig(config)) {	
-      res[name] = props[name];	
-      return;	
+    if (!isEmptyTextSize(props[name]) && isTextSizeConfig(config)) {
+      res[name] = props[name];
+      return;
+    }
+    if (!isEmptyMargin(props[name]) && isMarginConfig(config)) {
+      res[name] = props[name];
+      return;
+    }
+    if (!isEmptyPadding(props[name]) && isPaddingConfig(config)) {
+      res[name] = props[name];
+      return;
     }
     if (!isEmptyColor(props[name])) {
       if (isThemeColorKey(props[name])) {
@@ -135,17 +135,17 @@ function calcColors<ColorMap extends Record<string, string>>(
       res[name] = themeWithDefault[config.radius];
     }
     if (isBorderWidthConfig(config)) {
-      res[name] = '0px';
+      res[name] = config.defaultValue ?? '0px'; 
     }
     if (isTextSizeConfig(config)) {
       // TODO: remove default textSize after added in theme in backend.
       res[name] = themeWithDefault[config.textSize] || '14px';
     }
-    if (isMarginConfig(config)) {	
-      res[name] = themeWithDefault[config.margin];	
-    }	
-    if (isPaddingConfig(config)) {	
-      res[name] = themeWithDefault[config.padding];	
+    if (isMarginConfig(config)) {
+      res[name] = themeWithDefault[config.margin];
+    }
+    if (isPaddingConfig(config)) {
+      res[name] = themeWithDefault[config.padding];
     }
   });
   // The second pass calculates dep
@@ -256,7 +256,7 @@ const RadiusIcon = styled(IconRadius)`
 
 const MarginIcon = styled(ExpandIcon)`	
 margin: 0 8px 0 -2px;	
-`;	
+`;
 const PaddingIcon = styled(CompressIcon)`	
 margin: 0 8px 0 -2px;	
 `;
@@ -274,18 +274,18 @@ export function styleControl<T extends readonly SingleColorConfig[]>(colorConfig
   const childrenMap: any = {};
   colorConfigs.map((config) => {
     const name: Names<T> = config.name;
-    if (	
+    if (
       name === "radius" ||
       name === "borderWidth" ||
       name === "cardRadius" ||
       name === "fontSize" ||
       name === "textSize"
-    ) {	
-      childrenMap[name] = StringControl;	
-    } else if (name === "margin" || name === "padding" || name==="containerheaderpadding" || name==="containerfooterpadding" || name==="containerbodypadding") {	
-      childrenMap[name] = StringControl;	
-    } else {	
-      childrenMap[name] = ColorControl;	
+    ) {
+      childrenMap[name] = StringControl;
+    } else if (name === "margin" || name === "padding" || name === "containerheaderpadding" || name === "containerfooterpadding" || name === "containerbodypadding") {
+      childrenMap[name] = StringControl;
+    } else {
+      childrenMap[name] = ColorControl;
     }
   });
   // [K in Names<T>]: new (params: CompParams<any>) => ColorControl;
@@ -321,13 +321,13 @@ export function styleControl<T extends readonly SingleColorConfig[]>(colorConfig
                 onClick={() => {
                   colorConfigs.map((item) => {
                     const name: Names<T> = item.name;
-                    if (	
-                      name === "radius" ||	
-                      name === "margin" ||	
+                    if (
+                      name === "radius" ||
+                      name === "margin" ||
                       name === "padding" ||
-                      name==="containerheaderpadding"	||
-                      name==="containerfooterpadding"	||
-                      name==="containerbodypadding"
+                      name === "containerheaderpadding" ||
+                      name === "containerfooterpadding" ||
+                      name === "containerbodypadding"
                     ) {
                       children[name]?.dispatchChangeValueAction("");
                     } else {
@@ -365,52 +365,52 @@ export function styleControl<T extends readonly SingleColorConfig[]>(colorConfig
                 }
                 return controlItem(
                   { filterText: config.label },
-                  <div key={index}>	
+                  <div key={index}>
                     {(name === "radius" ||
-                    name === "borderWidth" ||
-                    name === "gap" ||	
-                    name === "cardRadius")
-                      ? (	
-                          children[name] as InstanceType<typeof StringControl>	
-                        ).propertyView({	
-                          label: config.label,	
-                          preInputNode: <RadiusIcon title="" />,	
-                          placeholder: props[name],	
-                        })	
-                      : name === "margin"	
-                      ? (	
-                          children[name] as InstanceType<typeof StringControl>	
-                        ).propertyView({	
-                          label: config.label,	
-                          preInputNode: <MarginIcon title="" />,	
-                          placeholder: props[name],	
-                        })	
-                      : (name === "padding" ||
-                      name === "containerheaderpadding"	||
-                      name === "containerfooterpadding"	||
-                      name === "containerbodypadding")
-                      ? (	
-                          children[name] as InstanceType<typeof StringControl>	
-                        ).propertyView({	
-                          label: config.label,	
-                          preInputNode: <PaddingIcon title="" />,	
-                          placeholder: props[name],	
-                        })	
-                      : name === "textSize"
-                      ? (	
-                          children[name] as InstanceType<typeof StringControl>	
-                        ).propertyView({	
-                          label: config.label,	
-                          preInputNode: <StyledTextSizeIcon title="" />,	
-                          placeholder: props[name],	
+                      name === "borderWidth" ||
+                      name === "gap" ||
+                      name === "cardRadius")
+                      ? (
+                        children[name] as InstanceType<typeof StringControl>
+                      ).propertyView({
+                        label: config.label,
+                        preInputNode: <RadiusIcon title="" />,
+                        placeholder: props[name],
+                      })
+                      : name === "margin"
+                        ? (
+                          children[name] as InstanceType<typeof StringControl>
+                        ).propertyView({
+                          label: config.label,
+                          preInputNode: <MarginIcon title="" />,
+                          placeholder: props[name],
                         })
-                      : children[name].propertyView({	
-                          label: config.label,	
-                          panelDefaultColor: props[name],	
-                          // isDep: isDepColorConfig(config),	
-                          isDep: true,	
-                          depMsg: depMsg,	
-                        })}	
+                        : (name === "padding" ||
+                          name === "containerheaderpadding" ||
+                          name === "containerfooterpadding" ||
+                          name === "containerbodypadding")
+                          ? (
+                            children[name] as InstanceType<typeof StringControl>
+                          ).propertyView({
+                            label: config.label,
+                            preInputNode: <PaddingIcon title="" />,
+                            placeholder: props[name],
+                          })
+                          : name === "textSize"
+                            ? (
+                              children[name] as InstanceType<typeof StringControl>
+                            ).propertyView({
+                              label: config.label,
+                              preInputNode: <StyledTextSizeIcon title="" />,
+                              placeholder: props[name],
+                            })
+                            : children[name].propertyView({
+                              label: config.label,
+                              panelDefaultColor: props[name],
+                              // isDep: isDepColorConfig(config),	
+                              isDep: true,
+                              depMsg: depMsg,
+                            })}
                   </div>
                 );
               })}
