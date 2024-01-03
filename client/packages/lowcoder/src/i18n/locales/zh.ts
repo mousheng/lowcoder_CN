@@ -258,9 +258,9 @@ eventHandler: {
     slowdownTooltip: "使用防抖或节流控制操作触发的频率,时间单位可以是毫秒(默认为ms)或秒(s).",
     notHandledError: "未处理",
     currentApp: "当前应用程序",
-    set: "设置",
-    clear: "清除",
-    reset: "重置",
+    set: "Set",
+    clear: "Clear",
+    reset: "Reset",
 },
 event: {
     submit: "提交",
