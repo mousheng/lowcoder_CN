@@ -1062,6 +1062,10 @@ export const en = {
     "cardCompDesc": "A card component for displaying organized information or content in a structured manner.",
     "cardCompKeywords": "card, information, content, display",
 
+    "confettiCompName": "Confetti",
+    "confettiCompDesc": "A component that creates a festive confetti effect, adding a touch of celebration to your UI.",
+    "confettiCompKeywords": "confetti, celebration, effect, festive",
+
   },
 
 
@@ -3235,6 +3239,11 @@ export const en = {
     "hoverColor": "hover Color",
     "IconColor": "Icon Color",
     "titleSize": "Title Size",
+  },
+  confetti: {
+    "celebrate": "celebrate",
+    "config": "config",
+    "active": "active",
   },
 
   docUrls: {

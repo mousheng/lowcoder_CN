@@ -92,6 +92,7 @@ import { CommentComp } from "./comps/commentComp/commentComp";
 import { MentionComp } from "./comps/textInputComp/mentionComp";
 import { AutoCompleteComp } from "./comps/autoCompleteComp/autoCompleteComp";
 import { CardComp } from "./comps/containerComp/cardComp";
+import { ConfettiComp } from "./comps/confettiComp";
 
 import {
   AudioCompIcon,
@@ -171,6 +172,7 @@ import {
   GanttIcon,
   TransferIcon,
   CardIcon,
+  ConfettiIcon,
 } from "lowcoder-design";
 
 type Registry = {
@@ -1298,7 +1300,17 @@ const uiCompMap: Registry = {
       h: 47,
       w: 4,
     },
-  }
+  },
+  confetti: {
+    name: trans("uiComp.confettiCompName"),
+    enName: "confetti",
+    icon: ConfettiIcon,
+    description: trans("uiComp.confettiCompDesc"),
+    categories: ["multimedia"],
+    keywords: trans("uiComp.confettiCompKeywords"),
+    comp: ConfettiComp,
+    withoutLoading: true,
+  },
   
 };
 

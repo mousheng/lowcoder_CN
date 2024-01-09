@@ -56,6 +56,7 @@ import {
   GanttIcon,
   TransferIcon,
   CardIcon,
+  ConfettiIcon,
 } from "lowcoder-design";
 
 export const CompStateIcon: {
@@ -145,4 +146,5 @@ export const CompStateIcon: {
   gantt: <GanttIcon />,
   transfer: <TransferIcon />,
   card: <CardIcon />,
+  confetti: <ConfettiIcon />,
 };

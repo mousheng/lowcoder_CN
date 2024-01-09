@@ -35,6 +35,7 @@ import { UtilsComp } from "./utilsComp";
 import { VideoMeetingControllerComp } from "../comps/meetingComp/videoMeetingControllerComp";
 import { ScreenInfoHookComp } from "./screenInfoComp";
 import cnchar from "cnchar";
+import { ConfettiComp } from "../comps/confettiComp";
 
 window._ = _;
 window.dayjs = dayjs;
@@ -105,6 +106,7 @@ const HookMap: HookCompMapRawType = {
   urlParams: UrlParamsHookComp,
   drawer: DrawerComp,
   theme: ThemeComp,
+  confetti: ConfettiComp,
 };
 
 export const HookTmpComp = withTypeAndChildren(HookMap, "title", {

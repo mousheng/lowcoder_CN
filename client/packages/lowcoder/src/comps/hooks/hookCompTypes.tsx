@@ -18,6 +18,7 @@ const AllHookComp = [
   "screenInfo",
   "urlParams",
   "theme",
+  "confetti",
 ] as const;
 
 export type HookCompType = (typeof AllHookComp)[number];
@@ -45,6 +46,10 @@ const HookCompConfig: Record<
     singleton: false,
   },
   meeting: {
+    category: "ui",
+    singleton: false,
+  },
+  confetti: {
     category: "ui",
     singleton: false,
   },

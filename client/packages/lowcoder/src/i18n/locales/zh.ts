@@ -979,6 +979,9 @@ uiComp: {
     cardCompName: "卡片",
     cardCompDesc: "卡片组件，用于以结构化方式显示有组织的信息或内容.",
     cardCompKeywords: "kp",
+    confettiCompName: "五彩纸屑",
+    confettiCompDesc: "一个创建节日五彩纸屑效果的组件，为您的UI添加一丝庆祝色彩",
+    confettiCompKeywords: "wczx",
 },
 comp: {
     menuViewDocs: "查看文档",
@@ -3178,5 +3181,10 @@ idSource: {
         hoverColor: "图标激活",
         IconColor: "图标",
         titleSize: "标题尺寸",
-    }
+    },
+    confetti: {
+        "celebrate": "庆祝",
+        "config": "参数",
+        "active": "激活",
+      },
 };
