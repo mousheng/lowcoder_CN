@@ -165,11 +165,8 @@ const EventHandlerControlPropertyView = (props: {
       return;
     }
     const queryExecHandler = {
-      compType: "executeQuery",
+      compType: "message",
       comp: {
-        queryName: editorState
-          ?.selectedOrFirstQueryComp()
-          ?.children.name.getView(),
       },
     };
     const messageHandler = {
