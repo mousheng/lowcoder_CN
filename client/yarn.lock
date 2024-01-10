@@ -7855,6 +7855,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dom-confetti@npm:0.2.2":
+  version: 0.2.2
+  resolution: "dom-confetti@npm:0.2.2"
+  checksum: 6b14f4432fa758b038d63cfb7c8d56577d4ce99b11b7a7c74d261e5fb2fb4e2495c6b6787ba78c778cfad2627730612234424f675c524d903ad8d7485319af22
+  languageName: node
+  linkType: hard
+
 "dom-helpers@npm:^5.1.3":
   version: 5.2.1
   resolution: "dom-helpers@npm:5.2.1"
@@ -12398,6 +12405,7 @@ __metadata:
     react-colorful: ^5.5.1
     react-documents: ^1.2.1
     react-dom: ^17.0.2
+    react-dom-confetti: ^0.2.0
     react-draggable: ^4.4.4
     react-grid-layout: ^1.3.0
     react-helmet: ^6.1.0
@@ -15807,6 +15815,17 @@ __metadata:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
   checksum: a3f91557d2a05793cacc414208e2e05c37f7f54858ae4dd852aa8c42b4a9e9df3748f2e6cb62b1a153f9ee65271d7b61eb8afc7bf21338ed7ed97e9a4ea85d58
+  languageName: node
+  linkType: hard
+
+"react-dom-confetti@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "react-dom-confetti@npm:0.2.0"
+  dependencies:
+    dom-confetti: 0.2.2
+  peerDependencies:
+    react: "*"
+  checksum: 57ea07edad246545116dea341577dfeddbd77c8ebf2e81175319fe6b988fb4ed693a044c20b5ab5bcdf6e68fc0bf1d70338630155e67885cc59ca0b9933fb59c
   languageName: node
   linkType: hard
 
