@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.1.1</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -31,6 +32,11 @@
     </properties>
 
     <repositories>
+        <repository>
+            <id>aliyun-releases</id>
+            <name>阿里云</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -107,32 +113,32 @@
     <dependencyManagement>
         <dependencies>
 
-			<dependency>
-				<groupId>org.lowcoder</groupId>
-				<artifactId>lowcoder-sdk</artifactId>
-				<version>${revision}</version>
-			</dependency>			
-			<dependency>
-				<groupId>org.lowcoder</groupId>
-				<artifactId>lowcoder-infra</artifactId>
-				<version>${revision}</version>
-			</dependency>			
-			<dependency>
-				<groupId>org.lowcoder</groupId>
-				<artifactId>lowcoder-domain</artifactId>
-				<version>${revision}</version>
-			</dependency>			
-			<dependency>
-				<groupId>org.lowcoder</groupId>
-				<artifactId>lowcoder-plugins</artifactId>
-				<version>${revision}</version>
-			</dependency>			
-			<dependency>
-				<groupId>org.lowcoder</groupId>
-				<artifactId>lowcoder-server</artifactId>
-				<version>${revision}</version>
-			</dependency>			
-			
+            <dependency>
+                <groupId>org.lowcoder</groupId>
+                <artifactId>lowcoder-sdk</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.lowcoder</groupId>
+                <artifactId>lowcoder-infra</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.lowcoder</groupId>
+                <artifactId>lowcoder-domain</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.lowcoder</groupId>
+                <artifactId>lowcoder-plugins</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.lowcoder</groupId>
+                <artifactId>lowcoder-server</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.pf4j</groupId>
                 <artifactId>pf4j</artifactId>
@@ -288,11 +294,11 @@
                 <version>1.0.6.RELEASE</version>
             </dependency>
 
-			<dependency>
-			    <groupId>jakarta.servlet</groupId>
-			    <artifactId>jakarta.servlet-api</artifactId>
-			    <version>6.0.0</version>
-			</dependency>
+            <dependency>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>6.0.0</version>
+            </dependency>
 
             <dependency>
                 <groupId>io.projectreactor</groupId>
@@ -332,4 +338,3 @@
     </modules>
 
 </project>
-
