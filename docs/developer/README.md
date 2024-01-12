@@ -45,6 +45,8 @@ yarn install
 # 运行前端
 yarn start
 ```
+!> 注意，如果你在步骤一中，修改了默认端口3000,那么，运行前端时请指定后端地址和端口 `LOWCODER_API_SERVICE_URL=http://localhost:修改后端口 yarn start`
+
 运行后，将自动打开浏览器，你也可以根据提示的网址手动打开。
 当您修改项目代码后，浏览器将自动加载最新的代码，方便你调试。
 ![Alt text](../assets/image-9.png)
