@@ -3,9 +3,9 @@
 
 * [源码下载](#源码下载)
 * [快速调试前端](#快速调试前端)
+* [调试后端](developer/debugBackendCode.md)
 * [添加原生组件](developer/addComponent.md)
 * [组件文件简单介绍](developer/component-file.md)
-* 调试后端(后面再加，你可以先查看server目录下的readme)
 * [打包Docker镜像](developer/build-image.md)
 
 以下以windows WSL2新安装的ubuntu22为例
