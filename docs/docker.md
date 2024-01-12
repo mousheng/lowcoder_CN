@@ -123,6 +123,35 @@ docker logs -f lowcoder
 
 ![](assets/2-20231002181225-34pfxhn.png)​
 
+### Docker环境变量介绍
+
+| 环境变量名                   | 描述                                                                            | 示例值                                                |
+| ---------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `REDIS_ENABLED`              | 指定是否在容器中启动Redis服务器。                          | `true`                                                |
+| `MONGODB_ENABLED`            | 指定是否在容器中启动MongoDB数据库。                        | `true`                                                |
+| `API_SERVICE_ENABLED`        | 控制lowcoder API服务是否在容器中启动。                     | `true`                                                |
+| `NODE_SERVICE_ENABLED`       | 控制lowcoder节点服务（JavaScript执行器）是否在容器中启动。 | `true`                                                |
+| `FRONTEND_ENABLED`           | 指定是否在容器中启动lowcoder web前端。                     | `true`                                                |
+| `PUID`                       | 运行服务的用户的用户ID，用于拥有日志和数据。值：数字用户ID。                    | `9001`                                                |
+| `PGID`                       | 运行服务的用户组的组ID。                                                        | `9001`                                                |
+| `MONGODB_URL`                | MongoDB的连接字符串。                                                           | `mongodb://localhost:27017/lowcoder?authSource=admin` |
+| `REDIS_URL`                  | Redis服务器的URL。                                                              | `redis://localhost:6379`                              |
+| `ENCRYPTION_PASSWORD`        | 密码                                                               | `lowcoder.org`                                        |
+| `ENCRYPTION_SALT`            | 密码盐                                                              | `lowcoder.org`                                        |
+| `CORS_ALLOWED_DOMAINS`       | 允许CORS的域。                                                                  | `*`                                                   |
+| `LOWCODER_MAX_REQUEST_SIZE`  | lowcoder的最大请求大小。                                                        | `20m`                                                 |
+| `LOWCODER_MAX_QUERY_TIMEOUT` | lowcoder API服务的最大查询超时（以秒为单位）。                                  | `120`                                                 |
+| `LOWCODER_API_SERVICE_URL`   | lowcoder API服务的URL。                                                         | `http://localhost:8080`                               |
+| `LOWCODER_NODE_SERVICE_URL`  | lowcoder节点服务（JavaScript执行器）的URL。                                     | `http://localhost:6060`                               |
+| `DEFAULT_ORGS_PER_USER`      | 各用户的默认最大组织数。                                                        | `100`                                                 |
+| `DEFAULT_ORG_MEMBER_COUNT`   | 各组织的默认最大成员数。                                                        | `1000`                                                |
+| `DEFAULT_ORG_GROUP_COUNT`    | 各组织的默认最大群组数。                                                        | `100`                                                 |
+| `DEFAULT_ORG_APP_COUNT`      | 各组织的默认最大应用数。                                                        | `1000`                                                |
+| `DEFAULT_DEVELOPER_COUNT`    | 默认最大开发者数。                                                              | `100`                                                 |
+| `COMMON_WORKSPACE_MODE`      | 工作空间的模式，可以是"SAAS"或"ENTERPRISE"。                                    | `SAAS`                                                |
+| `ENABLE_USER_SIGN_UP`        | 控制用户是否可以在注册时自动创建他们自己的工作空间。值：`true`或`false`。       | `true`                                                |
+| `AUTH_EMAIL_ENABLE`          | 控制在设置管理员用户后是否显示电子邮件登录。值：`true`或`false`。               | `true`                                                |
+
 
 ### 安装证书（SSl）
 
@@ -185,6 +214,7 @@ docker run -d --name lowcoder -p 33000:3000 -v "$PWD/stacks:/lowcoder-stacks" mo
 ```
 
 <!-- tabs:end -->
+
 
 
 * [在docker镜像中，如何如何访问宿主机 API/DB？](visit-host-api-or-db.md)
