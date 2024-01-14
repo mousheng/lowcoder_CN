@@ -1497,6 +1497,7 @@ QRCode: {
     expired: "过期",
     loading: "载入",
     imageTooltip: "图片地址/Base64编码",
+    dataURL: "二维码的DataURL，但是不支持二维码中间插入图片",
 },
 jsonExplorer: {
     indent: "缩进",

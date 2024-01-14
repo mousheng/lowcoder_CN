@@ -1,4 +1,4 @@
-import { RecordConstructorToView } from "lowcoder-core";
+import { CompAction, RecordConstructorToView, changeChildAction } from "lowcoder-core";
 import { BoolControl } from "comps/controls/boolControl";
 import { stringExposingStateControl } from "comps/controls/codeStateControl";
 import { dropdownControl } from "comps/controls/dropdownControl";
@@ -15,7 +15,7 @@ import ReactResizeDetector from "react-resize-detector";
 import { clickEvent, eventHandlerControl, refreshEvent } from "../controls/eventHandlerControl";
 import styled, { css } from "styled-components";
 import { useEffect, useRef, useState, useContext } from "react";
-import { withDefault } from "../generators";
+import { stateComp, withDefault } from "../generators";
 import { EditorContext } from "comps/editorState";
 
 // TODO: add styling for image (size)
@@ -78,14 +78,32 @@ const childrenMap = {
   status: stringExposingStateControl('status', 'active'),
   renderType: dropdownControl(typeOptions, 'canvas'),
   onEvent: eventHandlerControl(EventOptions),
+  dataURL: stateComp<string>(""),
 };
 
-const QRCodeView = (props: RecordConstructorToView<typeof childrenMap>) => {
+const QRCodeView = (props: RecordConstructorToView<typeof childrenMap> & { dispatch: (action: CompAction) => void; }) => {
   const value = props.value.value;
   const { renderType, image } = props;
   const conRef = useRef<HTMLDivElement>(null);
+  const [randomID, setRandomID] = useState(Math.random().toString());
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
+  useEffect(() => {
+    setTimeout(() => {
+      if (props.image === '' && value !== '') {
+        const element = document.getElementById(randomID)
+        if (props.renderType === 'canvas') {
+          const canvas = element?.querySelector<HTMLCanvasElement>('canvas');
+          props.dispatch(changeChildAction("dataURL", canvas?.toDataURL ? canvas?.toDataURL() : '', false));
+        } else {
+          const svg = element?.querySelector('svg')
+          props.dispatch(changeChildAction("dataURL", svg ? 'data:image/svg+xml;base64,' + window.btoa(new XMLSerializer().serializeToString(svg)) : '', false));
+        }
+      } else {
+        props.dispatch(changeChildAction("dataURL", '', false));
+      }
+    }, 10);
+  }, [value, props.image, props.renderType, props.style.background, props.style.color])
   useEffect(() => {
     if (height && width) {
       onResize();
@@ -110,38 +128,39 @@ const QRCodeView = (props: RecordConstructorToView<typeof childrenMap>) => {
   return (
     <ReactResizeDetector onResize={onResize}>
       <Container
+        id={randomID}
         ref={conRef}
         $style={props.style}
         onClick={(e) => {
           props.onEvent("click")
-      }}
-    >
-      {
-        (
-          <QRCode
-            value={value || '-'}
-            icon={image}
-            status={props.status.value as "active" | "expired" | "loading"}
-            bordered={props.includeMargin}
-            onRefresh={onRefresh}
-            color={props.style.color}
-            bgColor={props.style.background}
-            errorLevel={props.level}
-            type={renderType}
-            size={height > width ? width - 5 : height}
-            iconSize={height > width ? width / 4 : height / 4}
-            style={{
-              borderRadius: props.style.radius,
-            }}
-          />
-        )}
-    </Container>
+        }}
+      >
+        {
+          (
+            <QRCode
+              value={value || '-'}
+              icon={image}
+              status={props.status.value as "active" | "expired" | "loading"}
+              bordered={props.includeMargin}
+              onRefresh={onRefresh}
+              color={props.style.color}
+              bgColor={props.style.background}
+              errorLevel={props.level}
+              type={renderType}
+              size={height > width ? width - 5 : height}
+              iconSize={height > width ? width / 4 : height / 4}
+              style={{
+                borderRadius: props.style.radius,
+              }}
+            />
+          )}
+      </Container>
     </ReactResizeDetector >
   );
 };
 
 let QRCodeBasicComp = (function () {
-  return new UICompBuilder(childrenMap, (props) => <QRCodeView {...props} />)
+  return new UICompBuilder(childrenMap, (props, dispatch) => <QRCodeView {...props} dispatch={dispatch} />)
     .setPropertyViewFn((children) => (
       <>
         <Section name={sectionNames.basic}>
@@ -158,8 +177,8 @@ let QRCodeBasicComp = (function () {
 
         {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
           <><Section name={sectionNames.interaction}>
-              {hiddenPropertyView(children)}
-            </Section>
+            {hiddenPropertyView(children)}
+          </Section>
             <Section name={sectionNames.advanced}>
               {children.level.propertyView({
                 label: trans("QRCode.level"),
@@ -195,6 +214,7 @@ QRCodeBasicComp = class extends QRCodeBasicComp {
 
 export const QRCodeComp = withExposingConfigs(QRCodeBasicComp, [
   new NameConfig("value", trans("QRCode.valueDesc")),
+  new NameConfig("dataURL", trans("QRCode.dataURL")),
   new NameConfig("status", trans("QRCode.status")),
   NameConfigHidden,
 ]);

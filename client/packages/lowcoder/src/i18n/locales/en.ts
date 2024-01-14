@@ -1525,6 +1525,7 @@ export const en = {
     "expired": "expired",
     "loading": "loading",
     "imageTooltip": "Image URL/ Base64 encoded",
+    "dataURL": "The DataURL of the QR code, but does not support inserting images in the middle of the QR code",
   },
   "jsonExplorer": {
     "indent": "Indent of Each Level",
