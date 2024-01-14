@@ -41,6 +41,7 @@ const getStyle = (style: QRCodeStyleType) => {
      color: ${style.color};
     }
     padding: ${style.padding};
+    border: ${style.borderWidth} solid ${style.border};
     border-radius: ${style.radius};
     margin: ${style.margin};
     max-width: ${widthCalculator(style.margin)};
@@ -71,7 +72,6 @@ const EventOptions = [clickEvent, refreshEvent] as const;
 const childrenMap = {
   value: withDefault(stringExposingStateControl("value"), 'https://lowcoder.mousheng.top'),
   level: dropdownControl(levelOptions, "M"),
-  includeMargin: BoolControl.DEFAULT_TRUE,
   image: StringControl,
   style: styleControl(QRCodeStyle),
   statusOption: dropdownControl(statusOptions, 'active'),
@@ -161,7 +161,6 @@ const QRCodeView = (props: RecordConstructorToView<typeof childrenMap> & { dispa
               value={value || '-'}
               icon={image}
               status={props.status.value as "active" | "expired" | "loading"}
-              bordered={props.includeMargin}
               onRefresh={onRefresh}
               color={props.style.color}
               bgColor={props.style.background}
@@ -216,7 +215,6 @@ let QRCodeBasicComp = (function () {
         {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
           <Section name={sectionNames.style}>
             {children.style.getPropertyView()}
-            {children.includeMargin.propertyView({ label: trans("QRCode.includeMargin") })}
             {children.onEvent.propertyView()}
 
           </Section>
