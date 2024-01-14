@@ -1526,6 +1526,9 @@ export const en = {
     "loading": "loading",
     "imageTooltip": "Image URL/ Base64 encoded",
     "dataURL": "The DataURL of the QR code, but does not support inserting images in the middle of the QR code",
+    "downloadQR": "Download QRCode",
+    "fileName": "FileName",
+    "fail": "Not yet supporting inserting images in the middle of QR codes",
   },
   "jsonExplorer": {
     "indent": "Indent of Each Level",

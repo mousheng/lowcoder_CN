@@ -6,7 +6,7 @@ import { styleControl } from "comps/controls/styleControl";
 import { QRCodeStyle, QRCodeStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
 import { UICompBuilder } from "comps/generators/uiCompBuilder";
 import { NameConfig, NameConfigHidden, withExposingConfigs } from "comps/generators/withExposing";
-import { Section, sectionNames } from "lowcoder-design";
+import { Section, messageInstance, sectionNames } from "lowcoder-design";
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
 import { StringControl } from "comps/controls/codeControl";
@@ -79,29 +79,49 @@ const childrenMap = {
   renderType: dropdownControl(typeOptions, 'canvas'),
   onEvent: eventHandlerControl(EventOptions),
   dataURL: stateComp<string>(""),
+  compID: stateComp<string>(Math.random().toString()),
 };
+
+const downloadQR = (dataURL: string, fileName: string): void => {
+  const a = document.createElement('a');
+  a.download = fileName;
+  a.href = dataURL;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+const getImagesData = (value: string, image: string, compID: string, renderType: string, dispatch: (action: CompAction) => void, download = false, fileName = "qrcoder") => {
+  var dataURL = ''
+  if (image === '' && value !== '') {
+    const element = document.getElementById(compID)
+    if (renderType === 'canvas') {
+      const canvas = element?.querySelector<HTMLCanvasElement>('canvas');
+      dataURL = canvas?.toDataURL ? canvas?.toDataURL() : ''
+    } else {
+      const svg = element?.querySelector('svg')
+      dataURL = svg ? 'data:image/svg+xml;base64,' + window.btoa(new XMLSerializer().serializeToString(svg)) : ''
+    }
+    dispatch(changeChildAction("dataURL", dataURL, false));
+  } else {
+    dispatch(changeChildAction("dataURL", '', false));
+    if (download && image) {
+      messageInstance.error(trans("QRCode.fail"), 2)
+    }
+    return
+  }
+  download && downloadQR(dataURL, fileName)
+}
 
 const QRCodeView = (props: RecordConstructorToView<typeof childrenMap> & { dispatch: (action: CompAction) => void; }) => {
   const value = props.value.value;
   const { renderType, image } = props;
   const conRef = useRef<HTMLDivElement>(null);
-  const [randomID, setRandomID] = useState(Math.random().toString());
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
   useEffect(() => {
     setTimeout(() => {
-      if (props.image === '' && value !== '') {
-        const element = document.getElementById(randomID)
-        if (props.renderType === 'canvas') {
-          const canvas = element?.querySelector<HTMLCanvasElement>('canvas');
-          props.dispatch(changeChildAction("dataURL", canvas?.toDataURL ? canvas?.toDataURL() : '', false));
-        } else {
-          const svg = element?.querySelector('svg')
-          props.dispatch(changeChildAction("dataURL", svg ? 'data:image/svg+xml;base64,' + window.btoa(new XMLSerializer().serializeToString(svg)) : '', false));
-        }
-      } else {
-        props.dispatch(changeChildAction("dataURL", '', false));
-      }
+      getImagesData(props.value.value, props.image, props.compID, props.renderType, props.dispatch)
     }, 10);
   }, [value, props.image, props.renderType, props.style.background, props.style.color])
   useEffect(() => {
@@ -128,7 +148,7 @@ const QRCodeView = (props: RecordConstructorToView<typeof childrenMap> & { dispa
   return (
     <ReactResizeDetector onResize={onResize}>
       <Container
-        id={randomID}
+        id={props.compID}
         ref={conRef}
         $style={props.style}
         onClick={(e) => {
@@ -203,6 +223,25 @@ let QRCodeBasicComp = (function () {
         )}
       </>
     ))
+    .setExposeMethodConfigs([
+      {
+        method: {
+          name: "download",
+          description: trans("QRCode.downloadQR"),
+          params: [{ name: trans("QRCode.fileName"), type: "string", description: trans("QRCode.fileName") }],
+        },
+        execute: async (comp, params) => {
+          getImagesData(
+            comp.children.value.getView().value,
+            comp.children.image.getView(),
+            comp.children.compID.getView(),
+            comp.children.renderType.getView(),
+            comp.dispatch,
+            true,
+            params[0] as string
+          )
+        },
+      }])
     .build();
 })();
 

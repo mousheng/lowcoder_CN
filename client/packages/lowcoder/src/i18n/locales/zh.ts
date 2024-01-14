@@ -1498,6 +1498,9 @@ QRCode: {
     loading: "载入",
     imageTooltip: "图片地址/Base64编码",
     dataURL: "二维码的DataURL，但是不支持二维码中间插入图片",
+    downloadQR: "下载二维码",
+    fileName: "文件名",
+    fail: "还不支持二维码中间插入图片",
 },
 jsonExplorer: {
     indent: "缩进",
