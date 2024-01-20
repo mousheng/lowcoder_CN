@@ -1135,8 +1135,22 @@ export const FloatButtonStyle = [
 ] as const;
 
 export const AvatarStyle = [
-  getStaticBackground("#bfbfbf"),
+  {
+    name: "background",
+    label: trans("avatarComp.avatarBackground"),
+    color: '#bfbfbf',
+  },
   FILL,
+  {
+    name: "label",
+    label: trans("avatarComp.label"),
+    color: '#000000',
+  },
+  {
+    name: "caption",
+    label: trans("avatarComp.caption"),
+    color: '#a5a5a5',
+  },
 ] as const;
 
 export const DescriptionsStyle = [

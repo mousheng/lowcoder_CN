@@ -1218,8 +1218,8 @@ const uiCompMap: Registry = {
     keywords: trans("uiComp.avatarCompKeywords"),
     comp: AvatarComp,
     layoutInfo: {
-      w: 0,
-      h: 0,
+      w: 3,
+      h: 6,
     },
   },
   descriptions: {

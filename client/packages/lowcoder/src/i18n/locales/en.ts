@@ -2986,6 +2986,12 @@ export const en = {
     "src": "src",
     "avatarCompTooltip": "The rendering order is: images ->characters ->icon",
     "iconSize": "Icon Size",
+    "avatarBackground": "Icon Background",
+    "label": "Label",
+    "caption": "Caption",
+    "labelPosition": "Position",
+    "alignmentPosition": "alignment",
+    "text": 'Text',
   },
   "descriptions": {
     "horizontal": "Horizontal",

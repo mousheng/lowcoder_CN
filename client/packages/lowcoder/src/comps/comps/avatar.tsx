@@ -23,30 +23,59 @@ import {
   eventHandlerControl,
 } from "../controls/eventHandlerControl";
 import { Avatar, AvatarProps, Badge } from "antd";
-import { dropdownControl } from "../controls/dropdownControl";
+import { LeftRightControl, dropdownControl } from "../controls/dropdownControl";
 import { stringExposingStateControl } from "../controls/codeStateControl";
 import { BoolControl } from "../controls/boolControl";
 import { BudgeBasicSection, budgeChildren } from "./budgeComp/budgeConstants";
 
-const AvatarWrapper = styled(Avatar) <AvatarProps & { cursorPointer: boolean, $style: AvatarStyleType }>`
+const AvatarWrapper = styled(Avatar) <AvatarProps & { $cursorPointer: boolean, $style: AvatarStyleType }>`
   background: ${(props) => props.$style.background};
   color: ${(props) => props.$style.fill};
-  cursor: ${(props) => props.cursorPointer ? 'pointer' : ''};
+  cursor: ${(props) => props.$cursorPointer ? 'pointer' : ''};
 `;
 
-const Warpper = styled.div <{ iconSize: number }>`
-    width: ${(props) => props.iconSize}px;
-    height: ${(props) => props.iconSize}px;
-    inset-block-end: ${(props) => props.iconSize / 2}px;
-    inset-inline-start: -${(props) => props.iconSize / 2}px;
-    position: relative;
-    padding: 0px;
-    z-index: 11;
+const Warpper = styled.div <{ iconSize: number, labelPosition: string }>`
+display: flex;
+width: 100%;
+height: 100%;
+padding: 0px;
+align-items: center;
+flex-direction: ${(props) => props.labelPosition === 'left' ? 'row' : 'row-reverse'};
+`
+
+const LabelWarpper = styled.div<{ iconSize: number, alignmentPosition: string }>`
+width: calc(100% - ${(props) => props.iconSize}px);
+display: flex;
+padding-left: 5px;
+padding-right: 5px;
+flex-direction: column;
+justify-content: flex-end;
+align-items: ${(props) => props.alignmentPosition === 'left' ? 'flex-start' : 'flex-end'};
+`
+const LabelSpan = styled.span<{ color: string }>`
+max-width: 100%;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+font-weight: bold;
+color: ${(props) => props.color};
+`
+const CaptionSpan = styled.span<{ color: string }>`
+max-width: 100%;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+color: ${(props) => props.color};
 `
 const EventOptions = [clickEvent] as const;
 const sharpOptions = [
   { label: trans("avatarComp.square"), value: "square" },
   { label: trans("avatarComp.circle"), value: "circle" },
+] as const;
+
+const sideOptions = [
+  { label: trans('tabbedContainer.left'), value: "left" },
+  { label: trans('tabbedContainer.right'), value: "right" },
 ] as const;
 
 const childrenMap = {
@@ -57,6 +86,10 @@ const childrenMap = {
   shape: dropdownControl(sharpOptions, "circle"),
   title: stringExposingStateControl("title", ""),
   src: stringExposingStateControl("src", ""),
+  avatarLabel: stringExposingStateControl("avatarLabel", "{{currentUser.name}}"),
+  avatarCatption: stringExposingStateControl("avatarCatption", "{{currentUser.email}}"),
+  labelPosition: dropdownControl(sideOptions, 'left'),
+  alignmentPosition: withDefault(LeftRightControl, 'left'),
   cursorPointer: BoolControl,
   ...budgeChildren,
 };
@@ -64,13 +97,14 @@ const childrenMap = {
 const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
   const { shape, title, src, iconSize } = props;
   return (
-    <Warpper iconSize={props.iconSize}>
+    <Warpper iconSize={props.iconSize} labelPosition={props.labelPosition}>
       <Badge
         count={props.budgeCount.value}
         dot={props.budgeType === 'dot'}
         size={props.budgeSize}
         overflowCount={props.overflowCount}
         title={props.budgeTitle}
+        offset={props.shape === 'circle' ? [-2, 6] : [0, 0]}
       >
         <AvatarWrapper
           size={iconSize}
@@ -78,12 +112,16 @@ const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
           shape={shape}
           $style={props.style}
           src={src.value}
-          cursorPointer={props.cursorPointer}
+          $cursorPointer={props.cursorPointer}
           onClick={() => props.onEvent("click")}
         >
           {title.value}
         </AvatarWrapper>
       </Badge>
+      <LabelWarpper iconSize={props.iconSize} alignmentPosition={props.alignmentPosition}>
+        <LabelSpan color={props.style.label}>{props.avatarLabel.value}</LabelSpan>
+        <CaptionSpan color={props.style.caption}>{props.avatarCatption.value}</CaptionSpan>
+      </LabelWarpper>
     </Warpper>
   );
 };
@@ -120,7 +158,27 @@ let IconBasicComp = (function () {
               label: trans("avatarComp.iconSize"),
             })}
         </Section>
-        {children.shape.getView() === 'square' && <BudgeBasicSection {...children} />}
+        <Section name={trans('avatarComp.label')}>
+          {
+            children.avatarLabel.propertyView({
+              label: trans("avatarComp.label"),
+            })}
+          {
+            children.avatarCatption.propertyView({
+              label: trans("avatarComp.caption"),
+            })}
+          {
+            children.labelPosition.propertyView({
+              label: trans("avatarComp.labelPosition"),
+              radioButton: true,
+            })}
+          {
+            children.alignmentPosition.propertyView({
+              label: trans("avatarComp.alignmentPosition"),
+              radioButton: true,
+            })}
+        </Section>
+        {<BudgeBasicSection {...children} />}
         <Section name={sectionNames.interaction}>
           {children.onEvent.getPropertyView()}
         </Section>
@@ -135,11 +193,6 @@ let IconBasicComp = (function () {
     .build();
 })();
 
-IconBasicComp = class extends IconBasicComp {
-  override autoHeight(): boolean {
-    return false;
-  }
-};
 
 export const AvatarComp = withExposingConfigs(IconBasicComp, [
   NameConfigHidden,
