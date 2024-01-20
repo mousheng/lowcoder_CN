@@ -2934,6 +2934,7 @@ idSource: {
         labelPosition: "文本位置",
         alignmentPosition: "对齐方向",
         text: '文本',
+        enableDropDown: "显示下拉菜单",
     },
     descriptions: {
         horizontal: "水平布局",

@@ -2991,7 +2991,8 @@ export const en = {
     "caption": "Caption",
     "labelPosition": "Position",
     "alignmentPosition": "alignment",
-    "text": 'Text',
+    "text": "Text",
+    "enableDropDown": "Enable DropDown",
   },
   "descriptions": {
     "horizontal": "Horizontal",

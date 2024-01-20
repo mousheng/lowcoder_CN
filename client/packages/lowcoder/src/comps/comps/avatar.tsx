@@ -22,11 +22,13 @@ import {
   clickEvent,
   eventHandlerControl,
 } from "../controls/eventHandlerControl";
-import { Avatar, AvatarProps, Badge } from "antd";
+import { Avatar, AvatarProps, Badge, Dropdown, Menu } from "antd";
 import { LeftRightControl, dropdownControl } from "../controls/dropdownControl";
 import { stringExposingStateControl } from "../controls/codeStateControl";
 import { BoolControl } from "../controls/boolControl";
 import { BudgeBasicSection, budgeChildren } from "./budgeComp/budgeConstants";
+import { DropdownOptionControl } from "../controls/optionsControl";
+import { ReactElement } from "react";
 
 const AvatarWrapper = styled(Avatar) <AvatarProps & { $cursorPointer: boolean, $style: AvatarStyleType }>`
   background: ${(props) => props.$style.background};
@@ -91,38 +93,66 @@ const childrenMap = {
   labelPosition: dropdownControl(sideOptions, 'left'),
   alignmentPosition: withDefault(LeftRightControl, 'left'),
   cursorPointer: BoolControl,
+  enableDropdownMenu: BoolControl,
+  options: DropdownOptionControl,
   ...budgeChildren,
 };
 
 const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
   const { shape, title, src, iconSize } = props;
+  const hasIcon =
+    props.options.findIndex((option) => (option.prefixIcon as ReactElement)?.props.value) > -1;
+  const items = props.options
+    .filter((option) => !option.hidden)
+    .map((option, index) => ({
+      title: option.label,
+      label: option.label,
+      key: option.label + " - " + index,
+      disabled: option.disabled,
+      icon: hasIcon && <span>{option.prefixIcon}</span>,
+      onEvent: option.onEvent,
+    }));
+  const menu = (
+    <Menu
+      items={items}
+      onClick={({ key }) => items.find((o) => o.key === key)?.onEvent("click")}
+    />
+  );
   return (
-    <Warpper iconSize={props.iconSize} labelPosition={props.labelPosition}>
-      <Badge
-        count={props.budgeCount.value}
-        dot={props.budgeType === 'dot'}
-        size={props.budgeSize}
-        overflowCount={props.overflowCount}
-        title={props.budgeTitle}
-        offset={props.shape === 'circle' ? [-2, 6] : [0, 0]}
-      >
-        <AvatarWrapper
-          size={iconSize}
-          icon={title.value !== '' ? null : props.icon}
-          shape={shape}
-          $style={props.style}
-          src={src.value}
-          $cursorPointer={props.cursorPointer}
-          onClick={() => props.onEvent("click")}
+    <Dropdown
+      menu={{ items }}
+      placement={props.labelPosition === 'left' ? "bottomLeft" : "bottomRight"}
+      arrow
+      disabled={!props.enableDropdownMenu}
+      dropdownRender={() => menu}
+    >
+      <Warpper iconSize={props.iconSize} labelPosition={props.labelPosition}>
+        <Badge
+          count={props.budgeCount.value}
+          dot={props.budgeType === 'dot'}
+          size={props.budgeSize}
+          overflowCount={props.overflowCount}
+          title={props.budgeTitle}
+          offset={props.shape === 'circle' ? [-2, 6] : [0, 0]}
         >
-          {title.value}
-        </AvatarWrapper>
-      </Badge>
-      <LabelWarpper iconSize={props.iconSize} alignmentPosition={props.alignmentPosition}>
-        <LabelSpan color={props.style.label}>{props.avatarLabel.value}</LabelSpan>
-        <CaptionSpan color={props.style.caption}>{props.avatarCatption.value}</CaptionSpan>
-      </LabelWarpper>
-    </Warpper>
+          <AvatarWrapper
+            size={iconSize}
+            icon={title.value !== '' ? null : props.icon}
+            shape={shape}
+            $style={props.style}
+            src={src.value}
+            $cursorPointer={props.cursorPointer}
+            onClick={() => props.onEvent("click")}
+          >
+            {title.value}
+          </AvatarWrapper>
+        </Badge>
+        <LabelWarpper iconSize={props.iconSize} alignmentPosition={props.alignmentPosition}>
+          <LabelSpan color={props.style.label}>{props.avatarLabel.value}</LabelSpan>
+          <CaptionSpan color={props.style.caption}>{props.avatarCatption.value}</CaptionSpan>
+        </LabelWarpper>
+      </Warpper>
+    </Dropdown>
   );
 };
 
@@ -157,6 +187,11 @@ let IconBasicComp = (function () {
             children.iconSize.propertyView({
               label: trans("avatarComp.iconSize"),
             })}
+          {
+            children.enableDropdownMenu.propertyView({
+              label: trans("avatarComp.enableDropDown")
+            })}
+          {children.enableDropdownMenu.getView() && children.options.propertyView({})}
         </Section>
         <Section name={trans('avatarComp.label')}>
           {
