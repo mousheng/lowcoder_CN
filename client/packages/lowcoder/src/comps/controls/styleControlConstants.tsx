@@ -2,7 +2,6 @@ import { ThemeDetail } from "api/commonSettingApi";
 import { darkenColor, isDarkColor, lightenColor, toHex } from "lowcoder-design";
 import { trans } from "i18n";
 import { StyleConfigType } from "./styleControl";
-import { BackgroundColor } from "@lowcoder-ee/constants/style";
 
 type SupportPlatform = "pc" | "mobile";
 
@@ -1356,6 +1355,15 @@ export const NavLayoutItemActiveStyle = [
   },
 ] as const;
 
+export const avatarGroupStyle = [
+  {
+    name: "fill",
+    label: trans("style.fill"),
+    color: '#FFFFFF',
+  },
+  getBackground("primary"),
+] as const;
+
 export const CarouselStyle = [getBackground("canvas")] as const;
 
 export const RichTextEditorStyle = [
@@ -1422,6 +1430,7 @@ export type QRCodeStyleType = StyleConfigType<typeof QRCodeStyle>;
 export type GanttStyleType = StyleConfigType<typeof GanttStyle>;
 export type TransferStyleType = StyleConfigType<typeof TransferStyle>;
 export type CardStyleType = StyleConfigType<typeof CardStyle>;
+export type avatarGroupStyleType = StyleConfigType<typeof avatarGroupStyle>;
 
 export function widthCalculator(margin: string) {
   const marginArr = margin?.trim().replace(/\s+/g,' ').split(" ") || "";

@@ -1077,6 +1077,10 @@ export const en = {
     "confettiCompDesc": "A component that creates a festive confetti effect, adding a touch of celebration to your UI.",
     "confettiCompKeywords": "confetti, celebration, effect, festive",
 
+    "avatarGroupCompName": "AvatarGroup",
+    "avatarGroupCompDesc": "A group of avatars to represent multiple users or entities in a compact and visually appealing way.",
+    "avatarGroupCompKeywords": "avatar group, users, entities, compact",
+
   },
 
 
@@ -3266,6 +3270,13 @@ export const en = {
     "celebrate": "celebrate",
     "config": "config",
     "active": "active",
+  },
+  avatarGroup: {
+    "maxCount": "Max Count",
+    "avatarSize": "Avatar Size",
+    "autoColor": "Auto Color",
+    "alignment": "Alignment",
+    "currentAvatar": "Current Avatar",
   },
 
   docUrls: {

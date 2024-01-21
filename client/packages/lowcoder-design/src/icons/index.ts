@@ -317,3 +317,4 @@ export { ReactComponent as TransferIcon } from "icons/icon-comp-transfer.svg";
 export { ReactComponent as CardIcon } from "icons/icon-comp-card.svg";
 export { ReactComponent as BatchAddIcon } from "icons/icon-batch-add.svg";
 export { ReactComponent as ConfettiIcon } from "icons/icon-comp-confetti.svg";
+export { ReactComponent as AvatarGroupIcon } from "icons/icon-comp-avatar-group.svg";

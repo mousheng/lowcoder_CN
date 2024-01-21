@@ -57,6 +57,7 @@ import {
   TransferIcon,
   CardIcon,
   ConfettiIcon,
+  AvatarGroupIcon,
 } from "lowcoder-design";
 
 export const CompStateIcon: {
@@ -147,4 +148,5 @@ export const CompStateIcon: {
   transfer: <TransferIcon />,
   card: <CardIcon />,
   confetti: <ConfettiIcon />,
+  avatarGroup: <AvatarGroupIcon />,
 };

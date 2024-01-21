@@ -993,6 +993,10 @@ uiComp: {
     confettiCompName: "五彩纸屑",
     confettiCompDesc: "一个创建节日五彩纸屑效果的组件，为您的UI添加一丝庆祝色彩",
     confettiCompKeywords: "wczx",
+    avatarGroupCompName: "头像组",
+    avatarGroupCompDesc: "一组头像，以紧凑且视觉上吸引人的方式表示多个用户。",
+    avatarGroupCompKeywords: "txz",
+
 },
 comp: {
     menuViewDocs: "查看文档",
@@ -3209,4 +3213,11 @@ idSource: {
         "config": "参数",
         "active": "激活",
       },
+    avatarGroup: {
+        "maxCount": "最大数量",
+        "avatarSize": "头像大小",
+        "autoColor": "自动颜色",
+        "alignment": "对齐方式",
+        "currentAvatar": "选中的头像",
+    }
 };

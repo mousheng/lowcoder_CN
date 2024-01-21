@@ -139,6 +139,7 @@ export type UICompType =
   | "transfer" //Added By Mousheng
   | "card"  //Added By Mousheng
   | "confetti" //Added By Mousheng
+  | "avatarGroup" //Added By Mousheng
 
 export const uiCompRegistry = {} as Record<UICompType | string, UICompManifest>;
 

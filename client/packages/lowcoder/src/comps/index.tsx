@@ -93,6 +93,7 @@ import { MentionComp } from "./comps/textInputComp/mentionComp";
 import { AutoCompleteComp } from "./comps/autoCompleteComp/autoCompleteComp";
 import { CardComp } from "./comps/containerComp/cardComp";
 import { ConfettiComp } from "./comps/confettiComp";
+import { AvatarGroupComp } from "./comps/avatarGroup";
 
 import {
   AudioCompIcon,
@@ -173,6 +174,7 @@ import {
   TransferIcon,
   CardIcon,
   ConfettiIcon,
+  AvatarGroupIcon,
 } from "lowcoder-design";
 
 type Registry = {
@@ -1311,7 +1313,16 @@ const uiCompMap: Registry = {
     comp: ConfettiComp,
     withoutLoading: true,
   },
-  
+  avatarGroup: {
+    name: trans("uiComp.avatarGroupCompName"),
+    enName: "avatarGroup",
+    icon: AvatarGroupIcon,
+    description: trans("uiComp.avatarGroupCompDesc"),
+    categories: ["multimedia"],
+    keywords: trans("uiComp.avatarGroupCompKeywords"),
+    comp: AvatarGroupComp,
+    withoutLoading: true,
+  },
 };
 
 export function loadComps() {
