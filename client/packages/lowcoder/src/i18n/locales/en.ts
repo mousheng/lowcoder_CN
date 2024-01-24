@@ -3304,6 +3304,7 @@ export const en = {
     "resume": "Resume",
     "reset": "Reset",
     "startPause": "Start/Pause",
+    "hideButton": "Hide Button",
   },
 
   docUrls: {

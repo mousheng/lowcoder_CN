@@ -3246,5 +3246,6 @@ idSource: {
         "resume": "继续",
         "reset": "重置",
         "startPause": "开始/暂停",
+        "hideButton": "隐藏按钮",
       }
 };

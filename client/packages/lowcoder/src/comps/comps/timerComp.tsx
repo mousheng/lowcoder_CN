@@ -13,14 +13,12 @@ import { useContext, useState, useEffect, useMemo } from "react";
 import { stateComp } from "../generators";
 import { EditorContext } from "comps/editorState";
 import { dropdownControl } from "../controls/dropdownControl";
-import { stringExposingStateControl } from "@lowcoder-ee/index.sdk";
+import { BoolControl, stringExposingStateControl } from "@lowcoder-ee/index.sdk";
 
 const Container = styled.div<{ $style: timerStyleType | undefined }>`
-  width: 100%;
-  min-height: 120px;
   align-items: center;
   cursor: pointer;
-  font-size: 3em;
+  font-size: 2.9em;
   text-align: center;
   word-wrap: break-word;
   line-height: initial;
@@ -35,6 +33,8 @@ const ButtonWarrper = styled.div`
   display: flex;
   justify-content: flex-end;
   padding-right: 15px;
+  padding-bottom: 10px;
+  margin-top: -10px;
 `;
 
 function formatTimeDifference(timeDifference: number) {
@@ -68,6 +68,7 @@ const childrenMap = {
   elapsedTime: stateComp<number>(0),
   timerState: stateComp<string>('stoped'),
   actionHandler: stateComp<string>(''),
+  hideButton: BoolControl,
 };
 
 const AvatarGroupView = (props: RecordConstructorToView<typeof childrenMap> & { dispatch: (action: CompAction) => void; }) => {
@@ -157,7 +158,7 @@ const AvatarGroupView = (props: RecordConstructorToView<typeof childrenMap> & { 
       $style={props.style}
     >
       {formatTimeDifference(elapsedTime)}
-      <ButtonWarrper>
+      <ButtonWarrper hidden={props.hideButton}>
         <Space>
           <Button
             disabled={!buttonState}
@@ -190,6 +191,9 @@ let AvatarGroupBasicComp = (function () {
               })}
               {children.defaultValue.propertyView({
                 label: trans('timer.defaultValue')
+              })}
+              {children.hideButton.propertyView({
+                label: trans('timer.hideButton')
               })}
             </Section>
             <Section name={sectionNames.interaction}>
