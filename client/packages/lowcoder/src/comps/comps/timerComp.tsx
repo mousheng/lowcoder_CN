@@ -25,6 +25,7 @@ const Container = styled.div<{ $style: timerStyleType | undefined }>`
   background-color: ${props => props.$style?.background};
   border: 1px solid ${props => props.$style?.border};
   border-radius: ${props => props.$style?.radius};
+  color: ${props => props.$style?.fontColor};
 `;
 
 const ButtonWarrper = styled.div`

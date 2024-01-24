@@ -3305,6 +3305,7 @@ export const en = {
     "reset": "Reset",
     "startPause": "Start/Pause",
     "hideButton": "Hide Button",
+    "fontColor": "Font Color",
   },
 
   docUrls: {

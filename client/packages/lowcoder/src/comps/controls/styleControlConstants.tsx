@@ -1368,6 +1368,11 @@ export const timerStyle = [
   getBackground("primarySurface"),
   BORDER,
   RADIUS,
+  {
+    name: "fontColor",
+    label: trans("timer.fontColor"),
+    color: "#000000",
+  },
 ] as const;
 
 export const CarouselStyle = [getBackground("canvas")] as const;
