@@ -58,6 +58,7 @@ import {
   CardIcon,
   ConfettiIcon,
   AvatarGroupIcon,
+  TimerIcon,
 } from "lowcoder-design";
 
 export const CompStateIcon: {
@@ -149,4 +150,5 @@ export const CompStateIcon: {
   card: <CardIcon />,
   confetti: <ConfettiIcon />,
   avatarGroup: <AvatarGroupIcon />,
+  timer: <TimerIcon />,
 };

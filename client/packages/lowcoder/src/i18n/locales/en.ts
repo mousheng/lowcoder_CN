@@ -334,6 +334,16 @@ export const en = {
     "selectedChangeDesc": "Triggers on Selected Change",
     "clickExtra": 'Click Extra',
     "clickExtraDesc": "Triggers on Click Extra",
+    "start": "Start",
+    "startDesc": "Triggers on Start",
+    "resume": "Resume",
+    "resumeDesc": "Triggers on Resume",
+    "pause": "Pause",
+    "pauseDesc": "Triggers on Paused",
+    "countdown": "Countdown",
+    "countdownDesc": "Triggers on Countdown ends",
+    "reset": "Reset ends",
+    "resetDesc": "Triggers on Reset timer",
   },
   "themeDetail": {
     "primary": "Brand Color",
@@ -1080,6 +1090,10 @@ export const en = {
     "avatarGroupCompName": "AvatarGroup",
     "avatarGroupCompDesc": "A group of avatars to represent multiple users or entities in a compact and visually appealing way.",
     "avatarGroupCompKeywords": "avatar group, users, entities, compact",
+
+    "timerCompName": "Timer",
+    "timerCompDesc": "A component that displays a countdown or elapsed time, useful for tracking durations and deadlines.",
+    "timerCompKeywords": "timer, countdown, elapsed time, tracking, durations, deadlines",
 
   },
 
@@ -3277,6 +3291,19 @@ export const en = {
     "autoColor": "Auto Color",
     "alignment": "Alignment",
     "currentAvatar": "Current Avatar",
+  },
+  timer: {
+    "timerState": "timer State",
+    "elapsedTime": "Elapsed Time",
+    "timer": "Timer",
+    "countdown": "Countdown",
+    "defaultValue": "Default Value",
+    "timerType": "Timer Type",
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Resume",
+    "reset": "Reset",
+    "startPause": "Start/Pause",
   },
 
   docUrls: {

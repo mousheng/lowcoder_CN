@@ -328,6 +328,16 @@ event: {
     selectedChangeDesc: "在选择改变时触发",
     clickExtra: '点击更多按钮',
     clickExtraDesc: "在点击更多按钮时触发",
+    start: "开始",
+    startDesc: "在开始时触发",
+    resume: "恢复",
+    resumeDesc: "在恢复时触发",
+    pause: "暂停",
+    pauseDesc: "在暂停时触发",
+    countdown: "倒计时结束",
+    countdownDesc: "在倒计时结束时触发",
+    reset: "重置",
+    resetDesc: "在重置时触发",
 },
 themeDetail: {
     primary: "颜色主题",
@@ -996,6 +1006,10 @@ uiComp: {
     avatarGroupCompName: "头像组",
     avatarGroupCompDesc: "一组头像，以紧凑且视觉上吸引人的方式表示多个用户。",
     avatarGroupCompKeywords: "txz",
+    timerCompName: "计时器",
+    timerCompDesc: "用于显示倒计时或秒表的组件",
+    timerCompKeywords: "jsq",
+
 
 },
 comp: {
@@ -3219,5 +3233,18 @@ idSource: {
         "autoColor": "自动颜色",
         "alignment": "对齐方式",
         "currentAvatar": "选中的头像",
-    }
+    },
+    timer: {
+        "timerState": "定时器状态",
+        "elapsedTime": "经过时间",
+        "timer": "定时器",
+        "countdown": "倒计时",
+        "defaultValue": "默认值",
+        "timerType": "类型",
+        "start": "开始",
+        "pause": "暂停",
+        "resume": "继续",
+        "reset": "重置",
+        "startPause": "开始/暂停",
+      }
 };

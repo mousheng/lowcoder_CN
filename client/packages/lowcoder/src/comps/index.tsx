@@ -94,6 +94,7 @@ import { AutoCompleteComp } from "./comps/autoCompleteComp/autoCompleteComp";
 import { CardComp } from "./comps/containerComp/cardComp";
 import { ConfettiComp } from "./comps/confettiComp";
 import { AvatarGroupComp } from "./comps/avatarGroup";
+import { TimerComp } from "./comps/timerComp";
 
 import {
   AudioCompIcon,
@@ -175,6 +176,7 @@ import {
   CardIcon,
   ConfettiIcon,
   AvatarGroupIcon,
+  TimerIcon,
 } from "lowcoder-design";
 
 type Registry = {
@@ -1321,6 +1323,16 @@ const uiCompMap: Registry = {
     categories: ["multimedia"],
     keywords: trans("uiComp.avatarGroupCompKeywords"),
     comp: AvatarGroupComp,
+    withoutLoading: true,
+  },
+  timer: {
+    name: trans("uiComp.timerCompName"),
+    enName: "timer",
+    icon: TimerIcon,
+    description: trans("uiComp.timerCompDesc"),
+    categories: ["multimedia"],
+    keywords: trans("uiComp.timerCompKeywords"),
+    comp: TimerComp,
     withoutLoading: true,
   },
 };

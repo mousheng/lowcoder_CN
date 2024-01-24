@@ -1364,6 +1364,12 @@ export const avatarGroupStyle = [
   getBackground("primary"),
 ] as const;
 
+export const timerStyle = [
+  getBackground("primarySurface"),
+  BORDER,
+  RADIUS,
+] as const;
+
 export const CarouselStyle = [getBackground("canvas")] as const;
 
 export const RichTextEditorStyle = [
@@ -1431,6 +1437,7 @@ export type GanttStyleType = StyleConfigType<typeof GanttStyle>;
 export type TransferStyleType = StyleConfigType<typeof TransferStyle>;
 export type CardStyleType = StyleConfigType<typeof CardStyle>;
 export type avatarGroupStyleType = StyleConfigType<typeof avatarGroupStyle>;
+export type timerStyleType = StyleConfigType<typeof timerStyle>;
 
 export function widthCalculator(margin: string) {
   const marginArr = margin?.trim().replace(/\s+/g,' ').split(" ") || "";

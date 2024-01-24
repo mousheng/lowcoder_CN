@@ -460,6 +460,31 @@ export const clickExtraEvent: EventConfigType = {
   value: "clickExtra",
   description: trans("event.clickExtraDesc"),
 };
+export const startEvent: EventConfigType = {
+  label: trans("event.start"),
+  value: "start",
+  description: trans("event.startDesc"),
+};
+export const resumeEvent: EventConfigType = {
+  label: trans("event.resume"),
+  value: "resume",
+  description: trans("event.resumeDesc"),
+};
+export const pauseEvent: EventConfigType = {
+  label: trans("event.pause"),
+  value: "pause",
+  description: trans("event.pauseDesc"),
+};
+export const countdownEvent: EventConfigType = {
+  label: trans("event.countdown"),
+  value: "countdown",
+  description: trans("event.countdownDesc"),
+};
+export const resetEvent: EventConfigType = {
+  label: trans("event.reset"),
+  value: "reset",
+  description: trans("event.resetDesc"),
+};
 export const InputEventHandlerControl = eventHandlerControl([
   changeEvent,
   focusEvent,
