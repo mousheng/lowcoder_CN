@@ -1333,7 +1333,10 @@ const uiCompMap: Registry = {
     categories: ["multimedia"],
     keywords: trans("uiComp.timerCompKeywords"),
     comp: TimerComp,
-    withoutLoading: true,
+    layoutInfo: {
+      h: 10,
+      w: 7,
+    },
   },
 };
 
