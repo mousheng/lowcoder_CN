@@ -11,7 +11,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   ${markdownCompCss};
-  max-height: 32px;
+  max-height: 96px;
 
   > .markdown-body {
     margin: 0;
