@@ -1009,6 +1009,9 @@ uiComp: {
     timerCompName: "计时器",
     timerCompDesc: "用于显示倒计时或秒表的组件",
     timerCompKeywords: "jsq",
+    stepsCompName: "步骤条",
+    stepsCompDesc: "引导用户完成一系列步骤或阶段的组件，为流程提供可视化路线图",
+    stepsCompKeywords: "bzt",
 
 
 },
@@ -3248,5 +3251,26 @@ idSource: {
         "startPause": "开始/暂停",
         "hideButton": "隐藏按钮",
         "fontColor": "字体颜色",
-      }
+      },
+    steps: {
+        "title": "标题",
+        "description": "描述",
+        "subTitle": "子标题",
+        "small": "较小",
+        "default": "默认",
+        "status": "状态",
+        "direction": "方向",
+        "currentIndex": "当前序号",
+        "currentTitle": "当前标题",
+        "allowClick": "允许点击",
+        "navigation": "导航步骤",
+        "inline": "内联步骤",
+        "stepsType": "步骤条类型",
+        "progressDot": "步骤点进度条",
+        "statusDesc": "指定当前步骤的状态: wait、process、finish、error",
+        "size": "尺寸",
+        "percent": "进度",
+        "nextStep": "下一步",
+        "PreviousStep": "上一步",
+    },
 };

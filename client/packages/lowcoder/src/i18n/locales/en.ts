@@ -1095,6 +1095,10 @@ export const en = {
     "timerCompDesc": "A component that displays a countdown or elapsed time, useful for tracking durations and deadlines.",
     "timerCompKeywords": "timer, countdown, elapsed time, tracking, durations, deadlines",
 
+    "stepsCompName": "Steps",
+    "stepsCompDesc": "A component that guides users through a sequence of steps or stages, providing a visual roadmap for processes.",
+    "stepsCompKeywords": "steps, guide, sequence, stages, visual roadmap, processes",
+
   },
 
 
@@ -3306,6 +3310,27 @@ export const en = {
     "startPause": "Start/Pause",
     "hideButton": "Hide Button",
     "fontColor": "Font Color",
+  },
+  steps: {
+    "title": "Title",
+    "description": "Description",
+    "subTitle": "Sub Title",
+    "small": "Small",
+    "default": "Default",
+    "status": "Status",
+    "direction": "Direction",
+    "currentIndex": "Current Index",
+    "currentTitle": "Current Title",
+    "allowClick": "Allow Click",
+    "navigation": "Navigation",
+    "inline": "Inline",
+    "stepsType": "Steps Type",
+    "progressDot": "Progress Dot",
+    "statusDesc": "Specify the status of the current step: wait、process、finish、error",
+    "size": "Size",
+    "percent": "Percent",
+    "nextStep": "Next Step",
+    "PreviousStep": "Previous Step",
   },
 
   docUrls: {

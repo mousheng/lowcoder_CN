@@ -95,6 +95,7 @@ import { CardComp } from "./comps/containerComp/cardComp";
 import { ConfettiComp } from "./comps/confettiComp";
 import { AvatarGroupComp } from "./comps/avatarGroup";
 import { TimerComp } from "./comps/timerComp";
+import { StepsComp } from "./comps/stepsComp";
 
 import {
   AudioCompIcon,
@@ -177,6 +178,7 @@ import {
   ConfettiIcon,
   AvatarGroupIcon,
   TimerIcon,
+  StepsIcon,
 } from "lowcoder-design";
 
 type Registry = {
@@ -1336,6 +1338,19 @@ const uiCompMap: Registry = {
     layoutInfo: {
       h: 10,
       w: 7,
+    },
+  },
+  steps: {
+    name: trans("uiComp.stepsCompName"),
+    enName: "steps",
+    icon: StepsIcon,
+    description: trans("uiComp.stepsCompDesc"),
+    categories: ["multimedia"],
+    keywords: trans("uiComp.stepsCompKeywords"),
+    comp: StepsComp,
+    layoutInfo: {
+      h: 10,
+      w: 17,
     },
   },
 };

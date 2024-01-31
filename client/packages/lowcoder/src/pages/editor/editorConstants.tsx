@@ -59,6 +59,7 @@ import {
   ConfettiIcon,
   AvatarGroupIcon,
   TimerIcon,
+  StepsIcon,
 } from "lowcoder-design";
 
 export const CompStateIcon: {
@@ -151,4 +152,5 @@ export const CompStateIcon: {
   confetti: <ConfettiIcon />,
   avatarGroup: <AvatarGroupIcon />,
   timer: <TimerIcon />,
+  steps: <StepsIcon />,
 };

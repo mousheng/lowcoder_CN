@@ -319,3 +319,4 @@ export { ReactComponent as BatchAddIcon } from "icons/icon-batch-add.svg";
 export { ReactComponent as ConfettiIcon } from "icons/icon-comp-confetti.svg";
 export { ReactComponent as AvatarGroupIcon } from "icons/icon-comp-avatar-group.svg";
 export { ReactComponent as TimerIcon } from "icons/icon-comp-timer.svg";
+export { ReactComponent as StepsIcon } from "icons/icon-comp-step.svg";
