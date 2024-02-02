@@ -148,7 +148,7 @@ docker logs -f lowcoder
 | `DEFAULT_ORG_GROUP_COUNT`    | 各组织的默认最大群组数。                                                        | `100`                                                 |
 | `DEFAULT_ORG_APP_COUNT`      | 各组织的默认最大应用数。                                                        | `1000`                                                |
 | `DEFAULT_DEVELOPER_COUNT`    | 默认最大开发者数。                                                              | `100`                                                 |
-| `COMMON_WORKSPACE_MODE`      | 工作空间的模式，可以是"SAAS"或"ENTERPRISE"。                                    | `SAAS`                                                |
+| `COMMON_WORKSPACE_MODE`      | 工作空间的模式，可以是"SAAS"或"ENTERPRISE"。                                    | `ENTERPRISE`                                                |
 | `ENABLE_USER_SIGN_UP`        | 控制用户是否可以在注册时自动创建他们自己的工作空间。值：`true`或`false`。       | `true`                                                |
 | `AUTH_EMAIL_ENABLE`          | 控制在设置管理员用户后是否显示电子邮件登录。值：`true`或`false`。               | `true`                                                |
 

@@ -44,7 +44,7 @@ Image can be configured by setting environment variables.
 | `DEFAULT_ORG_GROUP_COUNT`       | Default maximum groups per organization                             | `100`                                                 |
 | `DEFAULT_ORG_APP_COUNT`         | Default maximum applications per organization                       | `1000`                                                |
 | `DEFAULT_DEVELOPER_COUNT`       | Default maximum developers                                          | `100`                                                 |
-| `COMMON_WORKSPACE_MODE`         | SAAS to activate, ENTERPRISE to switch off - Workspaces             | `SAAS`                                                |
+| `COMMON_WORKSPACE_MODE`         | SAAS to activate, ENTERPRISE to switch off - Workspaces             | `ENTERPRISE`                                                |
 | `ENABLE_USER_SIGN_UP`           | Control if users create their own Workspace automatic when Sign Up  | `true`                                                |
 | `AUTH_EMAIL_ENABLE`             | Control to show the eMail Login after Admin user is set             | `true`                                                |
 
@@ -82,7 +82,7 @@ Image can be configured by setting environment variables.
 | `DEFAULT_DEVELOPER_COUNT`       | Default maximum developers                                          | `100`                                                 |
 | `LOWCODER_MAX_QUERY_TIMEOUT`    | Lowcoder max query timeout (in seconds)                             | `120`                                                 |
 | `LOWCODER_MAX_REQUEST_SIZE`     | Lowcoder max request size                                           | `20m`                                                 |
-| `COMMON_WORKSPACE_MODE`         | SAAS to activate, ENTERPRISE to switch off - Workspaces             | `SAAS`                                                |
+| `COMMON_WORKSPACE_MODE`         | SAAS to activate, ENTERPRISE to switch off - Workspaces             | `ENTERPRISE`                                                |
 | `ENABLE_USER_SIGN_UP`           | Control is users can create their own Workspace when Sign Up        | `true`                                                |
 | `AUTH_EMAIL_ENABLE`             | Control to show the eMail Login after Admin user is set             | `true`                                                |
 
