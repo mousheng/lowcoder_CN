@@ -8,14 +8,14 @@ import { menuListComp } from "./navItemComp";
 import { menuPropertyView } from "./components/MenuItemList";
 import { Avatar, Layout, Menu, MenuProps, SiderProps } from "antd";
 import { styleControl } from "comps/controls/styleControl";
-import { AntLayoutBodyStyle, AntLayoutBodyStyleType, AntLayoutFramerStyle, AntLayoutFramerStyleType, AntLayoutLogoStyle, AntLayoutLogoStyleType, AntLayoutMenuStyle, AntLayoutMenuStyleType, NavigationStyle, ResponsiveLayoutColStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
+import { AntLayoutBodyStyle, AntLayoutBodyStyleType, AntLayoutFramerStyle, AntLayoutFramerStyleType, AntLayoutLogoStyle, AntLayoutLogoStyleType, AntLayoutMenuStyle, AntLayoutMenuStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
 import { IContainer } from "../containerBase/iContainer";
 import { SimpleContainerComp } from "../containerBase/simpleContainerComp";
 import { addMapChildAction } from "comps/generators/sameTypeMap";
-import { CompAction, CompActionTypes, deleteCompAction, wrapChildAction, wrapDispatch } from "lowcoder-core";
-import { IconControl, JSONObject, JSONValue, NameGenerator, booleanExposingStateControl, dropdownControl, stringExposingStateControl } from "@lowcoder-ee/index.sdk";
+import { CompAction, CompActionTypes, changeValueAction, deleteCompAction, wrapChildAction, wrapDispatch, multiChangeAction } from "lowcoder-core";
+import { BoolControl, IconControl, JSONObject, JSONValue, NameGenerator, booleanExposingStateControl, dropdownControl, stateComp, stringExposingStateControl } from "@lowcoder-ee/index.sdk";
 import { CompTree, mergeCompTrees } from "../containerBase/utils";
 import _ from "lodash";
 import { v4 as uuidv4 } from 'uuid';
@@ -23,7 +23,7 @@ import { BackgroundColorContext } from "comps/utils/backgroundColorContext";
 import { ContainerBaseProps, InnerGrid, gridItemCompToGridItems } from "../containerComp/containerView";
 import { HintPlaceHolder } from "lowcoder-design";
 import { FooterProps } from "antd-mobile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const { Header, Content, Footer, Sider } = Layout;
 
 const EventOptions = [
@@ -254,7 +254,7 @@ const HeaderContainer = (props: ColumnContainerProps) => {
 
 const childrenMap = {
   logoUrl: StringControl,
-  selectedKey: stringExposingStateControl('selectedKey', ''),
+  Key: stringExposingStateControl('selectedKey', ''),
   logoIcon: withDefault(IconControl, "/icon:antd/homeoutlined"),
   logoTitle: withDefault(StringControl, trans('antLayoutComp.title')),
   logoPosition: dropdownControl(LogoPositionOptions, 'align'),
@@ -276,21 +276,41 @@ const childrenMap = {
   menuStyle: withDefault(styleControl(AntLayoutMenuStyle, trans('antLayoutComp.menuStyle')), {}),
   footString: withDefault(StringControl, 'Ant Design ©2023 Created by Ant UED'),
   collapsed: booleanExposingStateControl('collapsed'),
+  manualOperation: BoolControl,
+  activatedKey: stateComp(''),
+  realKey: stateComp(''),
 };
 
 const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
+  const safeKeys = (key: string) => { //计算安全的key值
+    if (key.length < 3 && !isNaN(parseInt(key)) && parseInt(key) > 0 && parseInt(key) <= Object.keys(props.containers).length)
+      key = Object.keys(props.containers)[parseInt(key)]
+    return key !== '' && props.containers.hasOwnProperty(key) ? key : Object.keys(props.containers)[1]
+  }
+  const [selectedKey, setselectedKey] = useState(safeKeys(''))
   const [openKeys, setOpenKeys] = useState(['']);
   const data = props.items;
   const collapsed = props.collapsed.value;
-  const keys = props.selectedKey.value !== '' && props.containers.hasOwnProperty(props.selectedKey.value) ?
-    props.selectedKey.value : (Object.keys(props.containers)[0] === 'header' ? Object.keys(props.containers)[1] : Object.keys(props.containers)[0])
+  useEffect(() => {
+    var key = safeKeys(props.Key.value)
+    setselectedKey(key)
+    dispatch(multiChangeAction({
+      realKey: changeValueAction(key, false),
+      activatedKey: changeValueAction(key, false),
+    }))
+  }, [props.Key.value])
+  useEffect(() => {
+    props.Key.onChange(props.realKey)
+  }, [props.manualOperation])
   const rootSubmenuKeys = data.map(item => item.getView().id)
-  const containerProps = props.containers[keys].children;
+  const containerProps = props.containers[selectedKey].children;
   const headerProps = props.containers['header'].children;
-  const childDispatch = wrapDispatch(wrapDispatch(dispatch, "containers"), keys);
-  const headerDispatch = wrapDispatch(wrapDispatch(dispatch, "containers"), Object.keys(props.containers)[0]);
   const onClick: MenuProps['onClick'] = (e) => {
-    props.selectedKey.onChange(e.key)
+    dispatch(multiChangeAction({
+      realKey: changeValueAction(e.key, false),
+      activatedKey: changeValueAction(props.manualOperation ? safeKeys(props.activatedKey) : e.key, false),
+    }))
+    setselectedKey(props.manualOperation ? safeKeys(props.activatedKey) : e.key)
     props.onEvent('clickMenu')
   }
   const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
@@ -340,7 +360,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
             </TitleWarpper>}
           </LogoWrapper>
           <StyledMenu
-            selectedKeys={[props.selectedKey.value]}
+            selectedKeys={[selectedKey]}
             items={TraversalNode(data)}
             mode="inline"
             onClick={onClick}
@@ -356,7 +376,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
                 layout={headerProps.layout.getView()}
                 items={gridItemCompToGridItems(headerProps.items.getView())}
                 positionParams={headerProps.positionParams.getView()}
-                dispatch={headerDispatch}
+                dispatch={wrapDispatch(wrapDispatch(dispatch, "containers"), Object.keys(props.containers)[0])}
                 emptyRows={5}
                 hintPlaceholder={HintPlaceHolder}
                 autoHeight={true}
@@ -375,7 +395,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
                   layout={containerProps.layout.getView()}
                   items={gridItemCompToGridItems(containerProps.items.getView())}
                   positionParams={containerProps.positionParams.getView()}
-                  dispatch={childDispatch}
+                  dispatch={wrapDispatch(wrapDispatch(dispatch, "containers"), selectedKey)}
                   style={{
                     ...props.bodyStyle
                   }}
@@ -412,8 +432,9 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
         </Section>
         <Section name={trans("menu")}>
           {menuPropertyView(children.items)}
+          {children.manualOperation.propertyView({ label: trans('antLayoutComp.manualOperation') })}
           {children.collapsed.propertyView({ label: trans('antLayoutComp.collapsed') })}
-          {children.selectedKey.propertyView({ label: trans('antLayoutComp.selectedKey') })}
+          {children.Key.propertyView({ label: trans('antLayoutComp.selectedKey') })}
         </Section>
         <Section name={sectionNames.layout}>
           {children.onEvent.getPropertyView()}
@@ -506,7 +527,7 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
 
   realSimpleContainer(key?: string): SimpleContainerComp | undefined {
     console.log('realSimpleContainer', key, this.children.containers);
-    if (_.isNil(key)) return this.children.containers.children[this.children.selectedKey.getView().value];
+    if (_.isNil(key)) return this.children.containers.children[this.children.Key.getView().value];
     return Object.values(this.children.containers.children).find((container) =>
       container.realSimpleContainer(key)
     );
@@ -547,6 +568,7 @@ export const AntLayoutComp = withExposingConfigs(AntLayoutImplComp, [
   new NameConfig("logoUrl", trans("navigation.logoURLDesc")),
   NameConfigHidden,
   new NameConfig("items", trans("navigation.itemsDesc")),
-  new NameConfig("selectedKey", trans('antLayoutComp.selectedKey')),
+  new NameConfig("activatedKey", trans('antLayoutComp.ActivatedKey')),
+  new NameConfig("realKey", trans('antLayoutComp.selectedKey')),
   new NameConfig("collapsed", trans('antLayoutComp.collapsed')),
 ]);

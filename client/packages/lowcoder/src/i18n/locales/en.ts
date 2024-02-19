@@ -3066,6 +3066,8 @@ export const en = {
     "titleOP": "title",
     "dividerOP": "divider",
     "itemType": "itemType",
+    "manualOperation": "manual Operation",
+    "ActivatedKey": "activated Key",
   },
   "floatButton": {
     "custom": 'Custom',

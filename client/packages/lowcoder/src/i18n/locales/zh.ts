@@ -3007,6 +3007,8 @@ idSource: {
         titleOP: "标题",
         dividerOP: "分割线",
         itemType: "项目类型",
+        manualOperation: "手动切换",
+        ActivatedKey: "已激活的",
     },
     floatButton: {
         custom: '自定义',
