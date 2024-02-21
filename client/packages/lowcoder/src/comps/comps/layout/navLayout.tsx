@@ -224,7 +224,7 @@ let NavTmpLayout = (function () {
               radioButton: true
             })}
             {children.backgroundImage.propertyView({
-              label: `Background Image`,
+              label: trans("navLayout.BackgroundImage"),
               placeholder: 'https://temp.im/350x400',
             })}
           </Section>

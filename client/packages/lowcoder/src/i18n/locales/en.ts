@@ -2983,7 +2983,8 @@ export const en = {
     "width": "Width",
     "widthTooltip": "Pixel or Percentage, e.g. 520, 60%",
     "navStyle": "Menu Style",
-    "navItemStyle": "Menu Item Style"
+    "navItemStyle": "Menu Item Style",
+    "BackgroundImage": "Background Image",
   },
   "iconComp": {
     "icon": "icon",

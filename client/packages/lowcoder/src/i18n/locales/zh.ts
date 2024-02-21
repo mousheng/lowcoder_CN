@@ -2919,12 +2919,13 @@ idSource: {
     },
     navLayout: {
         mode: "模式",
-        modeInline: "排队",
-        modeVertical: "垂直的",
+        modeInline: "内联菜单",
+        modeVertical: "垂直菜单",
         width: "宽度",
         widthTooltip: "数字或百分比,例如 520,60%",
         navStyle: "菜单风格",
         navItemStyle: "菜单项样式",
+        BackgroundImage: "背景图片",
     },
     iconComp: {
         icon: "图标",
