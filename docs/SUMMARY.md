@@ -93,4 +93,5 @@
   * [添加原生组件](developer/addComponent.md)
   * [组件文件简单介绍](developer/component-file.md)
   * [打包Docker镜像](developer/build-image.md)
+  * [同步上游仓库代码](developer/upstream.md)
 
