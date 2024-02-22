@@ -338,7 +338,7 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
   }, [pathParam.applicationId, pathParam.viewMode, dataOptionType, itemKeyRecord])
 
   const getJsonMenuItem = useCallback(
-    (items: MenuItemNode[]): MenuProps["items"] => {
+    (items: MenuItemNode[], subFlag?: boolean): MenuProps["items"] => {
       return items?.map((item: MenuItemNode) => {
         const {
           label,
@@ -351,17 +351,17 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
           label,
           key,
           hidden,
-          icon: icon ? <StyledImage src={icon} /> : <a id='first_title'>{label.charAt(0)}</a>,
+          icon: icon || subFlag ? <StyledImage src={icon} /> : <a id='first_title'>{label.charAt(0)}</a>,
           onTitleClick: onMenuItemClick,
           onClick: onMenuItemClick,
-          ...(children?.length && { children: getJsonMenuItem(children) }),
+          ...(children?.length && { children: getJsonMenuItem(children, true) }),
         }
       })
     }, [onMenuItemClick]
   )
 
   const getMenuItem = useCallback(
-    (itemComps: LayoutMenuItemComp[]): MenuProps["items"] => {
+    (itemComps: LayoutMenuItemComp[], subFlag?: boolean): MenuProps["items"] => {
       return itemComps.filter(filterItem).map((item) => {
         const label = item.children.label.getView();
         const subItems = item.children.items.getView();
@@ -370,10 +370,10 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
           label: label,
           title: label,
           key: item.getItemKey(),
-          icon: icon.props.value ? <span>{icon}</span> : <a id='first_title'>{label.charAt(0)}</a>,
+          icon: icon.props.value || subFlag ? <span>{icon}</span> : <a id='first_title'>{label.charAt(0)}</a>,
           onTitleClick: onMenuItemClick,
           onClick: onMenuItemClick,
-          ...(subItems.length > 0 && { children: getMenuItem(subItems) }),
+          ...(subItems.length > 0 && { children: getMenuItem(subItems, true) }),
         };
       });
     },
