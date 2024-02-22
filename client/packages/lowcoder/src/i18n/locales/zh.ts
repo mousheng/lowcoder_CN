@@ -2926,7 +2926,9 @@ idSource: {
         navStyle: "菜单风格",
         navItemStyle: "菜单项样式",
         BackgroundImage: "背景图片",
-        showTrigger: "折叠按钮",
+        showTrigger: "切换按钮",
+        triggerColor: "切换按钮",
+        triggerBGColor: "切换按钮背景",
     },
     iconComp: {
         icon: "图标",

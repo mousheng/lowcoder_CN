@@ -1314,6 +1314,18 @@ export const NavLayoutStyle = [
   },
   MARGIN,
   PADDING,
+  {
+    name: "triggerColor",
+    label: trans("navLayout.triggerColor"),
+    color: '#000000',
+  },
+  {
+    name: "triggerBGColor",
+    label: trans("navLayout.triggerBGColor"),
+    depTheme: 'canvas',
+    depType: DEP_TYPE.SELF,
+    transformer: toSelf,
+  },
 ] as const;
 
 export const NavLayoutItemStyle = [

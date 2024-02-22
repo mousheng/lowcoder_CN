@@ -24,6 +24,7 @@ import {
   NavLayoutItemHoverStyleType,
   NavLayoutItemActiveStyle,
   NavLayoutItemActiveStyleType,
+  NavLayoutStyleType,
 } from "comps/controls/styleControlConstants";
 import { dropdownControl } from "comps/controls/dropdownControl";
 import _ from "lodash";
@@ -42,7 +43,7 @@ import { BoolControl } from "@lowcoder-ee/index.sdk";
 const DEFAULT_WIDTH = 240;
 type MenuItemStyleOptionValue = "normal" | "hover" | "active";
 
-const StyledSide = styled(Layout.Sider)`
+const StyledSide = styled(Layout.Sider) <{ NavLayoutStyle: NavLayoutStyleType }>`
   max-height: calc(100vh - ${TopHeaderHeight});
   overflow: auto;
 
@@ -55,6 +56,8 @@ const StyledSide = styled(Layout.Sider)`
     bottom: 1px;
     border-right: 1px solid #dcdee4;
     border-top: 1px solid #dcdee4;
+    background-color: ${(props) => props.NavLayoutStyle.triggerBGColor}!important;
+    color: ${(props) => props.NavLayoutStyle.triggerColor}!important;
   }
 `;
 
@@ -557,6 +560,7 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
         onCollapse={(value) => setCollapsed(value)}
         theme="light"
         width={navWidth}
+        NavLayoutStyle={navStyle}
       >
         <StyledMenu
           items={menuItems}
