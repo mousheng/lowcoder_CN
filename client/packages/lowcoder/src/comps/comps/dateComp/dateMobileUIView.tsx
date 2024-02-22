@@ -32,8 +32,8 @@ const handleClick = async (
     mouseWheel: true,
     destroyOnClose: true,
     closeOnMaskClick: true,
-    min: min.isValid() ? min.toDate() : undefined,
-    max: max.isValid() ? max.toDate() : undefined,
+    min: (params.minDate && min.isValid()) ? min.toDate() : undefined,
+    max: (params.maxDate && max.isValid()) ? max.toDate() : undefined,
     precision: params.showTime ? "second" : "day",
     defaultValue: params.value ? params.value.toDate() : undefined,
     filter: {
