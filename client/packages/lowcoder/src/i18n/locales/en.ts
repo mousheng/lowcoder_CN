@@ -2985,6 +2985,7 @@ export const en = {
     "navStyle": "Menu Style",
     "navItemStyle": "Menu Item Style",
     "BackgroundImage": "Background Image",
+    "showTrigger": "Show Trigger",
   },
   "iconComp": {
     "icon": "icon",

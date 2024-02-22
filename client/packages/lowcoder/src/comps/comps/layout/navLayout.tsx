@@ -11,7 +11,7 @@ import { TopHeaderHeight } from "constants/style";
 import { Section, controlItem, sectionNames } from "lowcoder-design";
 import { trans } from "i18n";
 import { EditorContainer, EmptyContent } from "pages/common/styledComponent";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { isUserViewMode, useAppPathParam } from "util/hooks";
 import { StringControl, jsonControl } from "comps/controls/codeControl";
@@ -37,6 +37,7 @@ import {
   jsonMenuItems,
   menuItemStyleOptions
 } from "./navLayoutConstants";
+import { BoolControl } from "@lowcoder-ee/index.sdk";
 
 const DEFAULT_WIDTH = 240;
 type MenuItemStyleOptionValue = "normal" | "hover" | "active";
@@ -50,10 +51,10 @@ const StyledSide = styled(Layout.Sider)`
   }
 
   .ant-layout-sider-trigger {
-    position: relative;
+    position: fixed;
     bottom: 1px;
-    border-right: 1px solid #f0f0f0;
-    border-top: 1px solid #f0f0f0;
+    border-right: 1px solid #dcdee4;
+    border-top: 1px solid #dcdee4;
   }
 `;
 
@@ -65,72 +66,71 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const StyledMenu = styled(AntdMenu)<{
-  $navItemStyle?: NavLayoutItemStyleType & { width: string},
+const StyledMenu = styled(AntdMenu) <{
+  $navItemStyle?: NavLayoutItemStyleType & { width: string },
   $navItemHoverStyle?: NavLayoutItemHoverStyleType,
   $navItemActiveStyle?: NavLayoutItemActiveStyleType,
+  collapsible: boolean,
+  collapsed: boolean,
 }>`
-  .ant-menu-item {
-    height: auto;
-    width: ${(props) => props.$navItemStyle?.width};
+#first_title {
+  display: ${(props) => props.collapsed ? '' : 'none'};
+}
+.ant-menu-item {
+  height: auto;
+  width: ${(props) => props.$navItemStyle?.width};
+  background-color: ${(props) => props.$navItemStyle?.background};
+  color: ${(props) => props.$navItemStyle?.text};
+  border-radius: ${(props) => props.$navItemStyle?.radius} !important;
+  border: ${(props) => `1px solid ${props.$navItemStyle?.border}`};
+  margin: ${(props) => props.$navItemStyle?.margin};
+  padding: ${(props) => props.collapsible ? '' : props.$navItemStyle?.padding};
+  }
+.ant-menu-item-active {
+  background-color: ${(props) => props.$navItemHoverStyle?.background} !important;
+  color: ${(props) => props.$navItemHoverStyle?.text} !important;
+  border: ${(props) => `1px solid ${props.$navItemHoverStyle?.border}`};
+}
+
+.ant-menu-item-selected {
+  background-color: ${(props) => props.$navItemActiveStyle?.background} !important;
+  color: ${(props) => props.$navItemActiveStyle?.text} !important;
+  border: ${(props) => `1px solid ${props.$navItemActiveStyle?.border}`};
+}
+
+.ant-menu-submenu {
+  margin: ${(props) => props.$navItemStyle?.margin};
+  width: ${(props) => props.$navItemStyle?.width};
+
+  .ant-menu-submenu-title {
+    width: 100%;
+    height: auto !important;
     background-color: ${(props) => props.$navItemStyle?.background};
     color: ${(props) => props.$navItemStyle?.text};
     border-radius: ${(props) => props.$navItemStyle?.radius} !important;
     border: ${(props) => `1px solid ${props.$navItemStyle?.border}`};
-    margin: ${(props) => props.$navItemStyle?.margin};
-    padding: ${(props) => props.$navItemStyle?.padding};
+    margin: 0;
+    padding: ${(props) => props.collapsible ? '' : props.$navItemStyle?.padding};
 
   }
-  .ant-menu-item-active {
-    background-color: ${(props) => props.$navItemHoverStyle?.background} !important;
-    color: ${(props) => props.$navItemHoverStyle?.text} !important;
-    border: ${(props) => `1px solid ${props.$navItemHoverStyle?.border}`};
-  }
 
-  .ant-menu-item-selected {
-    background-color: ${(props) => props.$navItemActiveStyle?.background} !important;
-    color: ${(props) => props.$navItemActiveStyle?.text} !important;
-    border: ${(props) => `1px solid ${props.$navItemActiveStyle?.border}`};
-  }
-
-  .ant-menu-submenu {
-    margin: ${(props) => props.$navItemStyle?.margin};
-    width: ${(props) => props.$navItemStyle?.width};
-
-    .ant-menu-submenu-title {
+  &.ant-menu-submenu-active {
+    >.ant-menu-submenu-title {
       width: 100%;
-      height: auto !important;
-      background-color: ${(props) => props.$navItemStyle?.background};
-      color: ${(props) => props.$navItemStyle?.text};
-      border-radius: ${(props) => props.$navItemStyle?.radius} !important;
-      border: ${(props) => `1px solid ${props.$navItemStyle?.border}`};
-      margin: 0;
-      padding: ${(props) => props.$navItemStyle?.padding};
-
-    }
-
-    .ant-menu-item {
-      width: 100%;
-    }
-
-    &.ant-menu-submenu-active {
-      >.ant-menu-submenu-title {
-        width: 100%;
-        background-color: ${(props) => props.$navItemHoverStyle?.background} !important;
-        color: ${(props) => props.$navItemHoverStyle?.text} !important;
-        border: ${(props) => `1px solid ${props.$navItemHoverStyle?.border}`};
-      }
-    }
-    &.ant-menu-submenu-selected {
-      >.ant-menu-submenu-title {
-        width: 100%;
-        background-color: ${(props) => props.$navItemActiveStyle?.background} !important;
-        color: ${(props) => props.$navItemActiveStyle?.text} !important;
-        border: ${(props) => `1px solid ${props.$navItemActiveStyle?.border}`};
-      }
+      background-color: ${(props) => props.$navItemHoverStyle?.background} !important;
+      color: ${(props) => props.$navItemHoverStyle?.text} !important;
+      border: ${(props) => `1px solid ${props.$navItemHoverStyle?.border}`};
     }
   }
-
+  &.ant-menu-submenu-selected {
+    >.ant-menu-submenu-title {
+      width: 100%;
+      background-color: ${(props) => props.$navItemActiveStyle?.background} !important;
+      color: ${(props) => props.$navItemActiveStyle?.text} !important;
+      border: ${(props) => `1px solid ${props.$navItemActiveStyle?.border}`};
+    }
+  }
+}
 `;
 
 const StyledImage = styled.img`
@@ -191,6 +191,7 @@ let NavTmpLayout = (function () {
     navItemStyle: withDefault(styleControl(NavLayoutItemStyle), defaultStyle),
     navItemHoverStyle: withDefault(styleControl(NavLayoutItemHoverStyle), {}),
     navItemActiveStyle: withDefault(styleControl(NavLayoutItemActiveStyle), {}),
+    collapsible: BoolControl,
   };
   return new MultiCompBuilder(childrenMap, (props) => {
     return null;
@@ -199,7 +200,7 @@ let NavTmpLayout = (function () {
       const [styleSegment, setStyleSegment] = useState('normal')
 
       return (
-        <div style={{overflowY: 'auto'}}>
+        <div style={{ overflowY: 'auto' }}>
           <Section name={trans("menu")}>
             {children.dataOptionType.propertyView({
               radioButton: true,
@@ -214,12 +215,12 @@ let NavTmpLayout = (function () {
             }
           </Section>
           <Section name={sectionNames.layout}>
-            { children.width.propertyView({
-                label: trans("navLayout.width"),
-                tooltip: trans("navLayout.widthTooltip"),
-                placeholder: DEFAULT_WIDTH + "",
+            {children.width.propertyView({
+              label: trans("navLayout.width"),
+              tooltip: trans("navLayout.widthTooltip"),
+              placeholder: DEFAULT_WIDTH + "",
             })}
-            { children.mode.propertyView({
+            {children.mode.propertyView({
               label: trans("labelProp.position"),
               radioButton: true
             })}
@@ -227,9 +228,12 @@ let NavTmpLayout = (function () {
               label: trans("navLayout.BackgroundImage"),
               placeholder: 'https://temp.im/350x400',
             })}
+            {children.collapsible.propertyView({
+              label: trans("navLayout.showTrigger")
+            })}
           </Section>
           <Section name={trans("navLayout.navStyle")}>
-            { children.navStyle.getPropertyView() }
+            {children.navStyle.getPropertyView()}
           </Section>
           <Section name={trans("navLayout.navItemStyle")}>
             {controlItem({}, (
@@ -270,7 +274,8 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
   const backgroundImage = comp.children.backgroundImage.getView();
   const jsonItems = comp.children.jsonItems.getView();
   const dataOptionType = comp.children.dataOptionType.getView();
-  
+  const collapsible = comp.children.collapsible.getView();
+  const [collapsed, setCollapsed] = useState(false);
   // filter out hidden. unauthorised items filtered by server
   const filterItem = useCallback((item: LayoutMenuItemComp): boolean => {
     return !item.children.hidden.getView();
@@ -279,7 +284,7 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
   const generateItemKeyRecord = useCallback(
     (items: LayoutMenuItemComp[] | MenuItemNode[]) => {
       const result: Record<string, LayoutMenuItemComp | MenuItemNode> = {};
-      if(dataOptionType === DataOption.Manual) {
+      if (dataOptionType === DataOption.Manual) {
         (items as LayoutMenuItemComp[])?.forEach((item) => {
           const subItems = item.children.items.getView();
           if (subItems.length > 0) {
@@ -288,7 +293,7 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
           result[item.getItemKey()] = item;
         });
       }
-      if(dataOptionType === DataOption.Json) {
+      if (dataOptionType === DataOption.Json) {
         (items as MenuItemNode[])?.forEach((item) => {
           if (item.children?.length) {
             Object.assign(result, generateItemKeyRecord(item.children))
@@ -301,15 +306,15 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
   )
 
   const itemKeyRecord = useMemo(() => {
-    if(dataOptionType === DataOption.Json) {
+    if (dataOptionType === DataOption.Json) {
       return generateItemKeyRecord(jsonItems)
     }
     return generateItemKeyRecord(items)
   }, [dataOptionType, jsonItems, items, generateItemKeyRecord]);
 
-  const onMenuItemClick = useCallback(({key}: {key: string}) => {
+  const onMenuItemClick = useCallback(({ key }: { key: string }) => {
     const itemComp = itemKeyRecord[key]
-  
+
     const url = [
       ALL_APPLICATIONS_URL,
       pathParam.applicationId,
@@ -318,12 +323,12 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
     ].join("/");
 
     // handle manual menu item action
-    if(dataOptionType === DataOption.Manual) {
+    if (dataOptionType === DataOption.Manual) {
       (itemComp as LayoutMenuItemComp).children.action.act(url);
       return;
     }
     // handle json menu item action
-    if((itemComp as MenuItemNode).action?.newTab) {
+    if ((itemComp as MenuItemNode).action?.newTab) {
       return window.open((itemComp as MenuItemNode).action?.url, '_blank')
     }
     history.push(url);
@@ -343,7 +348,7 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
           label,
           key,
           hidden,
-          icon: <StyledImage src={icon} />,
+          icon: icon ? <StyledImage src={icon} /> : <a id='first_title'>{label.charAt(0)}</a>,
           onTitleClick: onMenuItemClick,
           onClick: onMenuItemClick,
           ...(children?.length && { children: getJsonMenuItem(children) }),
@@ -357,11 +362,12 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
       return itemComps.filter(filterItem).map((item) => {
         const label = item.children.label.getView();
         const subItems = item.children.items.getView();
+        const icon = item.children.icon.getView() as ReactElement;
         return {
           label: label,
           title: label,
           key: item.getItemKey(),
-          icon: <span>{item.children.icon.getView()}</span>,
+          icon: icon.props.value ? <span>{icon}</span> : <a id='first_title'>{label.charAt(0)}</a>,
           onTitleClick: onMenuItemClick,
           onClick: onMenuItemClick,
           ...(subItems.length > 0 && { children: getMenuItem(subItems) }),
@@ -372,7 +378,7 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
   );
 
   const menuItems = useMemo(() => {
-    if(dataOptionType === DataOption.Json) return getJsonMenuItem(jsonItems)
+    if (dataOptionType === DataOption.Json) return getJsonMenuItem(jsonItems)
 
     return getMenuItem(items)
   }, [dataOptionType, jsonItems, getJsonMenuItem, items, getMenuItem]);
@@ -465,7 +471,7 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
   );
 
   const defaultOpenKeys = useMemo(() => {
-    if(dataOptionType === DataOption.Json) {
+    if (dataOptionType === DataOption.Json) {
       let itemPath: string[];
       if (pathParam.appPageId) {
         itemPath = findItemPathByKeyJson(jsonItems, pathParam.appPageId);
@@ -497,8 +503,8 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
 
   const pageView = useMemo(() => {
     let pageView = <EmptyContent text="" style={{ height: "100%" }} />;
-    
-    if(dataOptionType === DataOption.Manual) {
+
+    if (dataOptionType === DataOption.Manual) {
       const selectedItem = (itemKeyRecord[selectedKey] as LayoutMenuItemComp);
       if (selectedItem && !selectedItem.children.hidden.getView()) {
         const compView = selectedItem.children.action.getView();
@@ -507,10 +513,10 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
         }
       }
     }
-    if(dataOptionType === DataOption.Json) {
+    if (dataOptionType === DataOption.Json) {
       const item = (itemKeyRecord[selectedKey] as MenuItemNode)
-      if(item?.action?.url) {
-        pageView =  <iframe
+      if (item?.action?.url) {
+        pageView = <iframe
           title={item?.action?.url}
           src={item?.action?.url}
           width="100%"
@@ -523,33 +529,40 @@ NavTmpLayout = withViewFn(NavTmpLayout, (comp) => {
   }, [dataOptionType, itemKeyRecord, selectedKey])
 
   const getVerticalMargin = (margin: string[]) => {
-    if(margin.length === 1) return `${margin[0]}`;
-    if(margin.length === 2) return `(${margin[0]} + ${margin[0]})`;
-    if(margin.length === 3 || margin.length === 4)
+    if (margin.length === 1) return `${margin[0]}`;
+    if (margin.length === 2) return `(${margin[0]} + ${margin[0]})`;
+    if (margin.length === 3 || margin.length === 4)
       return `(${margin[0]} + ${margin[2]})`;
 
     return '0px';
   }
   const getHorizontalMargin = (margin: string[]) => {
-    if(margin.length === 1) return `(${margin[0]} + ${margin[0]})`;
-    if(margin.length === 2) return `(${margin[1]} + ${margin[1]})`;
-    if(margin.length === 3 || margin.length === 4)
+    if (margin.length === 1) return `(${margin[0]} + ${margin[0]})`;
+    if (margin.length === 2) return `(${margin[1]} + ${margin[1]})`;
+    if (margin.length === 3 || margin.length === 4)
       return `(${margin[1]} + ${margin[3]})`;
 
     return '0px';
   }
 
   let backgroundStyle = navStyle.background;
-  if(!_.isEmpty(backgroundImage))  {
+  if (!_.isEmpty(backgroundImage)) {
     backgroundStyle = `center / cover url('${backgroundImage}') no-repeat, ${backgroundStyle}`;
   }
-
   let content = (
     <Layout>
-      <StyledSide theme="light" width={navWidth}>
+      <StyledSide
+        collapsible={collapsible}
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+        theme="light"
+        width={navWidth}
+      >
         <StyledMenu
           items={menuItems}
           mode={navMode}
+          collapsible={collapsible}
+          collapsed={collapsed}
           style={{
             height: `calc(100% - ${getVerticalMargin(navStyle.margin.split(' '))})`,
             width: `calc(100% - ${getHorizontalMargin(navStyle.margin.split(' '))})`,

@@ -2926,6 +2926,7 @@ idSource: {
         navStyle: "菜单风格",
         navItemStyle: "菜单项样式",
         BackgroundImage: "背景图片",
+        showTrigger: "折叠按钮",
     },
     iconComp: {
         icon: "图标",
