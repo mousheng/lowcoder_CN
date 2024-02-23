@@ -65,6 +65,10 @@ const SiderWarpper = styled(Sider) <  SiderProps & { menustyle: AntLayoutMenuSty
   }
   .ant-menu-item {
     color: ${(props) => props.menustyle.menuFontColor};
+    margin-left: 0px!important;
+  }
+  .ant-menu .ant-menu-submenu, .ant-menu .ant-menu-submenu-inline {
+    margin-left: 0px!important;
   }
   .ant-menu-light:not(.ant-menu-horizontal) .ant-menu-item:not(.ant-menu-item-selected):hover, .ant-menu-light>.ant-menu:not(.ant-menu-horizontal) .ant-menu-item:not(.ant-menu-item-selected):hover 
    {
