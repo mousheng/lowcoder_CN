@@ -740,6 +740,7 @@ httpQuery: {
         "额外的body中的键值对将与JSON或表单数据类型一起添加到body中",
     forwardCookies: "转发cookies",
     forwardAllCookies: "转发所有cookies",
+    forwardCookiesHelp: "转发Cookie：用于将当前登录用户的Cookie发送给指定的API接口，因此可能会泄露您的账户信息，请确保API接口的安全性。",
 },
 smtpQuery: {
     attachment: "附件",

@@ -226,17 +226,21 @@ export const CertValidationFormItem = (props: { datasource: Datasource }) => {
 
 export const ForwardCookiesFormItem = (props: { datasource: Datasource }) => {
   const datasourceConfig = props.datasource?.datasourceConfig as HttpConfig;
-
+  const cookieKeyOptions = [
+    { label: "LOCAL_LOWCODER_TOKEN", value: "LOCAL_LOWCODER_TOKEN" },
+    { label: "SELF_HOST_TACO_TOKEN", value: "SELF_HOST_TACO_TOKEN" },
+    { label: "tenantId", value: "tenantId" },
+  ] as const;
   return (
     <>
       <FormSelectItem
-        open={false}
         mode={"tags"}
         name={"forwardCookies"}
         label={trans("httpQuery.forwardCookies")}
-        options={[]}
+        options={cookieKeyOptions}
         initialValue={datasourceConfig?.forwardCookies}
         labelWidth={142}
+        help={trans("httpQuery.forwardCookiesHelp")}
       />
       <FormCheckboxItem
         name={"forwardAllCookies"}

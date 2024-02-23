@@ -741,7 +741,8 @@ export const en = {
     "file": "File",
     "extraBodyTooltip": "Key-values in Extra Body will be appended to the body with JSON or Form Data types",
     "forwardCookies": "Forward Cookies",
-    "forwardAllCookies": "Forward All Cookies"
+    "forwardAllCookies": "Forward All Cookies",
+    "forwardCookiesHelp": "Forward Cookie: Used to send the current logged in user's cookie to the specified API interface, which may leak your account information. Please ensure the security of the API interface.",
   },
   "smtpQuery": {
     "attachment": "Attachment",
