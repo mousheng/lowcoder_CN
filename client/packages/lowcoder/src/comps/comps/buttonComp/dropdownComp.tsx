@@ -168,6 +168,24 @@ const DropdownTmpComp = (function () {
             <Section name={sectionNames.style}>{children.style.getPropertyView()}</Section>
           </>
         )}
+        {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
+          <><Section name={sectionNames.interaction}>
+              {!children.onlyMenu.getView() && children.onEvent.getPropertyView()}
+              {disabledPropertyView(children)}
+              {hiddenPropertyView(children)}
+            </Section>
+          </>
+        )}
+
+        {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
+          <>
+            <Section name={sectionNames.layout}>
+              {children.text.propertyView({ label: trans("label") })}
+              {children.onlyMenu.propertyView({ label: trans("dropdown.onlyMenu") })}
+            </Section>
+            <Section name={sectionNames.style}>{children.style.getPropertyView()}</Section>
+          </>
+        )}
       </>
     ))
     .build();

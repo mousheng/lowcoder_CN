@@ -191,7 +191,7 @@ const builtInRemoteComps: Omit<RemoteCompInfo, "compName"> = {
   packageName: "lowcoder-comps",
 };
 
-const uiCompMap: Registry = {
+var uiCompMap: Registry = {
 
   // Dashboards
 
@@ -1277,8 +1277,8 @@ const uiCompMap: Registry = {
     keywords: trans("uiComp.ganttKeywords"),
     comp: GanttComp,
     layoutInfo: {
-      w: 24,
-      h: 60,
+      w: 6,
+      h: 5,
     },
   },
   transfer: {
@@ -1353,9 +1353,11 @@ const uiCompMap: Registry = {
       w: 17,
     },
   },
+  
 };
 
 export function loadComps() {
+  if(!uiCompMap) return;
   const entries = Object.entries(uiCompMap);
   for (const [compType, manifest] of entries) {
     registerComp(compType as UICompType, manifest);

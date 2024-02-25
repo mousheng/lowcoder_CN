@@ -1,4 +1,5 @@
-import { Input, InputRef } from "antd";
+import { default as InputPassword } from "antd/es/input/Password";
+import { InputRef } from "antd/es/input";
 import {
   NameConfig,
   NameConfigPlaceHolder,
@@ -37,11 +38,11 @@ import { trans } from "i18n";
 import { IconControl } from "comps/controls/iconControl";
 import { hasIcon } from "comps/utils";
 import { RefControl } from "comps/controls/refControl";
-import { RegexControl } from "@lowcoder-ee/index.sdk";
 import React, { useContext } from "react";
 import { EditorContext } from "comps/editorState";
+import { RegexControl } from "@lowcoder-ee/index.sdk";
 
-const PasswordStyle = styled(Input.Password)<{
+const PasswordStyle = styled(InputPassword)<{
   $style: InputLikeStyleType;
 }>`
   ${(props) => props.$style && getStyle(props.$style)}

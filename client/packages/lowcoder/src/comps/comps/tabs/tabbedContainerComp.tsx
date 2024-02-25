@@ -3,16 +3,16 @@ import { JSONObject, JSONValue } from "util/jsonTypes";
 import { CompAction, CompActionTypes, deleteCompAction, wrapChildAction } from "lowcoder-core";
 import { DispatchType, RecordConstructorToView, wrapDispatch } from "lowcoder-core";
 import { AutoHeightControl } from "comps/controls/autoHeightControl";
-import { stringExposingStateControl } from "comps/controls/codeStateControl";
+import { BooleanStateControl, booleanExposingStateControl, stringExposingStateControl } from "comps/controls/codeStateControl";
 import { eventHandlerControl } from "comps/controls/eventHandlerControl";
 import { TabsOptionControl } from "comps/controls/optionsControl";
 import { styleControl } from "comps/controls/styleControl";
-import { TabContainerStyle, TabContainerStyleType } from "comps/controls/styleControlConstants";
+import { ContainerBodyStyle, ContainerBodyStyleType, ContainerHeaderStyle, ContainerHeaderStyleType, TabContainerStyle, TabContainerStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
 import { sameTypeMap, UICompBuilder, withDefault } from "comps/generators";
 import { addMapChildAction } from "comps/generators/sameTypeMap";
 import { NameConfig, NameConfigHidden, withExposingConfigs } from "comps/generators/withExposing";
 import { NameGenerator } from "comps/utils";
-import { Section, sectionNames } from "lowcoder-design";
+import { ControlNode, Section, sectionNames } from "lowcoder-design";
 import { HintPlaceHolder } from "lowcoder-design";
 import _ from "lodash";
 import React, { useCallback, useContext } from "react";
@@ -72,36 +72,63 @@ const childrenMap = {
   autoHeight: AutoHeightControl,
   onEvent: eventHandlerControl(EVENT_OPTIONS),
   disabled: BoolCodeControl,
+  showHeader: withDefault(BooleanStateControl, "true"),
   style: styleControl(TabContainerStyle),
+  headerStyle: styleControl(ContainerHeaderStyle),
+  bodyStyle: styleControl(ContainerBodyStyle),
   position: withDefault(PositionControl, "top"),
-  hiddenTabNav: BoolControl,
 };
 
 type ViewProps = RecordConstructorToView<typeof childrenMap>;
 type TabbedContainerProps = ViewProps & { dispatch: DispatchType };
-
-const getStyle = (style: TabContainerStyleType) => {
+ 
+const getStyle = (
+  style: TabContainerStyleType,
+  headerStyle: ContainerHeaderStyleType,
+  bodyStyle: ContainerBodyStyleType,
+) => {
   return css`
     &.ant-tabs {
-      border: 1px solid ${style.border};
-      border-radius: ${style.radius};
       overflow: hidden;
-      padding: ${style.padding};	
+      border: ${style.borderWidth} solid ${style.border};
+      border-radius: ${style.radius};
+      padding: ${style.padding};
+      background-color: ${style.background};
+      background-image: ${style.backgroundImage};
+      background-repeat: ${style.backgroundImageRepeat};
+      background-size: ${style.backgroundImageSize};
+      background-position: ${style.backgroundImagePosition};
+      background-origin: ${style.backgroundImageOrigin};
 
-      > .ant-tabs-content-holder > .ant-tabs-content > div > .react-grid-layout {
-        background-color: ${style.background};
-        border-radius: 0;
+      > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane {
+        height: 100%;
+        .react-grid-layout {
+          border-radius: 0;
+          background-color: ${bodyStyle.background || 'transparent'};
+          background-image: ${bodyStyle.backgroundImage};
+          background-repeat: ${bodyStyle.backgroundImageRepeat};
+          background-size: ${bodyStyle.backgroundImageSize};
+          background-position: ${bodyStyle.backgroundImagePosition};
+          background-origin: ${bodyStyle.backgroundImageOrigin};
+
+        }
       }
     
       > .ant-tabs-nav {
-        background-color: ${style.headerBackground};
+        background-color: ${headerStyle.headerBackground || 'transparent'};
+        background-image: ${headerStyle.headerBackgroundImage};
+        background-repeat: ${headerStyle.headerBackgroundImageRepeat};
+        background-size: ${headerStyle.headerBackgroundImageSize};
+        background-position: ${headerStyle.headerBackgroundImagePosition};
+        background-origin: ${headerStyle.headerBackgroundImageOrigin};
 
-      > .ant-tabs-nav-wrap > .ant-tabs-nav-list > .ant-tabs-ink-bar {
-        background-color: ${style.accent};
-        }
-
-        .ant-badge {
-          color: ${style.tabText};
+        .ant-tabs-tab {
+          div {
+            color: ${style.tabText};
+          }
+        > .ant-tabs-nav-wrap > .ant-tabs-nav-list > .ant-tabs-ink-bar {
+          background-color: ${style.accent};
+          }
         }
 
         .ant-tabs-tab-active {
@@ -117,43 +144,58 @@ const getStyle = (style: TabContainerStyleType) => {
   `;
 };
 
-const StyledTabs = styled(Tabs) <{ $style: TabContainerStyleType; $isMobile?: boolean, hiddenTabNav: boolean, autoHeight: boolean }>`
-  &.ant-tabs {
-    height: 100%;
-  }
+const StyledTabs = styled(Tabs)<{ 
+  $style: TabContainerStyleType;
+  $headerStyle: ContainerHeaderStyleType;
+  $bodyStyle: ContainerBodyStyleType;
+  $isMobile?: boolean; 
+  $showHeader?: boolean;
+  $autoHeight: boolean;
+}>`
+&.ant-tabs {
+  height: 100%;
+}
 
-  .ant-tabs-content-animated {
-    transition-duration: 0ms;
-  }
+.ant-tabs-content-animated {
+  transition-duration: 0ms;
+}
+.ant-tabs-tabpane {
+  height: 100%;
+  padding-left: ${(props) => (props.tabPosition === "left" ? "2px!important" : "0px!important")};
+  padding-right: ${(props) => (props.tabPosition === "right" ? "2px!important" : "0px!important")};
+}
 
-  .ant-tabs-tabpane {
-    height: 100%;
-    padding-left: ${(props) => (props.tabPosition === "left" ? "2px!important" : "0px!important")};
-    padding-right: ${(props) => (props.tabPosition === "right" ? "2px!important" : "0px!important")};
-  }
+.ant-tabs-content {
+  height: 100%;
+  // margin-top: -16px;
+}
 
-  .ant-tabs-content {
-    height: 100%;
-    // margin-top: -16px;
-  }
+.ant-tabs-nav {
+  display: ${(props) => (props.$showHeader ? "block" : "none")};
+  padding: 0 ${(props) => (props.$isMobile ? 16 :  props.tabPosition === "top" || props.tabPosition === "bottom" ? 24 : 0)}px;
+  background: white;
+  margin: 0px;
+}
 
-  .ant-tabs-nav {
-    padding: 0 ${(props) => (props.$isMobile ? 16 : props.tabPosition === "top" || props.tabPosition === "bottom" ? 24 : 0)}px;
-    display: ${props => props.hiddenTabNav ? 'none' : ''};
-    background: white;
-    margin: 0px;
-  }
+.ant-tabs-tab + .ant-tabs-tab {
+  margin: 0 0 0 20px;
+}
 
-  .ant-tabs-tab + .ant-tabs-tab {
-    margin: 0 0 0 20px;
-  }
+.ant-tabs-nav-operations {
+  margin-right: -24px;
+}
 
-  > .ant-tabs-content-holder > .ant-tabs-content > div > .react-grid-layout > div {
-    min-height: calc(100% - 2px)!important;
-    height: ${props => props.autoHeight ? '' : '10px'}!important;
-  }
+> .ant-tabs-content-holder > .ant-tabs-content > div > .react-grid-layout > div {
+  min-height: calc(100% - 2px)!important;
+  height: ${props => props.$autoHeight ? '' : '10px'}!important;
+}
 
-  ${(props) => props.$style && getStyle(props.$style)}
+
+${(props) => props.$style && getStyle(
+  props.$style,
+  props.$headerStyle,
+  props.$bodyStyle,
+)}
 `;
 
 const ContainerInTab = (props: ContainerBaseProps) => {
@@ -163,7 +205,14 @@ const ContainerInTab = (props: ContainerBaseProps) => {
 };
 
 const TabbedContainer = (props: TabbedContainerProps) => {
-  let { tabs, containers, dispatch, style } = props;
+  let {
+    tabs,
+    containers,
+    dispatch,
+    style,
+    headerStyle,
+    bodyStyle,
+  } = props;
 
   const visibleTabs = tabs.filter((tab) => !tab.hidden);
   const selectedTab = visibleTabs.find((tab) => tab.key === props.selectedTabKey.value);
@@ -187,7 +236,8 @@ const TabbedContainer = (props: TabbedContainerProps) => {
   const editorState = useContext(EditorContext);
   const maxWidth = editorState.getAppSettings().maxWidth;
   const isMobile = checkIsMobile(maxWidth);
-  const paddingWidth = isMobile ? 8 : 20;
+  const showHeader = props.showHeader.value;
+  const paddingWidth = isMobile ? 8 : 0;
 
   const tabItems = visibleTabs.map((tab) => {
     const id = String(tab.id);
@@ -210,7 +260,7 @@ const TabbedContainer = (props: TabbedContainerProps) => {
       key: tab.key,
       forceRender: true,
       children: (
-        <BackgroundColorContext.Provider value={props.style.background}>
+        <BackgroundColorContext.Provider value={bodyStyle.background}>
           <ContainerInTab
             layout={containerProps.layout.getView()}
             items={gridItemCompToGridItems(containerProps.items.getView())}
@@ -226,29 +276,32 @@ const TabbedContainer = (props: TabbedContainerProps) => {
   })
 
   return (
-    <div style={{ padding: props.style.margin, height: '100%' }}>
-      <StyledTabs
-        activeKey={activeKey}
-        $style={style}
-        autoHeight={props.autoHeight}
-        onChange={(key) => {
-          if (key !== props.selectedTabKey.value) {
-            props.selectedTabKey.onChange(key);
-            props.onEvent("change");
-          }
-        }}
-        onTabClick={onTabClick}
-        animated
-        $isMobile={isMobile}
-        // tabBarGutter={32}
-        items={tabItems}
-        tabPosition={props.position ?? "top"}
-        hiddenTabNav={props.hiddenTabNav}
-      >
-      </StyledTabs>
+    <div style={{padding: props.style.margin, height: '100%'}}>
+    <StyledTabs
+      activeKey={activeKey}
+      $style={style}
+      $headerStyle={headerStyle}
+      $bodyStyle={bodyStyle}
+      $showHeader={showHeader}
+      $autoHeight={props.autoHeight}
+      tabPosition={props.position ?? "top"}
+      onChange={(key) => {
+        if (key !== props.selectedTabKey.value) {
+          props.selectedTabKey.onChange(key);
+          props.onEvent("change");
+        }
+      }}
+      onTabClick={onTabClick}
+      animated
+      $isMobile={isMobile}
+      // tabBarGutter={32}
+      items={tabItems}
+    >
+    </StyledTabs>
     </div>
   );
 };
+
 
 export const TabbedContainerBaseComp = (function () {
   return new UICompBuilder(childrenMap, (props, dispatch) => {
@@ -266,15 +319,15 @@ export const TabbedContainerBaseComp = (function () {
               title: trans("tabbedContainer.tab"),
               newOptionLabel: "Tab",
             })}
-            {children.selectedTabKey.propertyView({ label: trans("tabbedContainer.defaultKey") })}
-            {children.hiddenTabNav.propertyView({ label: trans("tabbedContainer.hiddenTabNav") })}
-            {!children.hiddenTabNav.getView() && children.position.propertyView({ label: trans("tabbedContainer.TabPosition"), radioButton: true })}
+            {children.selectedTabKey.propertyView({ label: trans("prop.defaultValue") })}
           </Section>
-
+        
           {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
             <Section name={sectionNames.interaction}>
               {children.onEvent.getPropertyView()}
               {disabledPropertyView(children)}
+              {children.showHeader.propertyView({ label: trans("prop.showHeader") })}
+              {children.showHeader.getView().value && children.position.propertyView({ label: trans("tabbedContainer.TabPosition"), radioButton: true })}
               {hiddenPropertyView(children)}
             </Section>
           )}
@@ -286,6 +339,14 @@ export const TabbedContainerBaseComp = (function () {
               </Section>
               <Section name={sectionNames.style}>
                 {children.style.getPropertyView()}
+              </Section>
+              {children.showHeader.getView() && (
+                <Section name={"Header Style"}>
+                  { children.headerStyle.getPropertyView() }
+                </Section>
+              )}
+              <Section name={"Body Style"}>
+                { children.bodyStyle.getPropertyView() }
               </Section>
             </>
           )}
@@ -396,6 +457,8 @@ class TabbedContainerImplComp extends TabbedContainerBaseComp implements IContai
   override autoHeight(): boolean {
     return this.children.autoHeight.getView();
   }
+
+
 }
 
 export const TabbedContainerComp = withExposingConfigs(TabbedContainerImplComp, [

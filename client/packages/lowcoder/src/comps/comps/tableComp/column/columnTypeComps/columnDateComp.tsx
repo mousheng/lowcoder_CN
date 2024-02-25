@@ -1,4 +1,4 @@
-import { DatePicker } from "antd";
+import { default as DatePicker } from "antd/es/date-picker";
 import {
   ColumnTypeCompBuilder,
   ColumnTypeViewFn,
@@ -25,7 +25,7 @@ const IconSuperNext = styled(SuperPrevIcon)`
   transform: rotate(180deg);
 `;
 
-const DatePickerStyled = styled(DatePicker)<{ $open: boolean }>`
+const DatePickerStyled = styled(DatePicker) <{ $open: boolean }>`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -183,7 +183,7 @@ export const DateEdit = (props: DateEditProps) => {
           overflow: "hidden",
         }}
         onOpenChange={(open) => setPanelOpen(open)}
-        onChange={(value, dateString) => props.onChange(dateString)}
+        onChange={(value, dateString) => props.onChange(dateString as string)}
         onBlur={props.onChangeEnd}
       />
     </Wrapper>

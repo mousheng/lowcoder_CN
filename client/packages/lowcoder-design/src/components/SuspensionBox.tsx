@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { ReactComponent as close } from "icons/icon-flokclose.svg";
 import { ScrollBar } from "../components/ScrollBar";
 
-const Container = styled.div<{ width: number }>`
-  width: ${(props) => props.width}px;
+const Container = styled.div<{ $width: number }>`
+  width: ${(props) => props.$width}px;
   background: #ffffff;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -24,7 +24,7 @@ const CloseIcon = styled(close)`
   padding: 1px;
   color: #8b8fa3;
 
-  :hover {
+  &:hover {
     cursor: pointer;
   }
 
@@ -78,7 +78,7 @@ export const SuspensionBox = (props: Iprops) => {
   } = props;
   return (
     <Container
-      width={width}
+      $width={width}
       onMouseEnter={()=>setmouseOutFlag && setmouseOutFlag(false)}
       onMouseLeave={()=>setmouseOutFlag && setmouseOutFlag(true)}
     >

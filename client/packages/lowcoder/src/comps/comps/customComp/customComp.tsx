@@ -59,7 +59,6 @@ const defaultCode = `
   );
   
   const ConnectedComponent = ${trans("customComp.sdkGlobalVarName")}.connect(MyCustomComponent);
-  
   const root = ReactDOM.createRoot(document.getElementById("root"));
   root.render(<ConnectedComponent />);
   

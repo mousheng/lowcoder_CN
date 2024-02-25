@@ -34,7 +34,7 @@ import {
 import { trans } from "i18n";
 import { ChangeEvent, useRef, useState } from "react";
 import { refMethods } from "comps/generators/withMethodExposing";
-import { InputRef } from "antd";
+import { InputRef } from "antd/es/input";
 import {
   blurMethod,
   clickMethod,
@@ -230,13 +230,18 @@ export const TextInputValidationSection = (children: TextInputComp) => (
   </Section>
 );
 
-export function getStyle(style: InputLikeStyleType | ColorPickerStyleType) {
+export function getStyle(style: InputLikeStyleType) {
   return css`
     border-radius: ${style.radius};
+    border-width: ${style.borderWidth};
+    padding: ${style.padding};	
     // still use antd style when disabled
     &:not(.ant-input-disabled, .ant-input-affix-wrapper-disabled),
     input {
       color: ${style.text};
+      font-size: ${style.textSize};
+      font-weight: ${style.textWeight};
+      font-family: ${style.fontFamily};
       background-color: ${style.background};
       border-color: ${style.border};
 

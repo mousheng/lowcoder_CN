@@ -11588,7 +11588,6 @@ var Translator = /** @class */ (function () {
          * ！！此处载入i18n配置文件，如果没有检索到其他国家语言的数据，则默认载入英语
          */
         var _a = getDataByLocale(fileData, "", filterLocales, locales), data = _.merge( fileData.en, _a.data), language = _a.language;
-        // var _a = getDataByLocale(fileData, "", filterLocales, locales), data = _a.data, language = _a.language;
         this.messages = Object.assign({}, data, globalMessages);
         this.language = language;
         this.trans = this.trans.bind(this);
@@ -11601,7 +11600,7 @@ var Translator = /** @class */ (function () {
         var message = this.getMessage(key);
         var node = new IntlMessageFormat(message, i18n.locale).format(variables);
         if (Array.isArray(node)) {
-            return node.map(function (n, i) { return jsxRuntimeExports.jsx(reactExports.Fragment, { children: n }, i); });
+            return node.map(function (n, i) { return jsxRuntime.exports.jsx(react.exports.Fragment, { children: n }, i); });
         }
         return node;
     };
@@ -11621,6 +11620,7 @@ var Translator = /** @class */ (function () {
     };
     return Translator;
 }());
+
 function getI18nObjects(fileData, filterLocales) {
     return getDataByLocale(fileData, "Obj", filterLocales).data;
 }

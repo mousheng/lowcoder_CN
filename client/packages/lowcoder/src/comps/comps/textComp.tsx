@@ -16,6 +16,9 @@ import { trans } from "i18n";
 import { alignWithJustifyControl } from "comps/controls/alignControl";
 import { BoolControl } from "../controls/boolControl";
 
+import { MarginControl } from "../controls/marginControl";
+import { PaddingControl } from "../controls/paddingControl";
+
 import React, { useContext } from "react";
 import { EditorContext } from "comps/editorState";
 
@@ -24,6 +27,9 @@ const getStyle = (style: TextStyleType) => {
     border-radius: ${(style.radius ? style.radius : "4px")};
     border: ${(style.borderWidth ? style.borderWidth : "0px")} solid ${style.border};
     color: ${style.text};
+    font-size: ${style.textSize} !important;
+    font-weight: ${style.textWeight} !important;
+    font-family: ${style.fontFamily} !important;
     background-color: ${style.background};
     .markdown-body a {
       color: ${style.links};
@@ -75,13 +81,13 @@ const getStyle = (style: TextStyleType) => {
   `;
 };
 
-const TextContainer = styled.div<{ type: string; styleConfig: TextStyleType }>`
+const TextContainer = styled.div<{ $type: string; $styleConfig: TextStyleType }>`
   height: 100%;
   overflow: auto;
   margin: 0;
   ${(props) =>
-    props.type === "text" && "white-space:break-spaces;line-height: 1.9;padding: 3px 0;"};
-  ${(props) => props.styleConfig && getStyle(props.styleConfig)}
+    props.$type === "text" && "white-space:break-spaces;line-height: 1.9;padding: 3px 0;"};
+  ${(props) => props.$styleConfig && getStyle(props.$styleConfig)}
   display: flex;
   ${markdownCompCss};
   overflow-wrap: anywhere;
@@ -178,8 +184,8 @@ let TextTmpComp = (function () {
     }
     return (
       <TextContainer
-        type={props.type}
-        styleConfig={props.style}
+        $type={props.type}
+        $styleConfig={props.style}
         style={{
           justifyContent: props.horizontalAlignment,
           alignItems: props.autoHeight ? "center" : props.verticalAlignment,
@@ -207,6 +213,31 @@ let TextTmpComp = (function () {
             {children.text.propertyView({})}
           </Section>
 
+          {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+            <Section name={sectionNames.interaction}>
+              {hiddenPropertyView(children)}
+            </Section>
+          )}
+        
+          {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+            <>
+              <Section name={sectionNames.layout}>
+                {children.autoHeight.getPropertyView()}
+                {!children.autoHeight.getView() &&
+                  children.verticalAlignment.propertyView({
+                    label: trans("textShow.verticalAlignment"),
+                    radioButton: true,
+                  })}
+                {children.horizontalAlignment.propertyView({
+                  label: trans("textShow.horizontalAlignment"),
+                  radioButton: true,
+                })}
+              </Section>
+              <Section name={sectionNames.style}>
+                {children.style.getPropertyView()}
+              </Section>
+            </>
+          )}
           {children.type.getView() === 'text' &&
             (<Section name={trans("textShow.fontStyle")}>
               {children.fontSize.propertyView({

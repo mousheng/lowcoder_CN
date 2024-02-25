@@ -1,4 +1,5 @@
 import * as echarts from "echarts";
+import "echarts-wordcloud";
 import { EChartsReactProps, EChartsOption, EChartsInstance } from "./types";
 import EChartsReactCore from "./core";
 

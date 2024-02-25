@@ -33,12 +33,9 @@ import {
 import { trans } from "i18n";
 import { IconControl } from "comps/controls/iconControl";
 import { hasIcon } from "comps/utils";
-import {
-  ConfigProvider,
-  InputRef,
-  AutoComplete,
-  Input as AntInput,
-} from "antd";
+import { InputRef } from "antd/es/input";
+import { AutoComplete, Input as AntInput } from 'antd';
+import { default as ConfigProvider } from "antd/es/config-provider";
 import { RefControl } from "comps/controls/refControl";
 import {
   booleanExposingStateControl, jsonExposingStateControl, jsonObjectExposingStateControl,

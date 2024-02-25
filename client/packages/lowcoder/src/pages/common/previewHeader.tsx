@@ -1,4 +1,4 @@
-import { Skeleton } from "antd";
+import { default as Skeleton } from "antd/es/skeleton";
 import Header from "components/layout/Header";
 import { SHARE_TITLE } from "constants/apiConstants";
 import { ALL_APPLICATIONS_URL, APPLICATION_VIEW_URL, AUTH_LOGIN_URL } from "constants/routesURL";
@@ -19,10 +19,10 @@ import { useContext, useState } from "react";
 import { getBrandingConfig } from "../../redux/selectors/configSelectors";
 import { EditorContext } from "@lowcoder-ee/comps/editorState";
 
-const HeaderFont = styled.div<{ bgColor: string }>`
+const HeaderFont = styled.div<{ $bgColor: string }>`
   font-weight: 500;
   font-size: 14px;
-  color: ${(props) => (isDarkColor(props.bgColor) ? "#ffffff" : "#000000")};
+  color: ${(props) => (isDarkColor(props.$bgColor) ? "#ffffff" : "#000000")};
   font-style: normal;
   line-height: 24px;
   margin-right: 8px;
@@ -150,7 +150,7 @@ export const PreviewHeader = () => {
           {editorState.getAppSettings()?.customIcon}
         </CustomICON>) : (<LogoIcon branding={true} />)}
       </StyledLink>
-      <HeaderFont bgColor={brandingConfig?.headerColor ?? "#2c2c2c"}>
+      <HeaderFont $bgColor={brandingConfig?.headerColor ?? "#2c2c2c"}>
         {application && application.name}
       </HeaderFont>
     </>

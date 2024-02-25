@@ -3,16 +3,37 @@ import { BoolControl } from "comps/controls/boolControl";
 import { styleControl } from "comps/controls/styleControl";
 import { ColorPickerStyle, ColorPickerStyleType } from "comps/controls/styleControlConstants";
 import { NameConfig } from "comps/generators/withExposing";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { UICompBuilder } from "../../generators";
 import { FormDataPropertyView } from "../formComp/formDataConstants";
-import { getStyle, textInputChildren } from "./textInputConstants";
+import { textInputChildren } from "./textInputConstants";
 import { disabledPropertyView, hiddenPropertyView, } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
 import { ColorPicker } from 'antd';
 import { ArrayOrJSONObjectControl, changeEvent, dropdownControl, eventHandlerControl, jsonObjectExposingStateControl, stringExposingStateControl, withDefault } from "@lowcoder-ee/index.sdk";
 import { presets } from "./colorPickerstant";
 import _ from "lodash"
+
+export function getStyle(style: ColorPickerStyleType) {
+  return css`
+    border-radius: ${style.radius};
+    &:not(.ant-input-disabled, .ant-input-affix-wrapper-disabled),
+    input {
+      background-color: ${style.background};
+      border-color: ${style.border};
+      &:focus,
+      &.ant-input-affix-wrapper-focused {
+        border-color: ${style.accent};
+      }
+      &:hover {
+        border-color: ${style.accent};
+      }
+      .ant-input-clear-icon svg:hover {
+        opacity: 0.65;
+      }
+    }
+  `;
+}
 
 const ColorPickerWrapper = styled(ColorPicker) <{ $style: ColorPickerStyleType }>`
   width: 100%;
