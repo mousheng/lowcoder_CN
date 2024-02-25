@@ -83,6 +83,7 @@ type AppIndexProps = {
 class AppIndex extends React.Component<AppIndexProps, any> {
   componentDidMount() {
     this.props.getCurrentUser();
+    this.props.fetchConfig(this.props.currentOrgId);
   }
 
   componentDidUpdate(prevProps: AppIndexProps) {
