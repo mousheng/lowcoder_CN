@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { DateTimeStyleType } from "comps/controls/styleControlConstants";
-import { getMobileStyle } from "comps/comps/dateComp/dateCompUtil";
+import {getMobileStyle, getPrecisionType} from "comps/comps/dateComp/dateCompUtil";
 import dayjs from "dayjs";
-import { DATE_FORMAT, DATE_TIME_FORMAT, DateParser } from "util/dateTimeUtils";
+import {DATE_FORMAT, DATE_TIME_FORMAT, DateParser, PickerMode} from "util/dateTimeUtils";
 import { CanvasContainerID } from "constants/domLocators";
 import { trans } from "i18n";
 import React from "react";
@@ -18,6 +18,7 @@ const handleClick = async (
   > & {
     value: dayjs.Dayjs | null;
     onChange: (value: dayjs.Dayjs | null) => void;
+    picker?: PickerMode
   }
 ) => {
   const MobileDatePicker = (await import("antd-mobile/es/components/date-picker")).default;
@@ -34,7 +35,7 @@ const handleClick = async (
     closeOnMaskClick: true,
     min: (params.minDate && min.isValid()) ? min.toDate() : undefined,
     max: (params.maxDate && max.isValid()) ? max.toDate() : undefined,
-    precision: params.showTime ? "second" : "day",
+    precision: getPrecisionType(params.showTime,params?.picker),
     defaultValue: params.value ? params.value.toDate() : undefined,
     filter: {
       hour: (val) => !disabledHours().includes(val),
