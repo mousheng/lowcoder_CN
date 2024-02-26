@@ -18,6 +18,9 @@ import { AppPermissionDialog } from "../../components/PermissionDialog/AppPermis
 import { useContext, useState } from "react";
 import { getBrandingConfig } from "../../redux/selectors/configSelectors";
 import { EditorContext } from "@lowcoder-ee/comps/editorState";
+import { HeaderStartDropdown } from "./headerStartDropdown";
+import { useParams } from "react-router";
+import { AppPathParams } from "constants/applicationConstants";
 
 const HeaderFont = styled.div<{ $bgColor: string }>`
   font-weight: 500;
@@ -136,13 +139,16 @@ export function HeaderProfile(props: { user: User, allowClick: boolean }) {
 
 export const PreviewHeader = () => {
   const editorState = useContext(EditorContext);
+  const params = useParams<AppPathParams>();
   const user = useSelector(getUser);
   const application = useSelector(currentApplication);
   const applicationId = useApplicationId();
   const templateId = useSelector(getTemplateId);
   const brandingConfig = useSelector(getBrandingConfig);
   const [permissionDialogVisible, setPermissionDialogVisible] = useState(false);
-  const allowClick = !(editorState.getAppSettings()?.allowClick === 'false')
+  const allowClick = !(editorState.getAppSettings()?.allowClick === 'false');
+  const isViewMarketplaceMode = params.viewMode === 'view_marketplace';
+
   const headerStart = (
     <>
       <StyledLink onClick={() => allowClick ? history.push(ALL_APPLICATIONS_URL) : undefined}>
@@ -150,9 +156,17 @@ export const PreviewHeader = () => {
           {editorState.getAppSettings()?.customIcon}
         </CustomICON>) : (<LogoIcon branding={true} />)}
       </StyledLink>
-      <HeaderFont $bgColor={brandingConfig?.headerColor ?? "#2c2c2c"}>
-        {application && application.name}
-      </HeaderFont>
+      {isViewMarketplaceMode && (
+        <HeaderStartDropdown
+          setEdit={() => { }}
+          isViewMarketplaceMode={isViewMarketplaceMode}
+        />
+      )}
+      {!isViewMarketplaceMode && (
+        <HeaderFont $bgColor={brandingConfig?.headerColor ?? "#2c2c2c"}>
+          {application && application.name}
+        </HeaderFont>
+      )}
     </>
   );
 

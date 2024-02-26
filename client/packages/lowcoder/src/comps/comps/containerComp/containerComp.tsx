@@ -26,7 +26,7 @@ export const ContainerBaseComp = (function () {
   return new ContainerCompBuilder(childrenMap, (props, dispatch) => {
     return (
       <DisabledContext.Provider value={props.disabled}>
-        <TriContainer {...props} />
+          <TriContainer {...props} />        
       </DisabledContext.Provider>
     );
   })
@@ -63,6 +63,7 @@ function convertOldContainerParams(params: CompParams<any>) {
     // old params
     if (container && (container.hasOwnProperty("layout") || container.hasOwnProperty("items"))) {
       const autoHeight = tempParams.value.autoHeight;
+      const scrollbars = tempParams.value.scrollbars;
       return {
         ...tempParams,
         value: {
@@ -72,6 +73,7 @@ function convertOldContainerParams(params: CompParams<any>) {
             showBody: true,
             showFooter: false,
             autoHeight: autoHeight,
+            scrollbars: scrollbars,
           },
         },
       };
@@ -108,7 +110,7 @@ export function defaultContainerData(
           layoutItem: {
             i: "",
             h: 5,
-            w: 24,
+            w: 12,
             x: 0,
             y: 0,
           },

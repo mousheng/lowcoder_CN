@@ -10,7 +10,7 @@ import { UICompBuilder } from "../generators";
 import { NameConfig, NameConfigHidden, withExposingConfigs } from "../generators/withExposing";
 import { markdownCompCss, TacoMarkDown } from "lowcoder-design";
 import { styleControl } from "comps/controls/styleControl";
-import { TextStyle, TextStyleType } from "comps/controls/styleControlConstants";
+import { TextStyle, TextStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
 import { alignWithJustifyControl } from "comps/controls/alignControl";
@@ -30,28 +30,18 @@ const getStyle = (style: TextStyleType) => {
     font-size: ${style.textSize} !important;
     font-weight: ${style.textWeight} !important;
     font-family: ${style.fontFamily} !important;
+    font-style:${style.fontStyle} !important;
     background-color: ${style.background};
     .markdown-body a {
       color: ${style.links};
     }
     .markdown-body {
+      margin: ${style.margin} !important;	
+      padding: ${style.padding};	
+      width: ${widthCalculator(style.margin)};	
+      // height: ${heightCalculator(style.margin)};
       h1 {
-        line-height: 32px;
-      }
-      h2 {
-        line-height: 25px;
-      }
-      h3 {
-        line-height: 14px;
-      }
-      h4 {
-        line-height: 10px;
-      }
-      h5 {
-        line-height: 10px;
-      }
-      h6 {
-        line-height: 10px;
+        line-height: 1.5;
       }
       p {
         line-height: 11px!important;
@@ -150,7 +140,7 @@ const VerticalAlignmentOptions = [
 ] as const;
 
 
-let TextTmpComp = (function () {  
+let TextTmpComp = (function () {
 
   const childrenMap = {
     text: stringExposingStateControl(
@@ -162,6 +152,8 @@ let TextTmpComp = (function () {
     horizontalAlignment: alignWithJustifyControl(),
     verticalAlignment: dropdownControl(VerticalAlignmentOptions, "center"),
     style: styleControl(TextStyle),
+    margin: MarginControl,
+    padding: PaddingControl,
     fontSize: dropdownControl(fontSizeOptions, "0.875rem"),
     bold: BoolControl,
     italic: BoolControl,
@@ -203,7 +195,7 @@ let TextTmpComp = (function () {
     .setPropertyViewFn((children) => {
       return (
         <>
-        
+
           <Section name={sectionNames.basic}>
             {children.type.propertyView({
               label: trans("value"),
@@ -256,7 +248,7 @@ let TextTmpComp = (function () {
               {hiddenPropertyView(children)}
             </Section>
           )}
-        
+
           {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
             <>
               <Section name={sectionNames.layout}>

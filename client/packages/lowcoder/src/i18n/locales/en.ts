@@ -112,7 +112,12 @@ export const en = {
     "components": "Active Components",
     "modals": "in-App Modals",
     "expandTip": "Click to Expand {component}'s Data",
-    "collapseTip": "Click to Collapse {component}'s Data"
+    "collapseTip": "Click to Collapse {component}'s Data",
+    "layers": "Layers",
+    "activatelayers": "Use dynamic Layers",
+    "selectedComponents": "Selected Components...",
+    "displayComponents": "control Display",
+    "lockComponents": "control Position",
   },
 
   // second part
@@ -207,6 +212,7 @@ export const en = {
     "dot": "Dot",
     "number": "Number",
     "tooltip": "Tooltip",
+    "scrollbar" : "Show Scrollbars",
   },
   "autoHeightProp": {
     "auto": "Auto",
@@ -430,6 +436,7 @@ export const en = {
     "textSize": "Text Size",
     "textWeight": "Text Weight",
     "fontFamily": "Font Family",
+    "fontStyle":"Font Style",
     "backgroundImage": "BG Image",
     "backgroundImageRepeat": "BG Repeat",
     "backgroundImageSize": "BG Size",
@@ -1235,7 +1242,6 @@ export const en = {
 
   // ninth part
 
-
   "numberInput": {
     "formatter": "Format",
     "precision": "Precision",
@@ -1437,6 +1443,7 @@ export const en = {
     "auto": "Auto",
     "fixed": "Fixed",
     "columnType": "Column Type",
+    "dataMapping": "Data Mapping",
     "numberStep": "Step",
     "numberStepTooltip": "The number to which the current value is increased or decreased. It can be an integer or decimal",
     "precision": "Precision",
@@ -2092,7 +2099,11 @@ export const en = {
     "preloadLibsAddBtn": "Add a Library",
     "saveSuccess": "Saved Successfully",
     "AuthOrgTitle": "Workspace Welcome Screen",
-    "AuthOrgDescrition": "The URL for Your Users to Sign In to the Current Workspace."
+    "AuthOrgDescrition": "The URL for Your Users to Sign In to the Current Workspace.",
+    "APIConsumption": "API Consumption",
+    "APIConsumptionDescription": "Here you can see the API Consumption for All Apps in the Current Workspace.",
+    "overallAPIConsumption": "Overall API Consumption in this Workspace till now",
+    "lastMonthAPIConsumption": "Last Month API Consumption, in this Workspace"
   },
 
 
@@ -2439,12 +2450,13 @@ export const en = {
     "history": "History"
   },
   "home": {
-    "allApplications": "All Apps",
-    "allModules": "All Modules",
+    "allApplications": "Your Apps",
+    "allModules": "Your Modules",
     "allFolders": "All Folders",
     "modules": "Modules",
     "module": "Module",
     "trash": "Trash",
+    "marketplace": "Marketplace",
     "queryLibrary": "Query Library",
     "datasource": "Data Sources",
     "selectDatasourceType": "Select Data Source Type",
@@ -2504,6 +2516,14 @@ export const en = {
     "copyLink": "Copy link",
     "appPublicMessage": "Make the app public. Anyone can view.",
     "modulePublicMessage": "Make the module public. Anyone can view.",
+    "marketplaceURL": "https://api-service.lowcoder.cloud",
+    "appMarketplaceMessage": "Publish your App on Lowcoder Marketplace. Anyone can view and copy it from there.",
+    "moduleMarketplaceMessage": "Publish your Module on Lowcoder Marketplace. Anyone can view and copy it from there.",
+    "marketplaceGoodPublishing": "Please make sure your app is well-named and easy to use. Remove any sensitive information before publishing. Also, remove local datasources and replace by static built-in temporary data.",
+    "noMarketplaceApps": "No apps yet in the marketplace",
+    "errorMarketplaceApps": "Error while loading Marketplace Apps",
+    "localMarketplaceTitle": "Local Marketplace",
+    "globalMarketplaceTitle": "Lowcoder Marketplace",
     "memberPermissionList": "Member permissions: ",
     "orgName": "{orgName} admins",
     "addMember": "Add members",

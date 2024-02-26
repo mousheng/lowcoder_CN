@@ -455,7 +455,6 @@ var uiCompMap: Registry = {
     categories: ["scheduling", "projectmanagement"],
     icon: CalendarCompIcon,
     keywords: trans("uiComp.calendarCompKeywords"),
-    // comp: remoteComp({ ...builtInRemoteComps, compName: "calendar" }),
     comp: CalendarComp,//changed by mousheng
     layoutInfo: {
       w: 19,
@@ -963,6 +962,19 @@ var uiCompMap: Registry = {
       h: 40,
     },
   },
+  icon: {
+    name: trans("uiComp.iconCompName"),
+    enName: "icon",
+    description: trans("uiComp.iconCompDesc"),
+    categories: ["multimedia"],
+    icon: IconCompIcon,
+    keywords: trans("uiComp.iconCompKeywords"),
+    comp: IconComp,
+    layoutInfo: {
+      w: 2,
+      h: 10,
+    },
+  },
   imageEditor: {
     name: trans("uiComp.imageEditorCompName"),
     enName: "Image Editor",
@@ -1128,19 +1140,7 @@ var uiCompMap: Registry = {
       h: 24,
     },
   },
-  icon: {
-    name: trans("uiComp.iconCompName"),
-    enName: "icon",
-    description: trans("uiComp.iconCompDesc"),
-    categories: ["forms", "dashboards"],
-    icon: IconCompIcon,
-    keywords: trans("uiComp.iconCompKeywords"),
-    comp: IconComp,
-    layoutInfo: {
-      w: 2,
-      h: 10,
-    },
-  },
+
   colorPicker: {
     name: trans("uiComp.colorPickerCompName"),
     enName: "colorPicker",

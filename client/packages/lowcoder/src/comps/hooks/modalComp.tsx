@@ -52,6 +52,9 @@ const getStyle = (style: ModalStyleType) => {
         background-color: ${style.background};
       }
     }
+    .ant-modal-close {
+      inset-inline-end: 7px !important;
+    }
   `;
 };
 
@@ -63,12 +66,13 @@ function extractMarginValues(style: ModalStyleType) {
   const regex = /\d+px|\d+em|\d+%|\d+vh|\d+vw/g;
   // Extract the values using the regular expression
   let values = style.padding.match(regex);
+  let valuesarray: number[] = [];
   // If only one value is found, duplicate it to simulate uniform margin
   if (values && values.length === 1) {
-      values = [values[0], values[0]];
+    valuesarray = [parseInt(values[0]), parseInt(values[0])];
   }
   // Return the array of values
-  return values;
+  return valuesarray;
 }
 
 const ModalStyled = styled.div<{ $style: ModalStyleType }>`
@@ -93,11 +97,11 @@ let TmpModalComp = (function () {
       width: StringControl,
       height: StringControl,
       autoHeight: AutoHeightControl,
-      style: withDefault( styleControl(ModalStyle),{padding: '20px 30px'} ),
+      style: withDefault(styleControl(ModalStyle), { padding: '20px 30px' }),
       maskClosable: withDefault(BoolControl, true),
       showMask: withDefault(BoolControl, true),
       showCloseButton: BoolControl.DEFAULT_TRUE,
-      defaultStartHeight: withDefault( StringControl, '20%'),
+      defaultStartHeight: withDefault(StringControl, '20%'),
     },
     (props, dispatch) => {
       const userViewMode = useUserViewMode();
@@ -129,7 +133,13 @@ let TmpModalComp = (function () {
         },
         [dispatch]
       );
-      let paddingValues = extractMarginValues(props.style);
+      let paddingValues = [10, 10];
+      if (props.style.padding != undefined) {
+        const extractedValues = extractMarginValues(props.style);
+        if (extractedValues !== null) {
+          paddingValues = extractedValues;
+        }
+      }
       return (
         <BackgroundColorContext.Provider value={props.style.background}>
           <ModalWrapper>
@@ -144,7 +154,7 @@ let TmpModalComp = (function () {
               footer={null}
               closeIcon={props.showCloseButton}
               bodyStyle={bodyStyle}
-              style={{top: props.defaultStartHeight}}
+              style={{ top: props.defaultStartHeight }}
               width={width}
               onCancel={(e) => {
                 props.visible.onChange(false);
@@ -160,8 +170,8 @@ let TmpModalComp = (function () {
                 {...otherContainerProps}
                 items={gridItemCompToGridItems(items)}
                 autoHeight={props.autoHeight}
-                minHeight={paddingValues ? DEFAULT_HEIGHT - parseInt(paddingValues[0]) * 2 + "px" : ""}
-                containerPadding={paddingValues ? [parseInt(paddingValues[0]), parseInt(paddingValues[1])] : [0,0]}
+                minHeight={paddingValues ? DEFAULT_HEIGHT - paddingValues[0] * 2 + "px" : ""}
+                containerPadding={paddingValues ? [paddingValues[0], paddingValues[1]] : [0, 0]}
                 hintPlaceholder={HintPlaceHolder}
               />
             </Modal>

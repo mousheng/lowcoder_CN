@@ -15,6 +15,7 @@ import { useEffect } from "react";
 
 const CascaderStyle = styled(Cascader) <{ $style: CascaderStyleType }>`
   width: 100%;
+  font-family:"Montserrat";
   ${(props) => props.$style && getStyle(props.$style)}
 `;
 

@@ -3,7 +3,7 @@ import { EditorContext } from "comps/editorState";
 import { BackgroundColorContext } from "comps/utils/backgroundColorContext";
 import _ from "lodash";
 import { ConstructorToView, deferAction } from "lowcoder-core";
-import { HintPlaceHolder, pageItemRender } from "lowcoder-design";
+import { HintPlaceHolder, ScrollBar, pageItemRender } from "lowcoder-design";
 import { RefObject, useContext, useEffect, useMemo, useRef } from "react";
 import ReactResizeDetector from "react-resize-detector";
 import styled from "styled-components";
@@ -84,7 +84,7 @@ function ListItem(props: ListItemProps) {
   // }, []);
 
   return (
-    <ContainerInListView
+      <ContainerInListView
       layout={containerProps.layout}
       items={gridItemCompToGridItems(containerProps.items)}
       positionParams={containerProps.positionParams}
@@ -99,7 +99,7 @@ function ListItem(props: ListItemProps) {
       scrollContainerRef={scrollContainerRef}
       overflow={"hidden"}
       minHeight={minHeight}
-      enableGridLines={true}
+      enableGridLines={true}    
     />
   );
 }
@@ -129,6 +129,7 @@ export function ListView(props: Props) {
     [children.noOfRows]
   );
   const autoHeight = useMemo(() => children.autoHeight.getView(), [children.autoHeight]);
+  const scrollbars = useMemo(() => children.scrollbars.getView(), [children.scrollbars]);
   const noOfColumns = useMemo(
     () => Math.max(1, children.noOfColumns.getView()),
     [children.noOfColumns]
@@ -180,7 +181,10 @@ export function ListView(props: Props) {
               return <div key={itemIdx} style={{ flex: "auto" }}></div>;
             }
             const containerProps = containerFn(
-              { [itemIndexName]: itemIdx, [itemDataName]: getCurrentItemParams(data, itemIdx) },
+              {
+                [itemIndexName]: itemIdx,
+                [itemDataName]: getCurrentItemParams(data, itemIdx)
+              },
               String(itemIdx)
             ).getView();
             const unMountFn = () => {
@@ -213,16 +217,19 @@ export function ListView(props: Props) {
   // log.debug("renders: ", renders);
   return (
     <BackgroundColorContext.Provider value={style.background}>
-      <ListViewWrapper $style={style} $paddingWidth={style.containerbodypadding ?? "3px 0px"}>
-        <BodyWrapper ref={ref} $autoHeight={autoHeight} $style={style} showLastLine={showLastLine}>
-          <ReactResizeDetector
-            onResize={(width?: number, height?: number) => {
-              if (height) setListHeight(height);
-            }}
-            observerOptions={{ box: "border-box" }}
-          >
-            <div style={{ height: autoHeight ? "auto" : "100%" }}>{renders}</div>
-          </ReactResizeDetector>
+      <ListViewWrapper $style={style} $paddingWidth={paddingWidth}>
+        <BodyWrapper ref={ref} $autoHeight={autoHeight} showLastLine={showLastLine} $style={style}>
+          {scrollbars ? (
+            <ScrollBar style={{ height: autoHeight ? "auto" : "100%", margin: "0px", padding: "0px" }}>
+              <>{<ReactResizeDetector onResize={(width?: number, height?: number) => { if (height) setListHeight(height); }} observerOptions={{ box: "border-box" }} >
+                <div style={{ height: autoHeight ? "auto" : "100%" }}>{renders}</div>
+              </ReactResizeDetector>}</>
+            </ScrollBar>
+          ) : (
+            <>{<ReactResizeDetector onResize={(width?: number, height?: number) => { if (height) setListHeight(height); }} observerOptions={{ box: "border-box" }} >
+              <div style={{ height: autoHeight ? "auto" : "100%" }}>{renders}</div>
+            </ReactResizeDetector>}</>
+          )}
         </BodyWrapper>
         <FooterWrapper showLastLine={showLastLine}>
           <Pagination size="small" itemRender={pageItemRender} {...pageInfo.pagination} />

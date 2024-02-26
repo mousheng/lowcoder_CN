@@ -119,6 +119,7 @@ export type UICompType =
   | "calendar"
   | "signature"
   | "jsonLottie" //Added By Aqib Mirza
+  | "icon" //Added By Mousheng
   | "timeline" //Added By Mousheng
   | "comment" //Added By Mousheng
   | "mention" //Added By Mousheng
@@ -142,6 +143,7 @@ export type UICompType =
   | "avatarGroup" //Added By Mousheng
   | "timer" //Added by Mousheng
   | "steps" //Added By Mousheng
+
 
 export const uiCompRegistry = {} as Record<UICompType | string, UICompManifest>;
 

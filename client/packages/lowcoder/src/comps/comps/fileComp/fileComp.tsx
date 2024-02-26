@@ -141,6 +141,11 @@ const getStyle = (style: FileStyleType) => {
       margin: ${style.margin};	
       width: ${widthCalculator(style.margin)};	
       height: ${heightCalculator(style.margin)};
+      font-family:${style.fontFamily};
+      font-size:${style.textSize};
+      font-weight:${style.textWeight};
+      font-style:${style.fontStyle};
+      border-width:${style.borderWidth};
     }
 
     .ant-btn:not(:disabled) {
