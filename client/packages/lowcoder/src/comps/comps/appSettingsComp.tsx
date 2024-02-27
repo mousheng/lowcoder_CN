@@ -196,6 +196,7 @@ const childrenMap = {
   customIcon: withDefault(IconControl, ""),
   themeId: valueComp<string>(DEFAULT_THEMEID),
   customShortcuts: CustomShortcutsComp,
+  disableCollision: valueComp<boolean>(false),
   pcPadding: dropdownControl(PaddingOptions, '20'),
   mobilePadding: dropdownControl(PaddingOptions.slice(3), '5'),
 };

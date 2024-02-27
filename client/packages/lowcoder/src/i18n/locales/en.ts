@@ -1681,6 +1681,7 @@ export const en = {
     "showScroll": "Show scroll",
   },
   "drawer": {
+    "closePosition": "Close Button Placement",
     "placement": "Drawer Placement",
     "size": "Size",
     "top": "Top",

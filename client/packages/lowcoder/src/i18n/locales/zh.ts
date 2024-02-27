@@ -1650,6 +1650,7 @@ container: {
     showScroll: "显示滚动条",
 },
 drawer: {
+    closePosition: "关闭位置",
     placement: "抽屉位置",
     size: "大小",
     top: "顶部",
