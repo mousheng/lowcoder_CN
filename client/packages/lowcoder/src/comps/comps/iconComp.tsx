@@ -68,7 +68,7 @@ const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
   const [height, setHeight] = useState(0);
   const [mouseactivateFlags, setMouseactivateFlags] = useState(false);
   const comp = useContext(EditorContext).getUICompByName(useContext(CompNameContext));
-  const eventsCount = Object.keys(comp?.children.comp.children.onEvent.children).length;
+  const eventsCount = comp ? Object.keys(comp?.children.comp.children.onEvent.children).length : 0;
 
   useEffect(() => {
     if (height && width) {
