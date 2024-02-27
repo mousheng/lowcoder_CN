@@ -819,7 +819,6 @@ export const ModalStyle = [
   ...getBgBorderRadiusByBg(),
   BORDER_WIDTH,
   MARGIN,
-  PADDING,
   BACKGROUND_IMAGE,
   BACKGROUND_IMAGE_REPEAT,
   BACKGROUND_IMAGE_SIZE,

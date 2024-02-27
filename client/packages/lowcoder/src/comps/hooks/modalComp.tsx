@@ -136,7 +136,7 @@ let TmpModalComp = (function () {
       let paddingValues = [10, 10];
       if (props.style.padding != undefined) {
         const extractedValues = extractMarginValues(props.style);
-        if (extractedValues !== null) {
+        if (extractedValues !== null && extractedValues.length === 2) {
           paddingValues = extractedValues;
         }
       }
