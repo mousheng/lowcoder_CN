@@ -161,7 +161,7 @@ type ColumnContainerProps = Omit<ContainerBaseProps, 'style'> & {
 const TitleWarpper = styled.span<{ $style: AntLayoutLogoStyleType, collapsed: boolean }>`
 font-weight: 700;
 white-space: nowrap;
-font-size: ${(props) => props.$style.fontSize};
+font-size: ${(props) => props.$style.textSize};
 color: ${(props) => props.$style.fontColor};
 `
 const AvatarComponent = styled(Avatar) <{ $style: AntLayoutLogoStyleType }>`
@@ -273,7 +273,7 @@ const childrenMap = {
     },
   ]),
   onEvent: eventHandlerControl(EventOptions),
-  TitleStyle: withDefault(styleControl(AntLayoutLogoStyle, trans('antLayoutComp.TitleStyle')), { fontSize: '20px' }),
+  TitleStyle: withDefault(styleControl(AntLayoutLogoStyle, trans('antLayoutComp.TitleStyle')), { textSize: '20px' }),
   bodyStyle: withDefault(styleControl(AntLayoutBodyStyle, trans('antLayoutComp.bodyStyle')), {}),
   headerStyle: withDefault(styleControl(AntLayoutBodyStyle, trans('antLayoutComp.headerStyle')), {}),
   frameStyle: withDefault(styleControl(AntLayoutFramerStyle, trans('antLayoutComp.frameStyle')), {}),

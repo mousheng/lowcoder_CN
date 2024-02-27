@@ -1161,11 +1161,7 @@ export const AntLayoutLogoStyle = [
     color: "#5589F2",
   },
   getStaticBackground("#FFFFFF00"),
-  {
-    name: "fontSize",
-    label: trans("antLayoutComp.titleSize"),
-    padding: "padding",	
-  },
+  TEXT_SIZE,
   {
     name: "fontColor",
     label: trans("antLayoutComp.fontColor"),
