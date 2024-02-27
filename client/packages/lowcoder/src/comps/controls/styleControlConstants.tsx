@@ -1186,12 +1186,12 @@ export const ImageStyle = [getStaticBorder("#00000000"), RADIUS, BORDER_WIDTH, M
 
 export const IconStyle = [
   getStaticBackground("#00000000"),
-  getStaticBorder("#00000000"), 
   FILL,
-  RADIUS,
+  getStaticBorder("#00000000"), 
   BORDER_WIDTH,
-  MARGIN, 
-  PADDING] as const;
+  RADIUS,
+  MARGIN
+  ] as const;
 
 
 export const AntLayoutMenuStyle = [

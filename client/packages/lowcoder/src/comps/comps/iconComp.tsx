@@ -37,7 +37,6 @@ const Container = styled.div<{ $style: IconStyleType | undefined }>`
   ${(props) => props.$style && css`
     height: calc(100% - ${props.$style.margin});
     width: calc(100% - ${props.$style.margin});
-    padding: ${props.$style.padding};
     margin: ${props.$style.margin};
     border: ${props.$style.borderWidth} solid ${props.$style.border};
     border-radius: ${props.$style.radius};
@@ -66,7 +65,7 @@ const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
   const conRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
-
+  
   useEffect(() => {
     if (height && width) {
       onResize();
@@ -92,7 +91,7 @@ const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
         }}
         onClick={() => props.onEvent("click")}
       >
-        {props.icon}  
+        {props.icon}
       </Container>
     </ReactResizeDetector>
   );
@@ -107,8 +106,8 @@ let IconBasicComp = (function () {
             label: trans("iconComp.icon"),
             IconType: "All",
           })}
-          
-        </Section> 
+
+        </Section>
 
         {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
           <Section name={sectionNames.interaction}>
@@ -120,12 +119,12 @@ let IconBasicComp = (function () {
         {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
           <><Section name={sectionNames.layout}>
             {children.autoHeight.propertyView({
-            label: trans("iconComp.autoSize"),
-          })}
-            {!children.autoHeight.getView() &&
-            children.iconSize.propertyView({
-              label: trans("iconComp.iconSize"),
+              label: trans("iconComp.autoSize"),
             })}
+            {!children.autoHeight.getView() &&
+              children.iconSize.propertyView({
+                label: trans("iconComp.iconSize"),
+              })}
           </Section><Section name={sectionNames.style}>
               {children.style.getPropertyView()}
             </Section></>
