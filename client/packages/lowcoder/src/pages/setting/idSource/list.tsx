@@ -100,7 +100,7 @@ export const IdSourceList = (props: any) => {
                 setModalVisible(true)
               }
             >
-              {"Add OAuth Provider"}
+              {trans("idSource.addOAuthProvider")}
             </CreateButton>
           )}
         </Level1SettingPageTitleWithBtn>

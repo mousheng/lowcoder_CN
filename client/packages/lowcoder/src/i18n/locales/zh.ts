@@ -1674,7 +1674,7 @@ settings: {
     advanced: "高级",
     lab: "实验室",
     branding: "品牌",
-    oauthProviders: "OAuth 提供商",
+    oauthProviders: "身份源管理",
     appUsage: "应用程序使用日志",
     environments: "环境",
     premium: "高级版",
@@ -2812,7 +2812,7 @@ componentDocExtra: {
     table: "表格组件的附加文档",
 },
 idSource: {
-    title: "OAuth 提供商",
+    title: "身份源管理",
     form: "电子邮件",
     pay: "高级",
     enable: "启用",
@@ -2841,6 +2841,7 @@ idSource: {
     lockTip: "内容已锁定.要进行更改,请点击{icon}解锁.",
     lockModalContent: "更改“ID属性”字段可能对用户识别产生重大影响,请在继续之前确认您理解此更改的影响.",
     payUserTag: "高级",
+    addOAuthProvider: "添加身份源",
     },
     slotControl: {
     configSlotView: "配置槽视图",

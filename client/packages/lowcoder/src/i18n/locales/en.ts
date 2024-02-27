@@ -2893,7 +2893,8 @@ export const en = {
     "manualTip": "",
     "lockTip": "The Content is Locked. To Make Changes, Please Click the {icon} to Unlock.",
     "lockModalContent": "Changing the 'ID Attribute' Field Can Have Significant Impacts on User Identification. Please Confirm That You Understand the Implications of This Change Before Proceeding.",
-    "payUserTag": "Premium"
+    "payUserTag": "Premium",
+    "addOAuthProvider": "add OAuth Provider",
   },
   "slotControl": {
     "configSlotView": "Configure Slot View"
