@@ -27,9 +27,9 @@ import {
   eventHandlerControl,
 } from "../controls/eventHandlerControl";
 import { useContext } from "react";
-import { EditorContext } from "comps/editorState";
+import { CompNameContext, EditorContext } from "comps/editorState";
 
-const Container = styled.div<{ $style: IconStyleType | undefined }>`
+const Container = styled.div<{ $style: IconStyleType | undefined, $activateFlag: boolean, $eventsCount: number }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,10 +41,11 @@ const Container = styled.div<{ $style: IconStyleType | undefined }>`
     border: ${props.$style.borderWidth} solid ${props.$style.border};
     border-radius: ${props.$style.radius};
     background: ${props.$style.background};
+    cursor: ${props.$eventsCount ? 'pointer' : ''};
     svg {
       max-width: ${widthCalculator(props.$style.margin)};
       max-height: ${heightCalculator(props.$style.margin)};
-      color: ${props.$style.fill};
+      color: ${props.$activateFlag ? props.$style.activateColor : props.$style.fill};
       object-fit: contain;
       pointer-events: auto;
     }
@@ -65,7 +66,10 @@ const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
   const conRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
-  
+  const [mouseactivateFlags, setMouseactivateFlags] = useState(false);
+  const comp = useContext(EditorContext).getUICompByName(useContext(CompNameContext));
+  const eventsCount = Object.keys(comp?.children.comp.children.onEvent.children).length;
+
   useEffect(() => {
     if (height && width) {
       onResize();
@@ -83,12 +87,16 @@ const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
       <Container
         ref={conRef}
         $style={props.style}
+        $activateFlag={mouseactivateFlags}
+        $eventsCount={eventsCount}
         style={{
           fontSize: props.autoHeight
             ? `${height < width ? height : width}px`
             : props.iconSize,
           background: props.style.background,
         }}
+        onMouseEnter={() => setMouseactivateFlags(true)}
+        onMouseLeave={() => setMouseactivateFlags(false)}
         onClick={() => props.onEvent("click")}
       >
         {props.icon}

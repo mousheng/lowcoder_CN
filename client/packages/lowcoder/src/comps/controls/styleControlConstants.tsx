@@ -1189,6 +1189,13 @@ export const IconStyle = [
   FILL,
   getStaticBorder("#00000000"), 
   BORDER_WIDTH,
+  {
+    name: "activateColor",
+    label: trans("iconComp.activateColor"),
+    depTheme: "primary",
+    depType: DEP_TYPE.SELF,
+    transformer: toSelf,
+  },
   RADIUS,
   MARGIN
   ] as const;
