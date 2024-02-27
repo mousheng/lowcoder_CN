@@ -28,7 +28,8 @@ import { stringExposingStateControl } from "../controls/codeStateControl";
 import { BoolControl } from "../controls/boolControl";
 import { BudgeBasicSection, budgeChildren } from "./budgeComp/budgeConstants";
 import { DropdownOptionControl } from "../controls/optionsControl";
-import { ReactElement } from "react";
+import { ReactElement, useContext } from "react";
+import { CompNameContext, EditorContext } from "../editorState";
 
 const AvatarWrapper = styled(Avatar) <AvatarProps & { $cursorPointer: boolean, $style: AvatarStyleType }>`
   background: ${(props) => props.$style.background};
@@ -92,7 +93,6 @@ const childrenMap = {
   avatarCatption: stringExposingStateControl("avatarCatption", "{{currentUser.email}}"),
   labelPosition: dropdownControl(sideOptions, 'left'),
   alignmentPosition: withDefault(LeftRightControl, 'left'),
-  cursorPointer: BoolControl,
   enableDropdownMenu: BoolControl,
   options: DropdownOptionControl,
   ...budgeChildren,
@@ -100,6 +100,8 @@ const childrenMap = {
 
 const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
   const { shape, title, src, iconSize } = props;
+  const comp = useContext(EditorContext).getUICompByName(useContext(CompNameContext));
+  const eventsCount = comp ? Object.keys(comp?.children.comp.children.onEvent.children).length : 0;
   const hasIcon =
     props.options.findIndex((option) => (option.prefixIcon as ReactElement)?.props.value) > -1;
   const items = props.options
@@ -141,7 +143,7 @@ const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
             shape={shape}
             $style={props.style}
             src={src.value}
-            $cursorPointer={props.cursorPointer}
+            $cursorPointer={eventsCount > 0}
             onClick={() => props.onEvent("click")}
           >
             {title.value}
@@ -179,10 +181,6 @@ let IconBasicComp = (function () {
             label: trans("avatarComp.shape"),
             radioButton: true,
           })}
-          {
-            children.cursorPointer.propertyView({
-              label: trans("avatarComp.cursorPointer"),
-            })}
           {
             children.iconSize.propertyView({
               label: trans("avatarComp.iconSize"),

@@ -3001,7 +3001,6 @@ idSource: {
         icon: "图标",
         shape: "形状",
         counts: "角标",
-        cursorPointer: "手型指针",
         title: "文字头像",
         src: "图片",
         avatarCompTooltip: "渲染顺序为：图片->字符->icon",

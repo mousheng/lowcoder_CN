@@ -3059,7 +3059,6 @@ export const en = {
     "icon": "icon",
     "shape": "shape",
     "counts": "Badge",
-    "cursorPointer": "cursor Pointer",
     "title": "title",
     "src": "src",
     "avatarCompTooltip": "The rendering order is: images ->characters ->icon",
