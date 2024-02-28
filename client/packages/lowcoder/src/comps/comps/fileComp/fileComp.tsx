@@ -1,6 +1,6 @@
-import { Button, Upload as AntdUpload } from "antd";
-import { UploadChangeParam } from "antd/lib/upload";
-import { UploadFile, UploadProps } from "antd/lib/upload/interface";
+import { default as Button } from "antd/es/button";
+import { default as AntdUpload } from "antd/es/upload";
+import { UploadFile, UploadProps, UploadChangeParam } from "antd/es/upload/interface";
 import { Buffer } from "buffer";
 import { darkenColor } from "components/colorSelect/colorUtils";
 import { Section, sectionNames } from "components/Section";
@@ -141,6 +141,11 @@ const getStyle = (style: FileStyleType) => {
       margin: ${style.margin};	
       width: ${widthCalculator(style.margin)};	
       height: ${heightCalculator(style.margin)};
+      font-family:${style.fontFamily};
+      font-size:${style.textSize};
+      font-weight:${style.textWeight};
+      font-style:${style.fontStyle};
+      border-width:${style.borderWidth};
     }
 
     .ant-btn:not(:disabled) {

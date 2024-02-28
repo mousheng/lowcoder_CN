@@ -13,6 +13,9 @@ import { NumberControl, StringControl } from "comps/controls/codeControl";
 import { Button, Descriptions } from "antd";
 import { withDefault } from "../generators";
 import { clickEvent, eventHandlerControl } from "../controls/eventHandlerControl";
+import { useEffect, useState } from "react";
+import { isNull } from "lodash";
+import { DescriptionsItemType } from "antd/es/descriptions";
 
 const layoutOptions = [
   { label: trans("descriptions.horizontal"), value: "horizontal" },
@@ -53,7 +56,18 @@ const childrenMap = {
 };
 
 const DescriptionsView = (props: RecordConstructorToView<typeof childrenMap>) => {
+  const [items, setItems] = useState<DescriptionsItemType[]>()
   const value = props.value.value;
+  useEffect(() => {
+    if (Array.isArray(value) && !isNull(value)) {
+      setItems((value as Object[]).map((item: any, index) => ({
+        key: index.toString(),
+        label: item?.label ?? '',
+        span: Number.isInteger(item?.span) ? parseInt(item?.span) : 1,
+        children: props.parseEnter ? (item?.value && (item?.value as string).split('\n').map((item, index) => (<>{index !== 0 ? <br /> : ''}{item}</>))) : item?.value || '',
+      })))
+    }
+  }, [value, props.parseEnter])
   const handleClick = () => {
     props.onEvent('click')
   }
@@ -77,14 +91,8 @@ const DescriptionsView = (props: RecordConstructorToView<typeof childrenMap>) =>
         size={props.size}
         column={props.columnCount}
         extra={props.showEditButton ? <Button type="primary" onClick={handleClick}>{props.editButtonTitle}</Button> : ''}
+        items={items}
       >
-        {
-          Array.isArray(value) && value.map(item => (
-            <Descriptions.Item label={item?.label || ''} span={(item?.span || 1) as number}>
-              {props.parseEnter ? (item?.value && (item?.value as string).split('\n').map((item, index) => (<>{index !== 0 ? <br /> : ''}{item}</>))) : item?.value || ''}
-            </Descriptions.Item>
-          ))
-        }
       </Descriptions>
     </div>
   );

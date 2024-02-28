@@ -12,7 +12,8 @@ import { BottomSkeleton } from "pages/editor/bottom/BottomContent";
 import RightPanel from "pages/editor/right/RightPanel";
 import _ from "lodash";
 import styled from "styled-components";
-import { Skeleton, Spin } from "antd";
+import { default as Skeleton } from "antd/es/skeleton";
+import { default as Spin } from "antd/es/spin";
 import { useTemplateViewMode, useUserViewMode } from "util/hooks";
 import { ProductLoading } from "components/ProductLoading";
 
@@ -61,11 +62,19 @@ export default function EditorSkeletonView() {
   return (
     <>
       <Height100Div>
-        <Header panelStatus={panelStatus} togglePanel={_.noop} editorModeStatus={editorModeStatus} toggleEditorModeStatus={_.noop} />
+        <Header
+          panelStatus={panelStatus}
+          togglePanel={_.noop}
+          editorModeStatus={editorModeStatus}
+          toggleEditorModeStatus={_.noop}
+        />
         <Body>
           <SiderStyled />
           {panelStatus.left && (
-            <LeftPanel>
+            <LeftPanel
+              collisionStatus={false}
+              toggleCollisionStatus={_.noop}
+            >
               <StyledSkeleton active paragraph={{ rows: 10 }} />
             </LeftPanel>
           )}
@@ -80,7 +89,11 @@ export default function EditorSkeletonView() {
             )}
           </MiddlePanel>
           {panelStatus.right && (
-            <RightPanel showPropertyPane={false} onCompDrag={_.noop} onTabChange={_.noop} />
+            <RightPanel
+              showPropertyPane={false}
+              onCompDrag={_.noop}
+              onTabChange={_.noop}
+            />
           )}
         </Body>
       </Height100Div>

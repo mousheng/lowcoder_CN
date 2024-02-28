@@ -250,6 +250,25 @@ function renderTitle(props: { title: string; editable: boolean }) {
   );
 }
 
+function getInitialColumns(
+  columnsAggrData: ColumnsAggrData,
+  customColumns: string[],
+) {
+  let initialColumns = [];
+  Object.keys(columnsAggrData).forEach(column => {
+    if(customColumns.includes(column)) return;
+    initialColumns.push({
+      label: column,
+      value: `{{currentRow.${column}}}`
+    });
+  });
+  initialColumns.push({
+    label: 'Select with handlebars',
+    value: '{{currentCell}}',
+  })
+  return initialColumns;
+}
+
 export type CustomColumnType<RecordType> = ColumnType<RecordType> & {
   onWidthResize?: (width: number) => void;
   titleText: string;
@@ -269,7 +288,10 @@ export function columnsToAntdFormat(
   dynamicColumn: boolean,
   dynamicColumnConfig: Array<string>,
   columnsAggrData: ColumnsAggrData,
+  onTableEvent: (eventName: any) => void,
 ): Array<CustomColumnType<RecordType>> {
+  const customColumns = columns.filter(col => col.isCustom).map(col => col.dataIndex);
+  const initialColumns = getInitialColumns(columnsAggrData, customColumns);
   const sortMap: Map<string | undefined, SortOrder> = new Map(
     sort.map((s) => [s.column, s.desc ? "descend" : "ascend"])
   );
@@ -310,8 +332,9 @@ export function columnsToAntdFormat(
       status: StatusType;
     }[];
     const title = renderTitle({ title: column.title, editable: column.editable });
+   
     return {
-      title: title,
+      title: column.showTitle ? title : '',
       titleText: column.title,
       dataIndex: column.dataIndex,
       align: column.align,
@@ -319,10 +342,14 @@ export function columnsToAntdFormat(
       fixed: column.fixed === "close" ? false : column.fixed,
       style: {
         background: column.background,
+        margin: column.margin,
         text: column.text,
         border: column.border,
         radius: column.radius,
         textSize: column.textSize,
+        textWeight: column.textWeight,
+        fontStyle:column.fontStyle,
+        fontFamily: column.fontFamily,
         borderWidth: column.borderWidth,
       },
       linkStyle: {
@@ -340,15 +367,18 @@ export function columnsToAntdFormat(
               currentRow: _.omit(record, OB_ROW_ORI_INDEX),
               currentIndex: index,
               currentOriginalIndex: tryToNumber(record[OB_ROW_ORI_INDEX]),
+              initialColumns,
             },
             String(record[OB_ROW_ORI_INDEX])
           )
           .getView()
           .view({
             editable: column.editable,
-            size, candidateTags: tags,
+            size,
+            candidateTags: tags,
             candidateStatus: status,
             textOverflow: column.textOverflow,
+            onTableEvent,
           });
       },
       ...(column.sortable

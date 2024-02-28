@@ -10,7 +10,10 @@ import {
   SpanStyled,
   PasswordLabel
 } from "./styledComponents";
-import { Form, Input, Select, Tooltip } from "antd";
+import { default as Form } from "antd/es/form";
+import { default as Input } from "antd/es/input";
+import { default as Select } from "antd/es/select";
+import { default as Tooltip } from "antd/es/tooltip";
 import IdSourceApi, { ConfigItem } from "api/idSourceApi";
 import { validateResponse } from "api/apiUtils";
 import { authConfig, AuthType, clientIdandSecretConfig, ItemType } from "./idSourceConstants";
@@ -84,7 +87,7 @@ function CreateModal(props: CreateModalProp) {
   return (
     <CustomModalStyled
       width="500px"
-      title={"Add OAuth Provider"}
+      title={trans("idSource.addOAuthProvider")}
       open={modalVisible}
       okText={"Save and Enable"}
       okButtonProps={{
@@ -104,12 +107,12 @@ function CreateModal(props: CreateModalProp) {
       >
         <Form.Item
           name="authType"
-          label="Auth Type"
+          label={trans('idSource.loginType')}
           rules={[{ required: true }]}
         >
           <CustomSelect
             placeholder={trans("idSource.formSelectPlaceholder", {
-              label: 'Auth Type',
+              label: trans('idSource.loginType'),
             })}
           >
             {authConfigOptions.map(config => (

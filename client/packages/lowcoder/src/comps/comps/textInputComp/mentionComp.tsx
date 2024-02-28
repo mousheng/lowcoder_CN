@@ -36,9 +36,9 @@ import { booleanExposingStateControl } from "comps/controls/codeStateControl";
 import { trans } from "i18n";
 import { RefControl } from "comps/controls/refControl";
 import { TextAreaRef } from "antd/lib/input/TextArea";
-import { Mentions, ConfigProvider } from "antd";
+import { default as ConfigProvider } from "antd/es/config-provider";
+import { default as Mentions, MentionsOptionProps } from "antd/es/mentions";
 import { blurMethod, focusWithOptions } from "comps/utils/methodUtils";
-import type { MentionsOptionProps } from "antd/es/mentions";
 import {
   textInputValidate,
 } from "../textInputComp/textInputConstants";
@@ -101,7 +101,7 @@ let MentionTmpComp = (function () {
     const [activationFlag, setActivationFlag] = useState(false);
     const [prefix, setPrefix] = useState<PrefixType>("@");
     type PrefixType = "@" | keyof typeof mentionList;
-    
+
     const onSearch = (_: string, newPrefix: PrefixType) => {
       setPrefix(newPrefix);
     };
@@ -192,7 +192,17 @@ let MentionTmpComp = (function () {
                 label: value,
               }))}
               autoSize={props.autoHeight}
-              style={{ height: "100%", maxHeight: "100%", resize: "none" }}
+              style={{
+                height: "100%",
+                maxHeight: "100%",
+                resize: "none",
+                padding: props.style.padding,
+                fontStyle: props.style.fontStyle,
+                fontFamily: props.style.fontFamily,
+                borderWidth: props.style.borderWidth,
+                fontWeight: props.style.textWeight,
+                fontSize: props.style.textSize
+              }}
               readOnly={props.readOnly}
             />
           </ConfigProvider>
@@ -222,12 +232,12 @@ let MentionTmpComp = (function () {
         )}
 
         {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
-        <><Section name={sectionNames.interaction}>
+          <><Section name={sectionNames.interaction}>
             {children.onEvent.getPropertyView()}
             {disabledPropertyView(children)}
           </Section>
-          <Section name={sectionNames.layout}>{hiddenPropertyView(children)}</Section>
-          <Section name={sectionNames.advanced}>
+            <Section name={sectionNames.layout}>{hiddenPropertyView(children)}</Section>
+            <Section name={sectionNames.advanced}>
               {readOnlyPropertyView(children)}
             </Section><Section name={sectionNames.validation}>
               {requiredPropertyView(children)}
@@ -241,9 +251,9 @@ let MentionTmpComp = (function () {
         )}
 
         {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
-        <><Section name={sectionNames.style}>
-              {children.style.getPropertyView()}
-            </Section></>
+          <><Section name={sectionNames.style}>
+            {children.style.getPropertyView()}
+          </Section></>
         )}
       </>
     ))

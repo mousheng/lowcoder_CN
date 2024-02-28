@@ -37,6 +37,7 @@ export default function FormLogin(props: FormLoginProps) {
   const authId = systemConfig?.form.id;
   const location = useLocation();
   const orgId = useParams<any>().orgId;
+  const showRegistButton = !(systemConfig?.workspaceMode === "ENTERPRISE" && !systemConfig?.form?.enableRegister);
 
   const { onSubmit, loading } = useAuthSubmit(
     () =>
@@ -76,7 +77,7 @@ export default function FormLogin(props: FormLoginProps) {
         <ConfirmButton loading={loading} disabled={!account || !password} onClick={onSubmit}>
           {trans("userAuth.login")}
         </ConfirmButton>
-        
+
         {props.organizationId && (
           <ThirdPartyAuth
             invitationId={invitationId}
@@ -85,7 +86,7 @@ export default function FormLogin(props: FormLoginProps) {
           />
         )}
       </AccountLoginWrapper>
-      <AuthBottomView>
+      {showRegistButton && (<AuthBottomView>
         <StyledRouteLink to={{
           pathname: orgId
             ? ORG_AUTH_REGISTER_URL.replace(':orgId', orgId)
@@ -94,7 +95,7 @@ export default function FormLogin(props: FormLoginProps) {
         }}>
           {trans("userAuth.register")}
         </StyledRouteLink>
-      </AuthBottomView>
+      </AuthBottomView>)}
     </>
   );
 }

@@ -454,7 +454,7 @@ declare enum CompActionTypes {
      * broadcast other actions in comp tree structure.
      * used for encapsulate MultiBaseComp
      */
-    BROADCAST = "BROADCAST"
+    BROADCAST = "BROADCAST",
 }
 type ExtraActionType = "layout" | "delete" | "add" | "modify" | "rename" | "recover" | "upgrade";
 type ActionExtraInfo = {
@@ -659,12 +659,13 @@ type AddPrefix<T, P extends string> = {
 declare const globalMessages: AddPrefix<{}, "@">;
 type GlobalMessageKey = NestedKey<typeof globalMessages>;
 type VariableValue = string | number | boolean | Date | React.ReactNode;
+
 declare class Translator<Messages extends object> {
     private readonly messages;
     readonly language: string;
     constructor(fileData: object, filterLocales?: string, locales?: string[]);
     trans(key: NestedKey<Messages> | GlobalMessageKey, variables?: Record<string, VariableValue>): string;
-    transToNode(key: NestedKey<Messages> | GlobalMessageKey, variables?: Record<string, VariableValue>): {};
+    transToNode(key: NestedKey<Messages> | GlobalMessageKey, variables?: Record<string, VariableValue>): ReactNode;
     private getMessage;
 }
 declare function getI18nObjects<I18nObjects>(fileData: object, filterLocales?: string): I18nObjects;

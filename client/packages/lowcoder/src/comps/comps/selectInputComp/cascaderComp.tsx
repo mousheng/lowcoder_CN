@@ -1,4 +1,4 @@
-import { Cascader } from "antd";
+import { default as Cascader } from "antd/es/cascader";
 import { CascaderStyleType } from "comps/controls/styleControlConstants";
 import { blurMethod, focusMethod } from "comps/utils/methodUtils";
 import { trans } from "i18n";
@@ -15,6 +15,7 @@ import { useEffect } from "react";
 
 const CascaderStyle = styled(Cascader) <{ $style: CascaderStyleType }>`
   width: 100%;
+  font-family:"Montserrat";
   ${(props) => props.$style && getStyle(props.$style)}
 `;
 

@@ -13,31 +13,34 @@ export function getButtonStyle(buttonStyle: ButtonStyleType) {
   return css`
     &&& {
       border-radius: ${buttonStyle.radius};
+      border-width:${buttonStyle.borderWidth};
       margin: ${buttonStyle.margin};	
       &:not(:disabled) {
-        // click animation color
         --antd-wave-shadow-color: ${buttonStyle.border};
         border-color: ${buttonStyle.border};
         color: ${buttonStyle.text};
+        font-size: ${buttonStyle.textSize};
+        font-weight: ${buttonStyle.textWeight};
+        font-family: ${buttonStyle.fontFamily};
+        font-style: ${buttonStyle.fontStyle};
         background-color: ${buttonStyle.background};
         border-radius: ${buttonStyle.radius};
         margin: ${buttonStyle.margin};	
   
-        :hover,
-        :focus {
+        &:hover,
+        &:focus {
           color: ${buttonStyle.text};
           background-color: ${hoverColor};
           border-color: ${buttonStyle.border === buttonStyle.background
             ? hoverColor
-            : buttonStyle.border};
+            : buttonStyle.border} !important;
         }
-  
-        :active {
+        &:active {
           color: ${buttonStyle.text};
           background-color: ${activeColor};
           border-color: ${buttonStyle.border === buttonStyle.background
             ? activeColor
-            : buttonStyle.border};
+            : buttonStyle.border} !important;
         }
       }
     }

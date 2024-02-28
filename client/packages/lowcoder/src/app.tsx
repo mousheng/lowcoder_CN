@@ -1,4 +1,5 @@
-import { App, ConfigProvider } from "antd";
+import { default as App } from "antd/es/app";
+import { default as ConfigProvider } from "antd/es/config-provider";
 import {
   ALL_APPLICATIONS_URL,
   APP_EDITOR_URL,
@@ -13,6 +14,8 @@ import {
   IMPORT_APP_FROM_TEMPLATE_URL,
   INVITE_LANDING_URL,
   isAuthUnRequired,
+  MARKETPLACE_TYPE_URL,
+  MARKETPLACE_URL,
   ORG_AUTH_LOGIN_URL,
   ORG_AUTH_REGISTER_URL,
   QUERY_LIBRARY_URL,
@@ -21,7 +24,7 @@ import {
   USER_AUTH_URL,
 } from "constants/routesURL";
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Helmet } from "react-helmet";
 import { connect, Provider } from "react-redux";
 import { Redirect, Route, Router, Switch } from "react-router-dom";
@@ -82,6 +85,7 @@ type AppIndexProps = {
 class AppIndex extends React.Component<AppIndexProps, any> {
   componentDidMount() {
     this.props.getCurrentUser();
+    this.props.fetchConfig(this.props.currentOrgId);
   }
 
   componentDidUpdate(prevProps: AppIndexProps) {
@@ -137,6 +141,7 @@ class AppIndex extends React.Component<AppIndexProps, any> {
                 FOLDER_URL,
                 TRASH_URL,
                 SETTING,
+                MARKETPLACE_URL,
               ]}
               // component={ApplicationListPage}
               component={ApplicationHome}
@@ -187,10 +192,11 @@ const AppIndexWithProps = connect(mapStateToProps, mapDispatchToProps)(AppIndex)
 export function bootstrap() {
   initApp();
   loadComps();
-  ReactDOM.render(
+  const container = document.getElementById("root");
+  const root = createRoot(container!);
+  root.render(
     <Provider store={reduxStore}>
       <AppIndexWithProps />
-    </Provider>,
-    document.getElementById("root")
+    </Provider>
   );
 }

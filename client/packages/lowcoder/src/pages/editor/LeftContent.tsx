@@ -245,7 +245,7 @@ const LeftContentWrapper = styled.div`
 export const LeftContent = (props: LeftContentProps) => {
   const { uiComp } = props;
   const editorState = useContext(EditorContext);
-  const [expandedKeys, setExpandedKeys] = useState<Array<string | number>>([]);
+  const [expandedKeys, setExpandedKeys] = useState<Array<React.Key>>([]);
   const [showData, setShowData] = useState<NodeInfo[]>([]);
 
   const getTree = (tree: CompTree, result: NodeItem[], key?: string) => {
@@ -397,7 +397,7 @@ export const LeftContent = (props: LeftContentProps) => {
             ))}
         </span>
         {info?.show && data && (
-          <CollapseWrapper title="" clientX={info?.clientX} onClick={(e) => e.stopPropagation()}>
+          <CollapseWrapper title="" $clientX={info?.clientX} onClick={(e) => e.stopPropagation()}>
             <ScrollBar style={{ maxHeight: "400px" }}>
               <CollapseView
                 key={data.name}
@@ -440,9 +440,17 @@ export const LeftContent = (props: LeftContentProps) => {
     return (
       <DirectoryTreeStyle
         treeData={explorerData}
-        icon={(props: NodeItem) => props.type && (CompStateIcon[props.type] || <LeftCommon />)}
-        switcherIcon={({ expanded }: { expanded: boolean }) =>
-          expanded ? <FoldedIcon /> : <UnfoldIcon />
+        // icon={(props: NodeItem) => props.type && (CompStateIcon[props.type] || <LeftCommon />)}
+        icon={(props: any) => props.type && (
+          <div style={{ margin: '16px 4px 0 -4px'}}> 
+            {CompStateIcon[props.type as UICompType] || <LeftCommon />}
+          </div>
+        )}
+        // switcherIcon={({ expanded }: { expanded: boolean }) =>
+        //   expanded ? <FoldedIcon /> : <UnfoldIcon />
+        // }
+        switcherIcon={(props: any) =>
+          props.expanded ? <FoldedIcon /> : <UnfoldIcon />
         }
         expandedKeys={expandedKeys}
         onExpand={(keys) => setExpandedKeys(keys)}

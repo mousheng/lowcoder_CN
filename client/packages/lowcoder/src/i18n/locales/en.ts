@@ -112,7 +112,12 @@ export const en = {
     "components": "Active Components",
     "modals": "in-App Modals",
     "expandTip": "Click to Expand {component}'s Data",
-    "collapseTip": "Click to Collapse {component}'s Data"
+    "collapseTip": "Click to Collapse {component}'s Data",
+    "layers": "Layers",
+    "activatelayers": "Use dynamic Layers",
+    "selectedComponents": "Selected Components...",
+    "displayComponents": "control Display",
+    "lockComponents": "control Position",
   },
 
   // second part
@@ -207,13 +212,14 @@ export const en = {
     "dot": "Dot",
     "number": "Number",
     "tooltip": "Tooltip",
+    "scrollbar" : "Show Scrollbars",
   },
   "autoHeightProp": {
     "auto": "Auto",
     "fixed": "Fixed"
   },
   "textOverflowProp": {
-    "ellipsis": "Ellipsis",
+    "ellipsis": "Mouseover",
     "wrap": "Wrap"
   },
   "labelProp": {
@@ -428,9 +434,26 @@ export const en = {
     "minWidth": "Minimum Width",
     "aspectRatio": "Aspect Ratio",
     "textSize": "Text Size",
+    "textWeight": "Text Weight",
+    "fontFamily": "Font Family",
+    "fontStyle":"Font Style",
+    "backgroundImage": "BG Image",
+    "backgroundImageRepeat": "BG Repeat",
+    "backgroundImageSize": "BG Size",
+    "backgroundImagePosition": "BG Position",
+    "backgroundImageOrigin": "BG Origin",
+    "headerBackgroundImage": "BgImage",
+    "headerBackgroundImageRepeat": "BgImage Repeat",
+    "headerBackgroundImageSize": "BgImage Size",
+    "headerBackgroundImagePosition": "BgImage Position",
+    "headerBackgroundImageOrigin": "BgImage Origin",
+    "footerBackgroundImage": "BgImage",
+    "footerBackgroundImageRepeat": "BgImage Repeat",
+    "footerBackgroundImageSize": "BgImage Size",
+    "footerBackgroundImagePosition": "BgImage Position",
+    "footerBackgroundImageOrigin": "BgImage Origin",
     "tabActiveColor": "Tab active color", //added by Mousheng
     "BackgroundImage": "Background Image",
-
   },
   "export": {
     "hiddenDesc": "If true, the component is hidden",
@@ -1219,7 +1242,6 @@ export const en = {
 
   // ninth part
 
-
   "numberInput": {
     "formatter": "Format",
     "precision": "Precision",
@@ -1371,6 +1393,8 @@ export const en = {
     "columnNum": "Columns",
     "viewModeResizable": "Column Width Adjusted by User",
     "viewModeResizableTooltip": "Whether Users Can Adjust Column Width.",
+    "visibleResizables": "Show Resize Handles",
+    "visibleResizablesTooltip": "Display visible Resize Handles in the Table Header.",
     "showFilter": "Show Filter Button",
     "showRefresh": "Show Refresh Button",
     "showDownload": "Show Download Button",
@@ -1409,6 +1433,8 @@ export const en = {
     "imageSrc": "Image Source",
     "imageSize": "Image Size",
     "columnTitle": "Title",
+    "showTitle": "Show Title",
+    "showTitleTooltip": "Show/Hide column title in table header",
     "sortable": "Sortable",
     "align": "Alignment",
     "fixedColumn": "Fixed Column",
@@ -1417,6 +1443,10 @@ export const en = {
     "auto": "Auto",
     "fixed": "Fixed",
     "columnType": "Column Type",
+    "dataMapping": "Data Mapping",
+    "numberStep": "Step",
+    "numberStepTooltip": "The number to which the current value is increased or decreased. It can be an integer or decimal",
+    "precision": "Precision",
     "float": "Float",
     "prefix": "Prefix",
     "suffix": "Suffix",
@@ -1425,6 +1455,7 @@ export const en = {
     "link": "Link",
     "links": "Links",
     "tag": "Tag",
+    "select": "Select",
     "date": "Date",
     "dateTime": "Date Time",
     "badgeStatus": "Status",
@@ -1448,6 +1479,8 @@ export const en = {
     "fixedToolbar": "Fixed Toolbar",
     "fixedToolbarTooltip": "Toolbar Will Be Fixed for Vertically Scrollable Table Based on Position",
     "hideBordered": "Hide Column Border",
+    "showVerticalRowGridBorder": "Show vertical Row Grid Border",
+    "showHorizontalRowGridBorder": "Show horizontal Row Grid Border",
     "deleteColumn": "Delete Column",
     "confirmDeleteColumn": "Confirm Delete Column: ",
     "small": "S",
@@ -1471,6 +1504,10 @@ export const en = {
     "rowSelectChange": "Row Select Change",
     "rowClick": "Row Click",
     "rowExpand": "Row Expand",
+    "rowShrink": "Row Shrink",
+    "search": "Search",
+    "download": "Download",
+    "columnEdited": "Column Edited",
     "filterChange": "Filter Change",
     "sortChange": "Sort Change",
     "pageChange": "Page Change",
@@ -1644,6 +1681,7 @@ export const en = {
     "showScroll": "Show scroll",
   },
   "drawer": {
+    "closePosition": "Close Button Placement",
     "placement": "Drawer Placement",
     "size": "Size",
     "top": "Top",
@@ -2062,7 +2100,11 @@ export const en = {
     "preloadLibsAddBtn": "Add a Library",
     "saveSuccess": "Saved Successfully",
     "AuthOrgTitle": "Workspace Welcome Screen",
-    "AuthOrgDescrition": "The URL for Your Users to Sign In to the Current Workspace."
+    "AuthOrgDescrition": "The URL for Your Users to Sign In to the Current Workspace.",
+    "APIConsumption": "API Consumption",
+    "APIConsumptionDescription": "Here you can see the API Consumption for All Apps in the Current Workspace.",
+    "overallAPIConsumption": "Overall API Consumption in this Workspace till now",
+    "lastMonthAPIConsumption": "Last Month API Consumption, in this Workspace"
   },
 
 
@@ -2409,12 +2451,13 @@ export const en = {
     "history": "History"
   },
   "home": {
-    "allApplications": "All Apps",
-    "allModules": "All Modules",
+    "allApplications": "Your Apps",
+    "allModules": "Your Modules",
     "allFolders": "All Folders",
     "modules": "Modules",
     "module": "Module",
     "trash": "Trash",
+    "marketplace": "Marketplace",
     "queryLibrary": "Query Library",
     "datasource": "Data Sources",
     "selectDatasourceType": "Select Data Source Type",
@@ -2474,6 +2517,14 @@ export const en = {
     "copyLink": "Copy link",
     "appPublicMessage": "Make the app public. Anyone can view.",
     "modulePublicMessage": "Make the module public. Anyone can view.",
+    "marketplaceURL": "https://api-service.lowcoder.cloud",
+    "appMarketplaceMessage": "Publish your App on Lowcoder Marketplace. Anyone can view and copy it from there.",
+    "moduleMarketplaceMessage": "Publish your Module on Lowcoder Marketplace. Anyone can view and copy it from there.",
+    "marketplaceGoodPublishing": "Please make sure your app is well-named and easy to use. Remove any sensitive information before publishing. Also, remove local datasources and replace by static built-in temporary data.",
+    "noMarketplaceApps": "No apps yet in the marketplace",
+    "errorMarketplaceApps": "Error while loading Marketplace Apps",
+    "localMarketplaceTitle": "Local Marketplace",
+    "globalMarketplaceTitle": "Lowcoder Marketplace",
     "memberPermissionList": "Member permissions: ",
     "orgName": "{orgName} admins",
     "addMember": "Add members",
@@ -2842,7 +2893,8 @@ export const en = {
     "manualTip": "",
     "lockTip": "The Content is Locked. To Make Changes, Please Click the {icon} to Unlock.",
     "lockModalContent": "Changing the 'ID Attribute' Field Can Have Significant Impacts on User Identification. Please Confirm That You Understand the Implications of This Change Before Proceeding.",
-    "payUserTag": "Premium"
+    "payUserTag": "Premium",
+    "addOAuthProvider": "add OAuth Provider",
   },
   "slotControl": {
     "configSlotView": "Configure Slot View"
@@ -3008,7 +3060,6 @@ export const en = {
     "icon": "icon",
     "shape": "shape",
     "counts": "Badge",
-    "cursorPointer": "cursor Pointer",
     "title": "title",
     "src": "src",
     "avatarCompTooltip": "The rendering order is: images ->characters ->icon",

@@ -11,6 +11,7 @@ import {
   handleAppEditClick,
   handleAppViewClick,
   handleFolderViewClick,
+  handleMarketplaceAppViewClick,
   HomeResInfo,
 } from "../../util/homeResUtils";
 import { HomeResOptions } from "./HomeResOptions";
@@ -43,7 +44,7 @@ const ExecButton = styled(TacoButton)`
   font-weight: 500;
   color: #4965f2;
 
-  :hover {
+  &:hover {
     background: #f9fbff;
     border: 1px solid #c2d6ff;
     color: #315efb;
@@ -62,7 +63,7 @@ const Wrapper = styled.div`
   margin-bottom: -1px;
   margin-top: 1px;
 
-  :hover {
+  &:hover {
     background-color: #f5f7fa;
   }
 `;
@@ -79,7 +80,7 @@ const Card = styled.div`
     opacity: 0;
   }
 
-  :hover {
+  &:hover {
     button {
       opacity: 1;
     }
@@ -107,7 +108,7 @@ const CardInfo = styled.div`
   overflow: hidden;
   padding-right: 12px;
 
-  :hover {
+  &:hover {
     .ant-typography {
       color: #315efb;
     }
@@ -177,6 +178,10 @@ export function HomeResCard(props: { res: HomeRes; onMove: (res: HomeRes) => voi
                 history.push(APPLICATION_VIEW_URL(res.id, "view"));
                 return;
               }
+              if(res.isMarketplace) {
+                handleMarketplaceAppViewClick(res.id);
+                return;
+              }
               res.isEditable ? handleAppEditClick(e, res.id) : handleAppViewClick(res.id);
             }
           }}
@@ -211,6 +216,8 @@ export function HomeResCard(props: { res: HomeRes; onMove: (res: HomeRes) => voi
             onClick={() =>
               res.type === HomeResTypeEnum.Folder
                 ? handleFolderViewClick(res.id)
+                : res.isMarketplace
+                ? handleMarketplaceAppViewClick(res.id)
                 : handleAppViewClick(res.id)
             }
           >

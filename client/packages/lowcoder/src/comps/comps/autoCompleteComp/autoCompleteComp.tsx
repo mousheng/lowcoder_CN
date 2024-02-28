@@ -33,12 +33,9 @@ import {
 import { trans } from "i18n";
 import { IconControl } from "comps/controls/iconControl";
 import { hasIcon } from "comps/utils";
-import {
-  ConfigProvider,
-  InputRef,
-  AutoComplete,
-  Input as AntInput,
-} from "antd";
+import { InputRef } from "antd/es/input";
+import { AutoComplete, Input as AntInput } from 'antd';
+import { default as ConfigProvider } from "antd/es/config-provider";
 import { RefControl } from "comps/controls/refControl";
 import {
   booleanExposingStateControl, jsonExposingStateControl, jsonObjectExposingStateControl,
@@ -59,6 +56,7 @@ import {
 const InputStyle = styled(Input)<{ $style: InputLikeStyleType }>`
   ${(props) => props.$style && getStyle(props.$style)}
 `;
+
 
 const childrenMap = {
   ...textInputChildren,
@@ -104,6 +102,7 @@ let AutoCompleteCompBase = (function () {
       autocompleteIconColor,
       componentSize,
     } = props;
+    
 
     const getTextInputValidate = () => {
       return {
@@ -154,7 +153,7 @@ let AutoCompleteCompBase = (function () {
               },
             }}
           >
-            <AutoComplete
+            <AutoComplete 
               disabled={props.disabled}
               value={searchtext}
               style={{
@@ -166,11 +165,11 @@ let AutoCompleteCompBase = (function () {
                 props.valueInItems.onChange(false);
                 setvalidateState(textInputValidate(getTextInputValidate()));
                 setsearchtext(value);
-                props.value.onChange(value);
+                props.value.onChange(value); 
                 props.onEvent("change")
-              }}
+              }} 
               onFocus={() => {
-                setActivationFlag(true)
+                setActivationFlag(true) 
                 props.onEvent("focus")
               }}
               onBlur={() => props.onEvent("blur")}
@@ -287,8 +286,8 @@ let AutoCompleteCompBase = (function () {
           </ConfigProvider>
         </>
       ),
-      style: props.style,
-      ...validateState,
+      // style: props.style,
+      // ...validateState,
     });
   })
     .setPropertyViewFn((children) => {
@@ -385,6 +384,6 @@ export const AutoCompleteComp = withExposingConfigs(AutoCompleteCompBase, [
   new NameConfig("selectObject", trans("export.selectObjectDesc")),
   new NameConfig("valueInItems", trans("autoComplete.valueInItems")),
   NameConfigPlaceHolder,
-  NameConfigRequired,
+  NameConfigRequired, 
   ...TextInputConfigs,
 ]);

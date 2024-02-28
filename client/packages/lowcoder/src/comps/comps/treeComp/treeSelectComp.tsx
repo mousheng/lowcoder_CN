@@ -2,7 +2,7 @@ import { changeChildAction, DispatchType, RecordConstructorToView } from "lowcod
 import { UICompBuilder } from "comps/generators/uiCompBuilder";
 import { NameConfig, withExposingConfigs } from "comps/generators/withExposing";
 import { Section, sectionNames, ValueFromOption } from "lowcoder-design";
-import { TreeSelect } from "antd";
+import { default as TreeSelect } from "antd/es/tree-select";
 import { useEffect } from "react";
 import styled from "styled-components";
 import { styleControl } from "comps/controls/styleControl";
@@ -85,7 +85,11 @@ const TreeCompView = (
 ) => {
   const { treeData, selectType, value, expanded, style, inputValue } = props;
   const isSingle = selectType === "single";
-  const [validateState, handleValidate] = useSelectInputValidate(props);
+  const [
+    validateState,
+    handleChange,
+  ] = useSelectInputValidate(props);
+
   useEffect(() => {
     if (isSingle && value.value.length > 1) {
       value.onChange(value.value.slice(0, 1));
@@ -115,13 +119,11 @@ const TreeCompView = (
         // fix expand issue when searching
         treeExpandedKeys={inputValue ? undefined : expanded.value}
         onTreeExpand={(keys) => {
-          expanded.onChange(keys);
+          expanded.onChange(keys as (string | number)[]);
         }}
         onChange={(keys) => {
           const nextValue = Array.isArray(keys) ? keys : keys !== undefined ? [keys] : [];
-          handleValidate(nextValue);
-          value.onChange(nextValue);
-          props.onEvent("change");
+          handleChange(nextValue);
         }}
         showSearch={props.showSearch}
         // search label

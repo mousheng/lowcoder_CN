@@ -1,4 +1,4 @@
-import { Progress } from "antd";
+import { default as Progress } from "antd/es/progress";
 import { Section, sectionNames } from "lowcoder-design";
 import { numberExposingStateControl } from "../controls/codeStateControl";
 import { BoolControl } from "../controls/boolControl";
@@ -18,6 +18,10 @@ const getStyle = (style: ProgressStyleType) => {
     line-height: 2;
     .ant-progress-text {
       color: ${style.text};
+      font-style:${style.fontStyle};
+        font-family:${style.fontFamily};
+        font-weight:${style.textWeight};
+        font-size:${style.textSize};
     }
     width: ${widthCalculator(style.margin)};	
     height: ${heightCalculator(style.margin)};	

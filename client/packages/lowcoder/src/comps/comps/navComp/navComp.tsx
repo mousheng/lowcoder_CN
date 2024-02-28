@@ -8,7 +8,8 @@ import { alignWithJustifyControl } from "comps/controls/alignControl";
 import { navListComp } from "./navItemComp";
 import { menuPropertyView } from "./components/MenuItemList";
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Menu, MenuProps } from "antd";
+import { default as Dropdown } from "antd/es/dropdown";
+import { default as Menu, MenuProps } from "antd/es/menu";
 import { migrateOldData } from "comps/generators/simpleGenerators";
 import { styleControl } from "comps/controls/styleControl";
 import { NavigationStyle } from "comps/controls/styleControlConstants";
@@ -19,41 +20,53 @@ import { useContext } from "react";
 import { EditorContext } from "comps/editorState";
 
 type IProps = {
-  justify: boolean;
-  bgColor: string;
-  borderColor: string;
-  padding: string;
+  $justify: boolean;
+  $bgColor: string;
+  $borderColor: string;
+  $borderWidth: string;
+  $borderRadius: string;
+  $padding: string;
 };
 
-const Wrapper = styled("div")<Pick<IProps, "bgColor" | "borderColor" | "padding">>`
+const Wrapper = styled("div") <Pick<IProps, "$bgColor" | "$borderColor" | "$borderWidth" | "$borderRadius"| "$padding">>`
   height: 100%;
-  border-radius: 2px;
+  border-radius: ${(props) => props.$borderRadius ? props.$borderRadius : '2px'};
   box-sizing: border-box;
-  border: 1px solid ${(props) => props.borderColor};
-  background-color: ${(props) => props.bgColor};
-  padding: ${(props) => props.padding};
+  border: ${(props) => props.$borderWidth ? `${props.$borderWidth}` : '1px'} solid ${(props) => props.$borderColor};
+  background-color: ${(props) => props.$bgColor};
+  padding: ${(props) => props.$padding};
 `;
 
-const NavInner = styled("div")<Pick<IProps, "justify">>`
-  margin: 0 -16px;
+const NavInner = styled("div") <Pick<IProps, "$justify">>`
+  // margin: 0 -16px;
   height: 100%;
   display: flex;
-  justify-content: ${(props) => (props.justify ? "space-between" : "left")};
+  justify-content: ${(props) => (props.$justify ? "space-between" : "left")};
 `;
 
 const Item = styled.div<{
-  active: boolean;
-  activeColor: string;
-  color: string;
+  $active: boolean;
+  $activeColor: string;
+  $color: string;
+  $fontFamily: string;
+  $fontStyle: string;
+  $textWeight: string;
+  $textSize: string;
+  $margin: string;
+  $padding: string;
 }>`
   height: 30px;
   line-height: 30px;
-  padding: 0 16px;
-  color: ${(props) => (props.active ? props.activeColor : props.color)};
-  font-weight: 500;
-
+  padding: ${(props) => props.$padding ? props.$padding : '0 16px'};
+  color: ${(props) => (props.$active ? props.$activeColor : props.$color)};
+  font-weight: ${(props) => (props.$textWeight ? props.$textWeight : 500)};
+  font-family:${(props) => (props.$fontFamily ? props.$fontFamily : 'sans-serif')};
+  font-style:${(props) => (props.$fontStyle ? props.$fontStyle : 'normal')};
+  font-size:${(props) => (props.$textSize ? props.$textSize : '14px')};
+  margin:${(props) => props.$margin ? props.$margin : '0px'};
+  
   &:hover {
-    color: ${(props) => props.activeColor};
+    color: ${(props) => props.$activeColor};
     cursor: pointer;
   }
 
@@ -73,14 +86,14 @@ const LogoWrapper = styled.div`
   }
 `;
 
-const ItemList = styled.div<{ align: string }>`
+const ItemList = styled.div<{ $align: string }>`
   flex: 1;
   display: flex;
   flex-direction: row;
-  justify-content: ${(props) => props.align};
+  justify-content: ${(props) => props.$align};
 `;
 
-const StyledMenu = styled(Menu)<MenuProps>`
+const StyledMenu = styled(Menu) <MenuProps>`
   &.ant-dropdown-menu {
     min-width: 160px;
   }
@@ -142,9 +155,15 @@ const NavCompBase = new UICompBuilder(childrenMap, (props) => {
         const item = (
           <Item
             key={idx}
-            active={active || subMenuSelectedKeys.length > 0}
-            color={props.style.text}
-            activeColor={props.style.accent}
+            $active={active || subMenuSelectedKeys.length > 0}
+            $color={props.style.text}
+            $activeColor={props.style.accent}
+            $fontFamily={props.style.fontFamily}
+            $fontStyle={props.style.fontStyle}
+            $textWeight={props.style.textWeight}
+            $textSize={props.style.textSize}
+            $padding={props.style.padding}
+            $margin={props.style.margin}
             onClick={() => onEvent("click")}
           >
             {label}
@@ -179,14 +198,20 @@ const NavCompBase = new UICompBuilder(childrenMap, (props) => {
   const justify = props.horizontalAlignment === "justify";
 
   return (
-    <Wrapper borderColor={props.style.border} bgColor={props.style.background} padding={props.style.padding}>
-      <NavInner justify={justify}>
+    <Wrapper
+      $borderColor={props.style.border}
+      $bgColor={props.style.background}
+      $borderWidth={props.style.borderWidth}
+      $borderRadius={props.style.borderRadius}
+      $padding={props.style.padding}
+    >
+      <NavInner $justify={justify}>
         {props.logoUrl && (
           <LogoWrapper onClick={() => props.logoEvent("click")}>
             <img src={props.logoUrl} alt="LOGO" />
           </LogoWrapper>
         )}
-        {!justify ? <ItemList align={props.horizontalAlignment}>{items}</ItemList> : items}
+        {!justify ? <ItemList $align={props.horizontalAlignment}>{items}</ItemList> : items}
       </NavInner>
     </Wrapper>
   );
@@ -221,7 +246,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props) => {
           </Section>
         )}
 
-        {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (  
+        {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
           <Section name={sectionNames.style}>
             {children.style.getPropertyView()}
           </Section>

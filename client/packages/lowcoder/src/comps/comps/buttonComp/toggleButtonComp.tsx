@@ -27,17 +27,17 @@ const IconWrapper = styled.div`
 `;
 
 const ButtonCompWrapperStyled = styled(ButtonCompWrapper) <{
-  align: "left" | "center" | "right" | "stretch";
-  showBorder: boolean;
+  $align: "left" | "center" | "right" | "stretch";
+  $showBorder: boolean;
 }>`
   width: 100%;
   display: flex;
-  justify-content: ${(props) => props.align};
+  justify-content: ${(props) => props.$align};
 
   > button {
-    width: ${(props) => props.align !== "stretch" && "auto"};
-    border: ${(props) => !props.showBorder && "none"};
-    box-shadow: ${(props) => !props.showBorder && "none"};
+    width: ${(props) => props.$align !== "stretch" && "auto"};
+    border: ${(props) => !props.$showBorder && "none"};
+    box-shadow: ${(props) => !props.$showBorder && "none"};
   }
 `;
 
@@ -55,7 +55,7 @@ const ToggleTmpComp = (function () {
     iconPosition: LeftRightControl,
     alignment: AlignWithStretchControl,
     style: styleControl(ToggleButtonStyle),
-    showBorder: withDefault(BoolControl, true),
+    showBorder: withDefault(BoolControl, true), 
     viewRef: RefControl<HTMLElement>,
     expandClickArea: BoolControl.DEFAULT_TRUE,
   };
@@ -66,8 +66,8 @@ const ToggleTmpComp = (function () {
     return (
       <ButtonCompWrapperStyled
         disabled={props.disabled}
-        align={props.alignment}
-        showBorder={props.showBorder}
+        $align={props.alignment}
+        $showBorder={props.showBorder}
         onClick={() => {
           if (props.expandClickArea) {
             props.onEvent("change");
@@ -100,35 +100,6 @@ const ToggleTmpComp = (function () {
             tooltip: trans("toggleButton.valueDesc"),
           })}
         </Section>
-
-        {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
-          <><Section name={sectionNames.interaction}>
-              {children.onEvent.getPropertyView()}
-              {disabledPropertyView(children)}
-              {hiddenPropertyView(children)}
-              {loadingPropertyView(children)}
-            </Section>
-            <Section name={sectionNames.advanced}>
-              {children.showText.propertyView({ label: trans("toggleButton.showText") })}
-              {children.showText.getView() && 
-                children.trueText.propertyView({ label: trans("toggleButton.trueLabel") })}
-              {children.showText.getView() &&
-                children.falseText.propertyView({ label: trans("toggleButton.falseLabel") })}
-              {children.trueIcon.propertyView({ label: trans("toggleButton.trueIconLabel") })}
-              {children.falseIcon.propertyView({ label: trans("toggleButton.falseIconLabel") })}
-              {children.showText.getView() &&
-                children.iconPosition.propertyView({
-                  label: trans("toggleButton.iconPosition"),
-                  radioButton: true,
-              })}
-              {children.alignment.propertyView({
-                label: trans("toggleButton.alignment"),
-                radioButton: true,
-              })}
-            </Section>
-          </>
-        )}
-
         {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
           <>
           <Section name={sectionNames.layout}>

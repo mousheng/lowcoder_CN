@@ -9,14 +9,14 @@ import { StreamQuery } from "./streamQuery";
 import { trans } from "@lowcoder-ee/i18n";
 import { batchEditDispatch } from "@lowcoder-ee/comps/controls/keyValueControl";
 
-const UrlInput = styled.div<{ hasAddonBefore: boolean }>`
+const UrlInput = styled.div<{ $hasAddonBefore: boolean }>`
   display: flex;
   width: 100%;
 
   .cm-editor {
     margin-top: 0;
-    ${(props) => props.hasAddonBefore && "border-top-left-radius: 0;"}
-    ${(props) => props.hasAddonBefore && "border-bottom-left-radius: 0;"};
+    ${(props) => props.$hasAddonBefore && "border-top-left-radius: 0;"}
+    ${(props) => props.$hasAddonBefore && "border-bottom-left-radius: 0;"};
   }
 `;
 
@@ -48,7 +48,7 @@ export const HttpPathPropertyView = (props: {
     <QueryConfigWrapper>
       <QueryConfigLabel>{trans("query.URL")}</QueryConfigLabel>
       <QueryConfigItemWrapper>
-        <UrlInput hasAddonBefore={!!httpConfig?.url}>
+        <UrlInput $hasAddonBefore={!!httpConfig?.url}>
           {httpConfig?.url && <UrlInputAddonBefore>{httpConfig?.url}</UrlInputAddonBefore>}
 
           {props.comp.children.path.propertyView({

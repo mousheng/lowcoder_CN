@@ -67,14 +67,10 @@ export const CascaderPropertyView = (
     )}
 
     {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
-    <>
-    <Section name={sectionNames.advanced}>
+      <Section name={sectionNames.advanced}>
         {allowClearPropertyView(children)}
         {showSearchPropertyView(children)}
       </Section>
-
-    <CascaderValidationSection {...children} />
-    </>
     )}
 
     {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (

@@ -191,7 +191,7 @@ const builtInRemoteComps: Omit<RemoteCompInfo, "compName"> = {
   packageName: "lowcoder-comps",
 };
 
-const uiCompMap: Registry = {
+var uiCompMap: Registry = {
 
   // Dashboards
 
@@ -455,7 +455,6 @@ const uiCompMap: Registry = {
     categories: ["scheduling", "projectmanagement"],
     icon: CalendarCompIcon,
     keywords: trans("uiComp.calendarCompKeywords"),
-    // comp: remoteComp({ ...builtInRemoteComps, compName: "calendar" }),
     comp: CalendarComp,//changed by mousheng
     layoutInfo: {
       w: 19,
@@ -963,6 +962,19 @@ const uiCompMap: Registry = {
       h: 40,
     },
   },
+  icon: {
+    name: trans("uiComp.iconCompName"),
+    enName: "icon",
+    description: trans("uiComp.iconCompDesc"),
+    categories: ["multimedia"],
+    icon: IconCompIcon,
+    keywords: trans("uiComp.iconCompKeywords"),
+    comp: IconComp,
+    layoutInfo: {
+      w: 2,
+      h: 10,
+    },
+  },
   imageEditor: {
     name: trans("uiComp.imageEditorCompName"),
     enName: "Image Editor",
@@ -1128,19 +1140,7 @@ const uiCompMap: Registry = {
       h: 24,
     },
   },
-  icon: {
-    name: trans("uiComp.iconCompName"),
-    enName: "icon",
-    description: trans("uiComp.iconCompDesc"),
-    categories: ["forms", "dashboards"],
-    icon: IconCompIcon,
-    keywords: trans("uiComp.iconCompKeywords"),
-    comp: IconComp,
-    layoutInfo: {
-      w: 2,
-      h: 10,
-    },
-  },
+
   colorPicker: {
     name: trans("uiComp.colorPickerCompName"),
     enName: "colorPicker",
@@ -1277,8 +1277,8 @@ const uiCompMap: Registry = {
     keywords: trans("uiComp.ganttKeywords"),
     comp: GanttComp,
     layoutInfo: {
-      w: 24,
-      h: 60,
+      w: 6,
+      h: 5,
     },
   },
   transfer: {
@@ -1353,9 +1353,11 @@ const uiCompMap: Registry = {
       w: 17,
     },
   },
+  
 };
 
 export function loadComps() {
+  if(!uiCompMap) return;
   const entries = Object.entries(uiCompMap);
   for (const [compType, manifest] of entries) {
     registerComp(compType as UICompType, manifest);

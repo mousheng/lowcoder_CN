@@ -26,34 +26,31 @@ import {
   clickEvent,
   eventHandlerControl,
 } from "../controls/eventHandlerControl";
+import { useContext } from "react";
+import { CompNameContext, EditorContext } from "comps/editorState";
 
-const Container = styled.div<{ $style: IconStyleType | undefined, activateFlag: boolean }>`
-  height: 100%;
-  width: 100%;
+const Container = styled.div<{ $style: IconStyleType | undefined, $activateFlag: boolean, $eventsCount: number }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  svg {
-    object-fit: contain;
-    pointer-events: auto;
-  }
-  ${(props) => props.$style && getStyle(props.$style, props.activateFlag)}
-`;
 
-const getStyle = (style: IconStyleType, activateFlag: boolean) => {
-  return css`
+  ${(props) => props.$style && css`
+    height: calc(100% - ${props.$style.margin});
+    width: calc(100% - ${props.$style.margin});
+    margin: ${props.$style.margin};
+    border: ${props.$style.borderWidth} solid ${props.$style.border};
+    border-radius: ${props.$style.radius};
+    background: ${props.$style.background};
+    cursor: ${props.$eventsCount ? 'pointer' : ''};
     svg {
-      color: ${activateFlag ? style.activateColor : style.fill};
+      max-width: ${widthCalculator(props.$style.margin)};
+      max-height: ${heightCalculator(props.$style.margin)};
+      color: ${props.$activateFlag ? props.$style.activateColor : props.$style.fill};
+      object-fit: contain;
+      pointer-events: auto;
     }
-    padding: ${style.padding};
-    border: 1px solid ${style.border};
-    border-radius: ${style.radius};
-    margin: ${style.margin};
-    max-width: ${widthCalculator(style.margin)};
-    max-height: ${heightCalculator(style.margin)};
-  `;
-};
+  `}
+`;
 
 const EventOptions = [clickEvent] as const;
 
@@ -70,6 +67,8 @@ const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
   const [mouseactivateFlags, setMouseactivateFlags] = useState(false);
+  const comp = useContext(EditorContext).getUICompByName(useContext(CompNameContext));
+  const eventsCount = comp ? Object.keys(comp?.children.comp.children.onEvent.children).length : 0;
 
   useEffect(() => {
     if (height && width) {
@@ -88,16 +87,17 @@ const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
       <Container
         ref={conRef}
         $style={props.style}
+        $activateFlag={mouseactivateFlags}
+        $eventsCount={eventsCount}
         style={{
           fontSize: props.autoHeight
             ? `${height < width ? height : width}px`
             : props.iconSize,
           background: props.style.background,
         }}
-        onClick={() => props.onEvent("click")}
         onMouseEnter={() => setMouseactivateFlags(true)}
         onMouseLeave={() => setMouseactivateFlags(false)}
-        activateFlag={mouseactivateFlags}
+        onClick={() => props.onEvent("click")}
       >
         {props.icon}
       </Container>
@@ -114,23 +114,29 @@ let IconBasicComp = (function () {
             label: trans("iconComp.icon"),
             IconType: "All",
           })}
-          {children.autoHeight.propertyView({
-            label: trans("iconComp.autoSize"),
-          })}
-          {!children.autoHeight.getView() &&
-            children.iconSize.propertyView({
-              label: trans("iconComp.iconSize"),
+
+        </Section>
+
+        {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+          <Section name={sectionNames.interaction}>
+            {children.onEvent.getPropertyView()}
+            {hiddenPropertyView(children)}
+          </Section>
+        )}
+
+        {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
+          <><Section name={sectionNames.layout}>
+            {children.autoHeight.propertyView({
+              label: trans("iconComp.autoSize"),
             })}
-        </Section>
-        <Section name={sectionNames.interaction}>
-          {children.onEvent.getPropertyView()}
-        </Section>
-        <Section name={sectionNames.layout}>
-          {hiddenPropertyView(children)}
-        </Section>
-        <Section name={sectionNames.style}>
-          {children.style.getPropertyView()}
-        </Section>
+            {!children.autoHeight.getView() &&
+              children.iconSize.propertyView({
+                label: trans("iconComp.iconSize"),
+              })}
+          </Section><Section name={sectionNames.style}>
+              {children.style.getPropertyView()}
+            </Section></>
+        )}
       </>
     ))
     .build();

@@ -1,4 +1,4 @@
-import { Divider, DividerProps } from "antd";
+import { default as Divider, DividerProps } from "antd/es/divider";
 import { StringControl } from "comps/controls/codeControl";
 import { BoolControl } from "comps/controls/boolControl";
 import { alignControl } from "comps/controls/alignControl";
@@ -21,23 +21,26 @@ type IProps = DividerProps & { $style: DividerStyleType; dashed: boolean };
 // TODO: find out how to set border style when text is active
 // TODO: enable type "vertical" https://ant.design/components/divider
 
-const StyledDivider = styled(Divider)<IProps>`
+const StyledDivider = styled(Divider) <IProps>`
   margin-top: 3.5px;
   .ant-divider-inner-text {
     height: 32px;
     display: flex;
     align-items: center;
     font-size: ${(props) => props.$style.textSize};
+    font-weight: ${(props) => props.$style.textWeight};
+    font-family: ${(props) => props.$style.fontFamily};
+    font-style:${(props) => props.$style.fontStyle}
   }
   min-width: 0;	
-  width: ${(props) => {	
-    return widthCalculator(props.$style.margin);	
+  width: ${(props) => {
+    return widthCalculator(props.$style.margin);
   }};	
-  min-height: ${(props) => {	
-    return heightCalculator(props.$style.margin);	
+  min-height: ${(props) => {
+    return heightCalculator(props.$style.margin);
   }};	
-  margin: ${(props) => {	
-    return props.$style.margin;	
+  margin: ${(props) => {
+    return props.$style.margin;
   }};	
   padding: ${(props) => props.$style.padding};
   

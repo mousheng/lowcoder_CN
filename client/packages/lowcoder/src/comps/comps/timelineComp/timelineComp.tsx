@@ -1,60 +1,50 @@
-import { useEffect, useRef, useState } from "react";
-import { Button } from "antd";
-// 渲染组件到编辑器
+import React, { useEffect, useState, useContext, useRef } from "react";
+import { default as Button } from "antd/es/button";
 import {
   changeChildAction,
   CompAction,
   RecordConstructorToView,
 } from "lowcoder-core";
-// 文字国际化转换api
 import { trans } from "i18n";
-// 右侧属性栏总框架
 import { UICompBuilder, withDefault } from "../../generators";
-// 右侧属性子框架
 import { Section, sectionNames } from "lowcoder-design";
-// 指示组件是否隐藏的开关
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
-// 右侧属性开关
-
 import { BoolControl } from "comps/controls/boolControl";
-import { jsonExposingStateControl, numberExposingStateControl, } from "comps/controls/codeStateControl"; //文本并暴露值
+import { jsonExposingStateControl, numberExposingStateControl, } from "comps/controls/codeStateControl";
 import { dropdownControl } from "comps/controls/dropdownControl";
-import { styleControl } from "comps/controls/styleControl"; //样式输入框
+import { styleControl } from "comps/controls/styleControl";
+import { alignControl } from "comps/controls/alignControl";
+import { AutoHeightControl } from "comps/controls/autoHeightControl";
+import { jsonValueExposingStateControl } from "comps/controls/codeStateControl";
 import {
   jsonControl,
   NumberControl,
   StringControl,
 } from "comps/controls/codeControl";
-// 事件控制
 import {
   clickEvent,
   eventHandlerControl,
 } from "comps/controls/eventHandlerControl";
-
-// 引入样式
 import {
   TimeLineStyle,
   heightCalculator,
   widthCalculator,
   TimeLineType,
 } from "comps/controls/styleControlConstants";
-// 初始化暴露值
 import { stateComp, valueComp } from "comps/generators/simpleGenerators";
-// 组件对外暴露属性的api
 import {
   NameConfig,
   NameConfigHidden,
   withExposingConfigs,
 } from "comps/generators/withExposing";
-
 import { timelineDate, timelineNode, TimelineDataTooltip } from "./timelineConstants";
 import { convertTimeLineData } from "./timelineUtils";
-import { Timeline } from "antd";
-import { ANTDICON } from "./antIcon";
+import { default as Timeline } from "antd/es/timeline";
+
 import styled from "styled-components";
 import { debounce } from "lodash";
-import { useContext } from "react";
-import { EditorContext } from "comps/editorState"; 
+
+import { EditorContext } from "comps/editorState";
 
 
 const Wrapper = styled.div<{ $style: TimeLineType, mode: string, offset: number }>`
@@ -116,32 +106,45 @@ const childrenMap = {
   scrollTo: numberExposingStateControl("scrollTo", 99999),
 };
 
+// Utility function to dynamically load Ant Design icons
+const loadIcon = async (iconName: string) => {
+  if (!iconName) return null;
+  try {
+    const module = await import(`@ant-design/icons`);
+    const IconComponent = (module as any)[iconName];
+    return IconComponent ? <IconComponent /> : null;
+  } catch (error) {
+    console.error(`Error loading icon ${iconName}:`, error);
+    return null;
+  }
+};
+
 const TimelineComp = (
   props: RecordConstructorToView<typeof childrenMap> & {
     dispatch: (action: CompAction) => void;
   }
 ) => {
+  const { value, dispatch, style, mode, reverse, onEvent, scrollTo } = props;
+  const [icons, setIcons] = useState<React.ReactNode[]>([]);
   const divRef = useRef<HTMLDivElement>(null);
-  const { dispatch, style, mode, reverse, onEvent, scrollTo } = props;
   const [scroll, setScroll] = useState(0)
-  const [value, setValue] = useState(props.value.value)
-  const [scrollHeight, setScrollHeight] = useState(0)
 
   useEffect(() => {
-    setValue(props.value.value);
-    setTimeout(() => {
-      setScroll(Math.min(scrollTo.value, scrollHeight))
-      if (divRef.current) {
-        setScrollHeight(divRef.current.scrollHeight)
-        divRef.current.scrollTop = Math.min(scrollTo.value, divRef.current.scrollHeight);
-      }
-    }, 20);
-  }, [props.value.value, scrollTo.value])
-  const timelineItems = value.map((value: timelineNode, index: number) => ({
+    const loadIcons = async () => {
+      const iconComponents = await Promise.all(
+        value.value.map((node: timelineNode) =>
+          node.dot ? loadIcon(node.dot) : Promise.resolve(null)
+        )
+      );
+      setIcons(iconComponents);
+    };
+
+    loadIcons();
+  }, [value]);
+
+  const timelineItems = value.value.map((value: timelineNode, index: number) => ({
     color: value?.color,
-    dot: value?.dot && ANTDICON.hasOwnProperty(value?.dot.toLowerCase())
-      ? ANTDICON[value?.dot.toLowerCase() as keyof typeof ANTDICON]
-      : "",
+    dot: icons[index] || "",
     label: (
       <span style={{ color: value?.lableColor || style?.lableColor }}>
         {value?.label}
@@ -168,8 +171,7 @@ const TimelineComp = (
         </p>
       </>
     )
-  }
-  ))
+  }));
 
   return (
     <Wrapper $style={props.style}
@@ -224,22 +226,22 @@ let TimeLineBasicComp = (function () {
 
         {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
           <><Section name={sectionNames.layout}>
-              {children.mode.propertyView({
-                label: trans("timeLine.mode"),
-                tooltip: trans("timeLine.modeTooltip"),
-              })}
-          {children.mode.getView() !== "alternate" && children.offset.propertyView({
-            label: trans("timeLine.offset"),
-            tooltip: trans("timeLine.offsetDes"),
-          })}
-              {children.pending.propertyView({
-                label: trans("timeLine.pending"),
-                tooltip: trans("timeLine.pendingDescription"),
-              })}
-              {children.reverse.propertyView({
-                label: trans("timeLine.reverse"),
-              })}
-            </Section>
+            {children.mode.propertyView({
+              label: trans("timeLine.mode"),
+              tooltip: trans("timeLine.modeTooltip"),
+            })}
+            {children.mode.getView() !== "alternate" && children.offset.propertyView({
+              label: trans("timeLine.offset"),
+              tooltip: trans("timeLine.offsetDes"),
+            })}
+            {children.pending.propertyView({
+              label: trans("timeLine.pending"),
+              tooltip: trans("timeLine.pendingDescription"),
+            })}
+            {children.reverse.propertyView({
+              label: trans("timeLine.reverse"),
+            })}
+          </Section>
             <Section name={sectionNames.style}>
               {children.style.getPropertyView()}
             </Section>
