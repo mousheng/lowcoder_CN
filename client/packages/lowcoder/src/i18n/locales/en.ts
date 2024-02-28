@@ -118,6 +118,17 @@ export const en = {
     "selectedComponents": "Selected Components...",
     "displayComponents": "control Display",
     "lockComponents": "control Position",
+    "action": "Action:",
+    "applyAction": "Apply Action",
+    "hideComponent": "Hide Component",
+    "disableComponent": "Disable Component",
+    "margin": "Margin",
+    "padding": "Padding",
+    "borderRadius": "Border Radius",
+    "borderWidth": "Border Width",
+    "fontSize": "Font Size",
+    "fontWeight": "Font Weight",
+    "fontFamily": "Font Family",
   },
 
   // second part

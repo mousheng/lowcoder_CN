@@ -358,39 +358,39 @@ export const LeftLayersContent = (props: LeftLayersContentProps) => {
 
   const layerActions: ItemType[] = [
     {
-      label: 'Hide Component',
+      label: trans("leftPanel.hideComponent"),
       key: 'hidden',
     },
     {
-      label: 'Disable Component',
+      label: trans("leftPanel.disableComponent"),
       key: 'disable',
     },
     {
-      label: 'Margin',
+      label: trans("leftPanel.margin"),
       key: 'style.margin',
     },
     {
-      label: 'Padding',
+      label: trans("leftPanel.padding"),
       key: 'style.padding',
     },
     {
-      label: 'Border Radius',
+      label: trans("leftPanel.borderRadius"),
       key: 'style.radius',
     },
     {
-      label: 'Border Width',
+      label: trans("leftPanel.borderWidth"),
       key: 'style.borderWidth',
     },
     {
-      label: 'Font Size',
+      label: trans("leftPanel.fontSize"),
       key: 'style.textSize',
     },
     {
-      label: 'Font Weight',
+      label: trans("leftPanel.fontWeight"),
       key: 'style.textWeight',
     },
     {
-      label: 'Font Family',
+      label: trans("leftPanel.fontFamily"),
       key: 'style.fontFamily',
     }
   ];
@@ -429,6 +429,7 @@ export const LeftLayersContent = (props: LeftLayersContentProps) => {
     // TODO: sort by Types etc.
     const uiCompInfos = _.sortBy(editorState.uiCompInfoList(), [(x) => x.name]);
     const isDraggable = editorState.getCollisionStatus();
+    const selectedActionObject = layerActions.filter(item=> item?.key==selectedActionKey)[0] ?? undefined
 
     return (
       <>
@@ -476,9 +477,9 @@ export const LeftLayersContent = (props: LeftLayersContentProps) => {
                 />
               )}
             >
-              <Button size={"small"}>
+              <Button size={"middle"}>
                 <Space>
-                  Action
+                  {trans("leftPanel.action") + (selectedActionObject != undefined ? (selectedActionObject as any)?.label : '') }
                   <DownOutlined />
                 </Space>
               </Button>
@@ -493,7 +494,7 @@ export const LeftLayersContent = (props: LeftLayersContentProps) => {
               disabled={!selectedActionKey}
               onClick={() => selectedActionKey && handleComponentsActions(selectedActionKey)}
             >
-              Apply Action
+              {trans("leftPanel.applyAction")}
             </Button>
             <br/>
             <ColorPicker
@@ -528,7 +529,7 @@ export const LeftLayersContent = (props: LeftLayersContentProps) => {
       return;
     }
     return getTreeUI();
-  }, [editorState, uiCollapseClick, expandedKeys, componentTreeData, actionValue]);
+  }, [editorState, uiCollapseClick, expandedKeys, componentTreeData, actionValue, selectedActionKey]);
   
   const layerControlContent = (
     <ScrollBar>
