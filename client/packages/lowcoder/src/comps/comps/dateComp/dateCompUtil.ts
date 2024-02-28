@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { DateParser, TimeParser } from "util/dateTimeUtils";
+import {DateParser, PickerMode, TimeParser} from "util/dateTimeUtils";
 import { range } from "lodash";
 import { DateTimeStyleType } from "../../controls/styleControlConstants";
 import { css } from "styled-components";
@@ -129,3 +129,17 @@ export const getMobileStyle = (style: DateTimeStyleType) =>
   `;
 
 export const dateRefMethods = refMethods<CommonPickerMethods>([focusMethod, blurMethod]);
+
+/**
+ * 处理移动端年月周选择器，季度选择器antd mobile暂时不支持，使用原有方案
+ * @param precisionType
+ * @param showTime
+ */
+export const getPrecisionType =( showTime:boolean,precisionType?:PickerMode)=>{
+  // precisionType不存在时，为日期区间选择器，为date时，为日期选择器，这个时候不用处理
+  if (precisionType==='week' || precisionType==='month' || precisionType==='year'){
+    return precisionType
+  }else{
+    return showTime ? "second" : "day"
+  }
+}
