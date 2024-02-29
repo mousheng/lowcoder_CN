@@ -507,16 +507,16 @@ export function compTablePropertyView<T extends MultiBaseComp<TableChildrenType>
       )}
 
       {["layout", "both"].includes(editorModeStatus) && (
-        <><Section name={"Table Style"}>
-            {comp.children.style.getPropertyView()} 
+        <><Section name={trans("responsiveLayout.tableStyle")}>
+            {comp.children.style.getPropertyView()}
           </Section>
-          <Section name={"Header Style"}>
+          <Section name={trans("responsiveLayout.headerStyle")}>
             {comp.children.headerStyle.getPropertyView()}
           </Section>
-          <Section name={"Toolbar Style"}>
+          <Section name={trans("responsiveLayout.toolbarStyle")}>
             {comp.children.toolbarStyle.getPropertyView()}
           </Section>
-          <Section name={"Row Style"}>
+          <Section name={trans("responsiveLayout.rowStyle")}>
             {comp.children.showRowGridBorder.propertyView({
               label: trans("table.showVerticalRowGridBorder"),
             })}
@@ -528,7 +528,7 @@ export function compTablePropertyView<T extends MultiBaseComp<TableChildrenType>
             {comp.children.rowHeight.getPropertyView()}
             {comp.children.rowColor.getPropertyView()}
           </Section>
-          <Section name={"Column Style"}>
+          <Section name={trans("responsiveLayout.columnStyle")}>
             {comp.children.columnsStyle.getPropertyView()}
           </Section>
         </>
