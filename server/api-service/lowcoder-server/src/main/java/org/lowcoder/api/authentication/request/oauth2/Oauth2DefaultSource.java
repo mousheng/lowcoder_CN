@@ -74,5 +74,22 @@ public enum Oauth2DefaultSource implements Oauth2Source {
         	return Oauth2Constants.BASE_URL_PLACEHOLDER + "/realms/" + Oauth2Constants.REALM_PLACEHOLDER + "/protocol/openid-connect/token";
         }
     	
+    },
+
+    FEISHU {
+        @Override
+        public String accessToken() {
+            return "https://open.feishu.cn/open-apis/authen/v1/access_token";
+        }
+
+        @Override
+        public String userInfo() {
+            return "https://open.feishu.cn/open-apis/authen/v1/user_info";
+        }
+
+        @Override
+        public String refresh() {
+            return "https://open.feishu.cn/open-apis/authen/v1/refresh_access_token";
+        }
     }
 }

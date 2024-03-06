@@ -2853,6 +2853,8 @@ idSource: {
     lockModalContent: "更改“ID属性”字段可能对用户识别产生重大影响,请在继续之前确认您理解此更改的影响.",
     payUserTag: "高级",
     addOAuthProvider: "添加身份源",
+    clientID: "客户端ID(Client ID)",
+    clientSecret: "客户端密钥(Client Secret)",
     },
     slotControl: {
     configSlotView: "配置槽视图",

@@ -1,10 +1,7 @@
 package org.lowcoder.api.authentication.service.factory;
 
 import static java.util.Objects.requireNonNull;
-import static org.lowcoder.sdk.constants.AuthSourceConstants.GITHUB;
-import static org.lowcoder.sdk.constants.AuthSourceConstants.GITHUB_NAME;
-import static org.lowcoder.sdk.constants.AuthSourceConstants.GOOGLE;
-import static org.lowcoder.sdk.constants.AuthSourceConstants.GOOGLE_NAME;
+import static org.lowcoder.sdk.constants.AuthSourceConstants.*;
 
 import java.util.Set;
 
@@ -26,6 +23,7 @@ public class AuthConfigFactoryImpl implements AuthConfigFactory {
         return switch (authConfigRequest.getAuthType()) {
             case AuthTypeConstants.FORM -> buildEmailAuthConfig(authConfigRequest, enable);
             case AuthTypeConstants.GITHUB -> buildOauth2SimpleAuthConfig(GITHUB, GITHUB_NAME, authConfigRequest, enable);
+            case AuthTypeConstants.FEISHU -> buildOauth2SimpleAuthConfig(FEISHU, FEISHU_NAME, authConfigRequest, enable);
             case AuthTypeConstants.GOOGLE -> buildOauth2SimpleAuthConfig(GOOGLE, GOOGLE_NAME, authConfigRequest, enable);
             case AuthTypeConstants.ORY -> buildOauth2OryAuthConfig(authConfigRequest, enable);
             case AuthTypeConstants.KEYCLOAK -> buildOauth2KeycloakAuthConfig(authConfigRequest, enable);
@@ -40,7 +38,8 @@ public class AuthConfigFactoryImpl implements AuthConfigFactory {
                 AuthTypeConstants.GITHUB,
                 AuthTypeConstants.GOOGLE,
                 AuthTypeConstants.ORY,
-                AuthTypeConstants.KEYCLOAK
+                AuthTypeConstants.KEYCLOAK,
+                AuthTypeConstants.FEISHU
         );
     }
 

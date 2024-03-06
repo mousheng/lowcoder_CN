@@ -2906,6 +2906,8 @@ export const en = {
     "lockModalContent": "Changing the 'ID Attribute' Field Can Have Significant Impacts on User Identification. Please Confirm That You Understand the Implications of This Change Before Proceeding.",
     "payUserTag": "Premium",
     "addOAuthProvider": "add OAuth Provider",
+    "clientID": "Client ID",
+    "clientSecret": "Client Secret",
   },
   "slotControl": {
     "configSlotView": "Configure Slot View"

@@ -52,6 +52,7 @@ public class Oauth2SimpleAuthConfig extends AbstractAuthConfig {
         return switch (authType) {
             case AuthTypeConstants.GOOGLE -> replaceAuthUrlClientIdPlaceholder(Oauth2Constants.GOOGLE_AUTHORIZE_URL);
             case AuthTypeConstants.GITHUB -> replaceAuthUrlClientIdPlaceholder(Oauth2Constants.GITHUB_AUTHORIZE_URL);
+            case AuthTypeConstants.FEISHU -> replaceAuthUrlClientIdPlaceholder(Oauth2Constants.FEISHU_AUTHORIZE_URL);
             case AuthTypeConstants.ORY -> replaceAuthUrlClientIdPlaceholder(Oauth2Constants.ORY_AUTHORIZE_URL);
             case AuthTypeConstants.KEYCLOAK -> replaceAuthUrlClientIdPlaceholder(Oauth2Constants.KEYCLOAK_AUTHORIZE_URL);
             default -> null;

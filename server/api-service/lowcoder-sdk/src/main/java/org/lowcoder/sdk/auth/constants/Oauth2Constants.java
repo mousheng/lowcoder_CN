@@ -19,6 +19,11 @@ public class Oauth2Constants {
             + "&state=" + STATE_PLACEHOLDER
             + "&scope=";
 
+    public static final String FEISHU_AUTHORIZE_URL = "https://open.feishu.cn/open-apis/authen/v1/index?"
+            +"redirect_uri=" + REDIRECT_URL_PLACEHOLDER
+            +"&app_id="+ CLIENT_ID_PLACEHOLDER
+            +"&state="+ STATE_PLACEHOLDER;
+
     public static final String GOOGLE_AUTHORIZE_URL = "https://accounts.google.com/o/oauth2/v2/auth"
             + "?response_type=code"
             + "&client_id=" + CLIENT_ID_PLACEHOLDER

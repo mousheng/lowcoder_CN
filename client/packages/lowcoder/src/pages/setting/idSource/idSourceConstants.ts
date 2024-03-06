@@ -7,6 +7,7 @@ export enum AuthType {
   Github = "GITHUB",
   Ory = "ORY",
   KeyCloak = "KEYCLOAK",
+  Feishu = "FEISHU",
 }
 
 export const IdSource = [
@@ -15,14 +16,15 @@ export const IdSource = [
   AuthType.Form,
   AuthType.Ory,
   AuthType.KeyCloak,
+  AuthType.Feishu,
 ];
 
 export const validatorOptions = [];
 
 export const clientIdandSecretConfig = {
-  clientId: "Client ID",
+  clientId: trans("idSource.clientID"),
   clientSecret: {
-    label: "Client secret",
+    label: trans("idSource.clientSecret"),
     isPassword: true,
   },
 };
@@ -62,9 +64,14 @@ export const authConfig = {
       scope: "Scope",
     },
   },
+  [AuthType.Feishu]: {
+    sourceName: "Feishu",
+    sourceValue: AuthType.Feishu,
+    form: clientIdandSecretConfig,
+  },
 } as { [key: string]: { sourceName: string; sourceValue: AuthType, form: FormItemType } };
 
-export const FreeTypes = [AuthType.Google, AuthType.Github, AuthType.Form, AuthType.Ory, AuthType.KeyCloak];
+export const FreeTypes = [AuthType.Google, AuthType.Github, AuthType.Form, AuthType.Ory, AuthType.KeyCloak, AuthType.Feishu];
 
 export const authTypeDisabled = (type: AuthType, enableEnterpriseLogin?: boolean) => {
   return !FreeTypes.includes(type);

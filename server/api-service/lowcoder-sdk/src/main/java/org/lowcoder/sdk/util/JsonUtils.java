@@ -45,6 +45,7 @@ public final class JsonUtils {
         // register sub types
         OBJECT_MAPPER.registerSubtypes(new NamedType(EmailAuthConfig.class, FORM));
         OBJECT_MAPPER.registerSubtypes(new NamedType(Oauth2SimpleAuthConfig.class, GITHUB));
+        OBJECT_MAPPER.registerSubtypes(new NamedType(Oauth2SimpleAuthConfig.class, FEISHU));
         OBJECT_MAPPER.registerSubtypes(new NamedType(Oauth2SimpleAuthConfig.class, GOOGLE));
         OBJECT_MAPPER.registerSubtypes(new NamedType(Oauth2OryAuthConfig.class, ORY));
         OBJECT_MAPPER.registerSubtypes(new NamedType(Oauth2KeycloakAuthConfig.class, KEYCLOAK));

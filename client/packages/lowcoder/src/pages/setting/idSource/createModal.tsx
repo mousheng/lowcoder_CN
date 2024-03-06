@@ -89,7 +89,7 @@ function CreateModal(props: CreateModalProp) {
       width="500px"
       title={trans("idSource.addOAuthProvider")}
       open={modalVisible}
-      okText={"Save and Enable"}
+      okText={trans("idSource.saveBtn")}
       okButtonProps={{
         loading: saveLoading
       }}
