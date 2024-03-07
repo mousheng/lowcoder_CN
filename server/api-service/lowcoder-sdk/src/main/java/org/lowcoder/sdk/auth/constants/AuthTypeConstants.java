@@ -11,4 +11,5 @@ public class AuthTypeConstants {
     public static final String ORY = "ORY";
     public static final String KEYCLOAK = "KEYCLOAK";
     public static final String FEISHU = "FEISHU";
+    public static final String DINGTALK = "DINGTALK";
 }

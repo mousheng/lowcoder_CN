@@ -17,7 +17,8 @@ import {
   OryLoginIcon,
   KeyCloakLoginIcon,
   EmailLoginIcon,
-  FeishuLoginIcon
+  FeishuLoginIcon,
+  DingTalkLoginIcon,
 } from "assets/icons";
 
 export type AuthInviteInfo = InviteInfo & { invitationId: string };
@@ -46,7 +47,7 @@ export type OAuthLocationState = OauthRequestParam & {
   autoJump?: boolean;
 };
 
-export type ThirdPartyAuthType = "OAUTH2" | "CAS" | "LDAP" | "JWT" | "FEISHU";
+export type ThirdPartyAuthType = "OAUTH2" | "CAS" | "LDAP" | "JWT" | "FEISHU" | "DINGTALK";
 
 export type ThirdPartyConfigType = {
   url: string;
@@ -91,7 +92,7 @@ export const AuthRoutes: Array<{ path: string; component: React.ComponentType<an
   { path: ORG_AUTH_REGISTER_URL, component: UserRegister },
 ];
 
-export type ServerAuthType = "GOOGLE" | "GITHUB" | "FORM" | "KEYCLOAK" | "ORY" | "FEISHU";
+export type ServerAuthType = "GOOGLE" | "GITHUB" | "FORM" | "KEYCLOAK" | "ORY" | "FEISHU" | "DINGTALK";
 
 export type ServerAuthTypeInfoValueType = { logo: string; isOAuth2?: boolean };
 export const ServerAuthTypeInfo: { [key in ServerAuthType]?: ServerAuthTypeInfoValueType } = {
@@ -113,6 +114,10 @@ export const ServerAuthTypeInfo: { [key in ServerAuthType]?: ServerAuthTypeInfoV
   },
   FEISHU: {
     logo: FeishuLoginIcon,
+    isOAuth2: true
+  },
+  DINGTALK: {
+    logo: DingTalkLoginIcon,
     isOAuth2: true
   },
   FORM: { logo: EmailLoginIcon },

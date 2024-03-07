@@ -2908,6 +2908,8 @@ export const en = {
     "addOAuthProvider": "add OAuth Provider",
     "clientID": "Client ID",
     "clientSecret": "Client Secret",
+    "feishu": "Feishu",
+    "dingTalk": "DingTalk",
   },
   "slotControl": {
     "configSlotView": "Configure Slot View"

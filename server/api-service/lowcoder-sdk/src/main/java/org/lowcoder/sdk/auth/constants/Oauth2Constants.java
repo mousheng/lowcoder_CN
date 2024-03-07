@@ -20,9 +20,17 @@ public class Oauth2Constants {
             + "&scope=";
 
     public static final String FEISHU_AUTHORIZE_URL = "https://open.feishu.cn/open-apis/authen/v1/index?"
-            +"redirect_uri=" + REDIRECT_URL_PLACEHOLDER
-            +"&app_id="+ CLIENT_ID_PLACEHOLDER
-            +"&state="+ STATE_PLACEHOLDER;
+            + "redirect_uri=" + REDIRECT_URL_PLACEHOLDER
+            + "&app_id=" + CLIENT_ID_PLACEHOLDER
+            + "&state=" + STATE_PLACEHOLDER;
+
+    public static final String DINGTALK_AUTHORIZE_URL = "https://login.dingtalk.com/oauth2/auth?"
+            + "redirect_uri=" + REDIRECT_URL_PLACEHOLDER
+            + "&response_type=code"
+            + "&client_id=" + CLIENT_ID_PLACEHOLDER
+            + "&scope=openid"
+            + "&state=" + STATE_PLACEHOLDER
+            + "&prompt=consent";
 
     public static final String GOOGLE_AUTHORIZE_URL = "https://accounts.google.com/o/oauth2/v2/auth"
             + "?response_type=code"
@@ -33,7 +41,7 @@ public class Oauth2Constants {
             + "&scope=openid email profile"
             + "&prompt=select_account";
 
-    public static final String ORY_AUTHORIZE_URL = BASE_URL_PLACEHOLDER +  "/oauth2/auth"
+    public static final String ORY_AUTHORIZE_URL = BASE_URL_PLACEHOLDER + "/oauth2/auth"
             + "?response_type=code"
             + "&client_id=" + CLIENT_ID_PLACEHOLDER
             + "&redirect_uri=" + REDIRECT_URL_PLACEHOLDER

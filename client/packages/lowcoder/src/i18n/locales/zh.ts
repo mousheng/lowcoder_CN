@@ -2855,6 +2855,8 @@ idSource: {
     addOAuthProvider: "添加身份源",
     clientID: "客户端ID(Client ID)",
     clientSecret: "客户端密钥(Client Secret)",
+    feishu: "飞书",
+    dingTalk: "钉钉",
     },
     slotControl: {
     configSlotView: "配置槽视图",

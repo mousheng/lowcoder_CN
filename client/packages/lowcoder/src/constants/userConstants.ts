@@ -9,6 +9,7 @@ export const UserConnectionSource = {
   google: "GOOGLE",
   github: "GITHUB",
   feishu: "FEISHU",
+  dingtalk: "DINGTALK",
 };
 
 export type UserConnection = {

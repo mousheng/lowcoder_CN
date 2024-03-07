@@ -26,6 +26,7 @@ public class Oauth2AuthRequestFactory implements AuthRequestFactory<OAuth2Reques
         return switch (context.getAuthConfig().getAuthType()) {
             case GITHUB -> new GithubRequest((Oauth2SimpleAuthConfig) context.getAuthConfig());
             case FEISHU -> new FeishuRequest((Oauth2SimpleAuthConfig) context.getAuthConfig());
+            case DINGTALK -> new DingTalkRequest((Oauth2SimpleAuthConfig) context.getAuthConfig());
             case GOOGLE -> new GoogleRequest((Oauth2SimpleAuthConfig) context.getAuthConfig());
             case ORY -> new OryRequest((Oauth2OryAuthConfig) context.getAuthConfig());
             case KEYCLOAK -> new KeycloakRequest((Oauth2KeycloakAuthConfig)context.getAuthConfig());
@@ -40,6 +41,7 @@ public class Oauth2AuthRequestFactory implements AuthRequestFactory<OAuth2Reques
                 GOOGLE,
                 ORY,
                 KEYCLOAK,
-                FEISHU);
+                FEISHU,
+                DINGTALK);
     }
 }

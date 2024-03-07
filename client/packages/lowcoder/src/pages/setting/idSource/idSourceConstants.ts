@@ -8,6 +8,7 @@ export enum AuthType {
   Ory = "ORY",
   KeyCloak = "KEYCLOAK",
   Feishu = "FEISHU",
+  DingTalk = "DINGTALK",
 }
 
 export const IdSource = [
@@ -17,6 +18,7 @@ export const IdSource = [
   AuthType.Ory,
   AuthType.KeyCloak,
   AuthType.Feishu,
+  AuthType.DingTalk,
 ];
 
 export const validatorOptions = [];
@@ -65,13 +67,18 @@ export const authConfig = {
     },
   },
   [AuthType.Feishu]: {
-    sourceName: "Feishu",
+    sourceName: trans("idSource.feishu"),
     sourceValue: AuthType.Feishu,
+    form: clientIdandSecretConfig,
+  },
+  [AuthType.DingTalk]: {
+    sourceName: trans("idSource.dingTalk"),
+    sourceValue: AuthType.DingTalk,
     form: clientIdandSecretConfig,
   },
 } as { [key: string]: { sourceName: string; sourceValue: AuthType, form: FormItemType } };
 
-export const FreeTypes = [AuthType.Google, AuthType.Github, AuthType.Form, AuthType.Ory, AuthType.KeyCloak, AuthType.Feishu];
+export const FreeTypes = [AuthType.Google, AuthType.Github, AuthType.Form, AuthType.Ory, AuthType.KeyCloak, AuthType.Feishu, AuthType.DingTalk];
 
 export const authTypeDisabled = (type: AuthType, enableEnterpriseLogin?: boolean) => {
   return !FreeTypes.includes(type);

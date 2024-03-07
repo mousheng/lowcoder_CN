@@ -11,6 +11,7 @@ public class AuthSourceConstants {
     public static final String GOOGLE = "GOOGLE";
     public static final String GITHUB = "GITHUB";
     public static final String FEISHU = "FEISHU";
+    public static final String DINGTALK = "DINGTALK";
     public static final String ORY = "ORY";
     public static final String KEYCLOAK = "KEYCLOAK";
 
@@ -18,6 +19,7 @@ public class AuthSourceConstants {
     public static final String GOOGLE_NAME = "Google";
     public static final String GITHUB_NAME = "Github";
     public static final String FEISHU_NAME = "Feishu";
+    public static final String DINGTALK_NAME = "DingTalk";
     public static final String ORY_NAME = "Ory";
     public static final String KEYCLOAK_NAME = "Keycloak";
 
