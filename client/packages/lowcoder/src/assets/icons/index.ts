@@ -6,6 +6,7 @@ import GeneralLoginIcon from "./icon-login-general.svg";
 import EmailLoginIcon from "./icon-login-email.svg";
 import FeishuLoginIcon from "./icon-login-feishu.svg"
 import DingTalkLoginIcon from "./icon-login-dingtalk.svg"
+import WeiChatLoginIcon from "./icon-login-wechat.svg"
 
 export { ReactComponent as ViewDocIcon } from "./icon-viewDoc.svg";
 export { ReactComponent as VideoIcon } from "./watch-video.svg";
@@ -23,4 +24,5 @@ export {
   EmailLoginIcon,
   FeishuLoginIcon,
   DingTalkLoginIcon,
+  WeiChatLoginIcon,
 };

@@ -2910,6 +2910,7 @@ export const en = {
     "clientSecret": "Client Secret",
     "feishu": "Feishu",
     "dingTalk": "DingTalk",
+    "weChat": "WeChat",
   },
   "slotControl": {
     "configSlotView": "Configure Slot View"

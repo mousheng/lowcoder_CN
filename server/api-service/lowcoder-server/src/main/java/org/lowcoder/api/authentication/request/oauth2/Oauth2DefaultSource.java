@@ -91,5 +91,22 @@ public enum Oauth2DefaultSource implements Oauth2Source {
         public String refresh() {
             return "https://open.feishu.cn/open-apis/authen/v1/refresh_access_token";
         }
+    },
+
+    WECHAT {
+        @Override
+        public String accessToken() {
+            return "https://api.weixin.qq.com/sns/oauth2/access_token";
+        }
+
+        @Override
+        public String userInfo() {
+            return "https://api.weixin.qq.com/sns/userinfo";
+        }
+
+        @Override
+        public String refresh() {
+            return "https://api.weixin.qq.com/sns/oauth2/refresh_token";
+        }
     }
 }

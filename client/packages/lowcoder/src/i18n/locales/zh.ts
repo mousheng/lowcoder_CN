@@ -2857,6 +2857,7 @@ idSource: {
     clientSecret: "客户端密钥(Client Secret)",
     feishu: "飞书",
     dingTalk: "钉钉",
+    weChat: "微信",
     },
     slotControl: {
     configSlotView: "配置槽视图",

@@ -10,6 +10,7 @@ export const UserConnectionSource = {
   github: "GITHUB",
   feishu: "FEISHU",
   dingtalk: "DINGTALK",
+  wechat: "WECHAT",
 };
 
 export type UserConnection = {
