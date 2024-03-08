@@ -179,48 +179,12 @@ export const timePickerControl = new UICompBuilder(childrenMap, (props) => {
           label: trans("prop.defaultValue"),
           tooltip: trans("time.formatTip"),
         })}
-        
-        
+
+
       </Section>
 
 
       <FormDataPropertyView {...children} />
-
-      {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
-        <><Section name={sectionNames.validation}>
-          {requiredPropertyView(children)}
-          {minTimePropertyView(children)}
-          {maxTimePropertyView(children)}
-          {children.customRule.propertyView({})}
-        </Section>
-        <Section name={sectionNames.interaction}>
-          {children.onEvent.getPropertyView()}
-          {disabledPropertyView(children)}
-          {hiddenPropertyView(children)}
-        </Section></>
-      )}
-
-      {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && children.label.getPropertyView()}
-      {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
-        <Section name={sectionNames.layout}>
-          {children.format.propertyView({ label: trans("time.format") })}
-          {children.placeholder.propertyView({ label: trans("time.placeholderText") })}
-        </Section>
-      )}
-
-      {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
-        <Section name={sectionNames.advanced}>
-          {commonAdvanceSection(children)}
-          {children.use12Hours.propertyView({ label: trans("prop.use12Hours") })}
-          {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
-        </Section>
-      )}
-
-      {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
-        <Section name={sectionNames.style}>
-          {children.style.getPropertyView()}
-        </Section>
-      )}
 
       {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
         <><Section name={sectionNames.validation}>
@@ -330,41 +294,6 @@ export const timeRangeControl = (function () {
           })}
         </Section>
 
-        {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
-          <><Section name={sectionNames.validation}>
-            {requiredPropertyView(children)}
-            {minTimePropertyView(children)}
-            {maxTimePropertyView(children)}
-            {children.customRule.propertyView({})}
-          </Section>
-          <Section name={sectionNames.interaction}>
-            {children.onEvent.getPropertyView()}
-            {disabledPropertyView(children)}
-            {hiddenPropertyView(children)}
-          </Section></>
-        )}
-
-        {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && children.label.getPropertyView()}
-        {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
-          <Section name={sectionNames.layout}>
-            {children.format.propertyView({ label: trans("time.format") })}
-            {children.placeholder.propertyView({ label: trans("time.placeholderText") })}
-          </Section>
-        )}
-
-        {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
-          <Section name={sectionNames.advanced}>
-            {commonAdvanceSection(children)}
-            {children.use12Hours.propertyView({ label: trans("prop.use12Hours") })}
-            {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
-          </Section>
-        )}
-
-        {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
-          <Section name={sectionNames.style}>
-            {children.style.getPropertyView()}
-          </Section>
-        )}
         {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
           <><Section name={sectionNames.validation}>
             {requiredPropertyView(children)}

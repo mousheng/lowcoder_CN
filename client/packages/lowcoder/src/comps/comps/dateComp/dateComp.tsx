@@ -226,24 +226,9 @@ export const datePickerControl = new UICompBuilder(childrenMap, (props) => {
             </Section>
           </>
         )}
-        {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
-          <><Section name={sectionNames.validation}>
-              {requiredPropertyView(children)}
-              {dateValidationFields(children)}
-              {timeValidationFields(children)}
-              {children.customRule.propertyView({})}
-            </Section>
-            <Section name={sectionNames.interaction}>
-              {children.onEvent.getPropertyView()}
-              {disabledPropertyView(children)}
-              {hiddenPropertyView(children)}
-            </Section>
-          </>
-        )}
 
         {/*{commonAdvanceSection(children, children.dateType.value === "date")}*/}
         {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && children.label.getPropertyView()}
-        {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && children.label.getPropertyView()}
 
         {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
           <Section name={sectionNames.layout}>
@@ -251,27 +236,7 @@ export const datePickerControl = new UICompBuilder(childrenMap, (props) => {
             {children.placeholder.propertyView({ label: trans("date.placeholderText") })}
           </Section>
         )}
-        
-        {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
-           <><Section name={sectionNames.advanced}>
-            {timeFields(children, isMobile)}
-            {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
-          </Section></>
-        )}
-        {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && !isMobile && commonAdvanceSection(children)}
 
-        {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
-          <Section name={sectionNames.style}>
-            {children.style.getPropertyView()}
-          </Section>
-        )}
-        {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
-          <Section name={sectionNames.layout}>
-            {formatPropertyView({ children })}
-            {children.placeholder.propertyView({ label: trans("date.placeholderText") })}
-          </Section>
-        )}
-        
         {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
            <><Section name={sectionNames.advanced}>
             {timeFields(children, isMobile)}
@@ -395,7 +360,7 @@ export const dateRangeControl = (function () {
               {children.placeholder.propertyView({ label: trans("date.placeholderText") })}
             </Section>
           )}
-          
+
           {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
             <><Section name={sectionNames.advanced}>
               {timeFields(children, isMobile)}
