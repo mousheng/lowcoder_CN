@@ -1273,8 +1273,8 @@ var uiCompMap: Registry = {
     keywords: trans("uiComp.ganttKeywords"),
     comp: GanttComp,
     layoutInfo: {
-      w: 6,
-      h: 5,
+      w: 18,
+      h: 45,
     },
   },
   transfer: {
