@@ -1135,10 +1135,6 @@ var uiCompMap: Registry = {
     icon: TextCompIcon,
     keywords: trans("uiComp.textCompKeywords"),
     comp: TextComp,
-    layoutInfo: {
-      w: 6,
-      h: 24,
-    },
   },
 
   colorPicker: {

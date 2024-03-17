@@ -108,33 +108,6 @@ const typeOptions = [
   },
 ] as const;
 
-const fontSizeOptions = [
-  {
-    label: "S",
-    value: "0.875rem",
-  },
-  {
-    label: "M",
-    value: "1rem",
-  },
-  {
-    label: "L",
-    value: "1.25rem",
-  },
-  {
-    label: "XL",
-    value: "1.875rem",
-  },
-  {
-    label: "XXL",
-    value: "3rem",
-  },
-  {
-    label: "3XL",
-    value: "3.75rem",
-  },
-] as const;
-
 const VerticalAlignmentOptions = [
   { label: <AlignTop />, value: "flex-start" },
   { label: <AlignVerticalCenter />, value: "center" },
@@ -156,26 +129,9 @@ let TextTmpComp = (function () {
     style: styleControl(TextStyle),
     margin: MarginControl,
     padding: PaddingControl,
-    fontSize: dropdownControl(fontSizeOptions, "0.875rem"),
-    bold: BoolControl,
-    italic: BoolControl,
   };
   return new UICompBuilder(childrenMap, (props) => {
     const value = props.text.value;
-    const calcLineHeight = (fontSize: string) => {
-      if (fontSize === '0.875rem')
-        return '18px';
-      else if (fontSize === '1rem')
-        return '18px'
-      else if (fontSize === '1.25rem')
-        return '24px'
-      else if (fontSize === '1.875rem')
-        return '40px'
-      else if (fontSize === '3rem')
-        return '66px'
-      else if (fontSize === '3.75rem')
-        return '80px'
-    }
     return (
       <TextContainer
         $type={props.type}
@@ -184,10 +140,6 @@ let TextTmpComp = (function () {
           justifyContent: props.horizontalAlignment,
           alignItems: props.autoHeight ? "center" : props.verticalAlignment,
           textAlign: props.horizontalAlignment,
-          fontSize: props.fontSize,
-          fontWeight: props.bold ? "bold" : "normal",
-          fontStyle: props.italic ? "italic" : "normal",
-          lineHeight: calcLineHeight(props.fontSize),
         }}
       >
         {props.type === "markdown" ? <TacoMarkDown>{value}</TacoMarkDown> : value}
@@ -231,18 +183,6 @@ let TextTmpComp = (function () {
               </Section>
             </>
           )}
-          {children.type.getView() === 'text' &&
-            (<Section name={trans("textShow.fontStyle")}>
-              {children.fontSize.propertyView({
-                label: trans("textShow.fontSize"),
-              })}
-              {children.bold.propertyView({
-                label: trans("textShow.bold"),
-              })}
-              {children.italic.propertyView({
-                label: trans("textShow.italic"),
-              })}
-            </Section>)}
         </>
       );
     })
