@@ -153,8 +153,7 @@ let TmpModalComp = (function () {
               getContainer={() => document.querySelector(`#${CanvasContainerID}`) || document.body}
               footer={null}
               closeIcon={props.showCloseButton}
-              bodyStyle={bodyStyle}
-              style={{ top: props.defaultStartHeight }}
+              style={{ top: props.defaultStartHeight,...bodyStyle }}
               width={width}
               onCancel={(e) => {
                 props.visible.onChange(false);
