@@ -353,11 +353,11 @@ export const TabbedContainerBaseComp = (function () {
                 {children.style.getPropertyView()}
               </Section>
               {children.showHeader.getView() && (
-                <Section name={"Header Style"}>
+                <Section name={trans("container.headerStyle")}>
                   { children.headerStyle.getPropertyView() }
                 </Section>
               )}
-              <Section name={"Body Style"}>
+              <Section name={trans("container.bodyStyle")}>
                 { children.bodyStyle.getPropertyView() }
               </Section>
             </>

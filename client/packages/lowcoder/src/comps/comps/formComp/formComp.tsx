@@ -236,17 +236,17 @@ const FormBaseComp = (function () {
                 {children.container.stylePropertyView()}
               </Section>
               {children.container.children.showHeader.getView() && (
-                <Section name={"Header Style"}>
+                <Section name={trans("container.headerStyle")}>
                   { children.container.headerStylePropertyView() }
                 </Section>
               )}
               {children.container.children.showBody.getView() && (
-                <Section name={"Body Style"}>
+                <Section name={trans("container.bodyStyle")}>
                   { children.container.bodyStylePropertyView() }
                 </Section>
               )}
               {children.container.children.showFooter.getView() && (
-                <Section name={"Footer Style"}>
+                <Section name={trans("container.footStyle")}>
                   { children.container.footerStylePropertyView() }
                 </Section>
               )}

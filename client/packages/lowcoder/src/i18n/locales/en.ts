@@ -1546,7 +1546,12 @@ export const en = {
     "falseValues": "Text When False",
     "allColumn": "All",
     "visibleColumn": "Visible",
-    "emptyColumns": "No Columns Are Currently Visible"
+    "emptyColumns": "No Columns Are Currently Visible",
+    "tableStyle": "Table Style",
+    "headerStyle": "Header Style",
+    "toolbarStyle": "Toolbar Style",
+    "rowStyle": "Row Style",
+    "columnStyle": "Column Style",
   },
 
 
@@ -1693,6 +1698,9 @@ export const en = {
   "container": {
     "title": "Displayed Container Title",
     "showScroll": "Show scroll",
+    "headerStyle": "Header Style",
+    "bodyStyle": "Body Style",
+    "footStyle": "Foot Style",
   },
   "drawer": {
     "closePosition": "Close Button Placement",

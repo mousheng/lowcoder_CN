@@ -26,7 +26,7 @@ export const ContainerBaseComp = (function () {
   return new ContainerCompBuilder(childrenMap, (props, dispatch) => {
     return (
       <DisabledContext.Provider value={props.disabled}>
-          <TriContainer {...props} />        
+        <TriContainer {...props} />
       </DisabledContext.Provider>
     );
   })
@@ -36,8 +36,9 @@ export const ContainerBaseComp = (function () {
           {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
             <Section name={sectionNames.interaction}>
               {disabledPropertyView(children)}
-            {!children.container.children.autoHeight.getView() && children.showScroll.propertyView({
-            label: trans("container.showScroll")})}
+              {!children.container.children.autoHeight.getView() && children.showScroll.propertyView({
+                label: trans("container.showScroll")
+              })}
               {hiddenPropertyView(children)}
             </Section>
           )}
@@ -45,13 +46,33 @@ export const ContainerBaseComp = (function () {
           {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
             <><Section name={sectionNames.layout}>
               {children.container.getPropertyView()}
-            </Section><Section name={sectionNames.style}>{children.container.stylePropertyView()}</Section></>
+            </Section>
+              <Section name={sectionNames.style}>
+                {children.container.stylePropertyView()}
+              </Section>
+              {children.container.children.showHeader.getView() && (
+                <Section name={trans("container.headerStyle")}>
+                  {children.container.headerStylePropertyView()}
+                </Section>
+              )}
+              {children.container.children.showBody.getView() && (
+                <Section name={trans("container.bodyStyle")}>
+                  {children.container.bodyStylePropertyView()}
+                </Section>
+              )}
+              {children.container.children.showFooter.getView() && (
+                <Section name={trans("container.footStyle")}>
+                  {children.container.footerStylePropertyView()}
+                </Section>
+              )}
+            </>
+
           )}
         </>
       );
     })
     .build();
-})(); 
+})();
 
 // Compatible with old data
 function convertOldContainerParams(params: CompParams<any>) {

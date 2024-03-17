@@ -1523,6 +1523,11 @@ table: {
     allColumn: "全部",
     visibleColumn: "可见",
     emptyColumns: "当前没有可见列",
+    tableStyle: "表格样式",
+    headerStyle: "顶部样式",
+    toolbarStyle: "工具栏样式",
+    rowStyle: "行样式",
+    columnStyle: "列样式",
 },
 image: {
     src: "图片链接",
@@ -1662,6 +1667,9 @@ selectionControl: {
 container: {
     title: "容器标题",
     showScroll: "显示滚动条",
+    headerStyle: "头部样式",
+    bodyStyle: "主体样式",
+    footStyle: "底部样式",
 },
 drawer: {
     closePosition: "关闭位置",
