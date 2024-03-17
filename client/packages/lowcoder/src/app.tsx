@@ -51,6 +51,7 @@ import { SystemWarning } from "./components/SystemWarning";
 import { getBrandingConfig } from "./redux/selectors/configSelectors";
 import { buildMaterialPreviewURL } from "./util/materialUtils";
 import GlobalInstances from 'components/GlobalInstances';
+import ReactDOM from "react-dom";
 
 const LazyUserAuthComp = React.lazy(() => import("pages/userAuth"));
 const LazyInviteLanding = React.lazy(() => import("pages/common/inviteLanding"));
@@ -192,11 +193,17 @@ const AppIndexWithProps = connect(mapStateToProps, mapDispatchToProps)(AppIndex)
 export function bootstrap() {
   initApp();
   loadComps();
-  const container = document.getElementById("root");
-  const root = createRoot(container!);
-  root.render(
+  // const container = document.getElementById("root");
+  // const root = createRoot(container!);
+  // root.render(
+  //   <Provider store={reduxStore}>
+  //     <AppIndexWithProps />
+  //   </Provider>
+  // );
+  ReactDOM.render(
     <Provider store={reduxStore}>
       <AppIndexWithProps />
-    </Provider>
+    </Provider>,
+    document.getElementById("root")
   );
 }
