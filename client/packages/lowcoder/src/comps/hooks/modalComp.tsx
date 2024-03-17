@@ -102,6 +102,7 @@ let TmpModalComp = (function () {
       showMask: withDefault(BoolControl, true),
       showCloseButton: BoolControl.DEFAULT_TRUE,
       defaultStartHeight: withDefault(StringControl, '20%'),
+      title: StringControl,
     },
     (props, dispatch) => {
       const userViewMode = useUserViewMode();
@@ -144,6 +145,7 @@ let TmpModalComp = (function () {
         <BackgroundColorContext.Provider value={props.style.background}>
           <ModalWrapper>
             <Modal
+              title={props.title}
               height={height}
               resizeHandles={resizeHandles}
               onResizeStop={onResizeStop}
@@ -153,7 +155,7 @@ let TmpModalComp = (function () {
               getContainer={() => document.querySelector(`#${CanvasContainerID}`) || document.body}
               footer={null}
               closeIcon={props.showCloseButton}
-              style={{ top: props.defaultStartHeight,...bodyStyle }}
+              style={{ top: props.defaultStartHeight, ...bodyStyle }}
               width={width}
               onCancel={(e) => {
                 props.visible.onChange(false);
@@ -182,6 +184,7 @@ let TmpModalComp = (function () {
     .setPropertyViewFn((children) => (
       <>
         <Section name={sectionNames.basic}>
+          {children.title.propertyView({ label: trans("title") })}
           {children.autoHeight.getPropertyView()}
           {!children.autoHeight.getView() &&
             children.height.propertyView({
