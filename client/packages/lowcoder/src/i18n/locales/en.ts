@@ -425,6 +425,9 @@ export const en = {
     "tableCellText": "Cell Text",
     "selectedRowBackground": "Selected Row Background",
     "hoverRowBackground": "Hover Row Background",
+    "hoverBackground":"Hover Background",
+    "textTransform":"Text Transform",
+    "textDecoration":"Text Decoration",
     "alternateRowBackground": "Alternate Row Background",
     "tableHeaderBackground": "Header Background",
     "tableHeaderText": "Header Text",
@@ -1770,7 +1773,7 @@ export const en = {
     "advanced": "Advanced",
     "lab": "Lab",
     "branding": "Branding",
-    "oauthProviders": "OAuth Providers",
+    "oauthProviders": "User Authentication",
     "appUsage": "App Usage Logs",
     "environments": "Environments",
     "premium": "Premium"
@@ -1977,6 +1980,15 @@ export const en = {
   },
   "messageComp": {
     "info": "Send a Notification",
+    "loading": "Send a Loading Notification",
+    "success": "Send a Success Notification",
+    "warn": "Send a Warning Notification",
+    "error": "Send an Error Notification"
+  },
+  "toastComp": {
+    "destroy": "close a Notification",
+    "info": "Send a Notification",
+    "loading": "Send a Loading Notification",
     "success": "Send a Success Notification",
     "warn": "Send a Warning Notification",
     "error": "Send an Error Notification"
@@ -2238,6 +2250,9 @@ export const en = {
     "themeSetting": "Applied Style Theme",
     "themeSettingDefault": "Default",
     "themeCreate": "Create Theme",
+    "appTitle": "Title",
+    "appDescription": "Description",
+    "appCategory": "Category",
     "pageSetting": "Page settings", //added by Mousheng
     "HeaderSetting": "Header setting",
     "HeaderSettingDes": "When previewing you can also manually set the URL parameter template=true to hide the Header",
@@ -2469,6 +2484,7 @@ export const en = {
     "module": "Module",
     "trash": "Trash",
     "marketplace": "Marketplace",
+    "allCategories": "All Categories",
     "queryLibrary": "Query Library",
     "datasource": "Data Sources",
     "selectDatasourceType": "Select Data Source Type",
@@ -2876,7 +2892,7 @@ export const en = {
     "table": "Additional Documentation for Table Component"
   },
   "idSource": {
-    "title": "OAuth Providers",
+    "title": "User Authentication Provider",
     "form": "Email",
     "pay": "Premium",
     "enable": "Enable",

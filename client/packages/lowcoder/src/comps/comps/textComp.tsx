@@ -31,6 +31,8 @@ const getStyle = (style: TextStyleType) => {
     font-weight: ${style.textWeight} !important;
     font-family: ${style.fontFamily} !important;
     font-style:${style.fontStyle} !important;
+    text-transform:${style.textTransform} !important;
+    text-decoration:${style.textDecoration} !important;
     background-color: ${style.background};
     .markdown-body a {
       color: ${style.links};
@@ -195,7 +197,6 @@ let TextTmpComp = (function () {
     .setPropertyViewFn((children) => {
       return (
         <>
-
           <Section name={sectionNames.basic}>
             {children.type.propertyView({
               label: trans("value"),
@@ -242,32 +243,6 @@ let TextTmpComp = (function () {
                 label: trans("textShow.italic"),
               })}
             </Section>)}
-
-          {["logic", "both"].includes(useContext(EditorContext).editorModeStatus) && (
-            <Section name={sectionNames.interaction}>
-              {hiddenPropertyView(children)}
-            </Section>
-          )}
-
-          {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
-            <>
-              <Section name={sectionNames.layout}>
-                {children.autoHeight.getPropertyView()}
-                {!children.autoHeight.getView() &&
-                  children.verticalAlignment.propertyView({
-                    label: trans("textShow.verticalAlignment"),
-                    radioButton: true,
-                  })}
-                {children.horizontalAlignment.propertyView({
-                  label: trans("textShow.horizontalAlignment"),
-                  radioButton: true,
-                })}
-              </Section>
-              <Section name={sectionNames.style}>
-                {children.style.getPropertyView()}
-              </Section>
-            </>
-          )}
         </>
       );
     })

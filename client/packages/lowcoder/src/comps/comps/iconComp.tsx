@@ -151,3 +151,4 @@ IconBasicComp = class extends IconBasicComp {
 export const IconComp = withExposingConfigs(IconBasicComp, [
   NameConfigHidden,
 ]);
+

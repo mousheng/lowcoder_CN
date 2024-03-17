@@ -13,6 +13,7 @@ const AllHookComp = [
   "momentJsLib",
   "utils",
   "message",
+  "toast",
   "localStorage",
   "currentUser",
   "screenInfo",
@@ -67,6 +68,7 @@ const HookCompConfig: Record<
   },
   utils: { category: "hide" },
   message: { category: "hide" },
+  toast: { category: "hide" },
 };
 
 // Get hook component category

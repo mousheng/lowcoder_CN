@@ -1,4 +1,5 @@
-import { Tabs, Badge } from "antd";
+import { default as Tabs } from "antd/es/tabs";
+import { default as Badge } from "antd/es/badge";
 import { JSONObject, JSONValue } from "util/jsonTypes";
 import { CompAction, CompActionTypes, deleteCompAction, wrapChildAction } from "lowcoder-core";
 import { DispatchType, RecordConstructorToView, wrapDispatch } from "lowcoder-core";
@@ -131,6 +132,17 @@ const getStyle = (
           }
         }
 
+        .ant-tabs-tab-btn {
+          font-family:${style.fontFamily};
+          font-weight:${style.textWeight};
+          text-transform:${style.textTransform};
+          text-decoration:${style.textDecoration};
+          font-style:${style.fontStyle};
+        }
+
+        .ant-tabs-ink-bar {
+          background-color: ${style.accent};
+        }
         .ant-tabs-tab-active {
           background-color: ${style.activeColor};
           border-radius: 4px;

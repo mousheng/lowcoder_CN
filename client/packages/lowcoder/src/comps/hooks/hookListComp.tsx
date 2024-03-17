@@ -20,6 +20,7 @@ const defaultHookListValue = [
   { compType: "chcharLib", name: "chchar" },
   { compType: "utils", name: "utils" },
   { compType: "message", name: "message" },
+  { compType: "toast", name: "toast" },
   { compType: "localStorage", name: "localStorage" },
   { compType: "currentUser", name: "currentUser" },
   { compType: "screenInfo", name: "screenInfo" },

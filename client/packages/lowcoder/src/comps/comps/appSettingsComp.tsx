@@ -14,11 +14,13 @@ import { default as Divider } from "antd/es/divider";
 import { THEME_SETTING } from "constants/routesURL";
 import { CustomShortcutsComp } from "./customShortcutsComp";
 import { DEFAULT_THEMEID } from "comps/utils/themeUtil";
-import { dropdownControl } from "../controls/dropdownControl";
+import { StringControl } from "comps/controls/codeControl";
+import { IconControl } from "comps/controls/iconControl";
+import { dropdownControl } from "comps/controls/dropdownControl";
+import { ApplicationCategoriesEnum } from "constants/applicationConstants";
 import { isAggregationApp } from "@lowcoder-ee/util/appUtils";
 import { AppUILayoutType } from "@lowcoder-ee/constants/applicationConstants";
 import { currentApplication } from "@lowcoder-ee/redux/selectors/applicationSelector";
-import { IconControl } from "../controls/iconControl";
 
 const TITLE = trans("appSetting.title");
 const USER_DEFINE = "__USER_DEFINE";
@@ -125,9 +127,37 @@ const SettingsStyled = styled.div`
 `;
 
 const DivStyled = styled.div`
-  div {
-    width: 100%;
-    display: block;
+  > div {
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    
+    > div {
+      width: 100%;
+      display: block;
+    }
+
+    > div:first-child {
+      margin-bottom: 6px;
+    }
+    
+    .tooltipLabel {
+      white-space: nowrap;
+    }
+
+  }
+  // custom styles for icon selector
+  .app-icon {
+    > div {
+      margin-bottom: 0;
+
+      > div:first-child {
+        margin-bottom: 6px;
+      }
+      > div:nth-child(2) {
+        width: 88%;
+        display: inline-block;
+      }
+    }
   }
 `;
 
@@ -167,6 +197,17 @@ const DividerStyled = styled(Divider)`
   border-color: #e1e3eb;
 `;
 
+type AppCategoriesEnumKey = keyof typeof ApplicationCategoriesEnum
+const AppCategories = Object.keys(ApplicationCategoriesEnum).map(
+  (cat) => {
+    const value = ApplicationCategoriesEnum[cat as AppCategoriesEnumKey];
+    return {
+      label: value,
+      value: cat
+    }
+  }
+)
+
 const headerOptions = [
   {
     label: trans("appSetting.showHeader"),
@@ -190,6 +231,10 @@ const allowClickOptions = [
 ] as const;
 
 const childrenMap = {
+  title: withDefault(StringControl, ''),
+  description: withDefault(StringControl, ''),
+  icon: IconControl,
+  category: dropdownControl(AppCategories, ApplicationCategoriesEnum.BUSINESS),
   maxWidth: dropdownInputSimpleControl(OPTIONS, USER_DEFINE, "1920"),
   hiddenHeader: dropdownControl(headerOptions, "showHeader"),
   allowClick: dropdownControl(allowClickOptions, "true"),
@@ -206,7 +251,16 @@ type ChildrenInstance = RecordConstructorToComp<typeof childrenMap> & {
 };
 
 function AppSettingsModal(props: ChildrenInstance) {
-  const { themeList, defaultTheme, themeId, maxWidth, hiddenHeader, pcPadding, mobilePadding, allowClick } = props;
+  const {
+    themeList,
+    defaultTheme,
+    themeId,
+    maxWidth,
+    title,
+    description,
+    icon,
+    category,
+  hiddenHeader, pcPadding, mobilePadding, allowClick } = props;
   const application = useSelector(currentApplication);
   const InAggregationAppHidden = !(application && isAggregationApp(AppUILayoutType[application.applicationType]))
   const THEME_OPTIONS = themeList?.map((theme) => ({
@@ -245,6 +299,23 @@ function AppSettingsModal(props: ChildrenInstance) {
     <SettingsStyled>
       <Title>{trans("appSetting.pageSetting")}</Title>
       <DivStyled>
+        {title.propertyView({
+          label: trans("appSetting.appTitle"),
+          placeholder: trans("appSetting.appTitle")
+        })}
+        {description.propertyView({
+          label: trans("appSetting.appDescription"),
+          placeholder: trans("appSetting.appDescription")
+        })}
+        {category.propertyView({
+          label: trans("appSetting.appCategory"),
+        })}
+        <div className="app-icon">
+          {icon.propertyView({
+            label: trans("icon"),
+            tooltip: trans("aggregation.iconTooltip"),
+          })}
+        </div>
         {InAggregationAppHidden && maxWidth.propertyView({
           dropdownLabel: trans("appSetting.canvasMaxWidth"),
           inputLabel: trans("appSetting.userDefinedMaxWidth"),
