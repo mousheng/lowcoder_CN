@@ -145,7 +145,7 @@ export function TriContainer(props: TriContainerProps) {
             $headerBackgroundImagePosition={headerStyle?.headerBackgroundImagePosition}
             $headerBackgroundImageOrigin={headerStyle?.headerBackgroundImageOrigin}
             style={{padding: headerStyle.containerheaderpadding}}
-
+            
           />
         </BackgroundColorContext.Provider>
       )}
@@ -163,6 +163,7 @@ export function TriContainer(props: TriContainerProps) {
                 containerPadding={
                   (showHeader && showFooter) || showHeader ? [paddingWidth, 11.5] : [paddingWidth, 11]
                 }
+                showScroll={props.container.scrollbars}
                 hintPlaceholder={props.hintPlaceholder ?? HintPlaceHolder}
                 $backgroundColor={bodyStyle?.background || 'transparent'}
                 $borderColor={style?.border}
