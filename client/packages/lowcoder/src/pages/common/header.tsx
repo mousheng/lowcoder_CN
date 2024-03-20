@@ -57,13 +57,22 @@ import { EditorContext } from "../../comps/editorState";
 const StyledLink = styled.a`
   display: flex;
   align-items: center;
-  margin-right: 12px;
+  margin-right: 4px;
 `;
 
 const LogoIcon = styled(Logo)`
   min-width: 24px;
   max-width: 24px;
 `;
+
+const CustomICON = styled.div`
+color: white;
+height: 32px;
+font-size: 25px;
+display: flex;
+-webkit-box-align: center;
+align-items: center;
+`
 
 const IconCss = css<{ $show?: boolean }>`
   &:hover {
@@ -86,7 +95,7 @@ const LayoutIcon = styled(Layout)`
 const LeftIcon = styled(Left)`
   ${IconCss}
 `;
-const MiddleIcon = styled(Middle)<{ $show: boolean }>`
+const MiddleIcon = styled(Middle) <{ $show: boolean }>`
   ${IconCss}
   & g line {
     stroke: ${(props) => (props.$show ? "#dddddd" : "#dddddd65")};
@@ -314,7 +323,7 @@ export default function Header(props: HeaderProps) {
   const [editName, setEditName] = useState(false);
   const [editing, setEditing] = useState(false);
   const [permissionDialogVisible, setPermissionDialogVisible] = useState(false);
-
+  
   const isModule = appType === AppTypeEnum.Module;
 
   const editorModeOptions = [
@@ -346,8 +355,9 @@ export default function Header(props: HeaderProps) {
   const headerStart = (
     <>
       <StyledLink onClick={() => history.push(ALL_APPLICATIONS_URL)}>
-        {/* {REACT_APP_LOWCODER_SHOW_BRAND === 'true' ? REACT_APP_LOWCODER_CUSTOM_LOGO_SQUARE !== "" ? <img src={REACT_APP_LOWCODER_CUSTOM_LOGO_SQUARE } height={24} width={24} alt="logo" /> :<LogoIcon /> :  <LogoHome />} */}
-        <LogoHome />
+        {editorState && (editorState.getAppSettings()?.customIcon as any)?.props?.value ? (<CustomICON>
+          {editorState.getAppSettings()?.customIcon}
+        </CustomICON>) : (<LogoIcon branding={true} />)}
       </StyledLink>
       {editName ? (
         <Wrapper>
@@ -388,7 +398,7 @@ export default function Header(props: HeaderProps) {
 
   const headerMiddle = (
     <>
-      <>      
+      <>
       </>
       <Radio.Group
         onChange={onEditorStateValueChange}
