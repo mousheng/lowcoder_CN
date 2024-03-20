@@ -6,7 +6,7 @@ import { clickLogoEvent, clickMenuEvent, eventHandlerControl } from "comps/contr
 import { StringControl } from "comps/controls/codeControl";
 import { menuListComp } from "./navItemComp";
 import { menuPropertyView } from "./components/MenuItemList";
-import { Avatar, Layout, Menu, MenuProps, SiderProps } from "antd";
+import { Avatar, Layout, Menu, MenuProps, SiderProps, Tabs } from "antd";
 import { styleControl } from "comps/controls/styleControl";
 import { AntLayoutBodyStyle, AntLayoutBodyStyleType, AntLayoutFramerStyle, AntLayoutFramerStyleType, AntLayoutLogoStyle, AntLayoutLogoStyleType, AntLayoutMenuStyle, AntLayoutMenuStyleType, heightCalculator, widthCalculator } from "comps/controls/styleControlConstants";
 import { hiddenPropertyView } from "comps/utils/propertyUtils";
@@ -50,6 +50,9 @@ const StyledMenu = styled(Menu) <MenuProps>`
     min-width: 160px;
   }
 `;
+const TabWrapper = styled(Tabs) <{}>`
+  height: 38px;
+`
 const FooterWarpper = styled(Footer) <FooterProps>`
   textAlign: center;
   height: 48px;
@@ -291,6 +294,8 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
       key = Object.keys(props.containers)[parseInt(key)]
     return key !== '' && props.containers.hasOwnProperty(key) ? key : Object.keys(props.containers)[1]
   }
+  type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
+  const [items, setItems] = useState([] as any);
   const [selectedKey, setselectedKey] = useState(safeKeys(''))
   const [openKeys, setOpenKeys] = useState(['']);
   const data = props.items;
@@ -298,6 +303,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
   useEffect(() => {
     var key = safeKeys(props.Key.value)
     setselectedKey(key)
+    syncItems(key)
     dispatch(multiChangeAction({
       realKey: changeValueAction(key, false),
       activatedKey: changeValueAction(key, false),
@@ -309,7 +315,19 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
   const rootSubmenuKeys = data.map(item => item.getView().id)
   const containerProps = props.containers[selectedKey].children;
   const headerProps = props.containers['header'].children;
+  const syncItems = (key: string) => {
+    // 同步tabs
+    let tabsItem = _.find(items, ["key", key])
+    let sourceItem = _.find(props.items, ["children.id.unevaledValue", key])
+    if (!tabsItem) {
+      setItems([
+        ...items,
+        { label: sourceItem?.children.label.unevaledValue, key: key }
+      ])
+    }
+  }
   const onClick: MenuProps['onClick'] = (e) => {
+    syncItems(e.key)
     dispatch(multiChangeAction({
       realKey: changeValueAction(e.key, false),
       activatedKey: changeValueAction(props.manualOperation ? safeKeys(props.activatedKey) : e.key, false),
@@ -325,6 +343,27 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
     }
   };
+  const onChange = (key: string) => {
+    setselectedKey(key);
+  };
+
+  const remove = (targetKey: TargetKey) => {
+    debugger
+    let length = Object.keys(items).length
+    let index = _.findIndex(items, { key: targetKey })
+    if (index >= 0) {
+      setselectedKey(items[length === index + 1 ? index - 1 : index + 1].key)
+      setItems(items.filter((item: any, idx: number) => idx !== index))
+    }
+  };
+
+  const onEdit = (targetKey: TargetKey, action: 'add' | 'remove') => {
+    console.log("action", action);
+    if (action === 'remove') {
+      remove(targetKey);
+    }
+  };
+
   return (
     <FrameWrapper
       frameStyle={props.frameStyle}
@@ -394,6 +433,14 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
             <div style={{
               height: '100%',
             }}>
+              <TabWrapper
+                hideAdd
+                onChange={onChange}
+                activeKey={selectedKey}
+                type="editable-card"
+                onEdit={onEdit}
+                items={items}
+              />
               <BackgroundColorContext.Provider value={props.bodyStyle.background}>
                 <BodyContainer
                   layout={containerProps.layout.getView()}
