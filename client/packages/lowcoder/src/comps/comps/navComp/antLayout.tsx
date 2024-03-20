@@ -286,6 +286,7 @@ const childrenMap = {
   manualOperation: BoolControl,
   activatedKey: stateComp(''),
   realKey: stateComp(''),
+  showTabs: BoolControl.DEFAULT_TRUE,
 };
 
 const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
@@ -433,14 +434,14 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
             <div style={{
               height: '100%',
             }}>
-              <TabWrapper
+              {props.showTabs && <TabWrapper
                 hideAdd
                 onChange={onChange}
                 activeKey={selectedKey}
                 type="editable-card"
                 onEdit={onEdit}
                 items={items}
-              />
+              />}
               <BackgroundColorContext.Provider value={props.bodyStyle.background}>
                 <BodyContainer
                   layout={containerProps.layout.getView()}
@@ -480,6 +481,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
           })}
           {children.logoTitle.propertyView({ label: trans('antLayoutComp.logoTitle') })}
           {children.logoPosition.propertyView({ label: trans('antLayoutComp.logoPosition'), radioButton: true })}
+          {children.showTabs.propertyView({ label: trans('antLayoutComp.showTabs') })}
         </Section>
         <Section name={trans("menu")}>
           {menuPropertyView(children.items)}

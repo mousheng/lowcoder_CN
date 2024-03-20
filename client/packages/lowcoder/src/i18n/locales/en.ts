@@ -3163,6 +3163,7 @@ export const en = {
     "itemType": "itemType",
     "manualOperation": "manual Operation",
     "ActivatedKey": "activated Key",
+    "showTabs": "Show Tabs",
   },
   "floatButton": {
     "custom": 'Custom',

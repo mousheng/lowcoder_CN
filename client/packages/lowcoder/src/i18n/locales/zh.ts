@@ -3104,6 +3104,7 @@ idSource: {
         itemType: "项目类型",
         manualOperation: "手动切换",
         ActivatedKey: "已激活的",
+        showTabs: "显示卡片式页签",
     },
     floatButton: {
         custom: '自定义',
