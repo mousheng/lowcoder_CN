@@ -349,7 +349,6 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
   };
 
   const remove = (targetKey: TargetKey) => {
-    debugger
     let length = Object.keys(items).length
     let index = _.findIndex(items, { key: targetKey })
     if (index >= 0) {
@@ -364,6 +363,10 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
       remove(targetKey);
     }
   };
+
+  const onDbClick = (e: any) =>{
+    remove(selectedKey)
+  }
 
   return (
     <FrameWrapper
@@ -441,6 +444,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
                 type="editable-card"
                 onEdit={onEdit}
                 items={items}
+                onDoubleClick={onDbClick}
               />}
               <BackgroundColorContext.Provider value={props.bodyStyle.background}>
                 <BodyContainer
