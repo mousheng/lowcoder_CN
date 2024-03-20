@@ -2275,6 +2275,7 @@ export const en = {
     "showHeader": "Show",
     "hiddenHeader": "hidden",
     "appIcon": 'App Logo',
+    "marketIcon": "Market Icon",
   },
   "customShortcut": {
     "title": "Custom Shortcuts",

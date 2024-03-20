@@ -2169,6 +2169,7 @@ appSetting: {
     showHeader: "显示",
     hiddenHeader: "隐藏",
     appIcon: '程序图标',
+    marketIcon: "图标(市场)",
 },
 customShortcut: {
     title: "自定义快捷键",

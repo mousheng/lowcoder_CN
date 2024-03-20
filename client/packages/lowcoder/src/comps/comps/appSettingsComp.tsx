@@ -312,7 +312,7 @@ function AppSettingsModal(props: ChildrenInstance) {
         })}
         <div className="app-icon">
           {icon.propertyView({
-            label: trans("icon"),
+            label: trans("appSetting.marketIcon"),
             tooltip: trans("aggregation.iconTooltip"),
           })}
         </div>
