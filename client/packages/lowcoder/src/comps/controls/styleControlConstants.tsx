@@ -1102,6 +1102,13 @@ export const DividerStyle = [
         depName: "color",
         transformer: handleToDividerText,
       }
+    }else if(style.name === 'borderWidth'){
+      return {
+        name: "borderWidth",
+        label: trans("style.borderWidth"),
+        borderWidth: "borderWidth",
+        defaultValue: "1px"
+      }
     }
     return style
   })

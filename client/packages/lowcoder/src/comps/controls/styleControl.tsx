@@ -351,7 +351,7 @@ function calcColors<ColorMap extends Record<string, string>>(
       res[name] = themeWithDefault[config.radius];
     }
     if (isBorderWidthConfig(config)) {
-      res[name] = '0px';
+      res[name] =  config?.defaultValue ?? '0px'; 
     }
     if (isBackgroundImageConfig(config)) {
       res[name] = '';
