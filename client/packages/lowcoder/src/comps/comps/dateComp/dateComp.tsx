@@ -85,17 +85,15 @@ const timeFields = (children: CommonChildrenType, isMobile?: boolean) => [
   children.showTime.propertyView({ label: trans("date.showTime") }),
   !isMobile && children.use12Hours.propertyView({ label: trans("prop.use12Hours") }),
 ];
-const commonAdvanceSection = (children: CommonChildrenType, isDate: boolean = true) => {
-  if (isDate && children.showTime.getView()) {
-    return (
-      <Section name={sectionNames.advanced}>
-        {hourStepPropertyView(children)}
-        {minuteStepPropertyView(children)}
-        {SecondStepPropertyView(children)}
-      </Section>
-    );
-  }
-};
+
+const commonAdvanceSection = (children: RecordConstructorToComp<typeof commonChildren>) =>{
+  return children.showTime.getView()?[
+    hourStepPropertyView(children),
+    minuteStepPropertyView(children),
+    SecondStepPropertyView(children),
+  ]:[]
+}
+
 
 const dateValidationFields = (children: CommonChildrenType, dateType: PickerMode = "date") => {
   if (dateType === "date") {
@@ -170,7 +168,7 @@ export const datePickerControl = new UICompBuilder(childrenMap, (props) => {
       <DateUIView
         picker={'date'}
         viewRef={props.viewRef}
-        disabledTime={() => disabledTime(props.minTime, props.maxTime)}
+        disabledTime={() => disabledTime(props.minTime, props.maxTime,props.hourStep,props.minuteStep,props.secondStep)}
         $style={props.style}
         disabled={props.disabled}
         {...datePickerProps(props)}
@@ -239,11 +237,11 @@ export const datePickerControl = new UICompBuilder(childrenMap, (props) => {
 
         {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
            <><Section name={sectionNames.advanced}>
+            {commonAdvanceSection(children)}
             {timeFields(children, isMobile)}
             {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
           </Section></>
         )}
-        {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && !isMobile && commonAdvanceSection(children)}
 
         {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
           <Section name={sectionNames.style}>
@@ -284,7 +282,7 @@ export const dateRangeControl = (function () {
         minDate={props.minDate}
         maxDate={props.maxDate}
         placeholder={[props.placeholder, props.placeholder]}
-        disabledTime={() => disabledTime(props.minTime, props.maxTime)}
+        disabledTime={() => disabledTime(props.minTime, props.maxTime,props.hourStep,props.minuteStep,props.secondStep)}
         onChange={(start, end) => {
           props.start.onChange(
             start && start.isValid()
@@ -363,11 +361,11 @@ export const dateRangeControl = (function () {
 
           {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && (
             <><Section name={sectionNames.advanced}>
+              {commonAdvanceSection(children)}
               {timeFields(children, isMobile)}
               {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
             </Section></>
           )}
-          {(useContext(EditorContext).editorModeStatus === "logic" || useContext(EditorContext).editorModeStatus === "both") && commonAdvanceSection(children)}
 
           {(useContext(EditorContext).editorModeStatus === "layout" || useContext(EditorContext).editorModeStatus === "both") && (
             <Section name={sectionNames.style}>
@@ -451,8 +449,6 @@ export const weekPickerControl = new UICompBuilder(
           {timeValidationFields(children)}
           {children.customRule.propertyView({})}
         </Section>
-
-        {!isMobile && commonAdvanceSection(children)}
 
         <Section name={sectionNames.layout}>
           {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
@@ -588,8 +584,6 @@ export const monthPickerControl = new UICompBuilder(
           {timeValidationFields(children)}
           {children.customRule.propertyView({})}
         </Section>
-
-        {!isMobile && commonAdvanceSection(children)}
 
         <Section name={sectionNames.layout}>
           {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
@@ -735,8 +729,6 @@ export const quarterPickerControl = new UICompBuilder(
           {children.customRule.propertyView({})}
         </Section>
 
-        {!isMobile && commonAdvanceSection(children)}
-
         <Section name={sectionNames.layout}>
           {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
           {hiddenPropertyView(children)}
@@ -880,8 +872,6 @@ export const yearPickerControl = new UICompBuilder(
           {timeValidationFields(children)}
           {children.customRule.propertyView({})}
         </Section>
-
-        {!isMobile && commonAdvanceSection(children)}
 
         <Section name={sectionNames.layout}>
           {children.suffixIcon.propertyView({ label: trans("button.suffixIcon") })}
