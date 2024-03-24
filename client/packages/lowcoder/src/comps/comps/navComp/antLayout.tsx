@@ -290,25 +290,43 @@ const childrenMap = {
 };
 
 const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
+  // 递归查找
+  const recursiveFind: any = (obj: any, keyPath: string, findValue: string, judgeArrayPath: string) => {
+    for (let index in obj) {
+      {
+        let value = obj[index]
+        if (Object.keys(_.get(value, judgeArrayPath, {})).length > 0) {
+          let temp = recursiveFind(_.get(value, judgeArrayPath), keyPath, findValue)
+          if (_.isObject(temp)) return temp
+        } else if (_.get(value, keyPath) === findValue) return value
+      }
+    }
+    return
+  }
   const safeKeys = (key: string) => { //计算安全的key值
-    if (key.length < 3 && !isNaN(parseInt(key)) && parseInt(key) > 0 && parseInt(key) <= Object.keys(props.containers).length)
-      key = Object.keys(props.containers)[parseInt(key)]
-    return key !== '' && props.containers.hasOwnProperty(key) ? key : Object.keys(props.containers)[1]
+    let findByValue = recursiveFind(props.items, "children.label.unevaledValue", key, "children.items.children")
+    if (findByValue && _.get(findByValue, "children.id.unevaledValue")) {
+      return _.get(findByValue, "children.id.unevaledValue")
+    }
+    if (props.containers.hasOwnProperty(key)) return key
+    return Object.keys(props.containers)[1]
   }
   type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
   const [items, setItems] = useState([] as any);
-  const [selectedKey, setselectedKey] = useState(safeKeys(''))
+  const [selectedKey, setselectedKey] = useState(Object.keys(props.containers)[1])
   const [openKeys, setOpenKeys] = useState(['']);
   const data = props.items;
   const collapsed = props.collapsed.value;
   useEffect(() => {
-    var key = safeKeys(props.Key.value)
-    setselectedKey(key)
-    syncItems(key)
-    dispatch(multiChangeAction({
-      realKey: changeValueAction(key, false),
-      activatedKey: changeValueAction(key, false),
-    }))
+    if (props.Key.value) {
+      var key = safeKeys(props.Key.value)
+      setselectedKey(key)
+      syncItems(key)
+      dispatch(multiChangeAction({
+        realKey: changeValueAction(key, false),
+        activatedKey: changeValueAction(key, false),
+      }))
+    }
   }, [props.Key.value])
   useEffect(() => {
     props.Key.onChange(props.realKey)
@@ -319,8 +337,8 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
   const syncItems = (key: string) => {
     // 同步tabs
     let tabsItem = _.find(items, ["key", key])
-    let sourceItem = _.find(props.items, ["children.id.unevaledValue", key])
-    if (!tabsItem) {
+    let sourceItem = recursiveFind(props.items, "children.id.unevaledValue", key, "children.items.children")
+    if (!tabsItem && sourceItem) {
       setItems([
         ...items,
         { label: sourceItem?.children.label.unevaledValue, key: key }
