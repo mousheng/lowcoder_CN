@@ -15,7 +15,7 @@ import { IContainer } from "../containerBase/iContainer";
 import { SimpleContainerComp } from "../containerBase/simpleContainerComp";
 import { addMapChildAction } from "comps/generators/sameTypeMap";
 import { CompAction, CompActionTypes, changeValueAction, deleteCompAction, wrapChildAction, wrapDispatch, multiChangeAction } from "lowcoder-core";
-import { BoolControl, IconControl, JSONObject, JSONValue, NameGenerator, booleanExposingStateControl, dropdownControl, stateComp, stringExposingStateControl } from "@lowcoder-ee/index.sdk";
+import { AutoHeightControl, BoolControl, IconControl, JSONObject, JSONValue, NameGenerator, booleanExposingStateControl, dropdownControl, stateComp, stringExposingStateControl } from "@lowcoder-ee/index.sdk";
 import { CompTree, mergeCompTrees } from "../containerBase/utils";
 import _ from "lodash";
 import { v4 as uuidv4 } from 'uuid';
@@ -23,7 +23,8 @@ import { BackgroundColorContext } from "comps/utils/backgroundColorContext";
 import { ContainerBaseProps, InnerGrid, gridItemCompToGridItems } from "../containerComp/containerView";
 import { HintPlaceHolder } from "lowcoder-design";
 import { FooterProps } from "antd-mobile";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { EditorContext } from "@lowcoder-ee/comps/editorState";
 const { Header, Content, Footer, Sider } = Layout;
 
 const EventOptions = [
@@ -287,6 +288,7 @@ const childrenMap = {
   activatedKey: stateComp(''),
   realKey: stateComp(''),
   showTabs: BoolControl.DEFAULT_TRUE,
+  autoHeight: AutoHeightControl,
 };
 
 const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
@@ -390,7 +392,6 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
   const onDbClick = (e: any) => {
     remove(selectedKey)
   }
-
   return (
     <FrameWrapper
       frameStyle={props.frameStyle}
@@ -398,8 +399,9 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
       onMouseDown={(e) => {
         e.preventDefault();
       }}
+      style={{ height: props.autoHeight ? window.innerHeight - 15 - parseInt(useContext(EditorContext).getAppSettings().pcPadding) * 2 : "" }}
     >
-      <Layout style={{ height: '100%', margin: '5px' }}>
+      <Layout style={{ height: '100%', margin: '0px' }}>
         <SiderWarpper
           collapsible
           collapsed={collapsed}
@@ -517,6 +519,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
           {children.Key.propertyView({ label: trans('antLayoutComp.selectedKey') })}
         </Section>
         <Section name={sectionNames.layout}>
+          {children.autoHeight.getPropertyView()}
           {children.onEvent.getPropertyView()}
           {hiddenPropertyView(children)}
           {children.footString.propertyView({ label: trans('antLayoutComp.footString') })}
@@ -640,7 +643,7 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
   }
 
   override autoHeight(): boolean {
-    return false;
+    return this.children.autoHeight.getView();
   }
 }
 
