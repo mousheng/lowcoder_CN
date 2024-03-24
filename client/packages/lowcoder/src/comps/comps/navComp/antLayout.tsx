@@ -318,6 +318,9 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
   const data = props.items;
   const collapsed = props.collapsed.value;
   useEffect(() => {
+    syncItems(props.activatedKey)
+  }, [props.activatedKey])
+  useEffect(() => {
     if (props.Key.value) {
       var key = safeKeys(props.Key.value)
       setselectedKey(key)
@@ -346,7 +349,6 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
     }
   }
   const onClick: MenuProps['onClick'] = (e) => {
-    syncItems(e.key)
     dispatch(multiChangeAction({
       realKey: changeValueAction(e.key, false),
       activatedKey: changeValueAction(props.manualOperation ? safeKeys(props.activatedKey) : e.key, false),
@@ -364,6 +366,9 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
   };
   const onChange = (key: string) => {
     setselectedKey(key);
+    dispatch(multiChangeAction({
+      activatedKey: changeValueAction(key, false),
+    }))
   };
 
   const remove = (targetKey: TargetKey) => {
@@ -382,7 +387,7 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
     }
   };
 
-  const onDbClick = (e: any) =>{
+  const onDbClick = (e: any) => {
     remove(selectedKey)
   }
 
