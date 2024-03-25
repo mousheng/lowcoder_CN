@@ -12,6 +12,7 @@
   "scripts": {
     "start": "yarn workspace lowcoder start",
     "start-win": "LOWCODER_API_SERVICE_URL=http://localhost:3000 yarn start",
+    "start-backend": "LOWCODER_API_SERVICE_URL=http://localhost:8080 yarn start",
     "start:ee": "REACT_APP_EDITION=enterprise yarn workspace lowcoder start",
     "start:ee-global": "REACT_APP_EDITION=enterprise-global yarn workspace lowcoder start",
     "build": "yarn node ./scripts/build.js",
@@ -19,6 +20,8 @@
     "prepare": "yarn workspace lowcoder prepare",
     "build:core": "yarn workspace lowcoder-core build",
     "test:core": "yarn workspace lowcoder-core test",
+    "build:sdk": "yarn workspace lowcoder-sdk build",
+    "start:comps": "yarn workspace lowcoder-comps start",
     "lint": "eslint . --fix"
   },
   "devDependencies": {
