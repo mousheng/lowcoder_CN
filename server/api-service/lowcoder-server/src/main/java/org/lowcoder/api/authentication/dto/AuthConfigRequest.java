@@ -34,6 +34,11 @@ public class AuthConfigRequest extends HashMap<String, Object> {
     }
 
     @Nullable
+    public String getAgentID() {
+        return getString("agentID");
+    }
+
+    @Nullable
     public String getClientId() {
         return getString("clientId");
     }

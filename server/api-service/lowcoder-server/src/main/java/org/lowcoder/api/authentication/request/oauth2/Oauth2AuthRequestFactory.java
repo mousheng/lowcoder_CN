@@ -8,6 +8,7 @@ import org.lowcoder.api.authentication.request.oauth2.request.*;
 import org.lowcoder.sdk.auth.Oauth2KeycloakAuthConfig;
 import org.lowcoder.sdk.auth.Oauth2OryAuthConfig;
 import org.lowcoder.sdk.auth.Oauth2SimpleAuthConfig;
+import org.lowcoder.sdk.auth.Oauth2WeComAuthConfig;
 import org.springframework.stereotype.Component;
 
 import reactor.core.publisher.Mono;
@@ -27,6 +28,7 @@ public class Oauth2AuthRequestFactory implements AuthRequestFactory<OAuth2Reques
             case GITHUB -> new GithubRequest((Oauth2SimpleAuthConfig) context.getAuthConfig());
             case FEISHU -> new FeishuRequest((Oauth2SimpleAuthConfig) context.getAuthConfig());
             case DINGTALK -> new DingTalkRequest((Oauth2SimpleAuthConfig) context.getAuthConfig());
+            case WECOM -> new WeComRequest((Oauth2WeComAuthConfig) context.getAuthConfig());
             case GOOGLE -> new GoogleRequest((Oauth2SimpleAuthConfig) context.getAuthConfig());
             case ORY -> new OryRequest((Oauth2OryAuthConfig) context.getAuthConfig());
             case KEYCLOAK -> new KeycloakRequest((Oauth2KeycloakAuthConfig)context.getAuthConfig());
@@ -42,6 +44,7 @@ public class Oauth2AuthRequestFactory implements AuthRequestFactory<OAuth2Reques
                 ORY,
                 KEYCLOAK,
                 FEISHU,
-                DINGTALK);
+                DINGTALK,
+                WECOM);
     }
 }

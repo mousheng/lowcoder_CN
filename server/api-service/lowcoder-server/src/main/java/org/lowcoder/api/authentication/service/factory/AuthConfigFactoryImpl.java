@@ -7,11 +7,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.MapUtils;
 import org.lowcoder.api.authentication.dto.AuthConfigRequest;
-import org.lowcoder.sdk.auth.AbstractAuthConfig;
-import org.lowcoder.sdk.auth.EmailAuthConfig;
-import org.lowcoder.sdk.auth.Oauth2KeycloakAuthConfig;
-import org.lowcoder.sdk.auth.Oauth2OryAuthConfig;
-import org.lowcoder.sdk.auth.Oauth2SimpleAuthConfig;
+import org.lowcoder.sdk.auth.*;
 import org.lowcoder.sdk.auth.constants.AuthTypeConstants;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +21,7 @@ public class AuthConfigFactoryImpl implements AuthConfigFactory {
             case AuthTypeConstants.GITHUB -> buildOauth2SimpleAuthConfig(GITHUB, GITHUB_NAME, authConfigRequest, enable);
             case AuthTypeConstants.FEISHU -> buildOauth2SimpleAuthConfig(FEISHU, FEISHU_NAME, authConfigRequest, enable);
             case AuthTypeConstants.DINGTALK -> buildOauth2SimpleAuthConfig(DINGTALK, DINGTALK_NAME, authConfigRequest, enable);
+            case AuthTypeConstants.WECOM -> buildOauth2WeComAuthConfig(authConfigRequest, enable);
             case AuthTypeConstants.GOOGLE -> buildOauth2SimpleAuthConfig(GOOGLE, GOOGLE_NAME, authConfigRequest, enable);
             case AuthTypeConstants.ORY -> buildOauth2OryAuthConfig(authConfigRequest, enable);
             case AuthTypeConstants.KEYCLOAK -> buildOauth2KeycloakAuthConfig(authConfigRequest, enable);
@@ -41,7 +38,8 @@ public class AuthConfigFactoryImpl implements AuthConfigFactory {
                 AuthTypeConstants.ORY,
                 AuthTypeConstants.KEYCLOAK,
                 AuthTypeConstants.FEISHU,
-                AuthTypeConstants.DINGTALK
+                AuthTypeConstants.DINGTALK,
+                AuthTypeConstants.WECOM
         );
     }
 
@@ -89,6 +87,19 @@ public class AuthConfigFactoryImpl implements AuthConfigFactory {
                 authConfigRequest.getString("baseUrl"),
                 authConfigRequest.getString("realm"),
                 authConfigRequest.getString("scope"),
+                authConfigRequest.getAuthType());
+    }
+
+    private Oauth2SimpleAuthConfig buildOauth2WeComAuthConfig(AuthConfigRequest authConfigRequest, boolean enable) {
+        return new Oauth2WeComAuthConfig(
+                authConfigRequest.getId(),
+                enable,
+                authConfigRequest.isEnableRegister(),
+                AuthTypeConstants.WECOM,
+                org.lowcoder.sdk.constants.AuthSourceConstants.WECOM_NAME,
+                requireNonNull(authConfigRequest.getClientId(), "clientId can not be null."),
+                authConfigRequest.getClientSecret(),
+                authConfigRequest.getString("agentId"),
                 authConfigRequest.getAuthType());
     }
     

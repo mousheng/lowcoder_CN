@@ -2935,6 +2935,9 @@ export const en = {
     "clientSecret": "Client Secret",
     "feishu": "Feishu",
     "dingTalk": "DingTalk",
+    "weCom": "WeCom",
+    "enterpriseID": "Enterprise ID",
+    "agentid": "AgentID",
   },
   "slotControl": {
     "configSlotView": "Configure Slot View"

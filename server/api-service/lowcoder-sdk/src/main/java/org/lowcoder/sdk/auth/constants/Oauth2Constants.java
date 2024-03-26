@@ -10,6 +10,7 @@ public class Oauth2Constants {
 
     public static final String BASE_URL_PLACEHOLDER = "$BASE_URL";
     public static final String SCOPE_PLACEHOLDER = "$SCOPE";
+    public static final String AGENTID_PLACEHOLDER = "$AGENTID";
 
     // authorize url
     public static final String GITHUB_AUTHORIZE_URL = "https://github.com/login/oauth/authorize"
@@ -31,6 +32,15 @@ public class Oauth2Constants {
             + "&scope=openid"
             + "&state=" + STATE_PLACEHOLDER
             + "&prompt=consent";
+
+    public static final String WECOM_AUTHORIZE_URL = "https://open.work.weixin.qq.com/wwopen/sso/qrConnect?"
+            + "redirect_uri=" + REDIRECT_URL_PLACEHOLDER
+            + "&response_type=code"
+            + "&appid=" + CLIENT_ID_PLACEHOLDER
+            + "&scope=snsapi_base"
+            + "&agentid=" + AGENTID_PLACEHOLDER
+            + "&state=" + STATE_PLACEHOLDER
+            + "#self_redirect=false&version=1.2.7&login_type=jssdk";
 
     public static final String GOOGLE_AUTHORIZE_URL = "https://accounts.google.com/o/oauth2/v2/auth"
             + "?response_type=code"

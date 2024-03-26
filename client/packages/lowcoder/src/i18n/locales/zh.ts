@@ -2881,6 +2881,9 @@ idSource: {
     clientSecret: "客户端密钥(Client Secret)",
     feishu: "飞书",
     dingTalk: "钉钉",
+    weCom: "微信企业",
+    enterpriseID: "企业ID",
+    agentid: "应用ID(AgentID)",
     },
     slotControl: {
     configSlotView: "配置槽视图",
