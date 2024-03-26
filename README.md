@@ -13,11 +13,11 @@ Lowcoder_cn（以下简称lowcoder）是[lowcoder](https://github.com/lowcoder-o
 
 [Document On Github](https://mousheng.github.io/lowcoder_CN) 国内推荐访问 [Document On Gitee](https://moushengkoo.gitee.io/lowcoder_cn)
 
-### 讨论群
+## 讨论群
 
-![讨论群](docs/assets/微信群名片.jpg)
+### [查看讨论群二维码](https://lowcoder.mousheng.top/apps/65e499dfaea697211104b3e3/view)
 
-### 联系我
+### 如果群二维码过期可以直接联系我
 
 ![联系我](docs/assets/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231219083634.jpg)
 
@@ -28,11 +28,6 @@ Lowcoder_cn（以下简称lowcoder）是[lowcoder](https://github.com/lowcoder-o
 请访问 https://lowcoder.mousheng.top
 
 > ❗❗请不要将自己的api令牌或者账号密码保存在共享账号中❗❗
-
-> #### 账号密码
-> 账户： `test@mousheng.top`
-> 
-> 密码： `test123456`
 
 ### 私有化部署
 请参阅 [docker部署](docs/docker.md)
