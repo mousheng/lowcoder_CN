@@ -27,7 +27,7 @@ Lowcoder_cn（以下简称lowcoder）是[lowcoder](https://github.com/lowcoder-o
 
 请访问 https://lowcoder.mousheng.top
 
-> ❗❗请不要将自己的api令牌或者账号密码保存在共享账号中❗❗
+> ❗❗仅供试用，请不要在系统中保存任何有用的信息，系统不定期重置，如需长期试用，请自行私有化部署❗❗
 
 ### 私有化部署
 请参阅 [docker部署](docs/docker.md)
