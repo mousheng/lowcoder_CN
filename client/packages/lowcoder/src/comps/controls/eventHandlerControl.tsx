@@ -488,6 +488,11 @@ export const resetEvent: EventConfigType = {
   value: "reset",
   description: trans("event.resetDesc"),
 };
+export const closeTabEvent: EventConfigType = {
+  label: trans("event.closedTab"),
+  value: "closedTab",
+  description: trans("event.closedTabDesc"),
+};
 export const InputEventHandlerControl = eventHandlerControl([
   changeEvent,
   focusEvent,

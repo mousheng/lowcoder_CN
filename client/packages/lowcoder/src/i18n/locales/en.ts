@@ -361,6 +361,8 @@ export const en = {
     "countdownDesc": "Triggers on Countdown ends",
     "reset": "Reset ends",
     "resetDesc": "Triggers on Reset timer",
+    "closedTab": "closed Tab",
+    "closedTabDesc": "Triggers on closed Tab",
   },
   "themeDetail": {
     "primary": "Brand Color",
@@ -3165,6 +3167,7 @@ export const en = {
     "manualOperation": "manual Operation",
     "ActivatedKey": "activated Key",
     "showTabs": "Show Tabs",
+    "closedTab": "Closed Tab",
   },
   "floatButton": {
     "custom": 'Custom',

@@ -2,7 +2,7 @@ import { NameConfig, NameConfigHidden, withExposingConfigs } from "comps/generat
 import { UICompBuilder, sameTypeMap, withDefault } from "comps/generators";
 import { Section, messageInstance, sectionNames } from "lowcoder-design";
 import styled from "styled-components";
-import { clickLogoEvent, clickMenuEvent, eventHandlerControl } from "comps/controls/eventHandlerControl";
+import { clickLogoEvent, clickMenuEvent, closeTabEvent, eventHandlerControl } from "comps/controls/eventHandlerControl";
 import { StringControl } from "comps/controls/codeControl";
 import { menuListComp } from "./navItemComp";
 import { menuPropertyView } from "./components/MenuItemList";
@@ -14,7 +14,7 @@ import { trans } from "i18n";
 import { IContainer } from "../containerBase/iContainer";
 import { SimpleContainerComp } from "../containerBase/simpleContainerComp";
 import { addMapChildAction } from "comps/generators/sameTypeMap";
-import { CompAction, CompActionTypes, changeValueAction, deleteCompAction, wrapChildAction, wrapDispatch, multiChangeAction } from "lowcoder-core";
+import { CompAction, CompActionTypes, changeValueAction, deleteCompAction, wrapChildAction, wrapDispatch, multiChangeAction, changeChildAction } from "lowcoder-core";
 import { AutoHeightControl, BoolControl, IconControl, JSONObject, JSONValue, NameGenerator, booleanExposingStateControl, dropdownControl, stateComp, stringExposingStateControl } from "@lowcoder-ee/index.sdk";
 import { CompTree, mergeCompTrees } from "../containerBase/utils";
 import _ from "lodash";
@@ -30,6 +30,7 @@ const { Header, Content, Footer, Sider } = Layout;
 const EventOptions = [
   clickLogoEvent,
   clickMenuEvent,
+  closeTabEvent,
 ] as const;
 
 const LogoWrapper = styled.div<{ titlestyle: AntLayoutLogoStyleType, logoUrl: string, logoIcon: string, logoPosition: string }>`
@@ -289,6 +290,7 @@ const childrenMap = {
   realKey: stateComp(''),
   showTabs: BoolControl.DEFAULT_TRUE,
   autoHeight: AutoHeightControl,
+  closedTab: stateComp(''),
 };
 
 const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
@@ -379,6 +381,8 @@ const NavCompBase = new UICompBuilder(childrenMap, (props, dispatch) => {
     if (index >= 0) {
       setselectedKey(items[length === index + 1 ? index - 1 : index + 1].key)
       setItems(items.filter((item: any, idx: number) => idx !== index))
+      props.onEvent("closedTab")
+      dispatch(changeChildAction("closedTab", targetKey.toString(), false));
     }
   };
 
@@ -648,10 +652,10 @@ class AntLayoutImplComp extends NavCompBase implements IContainer {
 }
 
 export const AntLayoutComp = withExposingConfigs(AntLayoutImplComp, [
-  new NameConfig("logoUrl", trans("navigation.logoURLDesc")),
   NameConfigHidden,
   new NameConfig("items", trans("navigation.itemsDesc")),
   new NameConfig("activatedKey", trans('antLayoutComp.ActivatedKey')),
   new NameConfig("realKey", trans('antLayoutComp.selectedKey')),
+  new NameConfig("closedTab", trans("antLayoutComp.closedTab")),
   new NameConfig("collapsed", trans('antLayoutComp.collapsed')),
 ]);

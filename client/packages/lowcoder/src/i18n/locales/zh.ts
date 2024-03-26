@@ -353,6 +353,8 @@ event: {
     countdownDesc: "在倒计时结束时触发",
     reset: "重置",
     resetDesc: "在重置时触发",
+    closedTab: "关闭标签时",
+    closedTabDesc: "在关闭标签时触发",
 },
 themeDetail: {
     primary: "颜色主题",
@@ -3106,6 +3108,7 @@ idSource: {
         manualOperation: "手动切换",
         ActivatedKey: "已激活的",
         showTabs: "显示卡片式页签",
+        closedTab: "关闭的标签",
     },
     floatButton: {
         custom: '自定义',
